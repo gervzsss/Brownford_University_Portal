@@ -1,8 +1,8 @@
-/* src/main/resources/static/css/login.css */
 body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f5f5;
 }
 
 /* Centering the login form container */
@@ -12,12 +12,10 @@ body {
   width: 100%;
   position: relative;
   justify-content: center;
-  /* Centers the form horizontally */
   align-items: center;
-  /* Centers the form vertically */
 }
 
-/* Background image remains unchanged */
+/* Background image */
 .login-container::before {
   content: "";
   position: absolute;
@@ -35,36 +33,21 @@ body {
 .login-form-container {
   position: relative;
   width: 60%;
-  /* Adjust this to control the size */
   max-width: 400px;
-  /* Optional: Max width for responsiveness */
   height: auto;
-  /* Automatically adjusts the height based on content */
-  padding: 10px 20px;
-  /* Adjust padding to reduce height */
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  /* Stack items vertically */
   align-items: center;
-  /* Centers the content inside */
   justify-content: flex-start;
-  /* Aligns content at the top */
   background-color: rgba(214, 200, 166, 0.85);
-  /* Semi-transparent beige */
   border-radius: 10px;
-  /* Optional: rounded corners */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  /* Optional: subtle shadow */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   z-index: 1;
+  transition: all 0.3s ease;
 }
 
-/* Optional: If you want to further tweak opacity of form */
-.login-form-container {
-  opacity: 0.95;
-  /* Adjust opacity as needed */
-}
-
-/* Form content styling (Logo, form, etc.) */
+/* Form content styling */
 .login-form-content {
   position: relative;
   width: 100%;
@@ -76,85 +59,105 @@ body {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
-  /* Reduced margin */
 }
 
 .university-logo {
   width: 100px;
-  /* Reduced size of logo */
   height: 100px;
   border-radius: 50%;
   background-color: white;
   padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .university-name {
   font-family: serif;
   font-size: 2rem;
-  /* Reduced font size */
   font-weight: bold;
   color: #8B4513;
   text-align: center;
   margin-bottom: 0.25rem;
-  /* Reduced margin */
 }
 
 .portal-title {
   font-family: serif;
   font-size: 1.25rem;
-  /* Reduced font size */
   color: #8B4513;
   text-align: center;
   margin-bottom: 1rem;
-  /* Reduced margin */
 }
 
 .login-instruction {
   font-size: 1rem;
-  /* Reduced font size */
   font-weight: bold;
   color: #8B4513;
   text-align: center;
   margin-bottom: 1rem;
-  /* Reduced margin */
 }
 
 .form-group {
   margin-bottom: 1rem;
-  /* Reduced margin */
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .form-control {
   display: block;
   width: 100%;
   padding: 1rem;
-  /* Reduced padding */
   font-size: 1rem;
   background-color: #8B4513;
   color: white;
   border: none;
   border-radius: 0.375rem;
   box-sizing: border-box;
+  transition: box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3);
 }
 
 .form-control::placeholder {
   color: #e2e2e2;
 }
 
+.error-message {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
 .forgot-password {
   text-align: center;
   margin-bottom: 1rem;
-  /* Reduced margin */
 }
 
 .forgot-password a {
   color: #8B4513;
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 .forgot-password a:hover {
   text-decoration: underline;
+  color: #5e2e0d;
 }
 
 .sign-in-button {
@@ -169,7 +172,7 @@ body {
   border: 2px solid #8B4513;
   border-radius: 9999px;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s;
 }
 
 .sign-in-button:hover {
@@ -177,20 +180,55 @@ body {
   color: white;
 }
 
+.sign-in-button:active {
+  transform: scale(0.98);
+}
+
+.sign-in-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3);
+}
+
 .help-text {
   margin-top: 1rem;
-  /* Reduced margin */
   font-size: 0.875rem;
   color: #8B4513;
   text-align: center;
 }
 
+/* Responsive design */
 @media (max-width: 768px) {
-  .campus-image {
-    display: none;
-  }
-
   .login-form-container {
-    width: 100%;
+    width: 90%;
+    max-width: 350px;
+    padding: 15px;
+  }
+  
+  .university-name {
+    font-size: 1.75rem;
+  }
+  
+  .portal-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-container {
+    width: 95%;
+    padding: 10px;
+  }
+  
+  .university-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .university-name {
+    font-size: 1.5rem;
+  }
+  
+  .form-control {
+    padding: 0.75rem;
   }
 }

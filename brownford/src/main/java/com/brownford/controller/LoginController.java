@@ -31,11 +31,27 @@ public class LoginController {
             @RequestParam String password,
             Model model) {
         if (USERS.containsKey(username) && USERS.get(username).equals(password)) {
-            return "dashboard"; // Redirect if valid user
+            return "home"; // Redirect if valid user
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login"; // Stay on login page
         }
+    }
+
+    // @GetMapping("/home")
+    // public String home() {
+    // return "home";
+    // }
+
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "profile"; // This should match the Thymeleaf template file: profile.html
+    }
+
+    @GetMapping("/logout")
+    public String logoutPage() {
+        // Implement logout logic (redirect to login or home page)
+        return "redirect:/login";
     }
 
 }
