@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .background-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/campus-background.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+            z-index: -1;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #8B4513;
+            position: relative;
+        }
+
+        .logo::after {
+            content: "";
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            border: 1px solid #8B4513;
+        }
+
+        .logo-inner {
+            width: 70%;
+            height: 70%;
+            position: relative;
+        }
+
+        .university-name {
+            margin-left: 20px;
+            color: #8B4513;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-icon,
+        .profile-icon {
+            margin-left: 20px;
+            color: #8B4513;
+            font-size: 24px;
+        }
+
+        .notification-icon {
+            position: relative;
+        }
+
+        /* Navigation styles */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            padding-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .main-nav li {
+            margin: 0 20px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #8B4513;
+            font-size: 24px;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .main-nav a.active::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #CD853F;
+        }
+
+        /* Secondary navigation */
+        .secondary-nav {
+            background-color: rgba(139, 69, 19, 0.5);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .building-icon {
+            width: 80px;
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        .secondary-nav-links {
+            display: flex;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .secondary-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Content area */
+        .content-area {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .announcement-box {
+            background-color: rgba(139, 69, 19, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .enrollment-announcement {
+            width: 45%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enrollment-announcement::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(139, 69, 19, 0.6);
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 80%, 90% 70%, 85% 80%, 80% 70%, 75% 80%, 70% 70%, 65% 80%, 60% 70%, 55% 80%, 50% 70%, 45% 80%, 40% 70%, 35% 80%, 30% 70%, 25% 80%, 20% 70%, 15% 80%, 10% 70%, 5% 80%, 0 70%);
+            z-index: -1;
+        }
+
+        .announcement-icon {
+            margin-right: 15px;
+            color: #FF6347;
+            font-size: 40px;
+        }
+
+        .announcement-text {
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .schedule-announcement {
+            width: 45%;
+            background-color: #CD853F;
+            border-radius: 30px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .schedule-announcement::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            right: 50px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #CD853F;
+        }
+
+        .calendar-icon {
+            margin-right: 15px;
+            color: white;
+            font-size: 40px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            .enrollment-announcement,
+            .schedule-announcement {
+                width: 100%;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .main-nav li {
+                margin: 10px 0;
+            }
+
+            .secondary-nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .secondary-nav-links a {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <!-- Simplified logo representation -->
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 20 C30 30, 20 50, 30 70 C40 85, 60 85, 70 70 C80 50, 70 30, 50 20" fill="none"
+                                stroke="#8B4513" stroke-width="2" />
+                            <path d="M30 45 C20 35, 10 45, 15 55" fill="none" stroke="#CD853F" stroke-width="2" />
+                            <path d="M70 45 C80 35, 90 45, 85 55" fill="none" stroke="#CD853F" stroke-width="2" />
+                            <text x="30" y="60" font-size="8" fill="#8B4513">BROWN FORD</text>
+                            <text x="35" y="70" font-size="6" fill="#8B4513">University</text>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+            </div>
+            <div class="header-icons">
+                <div class="notification-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </div>
+                <div class="profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#" class="active">HOME</a></li>
+                <li><a href="#">SCHEDULE</a></li>
+                <li><a href="#">GRADES</a></li>
+                <li><a href="#">ENROLLMENT</a></li>
+                <li><a href="#">FACULTY EVALUATION</a></li>
+            </ul>
+        </nav>
+
+        <!-- Secondary Navigation -->
+        <div class="secondary-nav">
+            <div class="building-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+                    stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="6" x2="12" y2="6"></line>
+                    <line x1="12" y1="10" x2="12" y2="10"></line>
+                    <line x1="12" y1="14" x2="12" y2="14"></line>
+                    <line x1="12" y1="18" x2="12" y2="18"></line>
+                </svg>
+            </div>
+            <div class="secondary-nav-links">
+                <a href="#">ANNOUNCEMENTS</a>
+                <a href="#">EVENTS</a>
+                <a href="#">CONTACT</a>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Enrollment Announcement -->
+            <div class="enrollment-announcement announcement-box">
+                <div class="announcement-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                        stroke="#FF6347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </div>
+                <div class="announcement-text">
+                    Enrollment for 1st Semester AY 2024-2025 is now open! Check your Student Portal for details.
+                </div>
+            </div>
+
+            <!-- Schedule Announcement -->
+            <div class="schedule-announcement announcement-box">
+                <div class="calendar-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                </div>
+                <div class="announcement-text">
+                    Midterm Exam Schedule Released! View it on your portal
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

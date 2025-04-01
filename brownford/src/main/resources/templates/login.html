@@ -1,0 +1,63 @@
+<!-- src/main/resources/templates/login.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Student Portal</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Left side - Campus Image -->
+        <div class="campus-image"></div>
+
+        <!-- Right side - Login Form -->
+        <div class="login-form-container">
+            <div class="login-form-content">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <img src="/images/logo.png" alt="Brown Ford University Logo" class="university-logo">
+                </div>
+
+                <!-- University Name -->
+                <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+
+                <!-- Student Portal -->
+                <h2 class="portal-title">STUDENT PORTAL</h2>
+
+                <!-- Login Form -->
+                <div>
+                    <h3 class="login-instruction">FILL OUT THE FORM TO LOGIN</h3>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="form-group">
+                            <input type="text" id="username" name="username" class="form-control"
+                                placeholder="STUDENT ID:" required>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="PASSWORD:" required>
+                        </div>
+
+                        <div class="forgot-password">
+                            <a href="/forgot-password">FORGOT PASSWORD</a>
+                        </div>
+
+                        <button type="submit" class="sign-in-button">SIGN IN</button>
+                    </form>
+
+                    <p class="help-text">
+                        Forgot your password? No worries! Click 'Reset Password' and follow the steps to set a new one.
+                        Make sure to check your email or phone for the reset link
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
