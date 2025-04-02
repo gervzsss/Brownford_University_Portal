@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University</title>
+    <title>Brown Ford University - Events</title>
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
@@ -58,7 +58,7 @@
         <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/home}" class="active">HOME</a></li>
+                <li><a th:href="@{/home}">HOME</a></li>
                 <li><a th:href="@{/schedule}">SCHEDULE</a></li>
                 <li><a th:href="@{/grades}">GRADES</a></li>
                 <li><a th:href="@{/enrollment}">ENROLLMENT</a></li>
@@ -80,44 +80,42 @@
             </div>
             <div class="secondary-nav-links">
                 <a th:href="@{/announcements}">ANNOUNCEMENTS</a>
-                <a th:href="@{/events}">EVENTS</a>
+                <a th:href="@{/events}" class="active-secondary">EVENTS</a>
                 <a th:href="@{/contact}">CONTACT</a>
             </div>
         </div>
 
-        <!-- Content Area -->
-        <div class="content-area">
-            <!-- Enrollment Announcement -->
-            <div class="enrollment-announcement announcement-box">
-                <div class="announcement-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                        stroke="#FF6347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
+        <!-- Main Content -->
+        <main class="events-content">
+            <div class="events-container">
+                <div class="event-item">
+                    <div class="event-content">
+                        <h2 class="event-title">University Week Celebration – April 10-15, 2025</h2>
+                    </div>
+                    <div class="event-decoration">
+                        <img th:src="@{/images/ballons.png}" alt="Ballons" class="ballons-image">
+                    </div>
                 </div>
-                <div class="announcement-text">
-                    Enrollment for 1st Semester AY 2024-2025 is now open! Check your Student Portal for details.
-                </div>
-            </div>
 
-            <!-- Schedule Announcement -->
-            <div class="schedule-announcement announcement-box">
-                <div class="calendar-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
+                <div class="event-item">
+                    <div class="event-content">
+                        <h2 class="event-title">Career Fair – May 5, 2025 (Open to all graduating students)</h2>
+                    </div>
+                    <div class="event-decoration">
+                        <img th:src="@{/images/graduate.png}" alt="Graduate" class="graduate-image">
+                    </div>
                 </div>
-                <div class="announcement-text">
-                    Midterm Exam Schedule Released! View it on your portal
+
+                <div class="event-item">
+                    <div class="event-content">
+                        <h2 class="event-title">Intramurals 2025 – June 1-7, 2025 (Sports and cultural events)</h2>
+                    </div>
+                    <div class="event-decoration">
+                        <img th:src="@{/images/students.png}" alt="Students" class="students-image">
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </body>
 

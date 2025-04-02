@@ -1,279 +1,1044 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Times New Roman', Times, serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
 }
 
 body {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 
 .background-container {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .background-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/images/campus-background.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.8;
-    z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/campus-background.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+  z-index: -1;
 }
 
 /* Header styles */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid #ddd;
 }
 
 .logo-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #8B4513;
-    position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #8b4513;
+  position: relative;
 }
 
 .logo::after {
-    content: "";
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    border-radius: 50%;
-    border: 1px solid #8B4513;
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  border: 1px solid #8b4513;
 }
 
 .logo-inner img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
-
 .university-name {
-    margin-left: 20px;
-    color: #8B4513;
-    font-size: 32px;
-    font-weight: bold;
+  margin-left: 20px;
+  color: #8b4513;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .header-icons {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
-
-
 
 /* Logout Icon Styling */
 .logout-icon {
-    margin-left: 20px;
-    color: #8B4513;
-    font-size: 24px;
-    cursor: pointer;
-    transition: color 0.3s ease;
+  margin-left: 20px;
+  color: #8b4513;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .logout-icon:hover {
-    color: #CD853F;
+  color: #cd853f;
 }
 
 /* Other Icon Styling */
 .notification-icon,
 .profile-icon {
-    margin-left: 20px;
-    color: #8B4513;
-    font-size: 24px;
+  margin-left: 20px;
+  color: #8b4513;
+  font-size: 24px;
 }
 
 /* Notification Icon Specific Styling */
 .notification-icon {
-    position: relative;
+  position: relative;
 }
 
 /* Navigation styles */
 .main-nav {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    padding-bottom: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .main-nav ul {
-    display: flex;
-    list-style: none;
+  display: flex;
+  list-style: none;
 }
 
 .main-nav li {
-    margin: 0 20px;
+  margin: 0 20px;
 }
 
 .main-nav a {
-    text-decoration: none;
-    color: #8B4513;
-    font-size: 24px;
-    padding: 5px 0;
-    position: relative;
+  text-decoration: none;
+  color: #8b4513;
+  font-size: 24px;
+  padding: 5px 0;
+  position: relative;
 }
 
 .main-nav a.active::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background-color: #CD853F;
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #cd853f;
 }
 
 /* Secondary navigation */
 .secondary-nav {
-    background-color: rgba(139, 69, 19, 0.5);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background-color: rgba(139, 69, 19, 0.5);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .building-icon {
-    width: 80px;
-    height: 60px;
-    margin-right: 20px;
+  width: 80px;
+  height: 60px;
+  margin-right: 20px;
 }
 
 .secondary-nav-links {
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .secondary-nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: bold;
+  color: white;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Secondary Navigation Active Link */
+.active-secondary {
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* Content area */
 .content-area {
-    padding: 40px 20px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .announcement-box {
-    background-color: rgba(139, 69, 19, 0.6);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+  background-color: rgba(139, 69, 19, 0.6);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .enrollment-announcement {
-    width: 45%;
-    position: relative;
-    overflow: hidden;
+  width: 45%;
+  position: relative;
+  overflow: hidden;
 }
 
 .enrollment-announcement::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(139, 69, 19, 0.6);
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 95% 80%, 90% 70%, 85% 80%, 80% 70%, 75% 80%, 70% 70%, 65% 80%, 60% 70%, 55% 80%, 50% 70%, 45% 80%, 40% 70%, 35% 80%, 30% 70%, 25% 80%, 20% 70%, 15% 80%, 10% 70%, 5% 80%, 0 70%);
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(139, 69, 19, 0.6);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 70%,
+    95% 80%,
+    90% 70%,
+    85% 80%,
+    80% 70%,
+    75% 80%,
+    70% 70%,
+    65% 80%,
+    60% 70%,
+    55% 80%,
+    50% 70%,
+    45% 80%,
+    40% 70%,
+    35% 80%,
+    30% 70%,
+    25% 80%,
+    20% 70%,
+    15% 80%,
+    10% 70%,
+    5% 80%,
+    0 70%
+  );
+  z-index: -1;
 }
 
 .announcement-icon {
-    margin-right: 15px;
-    color: #FF6347;
-    font-size: 40px;
+  margin-right: 15px;
+  color: #ff6347;
+  font-size: 40px;
 }
 
 .announcement-text {
-    color: black;
-    font-size: 24px;
-    font-weight: bold;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .schedule-announcement {
-    width: 45%;
-    background-color: #CD853F;
-    border-radius: 30px;
-    padding: 30px;
-    position: relative;
+  width: 45%;
+  background-color: #cd853f;
+  border-radius: 30px;
+  padding: 30px;
+  position: relative;
 }
 
 .schedule-announcement::before {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    right: 50px;
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-top: 20px solid #CD853F;
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  right: 50px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #cd853f;
 }
 
 .calendar-icon {
-    margin-right: 15px;
-    color: white;
-    font-size: 40px;
+  margin-right: 15px;
+  color: white;
+  font-size: 40px;
+}
+
+/* Schedule Page Styles */
+.schedule-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.schedule-icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.schedule-icon {
+  background-color: #b67c4f;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.enrolled-subjects-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.semester-info {
+  font-size: 16px;
+  color: #6b3a1d;
+}
+
+.student-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.schedule-description {
+  margin-bottom: 20px;
+}
+
+.schedule-title {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.schedule-note {
+  font-size: 16px;
+  color: #333;
+}
+
+.schedule-table-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 2px solid #6b3a1d;
+  padding: 10px;
+  text-align: left;
+}
+
+.schedule-table th {
+  background-color: white;
+  color: #6b3a1d;
+  font-weight: bold;
+}
+
+.schedule-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.schedule-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.download-link {
+  color: #6b3a1d;
+  text-decoration: none;
+}
+
+.download-link:hover {
+  text-decoration: underline;
+}
+
+.certificate-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.certificate-button {
+  background-color: #6b3a1d;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.certificate-button:hover {
+  background-color: #8b4513;
+}
+
+.certificate-text {
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Grades Page Styles */
+.grades-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.grades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.grades-icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.grades-icon {
+  background-color: #b67c4f;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grades-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.grades-subtitle {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.grades-note {
+  font-size: 16px;
+  color: #333;
+}
+
+.grades-description {
+  margin-bottom: 20px;
+}
+
+.grades-table-container {
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.grades-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grades-table th,
+.grades-table td {
+  border: 2px solid #6b3a1d;
+  padding: 10px;
+  text-align: left;
+}
+
+.grades-table th {
+  background-color: white;
+  color: #6b3a1d;
+  font-weight: bold;
+}
+
+.grades-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.grades-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.grades-table tfoot {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Enrollment Page Styles */
+.enrollment-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.enrollment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.enrollment-icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.enrollment-icon {
+  background-color: #b67c4f;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enrollment-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.enrollment-status {
+  margin-bottom: 30px;
+}
+
+.status-box {
+  background-color: #f5f5f5;
+  border-left: 5px solid #6b3a1d;
+  padding: 15px;
+  border-radius: 0 5px 5px 0;
+}
+
+.status-open {
+  color: green;
+  font-weight: bold;
+}
+
+.enrollment-steps {
+  margin-bottom: 30px;
+}
+
+.steps-title {
+  font-size: 22px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+}
+
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.step-number {
+  background-color: #6b3a1d;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h4 {
+  margin-bottom: 5px;
+  color: #6b3a1d;
+}
+
+.step-status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.action-button {
+  display: inline-block;
+  background-color: #6b3a1d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.available-courses {
+  margin-bottom: 30px;
+}
+
+.courses-title {
+  font-size: 22px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+}
+
+.courses-table-container {
+  overflow-x: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courses-table th,
+.courses-table td {
+  border: 2px solid #6b3a1d;
+  padding: 10px;
+  text-align: left;
+}
+
+.courses-table th {
+  background-color: white;
+  color: #6b3a1d;
+  font-weight: bold;
+}
+
+.courses-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.courses-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.enroll-button {
+  display: inline-block;
+  background-color: #6b3a1d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Faculty Evaluation Page Styles */
+.evaluation-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.evaluation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.evaluation-icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.evaluation-icon {
+  background-color: #b67c4f;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.evaluation-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.evaluation-status {
+  margin-bottom: 30px;
+}
+
+.pending-evaluations {
+  margin-bottom: 30px;
+}
+
+.evaluations-title {
+  font-size: 22px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+}
+
+.evaluations-table-container {
+  overflow-x: auto;
+}
+
+.evaluations-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.evaluations-table th,
+.evaluations-table td {
+  border: 2px solid #6b3a1d;
+  padding: 10px;
+  text-align: left;
+}
+
+.evaluations-table th {
+  background-color: white;
+  color: #6b3a1d;
+  font-weight: bold;
+}
+
+.evaluations-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.evaluations-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.status-pending {
+  color: #856404;
+  background-color: #fff3cd;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.status-completed {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.evaluate-button {
+  display: inline-block;
+  background-color: #6b3a1d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.view-button {
+  display: inline-block;
+  background-color: #6c757d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.evaluation-instructions {
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.instructions-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.instructions-content ol {
+  padding-left: 20px;
+}
+
+.instructions-content li {
+  margin-bottom: 8px;
+}
+
+.evaluation-progress {
+  margin-bottom: 30px;
+}
+
+.progress-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.progress-container {
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 25px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #6b3a1d;
+  color: white;
+  text-align: center;
+  line-height: 25px;
+}
+
+.progress-text {
+  margin-top: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Events Page Styles */
+.events-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event-content {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 24px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.event-decoration {
+  margin-left: 20px;
+}
+
+.ballons-image,
+.graduate-image,
+.students-image {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Contact Page Styles */
+.contact-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.contact-icon {
+  margin-right: 15px;
+}
+
+.contact-title {
+  font-size: 32px;
+  color: #6b3a1d;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact-item-icon {
+  margin-right: 15px;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-item-text h3 {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.contact-item-text p {
+  font-size: 18px;
+  color: #333;
+}
+
+.contact-item-text a {
+  color: #6b3a1d;
+  text-decoration: none;
+}
+
+.contact-item-text a:hover {
+  text-decoration: underline;
+}
+
+.social-link {
+  color: #6b3a1d;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.social-link:hover {
+  text-decoration: underline;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .enrollment-announcement,
+  .schedule-announcement {
+    width: 100%;
+  }
 
-    .enrollment-announcement,
-    .schedule-announcement {
-        width: 100%;
-    }
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .main-nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
+  .main-nav li {
+    margin: 10px 0;
+  }
 
-    .main-nav li {
-        margin: 10px 0;
-    }
+  .secondary-nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .secondary-nav-links {
-        flex-direction: column;
-        align-items: center;
-    }
+  .secondary-nav-links a {
+    margin: 10px 0;
+  }
 
-    .secondary-nav-links a {
-        margin: 10px 0;
-    }
+  .schedule-header {
+    flex-direction: column;
+    gap: 15px;
+  }
 
+  .schedule-table th,
+  .schedule-table td {
+    padding: 8px 5px;
+    font-size: 14px;
+  }
+
+  .event-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .event-decoration {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-item-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }
+

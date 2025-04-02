@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Contact</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3v4h-9v7h9v4l5-5-5-5z"></path>
+                            <path d="M7 11h9v2H7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/home}">HOME</a></li>
+                <li><a th:href="@{/schedule}">SCHEDULE</a></li>
+                <li><a th:href="@{/grades}">GRADES</a></li>
+                <li><a th:href="@{/enrollment}">ENROLLMENT</a></li>
+                <li><a th:href="@{/faculty-evaluation}">FACULTY EVALUATION</a></li>
+            </ul>
+        </nav>
+
+        <!-- Secondary Navigation -->
+        <div class="secondary-nav">
+            <div class="building-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+                    stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="6" x2="12" y2="6"></line>
+                    <line x1="12" y1="10" x2="12" y2="10"></line>
+                    <line x1="12" y1="14" x2="12" y2="14"></line>
+                    <line x1="12" y1="18" x2="12" y2="18"></line>
+                </svg>
+            </div>
+            <div class="secondary-nav-links">
+                <a th:href="@{/announcements}">ANNOUNCEMENTS</a>
+                <a th:href="@{/events}">EVENTS</a>
+                <a th:href="@{/contact}" class="active-secondary">CONTACT</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="contact-content">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="contact-title">Contact Us</h2>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                                stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="10" r="3"></circle>
+                                <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h3>Address:</h3>
+                            <p>123 University Ave, City, Country</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                                stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h3>Phone:</h3>
+                            <p><a href="tel:+11234567890">(123) 456-7890</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                                stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h3>Email:</h3>
+                            <p><a href="mailto:info@brownford.edu">info@brownford.edu</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                                stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h3>Website:</h3>
+                            <p><a href="https://www.brownford.edu" target="_blank">www.brownford.edu</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+                                stroke="#CD853F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                        </div>
+                        <div class="contact-item-text">
+                            <h3>Follow Us:</h3>
+                            <p>
+                                <a href="#" class="social-link">Facebook</a> |
+                                <a href="#" class="social-link">Twitter</a> |
+                                <a href="#" class="social-link">Instagram @2025 Brown Ford University</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
+

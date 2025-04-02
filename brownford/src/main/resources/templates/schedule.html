@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Schedule</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3v4h-9v7h9v4l5-5-5-5z"></path>
+                            <path d="M7 11h9v2H7z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/home}">HOME</a></li>
+                <li><a th:href="@{/schedule}" class="active">SCHEDULE</a></li>
+                <li><a th:href="@{/grades}">GRADES</a></li>
+                <li><a th:href="@{/enrollment}">ENROLLMENT</a></li>
+                <li><a th:href="@{/faculty-evaluation}">FACULTY EVALUATION</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="schedule-content">
+            <div class="schedule-header">
+                <div class="schedule-icon-container">
+                    <div class="schedule-icon">
+                        <div class="checklist">
+                            <span>✓</span>
+                            <span>✓</span>
+                            <span>✓</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="enrolled-subjects-title">ENROLLED SUBJECTS</h2>
+                        <p class="semester-info">2024-2025 / 2ND SEMESTER / 2ND YEAR / BSBA</p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'STUDENTS NAME'}">STUDENTS
+                        NAME</h3>
+                </div>
+            </div>
+
+            <div class="schedule-description">
+                <h3 class="schedule-title">These are your schedules this 2ND SEMESTER of Academic Year 2024-2025</h3>
+                <p class="schedule-note">Changing of Section is not allowed.</p>
+            </div>
+
+            <!-- Schedule Table -->
+            <div class="schedule-table-container">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Block</th>
+                            <th>Section</th>
+                            <th>Course Title</th>
+                            <th>Class Days</th>
+                            <th>Class Time</th>
+                            <th>Room</th>
+                            <th>GCR Code</th>
+                            <th>Syllabus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- If you have a list of courses from your controller, you can use th:each to iterate -->
+                        <!-- <tr th:each="course : ${courses}"> -->
+                        <!-- <td th:text="${course.block}">BSBA2MM5</td> -->
+                        <!-- ... other fields ... -->
+                        <!-- </tr> -->
+
+                        <!-- Static data for demonstration -->
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>GENED07-BSBA2MM5</td>
+                            <td>Science, Technology And Society</td>
+                            <td>MTH</td>
+                            <td>07:00PM-08:30PM</td>
+                            <td>410</td>
+                            <td>ul6ecce</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>GENED02-BSBA2MM5</td>
+                            <td>Readings In Philippine History</td>
+                            <td>MTH</td>
+                            <td>05:30PM-07:00PM</td>
+                            <td>321</td>
+                            <td>amqew2y</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>PFIT400-BSBA2MM5</td>
+                            <td>Menu Of Courses</td>
+                            <td>TH</td>
+                            <td>02:00PM-04:00PM</td>
+                            <td>CC</td>
+                            <td>z6lhco6</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>BAPRMM3-BSBA2MM5</td>
+                            <td>Marketing Management</td>
+                            <td>W</td>
+                            <td>05:30PM-08:30PM</td>
+                            <td>321</td>
+                            <td>lf3tnsr</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>GEL2000-BSBA2MM5</td>
+                            <td>Interdisciplinary Elective 2</td>
+                            <td>MTH</td>
+                            <td>04:00PM-05:30PM</td>
+                            <td>403</td>
+                            <td>dgokiaq</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>BACORE5-BSBA2MM5</td>
+                            <td>Human Resource Management</td>
+                            <td>W</td>
+                            <td>01:00PM-04:00PM</td>
+                            <td>317</td>
+                            <td>todnma5</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                        <tr>
+                            <td>BSBA2MM5</td>
+                            <td>BAPRMM4-BSBA2MM5</td>
+                            <td>Distribution Management</td>
+                            <td>F</td>
+                            <td>06:00PM-09:00PM</td>
+                            <td>LMS</td>
+                            <td>gce4hbj</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Certificate Button -->
+            <div class="certificate-button-container">
+                <a th:href="@{/certificate-of-registration}" class="certificate-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="certificate-text">
+                        CERTIFICATE OF<br>REGISTRATIONS
+                    </span>
+                </a>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
