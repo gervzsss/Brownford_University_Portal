@@ -22,30 +22,26 @@ public class LoginController {
         return "forgot-password";
     }
 
+    @GetMapping("/home")
+    public String home() {
+        return "home";
+    }
+    
     private static final Map<String, String> USERS = Map.of(
             "admin", "password",
-            "user1", "pass123");
+            "user1", "pass123",
+            "asd", "asd");
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
             @RequestParam String password,
             Model model) {
         if (USERS.containsKey(username) && USERS.get(username).equals(password)) {
-            return "home"; // Redirect if valid user
+            return "redirect:/home"; // Redirect if valid user
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login"; // Stay on login page
         }
-    }
-
-    // @GetMapping("/home")
-    // public String home() {
-    // return "home";
-    // }
-
-    @GetMapping("/profile")
-    public String profilePage() {
-        return "profile"; // This should match the Thymeleaf template file: profile.html
     }
 
     @GetMapping("/logout")
