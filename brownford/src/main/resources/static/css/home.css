@@ -984,6 +984,292 @@ body {
   text-decoration: underline;
 }
 
+/* Faculty Evaluation List Page Styles */
+.evaluation-list-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.evaluation-list-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.evaluation-list-icon {
+  margin-right: 15px;
+}
+
+.evaluation-list-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.evaluation-list-subtitle {
+  font-size: 16px;
+  color: #6b3a1d;
+}
+
+.evaluation-status-box {
+  background-color: #f5f5f5;
+  border-left: 5px solid #6b3a1d;
+  padding: 15px;
+  border-radius: 0 5px 5px 0;
+  margin-bottom: 20px;
+}
+
+.evaluation-instructions-box {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.professors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.professor-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.professor-card.completed {
+  background-color: #f9f9f9;
+}
+
+.professor-info {
+  display: flex;
+  align-items: center;
+}
+
+.professor-avatar {
+  margin-right: 15px;
+}
+
+.professor-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.professor-course {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.professor-schedule {
+  font-size: 14px;
+  color: #666;
+}
+
+.professor-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.evaluation-progress-container {
+  margin-top: 30px;
+}
+
+.progress-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.progress-bar-container {
+  margin-top: 10px;
+}
+
+/* Faculty Evaluation Form Page Styles */
+.evaluation-form-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.evaluation-form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-icon {
+  margin-right: 15px;
+}
+
+.evaluation-form-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.evaluation-form-subtitle {
+  font-size: 16px;
+  color: #6b3a1d;
+  margin-bottom: 3px;
+}
+
+.evaluation-form-instructions {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-instructions h3 {
+  font-size: 18px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions li {
+  margin-bottom: 5px;
+}
+
+.evaluation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.evaluation-category {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.evaluation-item {
+  margin-bottom: 15px;
+}
+
+.item-question {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.rating-options {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+}
+
+.rating-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.rating-label input {
+  margin-bottom: 5px;
+}
+
+.rating-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.comments-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #6b3a1d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #8b4513;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .professor-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .professor-action {
+    margin-top: 15px;
+    align-self: flex-end;
+  }
+
+  .rating-options {
+    width: 100%;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .enrollment-announcement,
