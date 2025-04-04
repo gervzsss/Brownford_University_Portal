@@ -1,5 +1,21 @@
 # Changelog
 
+## [04.04.251327]
+### Added
+- Interactable Profile Icon
+    - Profile Page
+- Interactable Notification Icon
+    - Notification Dropdown Panel
+
+### Changed
+- Grades Page
+    - Shows Last Semestral Grades
+
+### Bugs
+- The profile icon is not accessible to all pages
+- The notification icon is not accessible to all pages
+- others
+
 ## [04.04.251059]
 ### Added
 - Faculty Evaluation Form.
