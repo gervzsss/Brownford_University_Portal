@@ -35,13 +35,11 @@
 
                 <!-- Profile Icon -->
                 <div class="profile-icon">
-                    <a th:href="@{/profile}" class="profile-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
                 </div>
 
                 <!-- Interactive Logout Icon as an anchor tag -->
@@ -81,424 +79,105 @@
                     </div>
                     <div>
                         <h2 class="grades-title">ACADEMIC GRADES</h2>
-                        <p class="semester-info">2023-2025 / BSBA - Marketing Management</p>
+                        <p class="semester-info">2024-2025 / 2ND SEMESTER / 2ND YEAR / BSBA</p>
                     </div>
                 </div>
                 <div class="student-info">
-                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Juan Miguel Dela Cruz'}">Juan Miguel Dela Cruz</h3>
-                    <p class="student-id">Student ID: 2022-12345</p>
+                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'STUDENTS NAME'}">STUDENTS NAME</h3>
                 </div>
             </div>
 
             <div class="grades-description">
-                <h3 class="grades-subtitle">Your Academic Performance Record</h3>
+                <h3 class="grades-subtitle">Your Academic Performance for 2ND SEMESTER of Academic Year 2024-2025</h3>
                 <p class="grades-note">Grade reports are updated within 48 hours after faculty submission.</p>
             </div>
 
-            <!-- Semester Navigation -->
-            <div class="semester-navigation">
-                <button class="semester-nav-button active" data-target="first-sem">1ST YEAR - 1ST SEM</button>
-                <button class="semester-nav-button" data-target="second-sem">1ST YEAR - 2ND SEM</button>
-                <button class="semester-nav-button" data-target="third-sem">2ND YEAR - 1ST SEM</button>
-                <button class="semester-nav-button" data-target="fourth-sem">2ND YEAR - 2ND SEM</button>
-            </div>
-
-            <!-- Grades Container - Scrollable for all semesters -->
-            <div class="all-grades-container">
-                <!-- 1st Year - 1st Semester -->
-                <div id="first-sem" class="semester-grades">
-                    <div class="semester-header">
-                        <h3 class="semester-title">1ST YEAR - 1ST SEMESTER (2023-2024)</h3>
-                    </div>
-                    <div class="grades-table-container">
-                        <table class="grades-table">
-                            <thead>
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Title</th>
-                                    <th>Units</th>
-                                    <th>Midterm</th>
-                                    <th>Finals</th>
-                                    <th>Final Grade</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>GENED01</td>
-                                    <td>Understanding the Self</td>
-                                    <td>3.0</td>
-                                    <td>91.0</td>
-                                    <td>93.5</td>
-                                    <td>92.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GENED03</td>
-                                    <td>Mathematics in the Modern World</td>
-                                    <td>3.0</td>
-                                    <td>89.5</td>
-                                    <td>90.0</td>
-                                    <td>89.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GENED04</td>
-                                    <td>Purposive Communication</td>
-                                    <td>3.0</td>
-                                    <td>90.0</td>
-                                    <td>92.0</td>
-                                    <td>91.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE1</td>
-                                    <td>Organization and Management</td>
-                                    <td>3.0</td>
-                                    <td>88.0</td>
-                                    <td>91.0</td>
-                                    <td>89.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE2</td>
-                                    <td>Business Economics</td>
-                                    <td>3.0</td>
-                                    <td>87.5</td>
-                                    <td>89.0</td>
-                                    <td>88.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>PFIT100</td>
-                                    <td>Physical Education 1</td>
-                                    <td>2.0</td>
-                                    <td>92.0</td>
-                                    <td>94.0</td>
-                                    <td>93.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>NSTP1</td>
-                                    <td>National Service Training Program 1</td>
-                                    <td>3.0</td>
-                                    <td>94.0</td>
-                                    <td>95.0</td>
-                                    <td>94.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="2" class="text-right"><strong>GPA:</strong></td>
-                                    <td colspan="5"><strong>91.18 (1.25) - Dean's Lister</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 1st Year - 2nd Semester -->
-                <div id="second-sem" class="semester-grades">
-                    <div class="semester-header">
-                        <h3 class="semester-title">1ST YEAR - 2ND SEMESTER (2023-2024)</h3>
-                    </div>
-                    <div class="grades-table-container">
-                        <table class="grades-table">
-                            <thead>
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Title</th>
-                                    <th>Units</th>
-                                    <th>Midterm</th>
-                                    <th>Finals</th>
-                                    <th>Final Grade</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>GENED05</td>
-                                    <td>Art Appreciation</td>
-                                    <td>3.0</td>
-                                    <td>90.0</td>
-                                    <td>92.5</td>
-                                    <td>91.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GENED06</td>
-                                    <td>Ethics</td>
-                                    <td>3.0</td>
-                                    <td>88.5</td>
-                                    <td>91.0</td>
-                                    <td>89.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE3</td>
-                                    <td>Business Law</td>
-                                    <td>3.0</td>
-                                    <td>86.0</td>
-                                    <td>89.0</td>
-                                    <td>87.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE4</td>
-                                    <td>Financial Accounting</td>
-                                    <td>3.0</td>
-                                    <td>85.0</td>
-                                    <td>88.0</td>
-                                    <td>86.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM1</td>
-                                    <td>Principles of Marketing</td>
-                                    <td>3.0</td>
-                                    <td>92.0</td>
-                                    <td>94.0</td>
-                                    <td>93.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>PFIT200</td>
-                                    <td>Physical Education 2</td>
-                                    <td>2.0</td>
-                                    <td>93.0</td>
-                                    <td>95.0</td>
-                                    <td>94.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>NSTP2</td>
-                                    <td>National Service Training Program 2</td>
-                                    <td>3.0</td>
-                                    <td>92.5</td>
-                                    <td>94.5</td>
-                                    <td>93.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="2" class="text-right"><strong>GPA:</strong></td>
-                                    <td colspan="5"><strong>90.79 (1.25) - Dean's Lister</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 2nd Year - 1st Semester -->
-                <div id="third-sem" class="semester-grades">
-                    <div class="semester-header">
-                        <h3 class="semester-title">2ND YEAR - 1ST SEMESTER (2024-2025)</h3>
-                    </div>
-                    <div class="grades-table-container">
-                        <table class="grades-table">
-                            <thead>
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Title</th>
-                                    <th>Units</th>
-                                    <th>Midterm</th>
-                                    <th>Finals</th>
-                                    <th>Final Grade</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>GENED02</td>
-                                    <td>Readings in Philippine History</td>
-                                    <td>3.0</td>
-                                    <td>88.0</td>
-                                    <td>91.5</td>
-                                    <td>89.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GEL1000</td>
-                                    <td>Interdisciplinary Elective 1</td>
-                                    <td>3.0</td>
-                                    <td>90.0</td>
-                                    <td>92.0</td>
-                                    <td>91.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM2</td>
-                                    <td>Consumer Behavior</td>
-                                    <td>3.0</td>
-                                    <td>91.5</td>
-                                    <td>93.0</td>
-                                    <td>92.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE5</td>
-                                    <td>Human Resource Management</td>
-                                    <td>3.0</td>
-                                    <td>89.0</td>
-                                    <td>92.0</td>
-                                    <td>90.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>PFIT300</td>
-                                    <td>Physical Education 3</td>
-                                    <td>2.0</td>
-                                    <td>92.0</td>
-                                    <td>94.0</td>
-                                    <td>93.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM3</td>
-                                    <td>Marketing Management</td>
-                                    <td>3.0</td>
-                                    <td>90.0</td>
-                                    <td>93.5</td>
-                                    <td>91.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM4</td>
-                                    <td>Distribution Management</td>
-                                    <td>3.0</td>
-                                    <td>89.5</td>
-                                    <td>92.0</td>
-                                    <td>90.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="2" class="text-right"><strong>GPA:</strong></td>
-                                    <td colspan="5"><strong>91.29 (1.25) - Dean's Lister</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 2nd Year - 2nd Semester -->
-                <div id="fourth-sem" class="semester-grades">
-                    <div class="semester-header">
-                        <h3 class="semester-title">2ND YEAR - 2ND SEMESTER (2024-2025)</h3>
-                    </div>
-                    <div class="grades-table-container">
-                        <table class="grades-table">
-                            <thead>
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Title</th>
-                                    <th>Units</th>
-                                    <th>Midterm</th>
-                                    <th>Finals</th>
-                                    <th>Final Grade</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>GENED07</td>
-                                    <td>Science, Technology And Society</td>
-                                    <td>3.0</td>
-                                    <td>92.5</td>
-                                    <td>90.0</td>
-                                    <td>91.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GENED02</td>
-                                    <td>Readings In Philippine History</td>
-                                    <td>3.0</td>
-                                    <td>88.0</td>
-                                    <td>91.5</td>
-                                    <td>89.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>PFIT400</td>
-                                    <td>Menu Of Courses</td>
-                                    <td>2.0</td>
-                                    <td>85.0</td>
-                                    <td>87.0</td>
-                                    <td>86.0</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM3</td>
-                                    <td>Marketing Management</td>
-                                    <td>3.0</td>
-                                    <td>90.0</td>
-                                    <td>93.5</td>
-                                    <td>91.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>GEL2000</td>
-                                    <td>Interdisciplinary Elective 2</td>
-                                    <td>3.0</td>
-                                    <td>87.5</td>
-                                    <td>89.0</td>
-                                    <td>88.25</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BACORE5</td>
-                                    <td>Human Resource Management</td>
-                                    <td>3.0</td>
-                                    <td>91.0</td>
-                                    <td>94.0</td>
-                                    <td>92.5</td>
-                                    <td>PASSED</td>
-                                </tr>
-                                <tr>
-                                    <td>BAPRMM4</td>
-                                    <td>Distribution Management</td>
-                                    <td>3.0</td>
-                                    <td>89.5</td>
-                                    <td>92.0</td>
-                                    <td>90.75</td>
-                                    <td>PASSED</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="2" class="text-right"><strong>GPA:</strong></td>
-                                    <td colspan="5"><strong>90.04 (1.25) - Dean's Lister</strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cumulative GPA Section -->
-            <div class="cumulative-gpa-section">
-                <h3 class="cumulative-title">Cumulative Academic Performance</h3>
-                <div class="cumulative-info">
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Cumulative GPA:</span>
-                        <span class="cumulative-value">90.82</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Equivalent Grade Point:</span>
-                        <span class="cumulative-value">1.25</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Academic Standing:</span>
-                        <span class="cumulative-value status-good">Dean's Lister</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Total Units Earned:</span>
-                        <span class="cumulative-value">80.0</span>
-                    </div>
-                </div>
+            <!-- Grades Table -->
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Title</th>
+                            <th>Units</th>
+                            <th>Midterm</th>
+                            <th>Finals</th>
+                            <th>Final Grade</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GENED07</td>
+                            <td>Science, Technology And Society</td>
+                            <td>3.0</td>
+                            <td>92.5</td>
+                            <td>90.0</td>
+                            <td>91.25</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>GENED02</td>
+                            <td>Readings In Philippine History</td>
+                            <td>3.0</td>
+                            <td>88.0</td>
+                            <td>91.5</td>
+                            <td>89.75</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>PFIT400</td>
+                            <td>Menu Of Courses</td>
+                            <td>2.0</td>
+                            <td>85.0</td>
+                            <td>87.0</td>
+                            <td>86.0</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>BAPRMM3</td>
+                            <td>Marketing Management</td>
+                            <td>3.0</td>
+                            <td>90.0</td>
+                            <td>93.5</td>
+                            <td>91.75</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>GEL2000</td>
+                            <td>Interdisciplinary Elective 2</td>
+                            <td>3.0</td>
+                            <td>87.5</td>
+                            <td>89.0</td>
+                            <td>88.25</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>BACORE5</td>
+                            <td>Human Resource Management</td>
+                            <td>3.0</td>
+                            <td>91.0</td>
+                            <td>94.0</td>
+                            <td>92.5</td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>BAPRMM4</td>
+                            <td>Distribution Management</td>
+                            <td>3.0</td>
+                            <td>89.5</td>
+                            <td>92.0</td>
+                            <td>90.75</td>
+                            <td>PASSED</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-right"><strong>GPA:</strong></td>
+                            <td colspan="5"><strong>90.04 (1.25) - Dean's Lister</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
 
             <!-- Download Button -->
@@ -517,43 +196,6 @@
             </div>
         </main>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get all semester navigation buttons
-            const semesterButtons = document.querySelectorAll('.semester-nav-button');
-            // Get all semester grade sections
-            const semesterSections = document.querySelectorAll('.semester-grades');
-
-            // Hide all semester sections except the first one
-            semesterSections.forEach((section, index) => {
-                if (index !== 0) {
-                    section.style.display = 'none';
-                }
-            });
-
-            // Add click event listeners to semester buttons
-            semesterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    semesterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-
-                    // Get the target semester section
-                    const targetId = this.getAttribute('data-target');
-                    
-                    // Hide all semester sections
-                    semesterSections.forEach(section => {
-                        section.style.display = 'none';
-                    });
-                    
-                    // Show the target semester section
-                    document.getElementById(targetId).style.display = 'block';
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

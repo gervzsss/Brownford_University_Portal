@@ -97,214 +97,16 @@ body {
   color: #cd853f;
 }
 
-/* Profile Icon Styling */
+/* Other Icon Styling */
+.notification-icon,
 .profile-icon {
   margin-left: 20px;
   color: #8b4513;
   font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
 }
 
-.profile-icon:hover {
-  color: #cd853f;
-}
-
-.profile-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Notification Icon and Dropdown Styles */
+/* Notification Icon Specific Styling */
 .notification-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 24px;
-  position: relative;
-  cursor: pointer;
-}
-
-.notification-link {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-}
-
-.notification-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #e74c3c;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-}
-
-.notification-dropdown {
-  position: absolute;
-  top: 45px;
-  right: -10px;
-  width: 350px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  display: none;
-  max-height: 500px;
-  overflow: hidden;
-  flex-direction: column;
-}
-
-.notification-dropdown.show {
-  display: flex;
-}
-
-.notification-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.notification-header h3 {
-  margin: 0;
-  color: #6b3a1d;
-  font-size: 18px;
-}
-
-.mark-all-read {
-  color: #6b3a1d;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.mark-all-read:hover {
-  text-decoration: underline;
-}
-
-.notification-list {
-  overflow-y: auto;
-  max-height: 350px;
-}
-
-.notification-item {
-  display: flex;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s;
-}
-
-.notification-item:hover {
-  background-color: #f9f9f9;
-}
-
-.notification-item.unread {
-  background-color: #f0f7ff;
-}
-
-.notification-item.unread:hover {
-  background-color: #e6f2ff;
-}
-
-.notification-icon {
-  margin-right: 15px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.notification-icon.announcement {
-  background-color: #ffedcc;
-  color: #ff9800;
-}
-
-.notification-icon.grades {
-  background-color: #e6f7ff;
-  color: #2196f3;
-}
-
-.notification-icon.event {
-  background-color: #e8f5e9;
-  color: #4caf50;
-}
-
-.notification-icon.faculty {
-  background-color: #f3e5f5;
-  color: #9c27b0;
-}
-
-.notification-icon.system {
-  background-color: #ffebee;
-  color: #f44336;
-}
-
-.notification-content {
-  flex: 1;
-}
-
-.notification-text {
-  margin: 0 0 5px 0;
-  color: #333;
-  font-size: 14px;
-}
-
-.notification-time {
-  margin: 0;
-  color: #999;
-  font-size: 12px;
-}
-
-.notification-footer {
-  padding: 15px;
-  text-align: center;
-  border-top: 1px solid #eee;
-}
-
-.view-all {
-  color: #6b3a1d;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.view-all:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .notification-dropdown {
-    width: 300px;
-    right: -100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .notification-dropdown {
-    width: 280px;
-    right: -120px;
-  }
-
-  .notification-item {
-    padding: 10px;
-  }
-}
-
-/* Other Icon Styling */
-.notification-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 24px;
   position: relative;
 }
 
@@ -668,7 +470,7 @@ body {
 
 .grades-table-container {
   overflow-x: auto;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .grades-table {
@@ -1286,121 +1088,169 @@ body {
   margin-top: 30px;
 }
 
-/* Profile Page Styles */
-.profile-content {
+.progress-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.progress-bar-container {
+  margin-top: 10px;
+}
+
+/* Faculty Evaluation Form Page Styles */
+.evaluation-form-content {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8);
   margin: 20px;
   border-radius: 10px;
 }
 
-.profile-header {
+.evaluation-form-header {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-icon {
+  margin-right: 15px;
+}
+
+.evaluation-form-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.evaluation-form-subtitle {
+  font-size: 16px;
+  color: #6b3a1d;
+  margin-bottom: 3px;
+}
+
+.evaluation-form-instructions {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-instructions h3 {
+  font-size: 18px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions li {
+  margin-bottom: 5px;
+}
+
+.evaluation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.evaluation-category {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
 }
 
-.profile-avatar {
-  margin-right: 20px;
-  background-color: #f5f5f5;
-  padding: 15px;
-  border-radius: 50%;
-  border: 2px solid #6b3a1d;
+.evaluation-item {
+  margin-bottom: 15px;
 }
 
-.profile-title {
-  flex: 1;
-}
-
-.profile-name {
-  font-size: 32px;
-  font-weight: bold;
-  color: #6b3a1d;
-  margin-bottom: 5px;
-}
-
-.profile-subtitle {
-  font-size: 18px;
-  color: #666;
-}
-
-.profile-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  margin-bottom: 30px;
-}
-
-.profile-section {
-  padding: 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.profile-section:last-child {
-  border-bottom: none;
-}
-
-.section-title {
-  font-size: 22px;
-  color: #6b3a1d;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.profile-info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-label {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
-}
-
-.info-value {
+.item-question {
   font-size: 16px;
   color: #333;
-  font-weight: 500;
+  margin-bottom: 10px;
 }
 
-.status-good {
-  color: #28a745;
+.rating-options {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+}
+
+.rating-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.rating-label input {
+  margin-bottom: 5px;
+}
+
+.rating-value {
+  font-size: 16px;
   font-weight: bold;
+  color: #6b3a1d;
 }
 
-.profile-actions {
+.comments-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.form-buttons {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.profile-button {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.submit-button {
   background-color: #6b3a1d;
   color: white;
-  padding: 12px 20px;
+  border: none;
   border-radius: 5px;
-  text-decoration: none;
+  padding: 10px 20px;
   font-size: 16px;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.profile-button:hover {
+.submit-button:hover {
   background-color: #8b4513;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
 }
 
 /* Responsive adjustments */
@@ -1417,25 +1267,6 @@ body {
 
   .rating-options {
     width: 100%;
-  }
-
-  .profile-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .profile-avatar {
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-
-  .profile-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-actions {
-    flex-direction: column;
-    align-items: center;
   }
 }
 
@@ -1494,140 +1325,6 @@ body {
   .contact-item-icon {
     margin-right: 0;
     margin-bottom: 10px;
-  }
-}
-
-/* Add these new styles for the grades page */
-
-.student-id {
-  font-size: 16px;
-  color: #6b3a1d;
-  margin-top: 5px;
-}
-
-.semester-navigation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  background-color: #f5f5f5;
-  padding: 15px;
-  border-radius: 5px;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.semester-nav-button {
-  background-color: #e9ecef;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #6b3a1d;
-  transition: all 0.3s ease;
-}
-
-.semester-nav-button:hover {
-  background-color: #d6d8db;
-}
-
-.semester-nav-button.active {
-  background-color: #6b3a1d;
-  color: white;
-}
-
-.all-grades-container {
-  max-height: 600px;
-  overflow-y: auto;
-  margin-bottom: 30px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 0 15px;
-  background-color: #fff;
-}
-
-.semester-grades {
-  margin-bottom: 30px;
-  padding-top: 15px;
-}
-
-.semester-header {
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #6b3a1d;
-}
-
-.semester-title {
-  font-size: 20px;
-  color: #6b3a1d;
-  font-weight: bold;
-}
-
-.cumulative-gpa-section {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  border-left: 5px solid #6b3a1d;
-}
-
-.cumulative-title {
-  font-size: 22px;
-  color: #6b3a1d;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-
-.cumulative-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.cumulative-item {
-  flex: 1;
-  min-width: 200px;
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.cumulative-label {
-  display: block;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
-}
-
-.cumulative-value {
-  display: block;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Add this to your existing CSS */
-.grades-table-container {
-  margin-bottom: 15px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .semester-navigation {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .cumulative-info {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .all-grades-container {
-    max-height: 500px;
   }
 }
 

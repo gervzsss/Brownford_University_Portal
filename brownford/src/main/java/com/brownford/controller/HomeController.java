@@ -57,8 +57,4 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
 }
