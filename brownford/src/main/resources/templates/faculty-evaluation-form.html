@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brown Ford University - Faculty Evaluation Form</title>
-    <!-- Link to the external CSS file -->
-    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <!-- Link to the external CSS files -->
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/notifications.css}">
+    <link rel="stylesheet" th:href="@{/css/faculty-evaluation.css}">
 </head>
 
 <body>
@@ -156,7 +158,7 @@
         <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/home}">HOME</a></li>
+                <li><a th:href="@{/}">HOME</a></li>
                 <li><a th:href="@{/schedule}">SCHEDULE</a></li>
                 <li><a th:href="@{/grades}">GRADES</a></li>
                 <li><a th:href="@{/enrollment}">ENROLLMENT</a></li>
@@ -512,38 +514,7 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Notification dropdown toggle
-            const notificationToggle = document.getElementById('notificationToggle');
-            const notificationDropdown = document.getElementById('notificationDropdown');
-            const markAllReadBtn = document.querySelector('.mark-all-read');
-            const notificationBadge = document.querySelector('.notification-badge');
-
-            // Toggle notification dropdown
-            notificationToggle.addEventListener('click', function (e) {
-                e.preventDefault();
-                notificationDropdown.classList.toggle('show');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function (e) {
-                if (!notificationToggle.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-
-            // Mark all as read functionality
-            markAllReadBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const unreadItems = document.querySelectorAll('.notification-item.unread');
-                unreadItems.forEach(item => {
-                    item.classList.remove('unread');
-                });
-                notificationBadge.style.display = 'none';
-            });
-        });
-    </script>
+    <script th:src="@{/js/notifications.js}"></script>
 </body>
 
 </html>

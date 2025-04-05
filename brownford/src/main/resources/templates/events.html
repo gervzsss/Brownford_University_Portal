@@ -26,20 +26,118 @@
             <div class="header-icons">
                 <!-- Notification Icon -->
                 <div class="notification-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
+                    <div class="notification-badge">3</div>
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon announcement">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                                    </svg>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Enrollment for 1st Semester AY 2024-2025 is now open!
+                                    </p>
+                                    <p class="notification-time">2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon grades">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Your grades for Marketing Management have been posted.
+                                    </p>
+                                    <p class="notification-time">Yesterday</p>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon event">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Midterm Exam Schedule has been released.</p>
+                                    <p class="notification-time">2 days ago</p>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon faculty">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Faculty evaluation period is now open. Please complete
+                                        your evaluations.</p>
+                                    <p class="notification-time">5 days ago</p>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon system">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">System maintenance scheduled for June 15, 2024 from
+                                        2:00 AM to 5:00 AM.</p>
+                                    <p class="notification-time">1 week ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Profile Icon -->
                 <div class="profile-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                        stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
+                    <a th:href="@{/profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
                 </div>
 
                 <!-- Interactive Logout Icon as an anchor tag -->
@@ -90,25 +188,41 @@
             <div class="events-container">
                 <div class="event-item">
                     <div class="event-content">
-                        <h2 class="event-title">University Week Celebration – April 10-15, 2025</h2>
+                        <h2 class="event-title">Graduation Ceremony 2024</h2>
+                        <p>Join us for the 2024 Graduation Ceremony on May 15, 2024 at the University Auditorium. The
+                            ceremony will begin at 10:00 AM and will be followed by a reception in the University
+                            Gardens.</p>
+                        <p><strong>Date:</strong> May 15, 2024</p>
+                        <p><strong>Time:</strong> 10:00 AM - 1:00 PM</p>
+                        <p><strong>Location:</strong> University Auditorium</p>
                     </div>
                     <div class="event-decoration">
-                        <img th:src="@{/images/ballons.png}" alt="Ballons" class="ballons-image">
+                        <img th:src="@{/images/graduation.png}" alt="Graduation" class="graduate-image">
                     </div>
                 </div>
 
                 <div class="event-item">
                     <div class="event-content">
-                        <h2 class="event-title">Career Fair – May 5, 2025 (Open to all graduating students)</h2>
+                        <h2 class="event-title">University Foundation Day</h2>
+                        <p>Celebrate the 75th Foundation Day of Brown Ford University with a week-long celebration
+                            featuring academic symposiums, cultural performances, and sports competitions.</p>
+                        <p><strong>Date:</strong> June 10-15, 2024</p>
+                        <p><strong>Time:</strong> Various schedules</p>
+                        <p><strong>Location:</strong> University Campus</p>
                     </div>
                     <div class="event-decoration">
-                        <img th:src="@{/images/graduate.png}" alt="Graduate" class="graduate-image">
+                        <img th:src="@{/images/balloons.png}" alt="Celebration" class="ballons-image">
                     </div>
                 </div>
 
                 <div class="event-item">
                     <div class="event-content">
-                        <h2 class="event-title">Intramurals 2025 – June 1-7, 2025 (Sports and cultural events)</h2>
+                        <h2 class="event-title">Freshman Orientation</h2>
+                        <p>Welcome to all incoming freshmen! Join us for the Freshman Orientation where you'll learn
+                            about university policies, meet your professors, and get to know your fellow students.</p>
+                        <p><strong>Date:</strong> July 25, 2024</p>
+                        <p><strong>Time:</strong> 8:00 AM - 4:00 PM</p>
+                        <p><strong>Location:</strong> University Gymnasium</p>
                     </div>
                     <div class="event-decoration">
                         <img th:src="@{/images/students.png}" alt="Students" class="students-image">
@@ -117,6 +231,7 @@
             </div>
         </main>
     </div>
+    <script th:src="@{/js/notifications.js}"></script>
 </body>
 
 </html>

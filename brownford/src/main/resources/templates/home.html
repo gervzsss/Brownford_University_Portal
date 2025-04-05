@@ -395,38 +395,7 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Notification dropdown toggle
-            const notificationToggle = document.getElementById('notificationToggle');
-            const notificationDropdown = document.getElementById('notificationDropdown');
-            const markAllReadBtn = document.querySelector('.mark-all-read');
-            const notificationBadge = document.querySelector('.notification-badge');
-
-            // Toggle notification dropdown
-            notificationToggle.addEventListener('click', function (e) {
-                e.preventDefault();
-                notificationDropdown.classList.toggle('show');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function (e) {
-                if (!notificationToggle.contains(e.target) && !notificationDropdown.contains(e.target)) {
-                    notificationDropdown.classList.remove('show');
-                }
-            });
-
-            // Mark all as read functionality
-            markAllReadBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                const unreadItems = document.querySelectorAll('.notification-item.unread');
-                unreadItems.forEach(item => {
-                    item.classList.remove('unread');
-                });
-                notificationBadge.style.display = 'none';
-            });
-        });
-    </script>
+    <script th:src="@{/js/notifications.js}"></script>
 </body>
 
 </html>
