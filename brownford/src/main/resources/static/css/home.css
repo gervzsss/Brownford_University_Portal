@@ -1631,3 +1631,199 @@ body {
   }
 }
 
+/* Add these styles for the faculty evaluation form */
+.evaluation-form-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.evaluation-form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-icon {
+  margin-right: 15px;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.evaluation-form-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.evaluation-form-subtitle {
+  font-size: 16px;
+  color: #6b3a1d;
+  margin-bottom: 3px;
+}
+
+.evaluation-form-instructions {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.evaluation-form-instructions h3 {
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions ul {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.evaluation-form-instructions li {
+  margin-bottom: 5px;
+}
+
+.evaluation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.evaluation-category {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-title {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.evaluation-item {
+  margin-bottom: 20px;
+}
+
+.evaluation-item:last-child {
+  margin-bottom: 0;
+}
+
+.item-question {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.rating-options {
+  display: flex;
+  gap: 15px;
+}
+
+.rating-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.rating-label input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.rating-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  color: #333;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.rating-label input[type="radio"]:checked + .rating-value {
+  background-color: #6b3a1d;
+  color: white;
+}
+
+.rating-label:hover .rating-value {
+  background-color: #e6d2c3;
+}
+
+.comments-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #6b3a1d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #8b4513;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 25px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .rating-options {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .evaluation-form-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .evaluation-form-icon {
+    margin-bottom: 10px;
+  }
+}
+

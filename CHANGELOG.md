@@ -1,5 +1,14 @@
 # Changelog
 
+## [04.05.251510]
+
+## Fixed
+- Faculty Evaluation Form Page not having CSS Designs
+
+### BUGS
+- Profile icon is not accessible to all pages
+- Notification icon is not accessible to all pages
+
 ## [04.05.250049]
 
 ## REVERT BACK TO VERSION [04.04.251327]
