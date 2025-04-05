@@ -1,106 +1,164 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brown Ford University - Student Portal</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
-</head>
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="login-container">
-        <div class="login-form-container">
-            <!-- Logo -->
-            <div class="logo-container">
-                <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
-            </div>
-
-            <!-- University Name -->
-            <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
-
-            <!-- Student Portal Dropdown -->
-            <div class="portal-selector">
-                <h2 class="portal-title">STUDENT PORTAL <span class="dropdown-arrow">▼</span></h2>
-            </div>
-
-            <!-- Login Form -->
-            <div class="login-form">
-                <h3 class="login-instruction">FILL OUT THE FORM TO LOGIN</h3>
-
-                <form th:action="@{/login}" method="post">
-                    <div class="form-group">
-                        <div class="input-with-icon">
-                            <span class="input-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <input type="text" id="username" name="username" class="form-control"
-                                placeholder="Student ID" required aria-required="true">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="input-with-icon">
-                            <span class="input-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                </svg>
-                            </span>
-                            <input type="password" id="password" name="password" class="form-control"
-                                placeholder="Password" required aria-required="true">
-                            <span class="password-toggle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Error message container (for login failures) -->
-                    <div th:if="${param.error}" class="error-message">
-                        Invalid student ID or password. Please try again.
-                    </div>
-
-                    <div class="forgot-password">
-                        <a href="/forgot-password">FORGOT PASSWORD</a>
-                    </div>
-
-                    <button type="submit" class="sign-in-button">SIGN IN</button>
-                </form>
-
-                <p class="help-text">
-                    Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow the steps to set a new one.
-                    Make sure to check your email or phone for the reset link
-                </p>
-            </div>
+      <div class="login-form-container">
+        <!-- Logo -->
+        <div class="logo-container">
+          <img
+            th:src="@{/images/logo.png}"
+            alt="Brown Ford University Logo"
+            class="university-logo"
+          />
         </div>
+
+        <!-- University Name -->
+        <h1 class="university-name">Brown Ford University</h1>
+
+        <!-- Student Portal Dropdown -->
+        <div class="portal-selector">
+          <h2 class="portal-title"> Student Portal</Portal> <span class="dropdown-arrow">▼</span>
+          </h2>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-form">
+          <h3 class="login-instruction">FILL OUT THE FORM TO LOGIN</h3>
+
+          <form th:action="@{/login}" method="post">
+            <div class="form-group">
+              <div class="input-with-icon">
+                <span class="input-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </span>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="form-control"
+                  placeholder="Student ID"
+                  required
+                  aria-required="true"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="input-with-icon">
+                <span class="input-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      x="3"
+                      y="11"
+                      width="18"
+                      height="11"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </span>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Password"
+                  required
+                  aria-required="true"
+                />
+                <span class="password-toggle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                    ></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Error message container (for login failures) -->
+            <div th:if="${param.error}" class="error-message">
+              Invalid student ID or password. Please try again.
+            </div>
+
+            <div class="forgot-password">
+              <a href="/forgot-password">forgot Password</a>
+            </div>
+
+            <button type="submit" class="sign-in-button">SIGN IN</button>
+          </form>
+
+          <p class="help-text">
+            Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow
+            the steps to set a new one. Make sure to check your email or phone
+            for the reset link
+          </p>
+        </div>
+      </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Toggle password visibility
-            const passwordToggle = document.querySelector('.password-toggle');
-            const passwordInput = document.getElementById('password');
+      document.addEventListener("DOMContentLoaded", function () {
+        // Toggle password visibility
+        const passwordToggle = document.querySelector(".password-toggle");
+        const passwordInput = document.getElementById("password");
 
-            if (passwordToggle && passwordInput) {
-                passwordToggle.addEventListener('click', function () {
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                });
-            }
-        });
+        if (passwordToggle && passwordInput) {
+          passwordToggle.addEventListener("click", function () {
+            const type =
+              passwordInput.getAttribute("type") === "password"
+                ? "text"
+                : "password";
+            passwordInput.setAttribute("type", type);
+          });
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>
