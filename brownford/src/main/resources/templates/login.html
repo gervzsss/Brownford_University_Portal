@@ -2,10 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brown Ford University - Student Portal</title>
-    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
@@ -13,15 +16,16 @@
         <div class="login-form-container">
             <!-- Logo -->
             <div class="logo-container">
-                <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo" />
             </div>
 
             <!-- University Name -->
-            <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+            <h1 class="university-name">Brown Ford University</h1>
 
             <!-- Student Portal Dropdown -->
             <div class="portal-selector">
-                <h2 class="portal-title">STUDENT PORTAL <span class="dropdown-arrow">▼</span></h2>
+                <h2 class="portal-title"> Student Portal</Portal> <span class="dropdown-arrow">▼</span>
+                </h2>
             </div>
 
             <!-- Login Form -->
@@ -40,7 +44,7 @@
                                 </svg>
                             </span>
                             <input type="text" id="username" name="username" class="form-control"
-                                placeholder="Student ID" required aria-required="true">
+                                placeholder="Student ID" required aria-required="true" />
                         </div>
                     </div>
 
@@ -55,7 +59,7 @@
                                 </svg>
                             </span>
                             <input type="password" id="password" name="password" class="form-control"
-                                placeholder="Password" required aria-required="true">
+                                placeholder="Password" required aria-required="true" />
                             <span class="password-toggle">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -73,30 +77,34 @@
                     </div>
 
                     <div class="forgot-password">
-                        <a href="/forgot-password">FORGOT PASSWORD</a>
+                        <a href="/forgot-password">forgot Password</a>
                     </div>
 
                     <button type="submit" class="sign-in-button">SIGN IN</button>
                 </form>
 
                 <p class="help-text">
-                    Forgot your password? No worries! Click 'Reset Password' and follow the steps to set a new one. Make
-                    sure to check your email or phone for the reset link
+                    Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow
+                    the steps to set a new one. Make sure to check your email or phone
+                    for the reset link
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener("DOMContentLoaded", function () {
             // Toggle password visibility
-            const passwordToggle = document.querySelector('.password-toggle');
-            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.querySelector(".password-toggle");
+            const passwordInput = document.getElementById("password");
 
             if (passwordToggle && passwordInput) {
-                passwordToggle.addEventListener('click', function () {
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
+                passwordToggle.addEventListener("click", function () {
+                    const type =
+                        passwordInput.getAttribute("type") === "password"
+                            ? "text"
+                            : "password";
+                    passwordInput.setAttribute("type", type);
                 });
             }
         });

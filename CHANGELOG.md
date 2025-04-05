@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.06.250020]
+
+### Changes
+- Log In Page Container Styles
+
 ## [04.05.252213]
 
 ### Fixed
