@@ -1,0 +1,185 @@
+/* Notification Icon and Dropdown Styles */
+.notification-icon {
+  margin-left: 20px;
+  color: #8b4513;
+  font-size: 24px;
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 45px;
+  right: -10px;
+  width: 350px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+  max-height: 500px;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.notification-dropdown.show {
+  display: flex;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-header h3 {
+  margin: 0;
+  color: #6b3a1d;
+  font-size: 18px;
+}
+
+.mark-all-read {
+  color: #6b3a1d;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.mark-all-read:hover {
+  text-decoration: underline;
+}
+
+.notification-list {
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+.notification-item {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+  background-color: #f9f9f9;
+}
+
+.notification-item.unread {
+  background-color: #f0f7ff;
+}
+
+.notification-item.unread:hover {
+  background-color: #e6f2ff;
+}
+
+.notification-icon {
+  margin-right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification-icon.announcement {
+  background-color: #ffedcc;
+  color: #ff9800;
+}
+
+.notification-icon.grades {
+  background-color: #e6f7ff;
+  color: #2196f3;
+}
+
+.notification-icon.event {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.notification-icon.faculty {
+  background-color: #f3e5f5;
+  color: #9c27b0;
+}
+
+.notification-icon.system {
+  background-color: #ffebee;
+  color: #f44336;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-text {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.notification-time {
+  margin: 0;
+  color: #999;
+  font-size: 12px;
+}
+
+.notification-footer {
+  padding: 15px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.view-all {
+  color: #6b3a1d;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.view-all:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .notification-dropdown {
+    width: 300px;
+    right: -100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification-dropdown {
+    width: 280px;
+    right: -120px;
+  }
+
+  .notification-item {
+    padding: 10px;
+  }
+}
+

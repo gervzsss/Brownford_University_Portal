@@ -1,0 +1,177 @@
+/* Enrollment Page Styles */
+.enrollment-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.enrollment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.enrollment-icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.enrollment-icon {
+  background-color: #b67c4f;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enrollment-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
+.enrollment-status {
+  margin-bottom: 30px;
+}
+
+.status-box {
+  background-color: #f5f5f5;
+  border-left: 5px solid #6b3a1d;
+  padding: 15px;
+  border-radius: 0 5px 5px 0;
+}
+
+.status-open {
+  color: green;
+  font-weight: bold;
+}
+
+.enrollment-steps {
+  margin-bottom: 30px;
+}
+
+.steps-title {
+  font-size: 22px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+}
+
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.step-number {
+  background-color: #6b3a1d;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h4 {
+  margin-bottom: 5px;
+  color: #6b3a1d;
+}
+
+.step-status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.action-button {
+  display: inline-block;
+  background-color: #6b3a1d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.available-courses {
+  margin-bottom: 30px;
+}
+
+.courses-title {
+  font-size: 22px;
+  color: #6b3a1d;
+  margin-bottom: 15px;
+}
+
+.courses-table-container {
+  overflow-x: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courses-table th,
+.courses-table td {
+  border: 2px solid #6b3a1d;
+  padding: 10px;
+  text-align: left;
+}
+
+.courses-table th {
+  background-color: white;
+  color: #6b3a1d;
+  font-weight: bold;
+}
+
+.courses-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.courses-table tr:nth-child(even) {
+  background-color: white;
+}
+
+.enroll-button {
+  display: inline-block;
+  background-color: #6b3a1d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 14px;
+}
+

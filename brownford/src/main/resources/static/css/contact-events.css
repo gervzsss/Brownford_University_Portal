@@ -1,0 +1,149 @@
+/* Events Page Styles */
+.events-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event-content {
+  flex: 1;
+}
+
+.event-title {
+  font-size: 24px;
+  color: #6b3a1d;
+  margin-bottom: 10px;
+}
+
+.event-decoration {
+  margin-left: 20px;
+}
+
+.ballons-image,
+.graduate-image,
+.students-image {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Contact Page Styles */
+.contact-content {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.contact-icon {
+  margin-right: 15px;
+}
+
+.contact-title {
+  font-size: 32px;
+  color: #6b3a1d;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contact-item-icon {
+  margin-right: 15px;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-item-text h3 {
+  font-size: 20px;
+  color: #6b3a1d;
+  margin-bottom: 5px;
+}
+
+.contact-item-text p {
+  font-size: 18px;
+  color: #333;
+}
+
+.contact-item-text a {
+  color: #6b3a1d;
+  text-decoration: none;
+}
+
+.contact-item-text a:hover {
+  text-decoration: underline;
+}
+
+.social-link {
+  color: #6b3a1d;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.social-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .event-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .event-decoration {
+    margin-left: 0;
+    margin-top: 15px;
+  }
+
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-item-icon {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+

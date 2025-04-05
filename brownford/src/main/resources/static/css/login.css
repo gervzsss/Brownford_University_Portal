@@ -24,7 +24,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('/images/campus.png');
+  background-image: url("/images/campus.png");
   background-size: cover;
   background-position: center;
 }
@@ -56,7 +56,7 @@ body {
 
 /* University name */
 .university-name {
-  color: #8B4513;
+  color: #8b4513;
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -69,7 +69,7 @@ body {
 }
 
 .portal-title {
-  color: #8B4513;
+  color: #8b4513;
   font-size: 20px;
   display: inline-flex;
   align-items: center;
@@ -86,7 +86,7 @@ body {
 }
 
 .login-instruction {
-  color: #8B4513;
+  color: #8b4513;
   font-size: 16px;
   margin-bottom: 20px;
 }
@@ -99,7 +99,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  background-color: #8B4513;
+  background-color: #8b4513;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -114,7 +114,7 @@ body {
 
 .form-control {
   flex: 1;
-  background-color: #8B4513;
+  background-color: #8b4513;
   border: none;
   color: white;
   padding: 15px 10px;
@@ -148,13 +148,23 @@ body {
   font-size: 14px;
 }
 
+/* Success message */
+.success-message {
+  background-color: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
 /* Forgot password link */
 .forgot-password {
   margin: 15px 0;
 }
 
 .forgot-password a {
-  color: #8B4513;
+  color: #8b4513;
   text-decoration: none;
   font-weight: bold;
   font-size: 14px;
@@ -167,8 +177,8 @@ body {
 /* Sign in button */
 .sign-in-button {
   background-color: transparent;
-  color: #8B4513;
-  border: 2px solid #8B4513;
+  color: #8b4513;
+  border: 2px solid #8b4513;
   border-radius: 25px;
   padding: 10px 30px;
   font-size: 18px;
@@ -179,16 +189,37 @@ body {
 }
 
 .sign-in-button:hover {
-  background-color: #8B4513;
+  background-color: #8b4513;
   color: white;
 }
 
 /* Help text */
 .help-text {
-  color: #8B4513;
+  color: #8b4513;
   font-size: 14px;
   margin-top: 20px;
   padding: 0 10px;
   line-height: 1.4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .login-form-container {
+    width: 90%;
+    padding: 20px 15px;
+  }
+
+  .university-name {
+    font-size: 24px;
+  }
+
+  .portal-title {
+    font-size: 18px;
+  }
+
+  .sign-in-button {
+    padding: 8px 20px;
+    font-size: 16px;
+  }
 }
 

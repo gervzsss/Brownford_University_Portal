@@ -1,8 +1,13 @@
 # Changelog
 
+## [04.05.251553]
+
+### Changes
+- Separated the content of home.css to multiple files
+
 ## [04.05.251510]
 
-## Fixed
+### Fixed
 - Faculty Evaluation Form Page not having CSS Designs
 
 ### BUGS
@@ -11,7 +16,7 @@
 
 ## [04.05.250049]
 
-## REVERT BACK TO VERSION [04.04.251327]
+### REVERT BACK TO VERSION [04.04.251327]
 
 ### BUGS
 - Profile icon is not accessible to all pages
