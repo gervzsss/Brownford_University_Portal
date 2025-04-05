@@ -1,5 +1,11 @@
 # Changelog
 
+## [04.05.252213]
+
+### Fixed
+- Fixed Profile icon is not accessible to all pages
+- FIxed Notification icon is not accessible to all pages
+
 ## [04.05.252009]
 
 ### Fixed
