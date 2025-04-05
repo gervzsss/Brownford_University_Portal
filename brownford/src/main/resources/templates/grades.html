@@ -85,7 +85,8 @@
                     </div>
                 </div>
                 <div class="student-info">
-                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Juan Miguel Dela Cruz'}">Juan Miguel Dela Cruz</h3>
+                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Juan Miguel Dela Cruz'}">
+                        Juan Miguel Dela Cruz</h3>
                     <p class="student-id">Student ID: 2022-12345</p>
                 </div>
             </div>
@@ -519,7 +520,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Get all semester navigation buttons
             const semesterButtons = document.querySelectorAll('.semester-nav-button');
             // Get all semester grade sections
@@ -534,7 +535,7 @@
 
             // Add click event listeners to semester buttons
             semesterButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     // Remove active class from all buttons
                     semesterButtons.forEach(btn => btn.classList.remove('active'));
                     // Add active class to clicked button
@@ -542,12 +543,12 @@
 
                     // Get the target semester section
                     const targetId = this.getAttribute('data-target');
-                    
+
                     // Hide all semester sections
                     semesterSections.forEach(section => {
                         section.style.display = 'none';
                     });
-                    
+
                     // Show the target semester section
                     document.getElementById(targetId).style.display = 'block';
                 });
@@ -557,4 +558,3 @@
 </body>
 
 </html>
-

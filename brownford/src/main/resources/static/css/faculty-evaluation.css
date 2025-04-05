@@ -291,7 +291,7 @@
   transition: all 0.2s ease;
 }
 
-.rating-label input[type="radio"]:checked + .rating-value {
+.rating-label input[type="radio"]:checked+.rating-value {
   background-color: #6b3a1d;
   color: white;
 }
@@ -376,4 +376,3 @@
     align-self: flex-end;
   }
 }
-

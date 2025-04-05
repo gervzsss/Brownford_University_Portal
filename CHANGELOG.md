@@ -1,5 +1,13 @@
 # Changelog
 
+## [04.05.252009]
+
+### Fixed
+- Formatted lines of code.
+
+### Changes
+- Home Page UI Major Rework
+
 ## [04.05.251553]
 
 ### Changes

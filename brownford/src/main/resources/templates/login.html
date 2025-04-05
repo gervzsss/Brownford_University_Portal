@@ -32,8 +32,9 @@
                     <div class="form-group">
                         <div class="input-with-icon">
                             <span class="input-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -46,8 +47,9 @@
                     <div class="form-group">
                         <div class="input-with-icon">
                             <span class="input-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                 </svg>
@@ -55,8 +57,9 @@
                             <input type="password" id="password" name="password" class="form-control"
                                 placeholder="Password" required aria-required="true">
                             <span class="password-toggle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
@@ -77,20 +80,21 @@
                 </form>
 
                 <p class="help-text">
-                    Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow the steps to set a new one. Make sure to check your email or phone for the reset link
+                    Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow the steps to set a new one.
+                    Make sure to check your email or phone for the reset link
                 </p>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Toggle password visibility
             const passwordToggle = document.querySelector('.password-toggle');
             const passwordInput = document.getElementById('password');
-            
+
             if (passwordToggle && passwordInput) {
-                passwordToggle.addEventListener('click', function() {
+                passwordToggle.addEventListener('click', function () {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
                 });
@@ -100,4 +104,3 @@
 </body>
 
 </html>
-
