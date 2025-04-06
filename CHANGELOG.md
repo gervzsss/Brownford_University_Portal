@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.05.251251]
+
+### Fixed
+- Minor HTML chages
+
 ## [04.06.250020]
 
 ### Changes
