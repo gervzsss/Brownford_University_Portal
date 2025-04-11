@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Alice', 'Cinzel', 'Cinzel Decorative', 'Cormorant Garamond', serif;
 }
 
 body {
@@ -77,6 +77,7 @@ body {
   color: #8b4513;
   font-size: 32px;
   font-weight: bold;
+  font-family: 'Cinzel Decorative';
 }
 
 .header-icons {
@@ -332,6 +333,7 @@ body {
   font-size: 24px;
   padding: 5px 0;
   position: relative;
+  font-family: 'Cinzel';
 }
 
 .main-nav a.active::after {
@@ -346,7 +348,7 @@ body {
 
 /* Secondary navigation */
 .secondary-nav {
-  background-color: rgba(139, 69, 19, 0.5);
+  background-color: rgba(139, 69, 19, 0.8);
   padding: 15px 20px;
   display: flex;
   justify-content: space-between;
@@ -2147,6 +2149,10 @@ body {
 
 .cancel-button:hover {
   background-color: #5a6268;
+}
+
+.secondary-nav a.active-second-navi {
+  color: #420302;
 }
 
 @media (max-width: 768px) {

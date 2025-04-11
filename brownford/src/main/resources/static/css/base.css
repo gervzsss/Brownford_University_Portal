@@ -81,6 +81,7 @@ body {
   color: #8b4513;
   font-size: 32px;
   font-weight: bold;
+  font-family: 'Cinzel Decorative';
 }
 
 .header-icons {
@@ -139,7 +140,7 @@ body {
 
 .main-nav a {
   text-decoration: none;
-  color: #8b4513;
+  color: #83613e;
   font-size: 24px;
   padding: 5px 0;
   position: relative;

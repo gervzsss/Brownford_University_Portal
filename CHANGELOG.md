@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.11.251857]
+
+### Fixed
+- Font Changes in some pages
+
 ## [04.11.251152]
 
 ### Fixed
