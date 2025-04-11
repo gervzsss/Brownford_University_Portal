@@ -40,7 +40,8 @@ body {
   align-items: center;
   padding: 10px 20px;
   background-color: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid #ddd;
+  border-bottom: none;
+  /* Remove the bottom border */
 }
 
 .logo-container {
@@ -81,7 +82,7 @@ body {
   color: #8b4513;
   font-size: 32px;
   font-weight: bold;
-  font-family: 'Cinzel Decorative';
+  font-family: "Cinzel Decorative";
 }
 
 .header-icons {
@@ -124,9 +125,12 @@ body {
 .main-nav {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 0;
+  /* Remove the top margin */
   padding-bottom: 10px;
   background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid #ddd;
+  /* Add the border to the nav instead */
 }
 
 .main-nav ul {

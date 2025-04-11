@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.12.250020]
+
+### Fixed
+- Header and Main Navigation Gap UI Fixed
+
 ## [04.11.251857]
 
 ### Fixed
