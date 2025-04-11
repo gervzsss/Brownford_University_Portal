@@ -353,16 +353,10 @@ body {
   align-items: center;
 }
 
-.building-icon {
-  width: 80px;
-  height: 60px;
-  margin-right: 20px;
-}
-
 .secondary-nav-links {
   display: flex;
   flex-grow: 1;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .secondary-nav-links a {

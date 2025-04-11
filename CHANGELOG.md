@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.11.251152]
+
+### Fixed
+- Icon Changes
+
 ## [04.05.251251]
 
 ### Fixed

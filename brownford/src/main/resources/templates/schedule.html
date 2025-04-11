@@ -7,6 +7,9 @@
     <title>Brown Ford University - Schedule</title>
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/schedule.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/notification.css}">
 </head>
 
 <body>
@@ -145,8 +148,8 @@
                     <a th:href="@{/logout}" class="logout-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                             stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 3v4h-9v7h9v4l5-5-5-5z"></path>
-                            <path d="M7 11h9v2H7z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                         </svg>
                     </a>
                 </div>
@@ -168,12 +171,14 @@
         <main class="schedule-content">
             <div class="schedule-header">
                 <div class="schedule-icon-container">
-                    <div class="schedule-icon">
-                        <div class="checklist">
-                            <span>✓</span>
-                            <span>✓</span>
-                            <span>✓</span>
-                        </div>
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
                     </div>
                     <div>
                         <h2 class="enrolled-subjects-title">ENROLLED SUBJECTS</h2>
