@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Alice', 'Cinzel', 'Cinzel Decorative', 'Cormorant Garamond', serif;
+  font-family: "Alice", "Cinzel", "Cinzel Decorative", "Cormorant Garamond", serif;
 }
 
 body {
@@ -60,7 +60,7 @@ body {
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 10px;
-  font-family: 'Cinzel Decorative';
+  font-family: "Cinzel Decorative";
 }
 
 /* Portal selector dropdown */
@@ -74,7 +74,7 @@ body {
   font-size: 16px;
   display: inline-flex;
   align-items: center;
-  font-family: 'Cinzel Decorative';
+  font-family: "Cinzel Decorative";
 }
 
 .dropdown-arrow {
@@ -104,7 +104,6 @@ body {
   background-color: #8b4513;
   border-radius: 4px;
   overflow: hidden;
-
 }
 
 .input-icon {
@@ -127,8 +126,7 @@ body {
 
 .form-control::placeholder {
   color: rgba(255, 255, 255, 0.8);
-  font-family: 'serif';
-
+  font-family: "serif";
 }
 
 .form-control:focus {
@@ -173,7 +171,7 @@ body {
   text-decoration: none;
   font-weight: bold;
   font-size: 14px;
-  font-family: 'Cinzel Decorative';
+  font-family: "Cinzel Decorative";
 }
 
 .forgot-password a:hover {
@@ -206,7 +204,7 @@ body {
   margin-top: 20px;
   padding: 0 10px;
   line-height: 1.4;
-  font-family: 'canva sans';
+  font-family: "canva sans";
 }
 
 /* Responsive adjustments */
@@ -228,4 +226,115 @@ body {
     padding: 8px 20px;
     font-size: 16px;
   }
+}
+
+/* Animation styles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.success-message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Portal dropdown styles */
+.portal-dropdown-menu {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.portal-option {
+  transition: background-color 0.2s;
+}
+
+.portal-option:hover {
+  background-color: rgba(139, 69, 19, 0.1);
+}
+
+/* Input focus effect */
+.input-with-icon:focus-within {
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.25);
+}
+
+/* Remember me checkbox styling */
+.remember-me {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remember-me input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #8b4513;
+  border-radius: 3px;
+  margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remember-me input[type="checkbox"]:checked {
+  background-color: #8b4513;
+}
+
+.remember-me input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.remember-me label {
+  font-size: 14px;
+  color: #5a2604;
+  cursor: pointer;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: spin 0.75s linear infinite;
+  margin-right: 8px;
+}
+
+/* Input error message */
+.input-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left;
+  transition: all 0.3s ease;
 }

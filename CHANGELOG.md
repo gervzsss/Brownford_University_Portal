@@ -1,5 +1,10 @@
 # Changelog
 
+## [04.12.251227]
+
+### Added
+- Javascript codes to login page
+
 ## [04.12.250020]
 
 ### Fixed
