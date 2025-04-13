@@ -1,5 +1,13 @@
 # Changelog
 
+## [04.13.252106]
+
+### Changes
+- Notification Dropdown
+
+### Added
+- HTML for error mapping
+
 ## [04.12.251227]
 
 ### Added

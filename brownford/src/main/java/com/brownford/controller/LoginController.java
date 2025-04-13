@@ -37,4 +37,9 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/error")
+    public String error() {
+        return "error";
+    }
+
 }
