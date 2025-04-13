@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brown Ford University - Faculty Evaluation Form</title>
     <!-- Link to the external CSS files -->
-    <link rel="stylesheet" th:href="@{/css/base.css}">
-    <link rel="stylesheet" th:href="@{/css/notifications.css}">
-    <link rel="stylesheet" th:href="@{/css/faculty-evaluation.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
@@ -23,7 +24,7 @@
                         <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
                     </div>
                 </div>
-                <h1 class="university-name">BROWN FORD UNIVERSITY</h1>
+                <h1 class="university-name">Brown Ford University</h1>
             </div>
             <div class="header-icons">
                 <!-- Notification Icon -->
@@ -86,26 +87,26 @@
         </nav>
 
         <!-- Main Content -->
-        <main class="evaluation-form-content">
-            <div class="evaluation-form-header">
-                <div class="evaluation-form-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                        stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                </div>
-                <div class="evaluation-form-title-container">
-                    <h2 class="evaluation-form-title">Faculty Evaluation Form</h2>
-                    <p class="evaluation-form-subtitle"
-                        th:text="${courseTitle != null ? courseTitle : 'Science, Technology And Society (GENED07)'}">
-                        Science, Technology And Society (GENED07)</p>
-                    <p class="evaluation-form-subtitle"
-                        th:text="${professorName != null ? professorName : 'Dr. Ma. Regine M. Javier'}">Dr. Ma. Regine
-                        M. Javier</p>
+        <main class="evaluation-content">
+            <div class="evaluation-header">
+                <div class="evaluation-icon-container">
+                    <div class="evaluation-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="evaluation-title">FACULTY EVALUATION FORM</h2>
+                        <p class="evaluation-form-subtitle"
+                            th:text="${courseTitle != null ? courseTitle : 'Science, Technology And Society (GENED07)'}">
+                            Science, Technology And Society (GENED07)</p>
+                        <p class="evaluation-form-subtitle"
+                            th:text="${professorName != null ? professorName : 'Dr. Ma. Regine M. Javier'}">Dr. Ma.
+                            Regine
+                            M. Javier</p>
+                    </div>
                 </div>
             </div>
 

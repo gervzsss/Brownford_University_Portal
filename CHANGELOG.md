@@ -1,5 +1,16 @@
 # Changelog
 
+## [04.14.250020]
+
+### Changes
+
+- Faculty Evaluation
+- Faculty Evaluation Form
+- Cleared the Notifications
+- Font Changes
+- Icon Changes
+- (Temporary )DELETED separate files of CSS
+
 ## [04.13.252106]
 
 ### Changes
