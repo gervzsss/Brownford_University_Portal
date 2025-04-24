@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "Student Portal",
             "Faculty Portal",
             "Admin Portal",
-            "Alumni Portal"
         ];
 
         const portalTitle = portalSelector.querySelector(".portal-title");

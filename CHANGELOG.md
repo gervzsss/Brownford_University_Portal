@@ -1,15 +1,21 @@
 # Changelog
 
+## [04.24.252151]
+
+### Changes
+- HTML Error Mapping Changes
+- application.properties (Small Setup for MySQL)
+- pom.xml (Small Setup for MySQL)
+
 ## [04.14.250020]
 
 ### Changes
-
 - Faculty Evaluation
 - Faculty Evaluation Form
 - Cleared the Notifications
 - Font Changes
 - Icon Changes
-- (Temporary )DELETED separate files of CSS
+- (Temporary ) DELETED separate files of CSS
 
 ## [04.13.252106]
 
