@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Grades</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a th:href="@{/profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/schedule}">Schedule</a></li>
+                <li><a th:href="@{/grades}" class="active">Grades</a></li>
+                <li><a th:href="@{/enrollment}">Enrollment</a></li>
+                <li><a th:href="@{/faculty-evaluation}">Faculty Evaluation</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="grades-content">
+            <div class="grades-header">
+                <div class="grades-icon-container">
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="grades-title">ACADEMIC GRADES</h2>
+                        <p class="semester-info">2023-2025 / BSBA - Marketing Management</p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Gervy Silvano Mabate'}">
+                        Gervy Silvano Masbate</h3>
+                    <p class="student-id">Student ID: 2022-12345</p>
+                </div>
+            </div>
+
+            <div class="grades-description">
+                <h3 class="grades-subtitle">Your Academic Performance Record</h3>
+                <p class="grades-note">Grade reports are updated within 48 hours after faculty submission.</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="academicYear">Academic Year:</label>
+                        <select id="academicYear" class="filter-select">
+                            <option value="2023-2024">2023-2024 (1ST YEAR)</option>
+                            <option value="2024-2025">2024-2025 (2ND YEAR)</option>
+                            <option value="2025-2026">2025-2026 (3RD YEAR)</option>
+                            <option value="2026-2027">2026-2027 (4TH YEAR)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="semester">Semester:</label>
+                        <select id="semester" class="filter-select">
+                            <option value="1">1ST SEMESTER</option>
+                            <option value="2">2ND SEMESTER</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button id="viewGradesBtn" class="view-grades-btn">VIEW GRADES</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grades Container -->
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Title</th>
+                            <th>Units</th>
+                            <th>Midterm</th>
+                            <th>Finals</th>
+                            <th>Final Grade</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- This will be populated by JavaScript -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-right"><strong>GPA:</strong></td>
+                            <td colspan="5" id="semesterGPA"><strong>0.00</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Cumulative GPA Section -->
+            <div class="cumulative-gpa-section">
+                <h3 class="cumulative-title">Cumulative Academic Performance</h3>
+                <div class="cumulative-info">
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Cumulative GPA:</span>
+                        <span class="cumulative-value" id="cumulativeGPA">90.82</span>
+                    </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Equivalent Grade Point:</span>
+                        <span class="cumulative-value" id="gradePoint">1.25</span>
+                    </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Academic Standing:</span>
+                        <span class="cumulative-value status-good" id="academicStanding">Dean's Lister</span>
+                    </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Total Units Earned:</span>
+                        <span class="cumulative-value" id="totalUnits">80.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <div class="certificate-button-container">
+                <a th:href="@{/grades-report}" class="certificate-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="certificate-text">
+                        DOWNLOAD<br>GRADE REPORT
+                    </span>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sample data for grades - mapping academic years to year levels
+            const yearLevelMap = {
+                "2023-2024": "1",
+                "2024-2025": "2",
+                "2025-2026": "3",
+                "2026-2027": "4"
+            };
+
+            // Sample data for grades
+            const gradesData = {
+                "1": {
+                    "1": [
+                        { code: "GENED01", title: "Understanding the Self", units: 3.0, midterm: 91.0, finals: 93.5, finalGrade: 92.25, remarks: "PASSED" },
+                        { code: "GENED03", title: "Mathematics in the Modern World", units: 3.0, midterm: 89.5, finals: 90.0, finalGrade: 89.75, remarks: "PASSED" },
+                        { code: "GENED04", title: "Purposive Communication", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BACORE1", title: "Organization and Management", units: 3.0, midterm: 88.0, finals: 91.0, finalGrade: 89.5, remarks: "PASSED" },
+                        { code: "BACORE2", title: "Business Economics", units: 3.0, midterm: 87.5, finals: 89.0, finalGrade: 88.25, remarks: "PASSED" },
+                        { code: "PFIT100", title: "Physical Education 1", units: 2.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
+                        { code: "NSTP1", title: "National Service Training Program 1", units: 3.0, midterm: 94.0, finals: 95.0, finalGrade: 94.5, remarks: "PASSED" }
+                    ],
+                    "2": [
+                        { code: "GENED05", title: "Art Appreciation", units: 3.0, midterm: 90.0, finals: 92.5, finalGrade: 91.25, remarks: "PASSED" },
+                        { code: "GENED06", title: "Ethics", units: 3.0, midterm: 88.5, finals: 91.0, finalGrade: 89.75, remarks: "PASSED" },
+                        { code: "BACORE3", title: "Business Law", units: 3.0, midterm: 86.0, finals: 89.0, finalGrade: 87.5, remarks: "PASSED" },
+                        { code: "BACORE4", title: "Financial Accounting", units: 3.0, midterm: 85.0, finals: 88.0, finalGrade: 86.5, remarks: "PASSED" },
+                        { code: "BAPRMM1", title: "Principles of Marketing", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
+                        { code: "PFIT200", title: "Physical Education 2", units: 2.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" },
+                        { code: "NSTP2", title: "National Service Training Program 2", units: 3.0, midterm: 92.5, finals: 94.5, finalGrade: 93.5, remarks: "PASSED" }
+                    ],
+                    "gpa1": "91.18 (1.25) - Dean's Lister",
+                    "gpa2": "90.79 (1.25) - Dean's Lister"
+                },
+                "2": {
+                    "1": [
+                        { code: "GENED02", title: "Readings in Philippine History", units: 3.0, midterm: 88.0, finals: 91.5, finalGrade: 89.75, remarks: "PASSED" },
+                        { code: "GEL1000", title: "Interdisciplinary Elective 1", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BAPRMM2", title: "Consumer Behavior", units: 3.0, midterm: 91.5, finals: 93.0, finalGrade: 92.25, remarks: "PASSED" },
+                        { code: "BACORE5", title: "Human Resource Management", units: 3.0, midterm: 89.0, finals: 92.0, finalGrade: 90.5, remarks: "PASSED" },
+                        { code: "PFIT300", title: "Physical Education 3", units: 2.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
+                        { code: "BAPRMM3", title: "Marketing Management", units: 3.0, midterm: 90.0, finals: 93.5, finalGrade: 91.75, remarks: "PASSED" },
+                        { code: "BAPRMM4", title: "Distribution Management", units: 3.0, midterm: 89.5, finals: 92.0, finalGrade: 90.75, remarks: "PASSED" }
+                    ],
+                    "2": [
+                        { code: "GENED07", title: "Science, Technology And Society", units: 3.0, midterm: 92.5, finals: 90.0, finalGrade: 91.25, remarks: "PASSED" },
+                        { code: "GENED02", title: "Readings In Philippine History", units: 3.0, midterm: 88.0, finals: 91.5, finalGrade: 89.75, remarks: "PASSED" },
+                        { code: "PFIT400", title: "Menu Of Courses", units: 2.0, midterm: 85.0, finals: 87.0, finalGrade: 86.0, remarks: "PASSED" },
+                        { code: "BAPRMM3", title: "Marketing Management", units: 3.0, midterm: 90.0, finals: 93.5, finalGrade: 91.75, remarks: "PASSED" },
+                        { code: "GEL2000", title: "Interdisciplinary Elective 2", units: 3.0, midterm: 87.5, finals: 89.0, finalGrade: 88.25, remarks: "PASSED" },
+                        { code: "BACORE5", title: "Human Resource Management", units: 3.0, midterm: 91.0, finals: 94.0, finalGrade: 92.5, remarks: "PASSED" },
+                        { code: "BAPRMM4", title: "Distribution Management", units: 3.0, midterm: 89.5, finals: 92.0, finalGrade: 90.75, remarks: "PASSED" }
+                    ],
+                    "gpa1": "91.29 (1.25) - Dean's Lister",
+                    "gpa2": "90.04 (1.25) - Dean's Lister"
+                },
+                "3": {
+                    "1": [
+                        { code: "BAPRMM5", title: "Marketing Research", units: 3.0, midterm: 88.0, finals: 90.0, finalGrade: 89.0, remarks: "PASSED" },
+                        { code: "BAPRMM6", title: "Product Management", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
+                        { code: "BACORE6", title: "Strategic Management", units: 3.0, midterm: 89.5, finals: 92.5, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BACORE7", title: "Operations Management", units: 3.0, midterm: 87.0, finals: 89.0, finalGrade: 88.0, remarks: "PASSED" },
+                        { code: "GEL3000", title: "Interdisciplinary Elective 3", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BAPRMM7", title: "Digital Marketing", units: 3.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" }
+                    ],
+                    "2": [
+                        { code: "BAPRMM8", title: "Advertising and Promotions", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BAPRMM9", title: "Sales Management", units: 3.0, midterm: 88.5, finals: 90.5, finalGrade: 89.5, remarks: "PASSED" },
+                        { code: "BACORE8", title: "Business Research", units: 3.0, midterm: 87.0, finals: 89.0, finalGrade: 88.0, remarks: "PASSED" },
+                        { code: "BACORE9", title: "Business Ethics and Social Responsibility", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
+                        { code: "GEL4000", title: "Interdisciplinary Elective 4", units: 3.0, midterm: 89.0, finals: 91.0, finalGrade: 90.0, remarks: "PASSED" },
+                        { code: "BAPRMM10", title: "International Marketing", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" }
+                    ],
+                    "gpa1": "90.83 (1.25) - Dean's Lister",
+                    "gpa2": "90.58 (1.25) - Dean's Lister"
+                },
+                "4": {
+                    "1": [
+                        { code: "BAPRMM11", title: "Marketing Strategy", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
+                        { code: "BAPRMM12", title: "Brand Management", units: 3.0, midterm: 89.5, finals: 91.5, finalGrade: 90.5, remarks: "PASSED" },
+                        { code: "BACORE10", title: "Business Policy", units: 3.0, midterm: 88.0, finals: 90.0, finalGrade: 89.0, remarks: "PASSED" },
+                        { code: "BAPRMM13", title: "Retail Marketing", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
+                        { code: "BAPRMM14", title: "Marketing Analytics", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
+                        { code: "PRACTICUM1", title: "Practicum 1", units: 3.0, midterm: 94.0, finals: 96.0, finalGrade: 95.0, remarks: "PASSED" }
+                    ],
+                    "2": [
+                        { code: "BAPRMM15", title: "Marketing Capstone Project", units: 6.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
+                        { code: "PRACTICUM2", title: "Practicum 2", units: 6.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" }
+                    ],
+                    "gpa1": "91.75 (1.0) - President's Lister",
+                    "gpa2": "93.50 (1.0) - President's Lister"
+                }
+            };
+
+            const academicYearSelect = document.getElementById('academicYear');
+            const semesterSelect = document.getElementById('semester');
+            const viewGradesBtn = document.getElementById('viewGradesBtn');
+            const gradesTableBody = document.getElementById('gradesTableBody');
+            const semesterGPA = document.getElementById('semesterGPA');
+
+            // Function to update the grades table
+            function updateGradesTable() {
+                // Clear the table
+                gradesTableBody.innerHTML = '';
+
+                const academicYear = academicYearSelect.value;
+                const yearLevel = yearLevelMap[academicYear]; // Get year level from academic year
+                const semester = semesterSelect.value;
+
+                // Check if data exists for the selected year level and semester
+                if (gradesData[yearLevel] && gradesData[yearLevel][semester]) {
+                    const semesterData = gradesData[yearLevel][semester];
+
+                    // Populate the table with the semester data
+                    semesterData.forEach(course => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${course.code}</td>
+                            <td>${course.title}</td>
+                            <td>${course.units}</td>
+                            <td>${course.midterm}</td>
+                            <td>${course.finals}</td>
+                            <td>${course.finalGrade}</td>
+                            <td>${course.remarks}</td>
+                        `;
+                        gradesTableBody.appendChild(row);
+                    });
+
+                    // Update the GPA
+                    const gpaKey = `gpa${semester}`;
+                    if (gradesData[yearLevel][gpaKey]) {
+                        semesterGPA.innerHTML = `<strong>${gradesData[yearLevel][gpaKey]}</strong>`;
+                    } else {
+                        semesterGPA.innerHTML = '<strong>No GPA available</strong>';
+                    }
+                } else {
+                    // No data available for this semester
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td colspan="7" style="text-align: center;">No grades available for this semester</td>
+                    `;
+                    gradesTableBody.appendChild(row);
+                    semesterGPA.innerHTML = '<strong>N/A</strong>';
+                }
+            }
+
+            // Add click event listener to view grades button
+            viewGradesBtn.addEventListener('click', updateGradesTable);
+
+            // Initialize with the first semester
+            updateGradesTable();
+        });
+    </script>
+    <script th:src="@{/js/notifications.js}"></script>
+
+    <style>
+        /* Additional styles for filter section */
+        .filter-section {
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+            font-family: 'Cinzel', serif;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Alice', serif;
+            background-color: white;
+        }
+
+        .view-grades-btn {
+            padding: 10px 20px;
+            background-color: #8B4513;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Cinzel', serif;
+            transition: background-color 0.3s;
+        }
+
+        .view-grades-btn:hover {
+            background-color: #6B3A1D;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .filter-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+        }
+    </style>
+</body>
+
+</html>

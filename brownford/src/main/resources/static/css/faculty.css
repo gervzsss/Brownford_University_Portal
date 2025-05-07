@@ -1,0 +1,362 @@
+/* Add these styles for the faculty dashboard */
+
+/* Schedule container styles */
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .schedule-time {
+    font-weight: bold;
+    color: #6b3a1d;
+    min-width: 150px;
+  }
+  
+  .schedule-details {
+    flex: 1;
+    padding: 0 15px;
+  }
+  
+  .schedule-details h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .schedule-details p {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .schedule-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 80px;
+  }
+  
+  .ongoing {
+    background-color: #e6f7ff;
+    color: #0288d1;
+  }
+  
+  .upcoming {
+    background-color: #fff8e1;
+    color: #ffa000;
+  }
+  
+  .completed {
+    background-color: #e8f5e9;
+    color: #4caf50;
+  }
+  
+  .date-display {
+    font-size: 16px;
+    color: #666;
+    font-weight: normal;
+    margin-left: 10px;
+  }
+  
+  /* Filter section styles */
+  .filter-section {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .filter-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #6b3a1d;
+  }
+  
+  .filter-select {
+    padding: 8px 12px;
+    border: 1px solid #8b4513;
+    border-radius: 5px;
+    font-size: 16px;
+    min-width: 200px;
+  }
+  
+  /* View button small */
+  .view-button-small {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #6b3a1d;
+    color: white;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .view-button-small:hover {
+    background-color: #8b4513;
+  }
+  
+  /* Back link container */
+  .back-link-container {
+    margin-bottom: 20px;
+  }
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #6b3a1d;
+    text-decoration: none;
+    font-weight: bold;
+    gap: 5px;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Grading info box */
+  .grading-info-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .grading-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .grading-info-row:last-child {
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  
+  .grading-info-item {
+    margin-right: 20px;
+  }
+  
+  .grading-info-item h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #6b3a1d;
+    margin-bottom: 5px;
+  }
+  
+  .grading-info-item p {
+    font-size: 16px;
+  }
+  
+  .status-open {
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  .status-finalize {
+    color: #2196f3;
+    font-weight: bold;
+  }
+  
+  .review-button {
+    padding: 10px 20px;
+    background-color: #6b3a1d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .review-button:hover {
+    background-color: #8b4513;
+  }
+  
+  /* Grade input styles */
+  .grade-input,
+  .remark-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+  }
+  
+  /* Grading actions */
+  .grading-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .save-button,
+  .finalize-button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .save-button {
+    background-color: #2196f3;
+  }
+  
+  .save-button:hover {
+    background-color: #1976d2;
+  }
+  
+  .finalize-button {
+    background-color: #4caf50;
+  }
+  
+  .finalize-button:hover {
+    background-color: #388e3c;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .filter-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .filter-group {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .filter-select {
+      width: 100%;
+    }
+  
+    .grading-info-row {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .schedule-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .schedule-time,
+    .schedule-details {
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  
+    .schedule-status {
+      align-self: flex-end;
+    }
+  
+    .grading-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .save-button,
+    .finalize-button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+  
+    .grades-header,
+    .schedule-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .student-info {
+      margin-top: 15px;
+    }
+  
+    .grades-table,
+    .schedule-table {
+      display: block;
+      overflow-x: auto;
+    }
+  
+    .grades-table th,
+    .grades-table td,
+    .schedule-table th,
+    .schedule-table td {
+      padding: 8px 5px;
+      font-size: 12px;
+    }
+  
+    .grade-input,
+    .remark-input {
+      width: 100%;
+      min-width: 60px;
+      font-size: 12px;
+    }
+  }
+  
+  /* Date display in schedule section */
+  .date-display {
+    display: inline-block;
+    font-size: 16px;
+    color: #666;
+    margin-left: 10px;
+    font-weight: normal;
+  }
+  
+  /* Faculty dashboard specific styles */
+  .faculty-dashboard .welcome-section {
+    margin-bottom: 30px;
+  }
+  
+  .faculty-dashboard .quick-links-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .faculty-dashboard .quick-links-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .faculty-dashboard .quick-links-container {
+      grid-template-columns: 1fr;
+    }
+  }

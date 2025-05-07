@@ -12,12 +12,12 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "/Global/login";
     }
 
     @GetMapping("/forgot-password")
     public String forgotPassword() {
-        return "forgot-password";
+        return "/Global/forgot-password";
     }
 
     private static final Map<String, String> USERS = Map.of(
@@ -30,10 +30,10 @@ public class LoginController {
             @RequestParam String password,
             Model model) {
         if (USERS.containsKey(username) && USERS.get(username).equals(password)) {
-            return "redirect:/home"; // Redirect if valid user
+            return "redirect:/home";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "login"; // Stay on login page
+            return "/Global/login";
         }
     }
 

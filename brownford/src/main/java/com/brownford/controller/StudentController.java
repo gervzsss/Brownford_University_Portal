@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class StudentController {
 
     @GetMapping("/home")
     public String home() {
-        return "home";
+        return "/student/home";
     }
 
     @GetMapping("/announcements")
@@ -18,47 +18,46 @@ public class HomeController {
 
     @GetMapping("/events")
     public String events() {
-        return "events";
+        return "/student/events";
     }
 
     @GetMapping("/contact")
     public String contact() {
-        return "contact";
+        return "/student/contact";
     }
 
     @GetMapping("/schedule")
     public String schedule() {
-        return "schedule";
+        return "/student/schedule";
     }
 
     @GetMapping("/grades")
     public String grades() {
-        return "grades";
+        return "/student/grades";
     }
 
     @GetMapping("/enrollment")
     public String enrollment() {
-        return "enrollment";
+        return "/student/enrollment";
     }
 
     @GetMapping("/faculty-evaluation")
     public String facultyevaluation() {
-        return "faculty-evaluation";
+        return "/student/faculty-evaluation";
     }
 
     @GetMapping("/faculty-evaluation-form")
     public String EvaluationForm() {
-        return "faculty-evaluation-form";
+        return "/student/faculty-evaluation-form";
     }
 
     @GetMapping("/logout")
     public String logoutPage() {
-        // Implement logout logic (redirect to login or home page)
         return "redirect:/login";
     }
 
     @GetMapping("/profile")
     public String profile() {
-        return "profile";
+        return "/student/profile";
     }
 }

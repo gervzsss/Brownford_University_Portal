@@ -1,5 +1,23 @@
 # Changelog
 
+## [05.07.251246]
+
+### Changes
+- Folder created for HTML of Faculty Student and Admin. Also for Global Files
+- Change in the Controllers to match the pathing of the new folders for admin, student, and faculty
+- Grades Year and Semester Selection Buttons
+
+### Added
+- Faculty Dashboard Page
+- Faculty Workload Page
+- Faculty Grading Sheet Page
+- Faculy Controller
+
+- Admin Dashboard Page
+- Admin Controller
+
+- Renamed HomeController to Student Controller
+
 ## [04.24.252151]
 
 ### Changes

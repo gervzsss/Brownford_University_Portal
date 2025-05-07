@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Faculty Workload</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/faculty.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a th:href="@{/faculty-profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/faculty-dashboard}">Home</a></li>
+                <li><a th:href="@{/faculty-workload}" class="active">Workload</a></li>
+                <li><a th:href="@{/faculty-grading}">Grading</a></li>
+                <li><a th:href="@{/faculty-attendance}">Attendance</a></li>
+                <li><a th:href="@{/faculty-evaluation}">Evaluations</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="schedule-content">
+            <div class="schedule-header">
+                <div class="schedule-icon-container">
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="enrolled-subjects-title">FACULTY WORKLOAD</h2>
+                        <p class="semester-info">2024-2025 / 2ND SEMESTER</p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <h3 class="student-name">Prof. Gervy Silvano Masbate</h3>
+                    <p class="student-id">Faculty ID: F-2022-0123</p>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="schoolYear">School Year:</label>
+                        <select id="schoolYear" name="schoolYear" class="filter-select">
+                            <option value="2223">2022-2023</option>
+                            <option value="2324">2023-2024</option>
+                            <option value="2425" selected>2024-2025</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="semester">Semester:</label>
+                        <select id="semester" name="semester" class="filter-select">
+                            <option value="First">First</option>
+                            <option value="Second" selected>Second</option>
+                            <option value="Summer">Summer</option>
+                        </select>
+                    </div>
+                    <button id="viewButton" class="certificate-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <span class="certificate-text">VIEW</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Workload Table -->
+            <div id="workloadTable" class="schedule-table-container">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Section</th>
+                            <th>Subject Code</th>
+                            <th>Description</th>
+                            <th>Schedule</th>
+                            <th>Class list</th>
+                            <th>Grading Sheet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>BSSTAT 1-1</td>
+                            <td>STAT104</td>
+                            <td>Linear Regression</td>
+                            <td>M/M 9:00AM-12:00PM/1:30PM-4:30PM</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                            <td><a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=STAT104"
+                                    class="view-button-small">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>BSSTAT 2-1</td>
+                            <td>STAT104</td>
+                            <td>Linear Regression</td>
+                            <td>T/T 8:00AM-11:00PM/1:00PM-4:00PM</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                            <td><a href="/faculty-grading-sheet?section=BSSTAT2-1&subject=STAT104"
+                                    class="view-button-small">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>BSSTAT 1-1</td>
+                            <td>NSTP102</td>
+                            <td>National Service Training Program 2</td>
+                            <td>W/TH 7:00AM-10:00AM/7:00AM-10:00AM</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                            <td><a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=NSTP102"
+                                    class="view-button-small">View</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>BSSTAT 2-2</td>
+                            <td>NSTP102</td>
+                            <td>National Service Training Program 2</td>
+                            <td>W/TH 1:00PM-4:00PM/1:00PM-4:00PM</td>
+                            <td><a href="#" class="download-link">Download</a></td>
+                            <td><a href="/faculty-grading-sheet?section=BSSTAT2-2&subject=NSTP102"
+                                    class="view-button-small">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Certificate Button -->
+            <div class="certificate-button-container">
+                <a href="#" class="certificate-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="certificate-text">
+                        DOWNLOAD<br>WORKLOAD REPORT
+                    </span>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const viewButton = document.getElementById('viewButton');
+            const workloadTable = document.getElementById('workloadTable');
+            const schoolYearSelect = document.getElementById('schoolYear');
+            const semesterSelect = document.getElementById('semester');
+
+            // Initially show the table
+            workloadTable.style.display = 'block';
+
+            // Show table when View button is clicked
+            viewButton.addEventListener('click', function () {
+                workloadTable.style.display = 'block';
+            });
+
+            // For demonstration purposes, hide table when selections change
+            schoolYearSelect.addEventListener('change', function () {
+                workloadTable.style.display = 'none';
+            });
+
+            semesterSelect.addEventListener('change', function () {
+                workloadTable.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Faculty Grading Sheet</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/faculty.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a th:href="@{/faculty-profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/faculty-dashboard}">Home</a></li>
+                <li><a th:href="@{/faculty-workload}">Workload</a></li>
+                <li><a th:href="@{/faculty-grading}" class="active">Grading</a></li>
+                <li><a th:href="@{/faculty-attendance}">Attendance</a></li>
+                <li><a th:href="@{/faculty-evaluation}">Evaluations</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="grades-content">
+            <div class="grades-header">
+                <div class="grades-icon-container">
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="grades-title">GRADING SHEET</h2>
+                        <p class="semester-info">STAT104: Linear Regression | BSSTAT 1-1</p>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <h3 class="student-name">Prof. Gervy Silvano Masbate</h3>
+                    <p class="student-id">Faculty ID: F-2022-0123</p>
+                </div>
+            </div>
+
+            <div class="back-link-container">
+                <a href="/faculty-workload" class="back-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to Workload
+                </a>
+            </div>
+
+            <div class="grading-info-box">
+                <div class="grading-info-row">
+                    <div class="grading-info-item">
+                        <h3>GRADE SHEET STATUS</h3>
+                        <p class="status-open">OPEN</p>
+                    </div>
+                    <div class="grading-info-item">
+                        <h3>STATUS</h3>
+                        <p class="status-finalize">Finalize</p>
+                    </div>
+                    <div class="grading-info-item">
+                        <h3>SUBJECT</h3>
+                        <p>STAT104: Linear Regression</p>
+                    </div>
+                </div>
+                <div class="grading-info-row">
+                    <div class="grading-info-item">
+                        <h3>SCHOOL YEAR:</h3>
+                        <p>2024-2025</p>
+                    </div>
+                    <div class="grading-info-item">
+                        <h3>SEMESTER:</h3>
+                        <p>Second</p>
+                    </div>
+                    <div class="grading-info-item">
+                        <h3>SECTION:</h3>
+                        <p>BSSTAT 1-1</p>
+                    </div>
+                    <div class="grading-info-item">
+                        <h3>SCHEDULE:</h3>
+                        <p>M/M 9:00AM-12:00PM/1:30PM-4:30PM</p>
+                    </div>
+                </div>
+                <div class="grading-info-row">
+                    <button class="review-button">Review Grading Sheet</button>
+                </div>
+            </div>
+
+            <!-- Grading Table -->
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Student No</th>
+                            <th>Student Name</th>
+                            <th>1<sup>st</sup> Grading</th>
+                            <th>2<sup>nd</sup> Grading</th>
+                            <th>Computed Rating</th>
+                            <th>Final Rating</th>
+                            <th>Remark</th>
+                            <th>Other Remark</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>411-172-BF-1</td>
+                            <td>DELA CRUZ, JUAN MANALO C.</td>
+                            <td>
+                                <input type="text" class="grade-input" value="1.50">
+                            </td>
+                            <td>
+                                <input type="text" class="grade-input" value="1.50">
+                            </td>
+                            <td>1.500</td>
+                            <td>1.50</td>
+                            <td>PASSED</td>
+                            <td>
+                                <input type="text" class="remark-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>411-173-BF-1</td>
+                            <td>JAVIER, MA. REGINE M.</td>
+                            <td>
+                                <input type="text" class="grade-input" value="1.75">
+                            </td>
+                            <td>
+                                <input type="text" class="grade-input" value="1.75">
+                            </td>
+                            <td>1.750</td>
+                            <td>1.75</td>
+                            <td>PASSED</td>
+                            <td>
+                                <input type="text" class="remark-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>411-174-BF-1</td>
+                            <td>TORRES, CJ LOYD B.</td>
+                            <td>
+                                <input type="text" class="grade-input" value="1.50">
+                            </td>
+                            <td>
+                                <input type="text" class="grade-input" value="-">
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td></td>
+                            <td>
+                                <input type="text" class="remark-input" value="INCOMPLETE">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grading-actions">
+                <button class="save-button">Save Changes</button>
+                <button class="finalize-button">Finalize Grades</button>
+            </div>
+        </main>
+    </div>
+
+    <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Calculate computed rating when grades change
+            const gradeInputs = document.querySelectorAll('.grade-input');
+
+            gradeInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const row = this.closest('tr');
+                    const firstGrade = row.querySelector('td:nth-child(4) input').value;
+                    const secondGrade = row.querySelector('td:nth-child(5) input').value;
+
+                    // Only calculate if both grades are numbers
+                    if (!isNaN(firstGrade) && !isNaN(secondGrade) && firstGrade !== '-' && secondGrade !== '-') {
+                        const computed = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(3);
+                        const final = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(2);
+
+                        row.querySelector('td:nth-child(6)').textContent = computed;
+                        row.querySelector('td:nth-child(7)').textContent = final;
+
+                        // Set remark based on final grade
+                        if (parseFloat(final) <= 3.0) {
+                            row.querySelector('td:nth-child(8)').textContent = 'PASSED';
+                        } else {
+                            row.querySelector('td:nth-child(8)').textContent = 'FAILED';
+                        }
+                    } else {
+                        row.querySelector('td:nth-child(6)').textContent = '-';
+                        row.querySelector('td:nth-child(7)').textContent = '-';
+                        row.querySelector('td:nth-child(8)').textContent = '';
+                    }
+                });
+            });
+
+            // Save button functionality
+            document.querySelector('.save-button').addEventListener('click', function () {
+                alert('Grades saved successfully!');
+            });
+
+            // Finalize button functionality
+            document.querySelector('.finalize-button').addEventListener('click', function () {
+                if (confirm('Are you sure you want to finalize these grades? This action cannot be undone.')) {
+                    alert('Grades have been finalized and submitted.');
+                    // Disable all inputs after finalizing
+                    document.querySelectorAll('.grade-input, .remark-input').forEach(input => {
+                        input.disabled = true;
+                    });
+                    // Disable buttons
+                    document.querySelector('.save-button').disabled = true;
+                    document.querySelector('.finalize-button').disabled = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
