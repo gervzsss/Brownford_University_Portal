@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.08.250012]
+
+### Fixes
+- Working Login credentials for ADMIN, FACULTY, and STUDENT
+
 ## [05.07.251246]
 
 ### Changes
