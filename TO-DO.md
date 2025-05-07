@@ -17,5 +17,5 @@
 - Can Also Encode Grades(For Necessary Changes)
 
 ### ADMIN [SIDE]
-- CAN ADD EVENTS
-- CAN ADD ANNOUNCEMENTS
+- CAN Add Events
+- CAN Add Announcements
