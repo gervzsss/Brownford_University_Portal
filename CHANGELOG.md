@@ -1,5 +1,14 @@
 # Changelog
 
+## [05.12.250048]
+
+#### Added
+- Admin User Management
+
+### Changes
+- Remove Hardcoded Data in Admin Dashboard
+- Remove Hardcoded Data in Admin User Management
+
 ## [05.08.250012]
 
 ### Fixes

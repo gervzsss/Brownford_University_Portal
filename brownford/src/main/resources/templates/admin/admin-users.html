@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - User Management</title>
+    <!-- Link to the external CSS files -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a th:href="@{/admin-profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a th:href="@{/admin-dashboard}">Dashboard</a></li>
+                <li><a th:href="@{/admin-student-assignment}">Student Assignment</a></li>
+                <li><a th:href="@{/admin-schedule-assignment}">Schedule Assignment</a></li>
+                <li><a th:href="@{/admin-subject-assignment}">Subject Assignment</a></li>
+                <li><a th:href="@{/admin-users}" class="active">User Management</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- User Management Section -->
+            <section class="content-panel">
+                <div class="panel-header">
+                    <h2 class="section-title">User Management</h2>
+                </div>
+                <div class="panel-content">
+                    <!-- Search and Filter Controls -->
+                    <div class="user-controls">
+                        <div class="search-filter-container">
+                            <div class="search-container">
+                                <input type="text" placeholder="Search users..." id="searchInput">
+                                <button class="search-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="filter-container">
+                                <select id="roleFilter" class="filter-select">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="student">Student</option>
+                                </select>
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="all">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="locked">Locked</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="addUserBtn" class="add-user-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                                Add New User
+                            </button>
+                            <button id="exportUsersBtn" class="export-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- User data will be loaded dynamically from the database -->
+                                <tr class="empty-state-row">
+                                    <td colspan="8" class="empty-state-message">
+                                        <div class="empty-state">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                            <p>No users found. Add users or adjust your search filters to see results.
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="paginationContainer">
+                        <!-- Pagination will be dynamically generated based on data -->
+                        <div class="empty-pagination-message">
+                            <p>Pagination will appear when there are enough records to display multiple pages.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Add/Edit User Modal -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">Add New User</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="userRole">Role</label>
+                                <select id="userRole" name="userRole" class="form-control" required>
+                                    <option value="">Select Role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="student">Student</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select id="status" name="status" class="form-control" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="locked">Locked</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group" id="departmentGroup" style="display: none;">
+                            <label for="department">Department</label>
+                            <select id="department" name="department" class="form-control">
+                                <option value="">Select Department</option>
+                                <option value="business">Business Administration</option>
+                                <option value="statistics">Statistics</option>
+                                <option value="computer_science">Computer Science</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="humanities">Humanities</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="programGroup" style="display: none;">
+                            <label for="program">Program</label>
+                            <select id="program" name="program" class="form-control">
+                                <option value="">Select Program</option>
+                                <option value="bsba">BSBA - Marketing Management</option>
+                                <option value="bsstat">BS Statistics</option>
+                                <option value="bscs">BS Computer Science</option>
+                                <option value="bsit">BS Information Technology</option>
+                                <option value="bsece">BS Electronics Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveUserBtn">Save User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- View User Details Modal -->
+        <div id="viewUserModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>User Details</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="user-details">
+                        <div class="user-avatar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div class="user-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">User ID:</span>
+                                <span class="info-value" id="viewUserId">S-2022-12345</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Username:</span>
+                                <span class="info-value" id="viewUsername">asd</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Full Name:</span>
+                                <span class="info-value" id="viewFullName">Gervy Silvano Masbate</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" id="viewEmail">gervy.masbate@student.brownford.edu</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Role:</span>
+                                <span class="info-value" id="viewRole">Student</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value" id="viewStatus">Active</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Created On:</span>
+                                <span class="info-value" id="viewCreatedOn">August 15, 2022</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Last Login:</span>
+                                <span class="info-value" id="viewLastLogin">May 10, 2025 9:15 AM</span>
+                            </div>
+                            <div class="info-item" id="viewDepartmentItem" style="display: none;">
+                                <span class="info-label">Department:</span>
+                                <span class="info-value" id="viewDepartment">Statistics</span>
+                            </div>
+                            <div class="info-item" id="viewProgramItem" style="display: none;">
+                                <span class="info-label">Program:</span>
+                                <span class="info-value" id="viewProgram">BSBA - Marketing Management</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn btn-secondary" id="closeViewBtn">Close</button>
+                        <button class="btn btn-primary" id="editFromViewBtn">Edit User</button>
+                        <button class="btn btn-danger" id="resetPasswordBtn">Reset Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize user management page
+            initializeUserManagementPage();
+
+            // Modal elements
+            const userModal = document.getElementById('userModal');
+            const viewUserModal = document.getElementById('viewUserModal');
+            const addUserBtn = document.getElementById('addUserBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            const userRoleSelect = document.getElementById('userRole');
+            const departmentGroup = document.getElementById('departmentGroup');
+            const programGroup = document.getElementById('programGroup');
+            const closeViewBtn = document.getElementById('closeViewBtn');
+            const editFromViewBtn = document.getElementById('editFromViewBtn');
+
+            // Open add user modal
+            addUserBtn.addEventListener('click', function () {
+                document.getElementById('modalTitle').textContent = 'Add New User';
+                document.getElementById('userForm').reset();
+
+                // Password fields are required for new users
+                document.getElementById('password').required = true;
+                document.getElementById('confirmPassword').required = true;
+
+                userModal.style.display = 'block';
+            });
+
+            // Close modals
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    userModal.style.display = 'none';
+                    viewUserModal.style.display = 'none';
+                });
+            });
+
+            cancelBtn.addEventListener('click', function () {
+                userModal.style.display = 'none';
+            });
+
+            closeViewBtn.addEventListener('click', function () {
+                viewUserModal.style.display = 'none';
+            });
+
+            // Show/hide department and program fields based on role
+            userRoleSelect.addEventListener('change', function () {
+                if (this.value === 'faculty') {
+                    departmentGroup.style.display = 'block';
+                    programGroup.style.display = 'none';
+                } else if (this.value === 'student') {
+                    departmentGroup.style.display = 'none';
+                    programGroup.style.display = 'block';
+                } else {
+                    departmentGroup.style.display = 'none';
+                    programGroup.style.display = 'none';
+                }
+            });
+
+            // Form submission
+            document.getElementById('userForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Validate password match
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (password && password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                // Get form data
+                const formData = {
+                    username: document.getElementById('username').value,
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    role: document.getElementById('userRole').value,
+                    status: document.getElementById('status').value,
+                    password: password
+                };
+
+                // Add department or program if applicable
+                if (formData.role === 'faculty') {
+                    formData.department = document.getElementById('department').value;
+                } else if (formData.role === 'student') {
+                    formData.program = document.getElementById('program').value;
+                }
+
+                // In a real application, this would be an AJAX call to the server
+                // For example:
+                // fetch('/api/users', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(formData)
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     // Handle success - refresh the users table
+                //     loadUsers();
+                //     userModal.style.display = 'none';
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                //     alert('An error occurred while saving the user.');
+                // });
+
+                console.log('Ready to send user data to server:', formData);
+                alert('User data ready to be saved to database');
+                userModal.style.display = 'none';
+            });
+
+            // Reset password
+            document.getElementById('resetPasswordBtn').addEventListener('click', function () {
+                if (confirm('Are you sure you want to reset this user\'s password?')) {
+                    const userId = document.getElementById('viewUserId').textContent;
+
+                    // In a real application, this would be an AJAX call to the server
+                    // For example:
+                    // fetch(`/api/users/${userId}/reset-password`, {
+                    //     method: 'POST'
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     alert('Password has been reset and sent to the user\'s email.');
+                    // })
+                    // .catch(error => {
+                    //     console.error('Error:', error);
+                    //     alert('An error occurred while resetting the password.');
+                    // });
+
+                    console.log('Resetting password for user:', userId);
+                    alert('Password reset functionality ready for implementation');
+                }
+            });
+
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('keyup', function () {
+                const searchTerm = this.value.trim();
+                if (searchTerm.length >= 2) {
+                    // In a real implementation, this would call an API endpoint
+                    // searchUsers(searchTerm);
+                    console.log('Searching for users with term:', searchTerm);
+                }
+            });
+
+            // Filter functionality
+            document.getElementById('roleFilter').addEventListener('change', function () {
+                applyFilters();
+            });
+
+            document.getElementById('statusFilter').addEventListener('change', function () {
+                applyFilters();
+            });
+
+            function applyFilters() {
+                const roleValue = document.getElementById('roleFilter').value;
+                const statusValue = document.getElementById('statusFilter').value;
+
+                // In a real implementation, this would call an API endpoint
+                // filterUsers(roleValue, statusValue);
+                console.log('Filtering users - Role:', roleValue, 'Status:', statusValue);
+            }
+
+            // Export functionality
+            document.getElementById('exportUsersBtn').addEventListener('click', function () {
+                // In a real implementation, this would call an API endpoint to generate a CSV/Excel file
+                // exportUsers();
+                console.log('Exporting users data');
+                alert('User export functionality ready for implementation');
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', function (event) {
+                if (event.target === userModal) {
+                    userModal.style.display = 'none';
+                }
+                if (event.target === viewUserModal) {
+                    viewUserModal.style.display = 'none';
+                }
+            });
+        });
+
+        function initializeUserManagementPage() {
+            // This function would make API calls to load data from the server
+            // loadUsers();
+            console.log('User Management page initialized and ready for data loading');
+
+            // Set up event delegation for dynamic elements
+            setupEventDelegation();
+        }
+
+        function setupEventDelegation() {
+            // Use event delegation for dynamically added elements
+            document.getElementById('usersTableBody').addEventListener('click', function (e) {
+                // Handle view button clicks
+                if (e.target.closest('.btn-view')) {
+                    const btn = e.target.closest('.btn-view');
+                    const userId = btn.getAttribute('data-id');
+                    viewUser(userId);
+                }
+
+                // Handle edit button clicks
+                if (e.target.closest('.btn-edit')) {
+                    const btn = e.target.closest('.btn-edit');
+                    const userId = btn.getAttribute('data-id');
+                    editUser(userId);
+                }
+
+                // Handle lock button clicks
+                if (e.target.closest('.btn-lock')) {
+                    const btn = e.target.closest('.btn-lock');
+                    const userId = btn.getAttribute('data-id');
+                    lockUser(userId);
+                }
+
+                // Handle unlock button clicks
+                if (e.target.closest('.btn-unlock')) {
+                    const btn = e.target.closest('.btn-unlock');
+                    const userId = btn.getAttribute('data-id');
+                    unlockUser(userId);
+                }
+            });
+        }
+
+        // Function to load users from the server
+        function loadUsers(page = 1) {
+            // In a real application, this would fetch users with pagination parameters
+            // fetch(`/api/users?page=${page}&size=10`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         renderUsersTable(data.content);
+            //         renderPagination(data.totalElements, data.number + 1, data.size);
+            //     })
+            //     .catch(error => {
+            //         console.error('Error loading users:', error);
+            //     });
+
+            console.log(`Loading users for page ${page}`);
+
+            // For now, just show the empty state
+            renderUsersTable([]);
+            renderPagination(0, 1, 10);
+        }
+
+        // Function to render users in the table
+        function renderUsersTable(users) {
+            const tableBody = document.getElementById('usersTableBody');
+
+            // Clear existing content
+            tableBody.innerHTML = '';
+
+            if (users && users.length > 0) {
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.fullName}</td>
+                        <td>${user.email}</td>
+                        <td><span class="role-badge ${user.role.toLowerCase()}">${user.role}</span></td>
+                        <td><span class="status-badge ${user.status.toLowerCase()}">${user.status}</span></td>
+                        <td>${user.lastLogin}</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="action-btn btn-view" data-id="${user.id}" title="View Details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                                <button class="action-btn btn-edit" data-id="${user.id}" title="Edit User">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                </button>
+                                ${user.status.toLowerCase() === 'locked' ?
+                            `<button class="action-btn btn-unlock" data-id="${user.id}" title="Unlock Account">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                                        </svg>
+                                    </button>` :
+                            `<button class="action-btn btn-lock" data-id="${user.id}" title="Lock Account">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                    </button>`
+                        }
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                // Show empty state
+                tableBody.innerHTML = `
+                    <tr class="empty-state-row">
+                        <td colspan="8" class="empty-state-message">
+                            <div class="empty-state">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                    stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                                <p>No users found. Add users or adjust your search filters to see results.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Function to view user details
+        function viewUser(userId) {
+            // In a real application, this would fetch the user details from the server
+            // fetch(`/api/users/${userId}`)
+            //     .then(response => response.json())
+            //     .then(user => {
+            //         // Populate the view modal with user data
+            //         document.getElementById('viewUserId').textContent = user.id;
+            //         document.getElementById('viewUsername').textContent = user.username;
+            //         document.getElementById('viewFullName').textContent = user.fullName;
+            //         document.getElementById('viewEmail').textContent = user.email;
+            //         document.getElementById('viewRole').textContent = user.role;
+            //         document.getElementById('viewStatus').textContent = user.status;
+            //         document.getElementById('viewLastLogin').textContent = user.lastLogin;
+            //         document.getElementById('viewCreatedOn').textContent = user.createdOn;
+            //         
+            //         // Show/hide department or program based on role
+            //         if (user.role === 'Faculty') {
+            //             document.getElementById('viewDepartmentItem').style.display = 'block';
+            //             document.getElementById('viewProgramItem').style.display = 'none';
+            //             document.getElementById('viewDepartment').textContent = user.department;
+            //         } else if (user.role === 'Student') {
+            //             document.getElementById('viewDepartmentItem').style.display = 'none';
+            //             document.getElementById('viewProgramItem').style.display = 'block';
+            //             document.getElementById('viewProgram').textContent = user.program;
+            //         } else {
+            //             document.getElementById('viewDepartmentItem').style.display = 'none';
+            //             document.getElementById('viewProgramItem').style.display = 'none';
+            //         }
+            //         
+            //         document.getElementById('viewUserModal').style.display = 'block';
+            //     })
+            //     .catch(error => {
+            //         console.error('Error fetching user details:', error);
+            //         alert('An error occurred while fetching user details.');
+            //     });
+
+            console.log('Viewing user details for ID:', userId);
+        }
+
+        // Function to edit user
+        function editUser(userId) {
+            // In a real application, this would fetch the user details from the server
+            // Similar to viewUser but populating the edit form instead
+            console.log('Editing user with ID:', userId);
+        }
+
+        // Function to lock user
+        function lockUser(userId) {
+            if (confirm('Are you sure you want to lock this account?')) {
+                // In a real application, this would send a request to the server
+                // fetch(`/api/users/${userId}/lock`, {
+                //     method: 'POST'
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     // Refresh the users table
+                //     loadUsers();
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                //     alert('An error occurred while locking the account.');
+                // });
+
+                console.log('Locking user account with ID:', userId);
+            }
+        }
+
+        // Function to unlock user
+        function unlockUser(userId) {
+            if (confirm('Are you sure you want to unlock this account?')) {
+                // In a real application, this would send a request to the server
+                // fetch(`/api/users/${userId}/unlock`, {
+                //     method: 'POST'
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     // Refresh the users table
+                //     loadUsers();
+                // })
+                // .catch(error => {
+                //     console.error('Error:', error);
+                //     alert('An error occurred while unlocking the account.');
+                // });
+
+                console.log('Unlocking user account with ID:', userId);
+            }
+        }
+
+        // Function to generate pagination based on total records and current page
+        function renderPagination(totalRecords, currentPage, recordsPerPage) {
+            const container = document.getElementById('paginationContainer');
+
+            // If no records or only one page, hide pagination
+            if (totalRecords <= recordsPerPage) {
+                container.innerHTML = `
+            <div class="empty-pagination-message">
+                <p>Pagination will appear when there are enough records to display multiple pages.</p>
+            </div>
+        `;
+                return;
+            }
+
+            const totalPages = Math.ceil(totalRecords / recordsPerPage);
+            let paginationHTML = '';
+
+            // Previous button
+            paginationHTML += `
+        <button class="pagination-btn prev" ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+    `;
+
+            // First page
+            paginationHTML += `
+        <button class="pagination-btn ${currentPage === 1 ? 'active' : ''}" data-page="1">1</button>
+    `;
+
+            // Ellipsis and middle pages
+            if (totalPages > 1) {
+                if (currentPage > 3) {
+                    paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+                }
+
+                // Pages around current page
+                const startPage = Math.max(2, currentPage - 1);
+                const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+                for (let i = startPage; i <= endPage; i++) {
+                    if (i === 1 || i === totalPages) continue; // Skip first and last page as they're always shown
+                    paginationHTML += `
+                <button class="pagination-btn ${currentPage === i ? 'active' : ''}" data-page="${i}">${i}</button>
+            `;
+                }
+
+                if (currentPage < totalPages - 2) {
+                    paginationHTML += `<span class="pagination-ellipsis">...</span>`;
+                }
+
+                // Last page (if more than one page)
+                if (totalPages > 1) {
+                    paginationHTML += `
+                <button class="pagination-btn ${currentPage === totalPages ? 'active' : ''}" data-page="${totalPages}">${totalPages}</button>
+            `;
+                }
+            }
+
+            // Next button
+            paginationHTML += `
+        <button class="pagination-btn next" ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    `;
+
+            container.innerHTML = paginationHTML;
+
+            // Add event listeners to pagination buttons
+            container.querySelectorAll('.pagination-btn').forEach(btn => {
+                if (!btn.disabled && btn.hasAttribute('data-page')) {
+                    btn.addEventListener('click', function () {
+                        const page = parseInt(this.getAttribute('data-page'));
+                        // Call the appropriate function to load data for the selected page
+                        loadUsers(page);
+                    });
+                }
+            });
+        }
+    </script>
+    <style>
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .empty-state svg {
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .empty-state p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .empty-state-message {
+            text-align: center;
+        }
+
+        .empty-pagination-message {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            font-style: italic;
+        }
+    </style>
+</body>
+
+</html>

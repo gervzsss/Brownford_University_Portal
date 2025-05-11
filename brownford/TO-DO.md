@@ -19,3 +19,11 @@
 ### ADMIN [SIDE]
 - CAN Add Events
 - CAN Add Announcements
+
+
+### CRUD [MAIN]
+- STUDENTS
+- FACULTY
+- COURSES
+- SECTION
+- SUBJECTS
