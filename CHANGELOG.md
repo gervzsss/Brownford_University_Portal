@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.13.252048]
+
+### Changes
+- MySQL Database Connection
+
 ## [05.13.251109]
 
 ### Changes
