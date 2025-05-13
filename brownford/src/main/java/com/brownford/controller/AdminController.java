@@ -11,19 +11,19 @@ public class AdminController {
         return "/admin/admin-dashboard";
     }
 
-    @GetMapping("/admin-student-assignment")
-    public String adminStudentAssignment() {
-        return "/admin/admin-student-assignment";
+    @GetMapping("/admin-course-section")
+    public String adminCourseSection() {
+        return "/admin/admin-course-section";
     }
 
-    @GetMapping("/admin-schedule-assignment")
-    public String adminScheduleAssignment() {
-        return "/admin/admin-schedule-assignment";
+    @GetMapping("/admin-subject-management")
+    public String adminSubjectManagement() {
+        return "/admin/admin-subject-management";
     }
 
-    @GetMapping("/admin-subject-assignment")
-    public String adminSubjectAssignment() {
-        return "/admin/admin-subject-assignment";
+    @GetMapping("/admin-enrollment-grades")
+    public String adminEnrollmentGrades() {
+        return "/admin/admin-enrollment-grades";
     }
 
     @GetMapping("/admin-users")

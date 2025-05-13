@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brown Ford University - Subject Management</title>
+    <!-- Link to the external CSS files -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+
+        <!-- Sidebar Navigation -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
+                    <span class="sidebar-title">Admin Portal</span>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">&times;</button>
+            </div>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <div class="sidebar-section-title">Academic Management</div>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-course-section}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Course & Section</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-subject-management}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Subject Management</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-enrollment-grades}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Enrollment & Grades</span>
+                        </a>
+                    </li>
+
+                    <div class="sidebar-section-title">User Management</div>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-users}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">User Management</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item sidebar-dropdown">
+                        <button class="sidebar-dropdown-toggle">
+                            <span class="sidebar-dropdown-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-dropdown-text">Faculty</span>
+                            <span class="sidebar-dropdown-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="sidebar-dropdown-menu">
+                            <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
+                            <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
+                                Management</a>
+                            <a th:href="@{/admin-faculty-evaluation}" class="sidebar-dropdown-item">Evaluations</a>
+                        </div>
+                    </li>
+
+                    <li class="sidebar-nav-item sidebar-dropdown">
+                        <button class="sidebar-dropdown-toggle">
+                            <span class="sidebar-dropdown-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                            <span class="sidebar-dropdown-text">Students</span>
+                            <span class="sidebar-dropdown-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="sidebar-dropdown-menu">
+                            <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
+                            <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
+                            <a th:href="@{/admin-student-graduation}" class="sidebar-dropdown-item">Graduation
+                                Management</a>
+                        </div>
+                    </li>
+
+                    <div class="sidebar-section-title">System</div>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-settings}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Settings</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-reports}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Reports</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <p>Brown Ford University &copy; 2025</p>
+                <p>Admin Portal v1.0</p>
+            </div>
+        </div>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a th:href="@{/admin-profile}" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-wrapper" id="contentWrapper">
+            <main class="dashboard-content">
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <div class="tab-container">
+                        <button class="tab-button active" id="subjectsTab">SUBJECTS</button>
+                        <button class="tab-button" id="assignmentsTab">ASSIGNMENTS</button>
+                    </div>
+                </div>
+
+                <!-- Subjects Tab Content -->
+                <section class="content-panel" id="subjectsPanel">
+                    <div class="panel-header">
+                        <h2 class="section-title">Subject Management</h2>
+                    </div>
+                    <div class="panel-content">
+                        <!-- Search and Filter Controls -->
+                        <div class="user-controls">
+                            <div class="search-filter-container">
+                                <div class="search-container">
+                                    <input type="text" placeholder="Search subjects..." id="subjectSearchInput">
+                                    <button class="search-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="filter-container">
+                                    <select id="departmentFilter" class="filter-select">
+                                        <option value="all">All Departments</option>
+                                        <option value="business">Business Administration</option>
+                                        <option value="statistics">Statistics</option>
+                                        <option value="computer_science">Computer Science</option>
+                                        <option value="engineering">Engineering</option>
+                                        <option value="humanities">Humanities</option>
+                                    </select>
+                                    <select id="levelFilter" class="filter-select">
+                                        <option value="all">All Levels</option>
+                                        <option value="undergraduate">Undergraduate</option>
+                                        <option value="graduate">Graduate</option>
+                                    </select>
+                                    <select id="statusFilter" class="filter-select">
+                                        <option value="all">All Status</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button id="addSubjectBtn" class="add-user-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                        <line x1="12" y1="11" x2="12" y2="17"></line>
+                                        <line x1="9" y1="14" x2="15" y2="14"></line>
+                                    </svg>
+                                    Add New Subject
+                                </button>
+                                <button id="exportSubjectsBtn" class="export-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Subjects Table -->
+                        <div class="table-container">
+                            <table class="data-table" id="subjectsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Subject Code</th>
+                                        <th>Subject Name</th>
+                                        <th>Department</th>
+                                        <th>Level</th>
+                                        <th>Credits</th>
+                                        <th>Prerequisites</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="subjectsTableBody">
+                                    <!-- Subject data will be loaded dynamically from the database -->
+                                    <tr class="empty-state-row">
+                                        <td colspan="8" class="empty-state-message">
+                                            <div class="empty-state">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                                </svg>
+                                                <p>No subjects found. Add subjects or adjust your search filters to see
+                                                    results.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination" id="subjectsPaginationContainer">
+                            <div class="empty-pagination-message">
+                                <p>Pagination will appear when there are enough records to display multiple pages.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assignments Tab Content -->
+                <section class="content-panel" id="assignmentsPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h2 class="section-title">Subject Assignments</h2>
+                    </div>
+                    <div class="panel-content">
+                        <!-- Search and Filter Controls -->
+                        <div class="user-controls">
+                            <div class="search-filter-container">
+                                <div class="search-container">
+                                    <input type="text" placeholder="Search assignments..." id="assignmentSearchInput">
+                                    <button class="search-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="filter-container">
+                                    <select id="subjectFilter" class="filter-select">
+                                        <option value="all">All Subjects</option>
+                                        <!-- Subject options will be loaded dynamically -->
+                                    </select>
+                                    <select id="assignmentTypeFilter" class="filter-select">
+                                        <option value="all">All Types</option>
+                                        <option value="faculty">Faculty</option>
+                                        <option value="student">Student</option>
+                                    </select>
+                                    <select id="semesterFilter" class="filter-select">
+                                        <option value="all">All Semesters</option>
+                                        <option value="fall2024">Fall 2024</option>
+                                        <option value="spring2025">Spring 2025</option>
+                                        <option value="summer2025">Summer 2025</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button id="assignSubjectBtn" class="add-user-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="8.5" cy="7" r="4"></circle>
+                                        <line x1="20" y1="8" x2="20" y2="14"></line>
+                                        <line x1="23" y1="11" x2="17" y2="11"></line>
+                                    </svg>
+                                    Assign Subject
+                                </button>
+                                <button id="exportAssignmentsBtn" class="export-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Assignments Table -->
+                        <div class="table-container">
+                            <table class="data-table" id="assignmentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Assignment ID</th>
+                                        <th>Subject</th>
+                                        <th>Assigned To</th>
+                                        <th>Type</th>
+                                        <th>Semester</th>
+                                        <th>Assigned Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assignmentsTableBody">
+                                    <!-- Assignment data will be loaded dynamically from the database -->
+                                    <tr class="empty-state-row">
+                                        <td colspan="8" class="empty-state-message">
+                                            <div class="empty-state">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="9" cy="7" r="4"></circle>
+                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                </svg>
+                                                <p>No assignments found. Assign subjects to faculty or students to see
+                                                    results.</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination" id="assignmentsPaginationContainer">
+                            <div class="empty-pagination-message">
+                                <p>Pagination will appear when there are enough records to display multiple pages.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Subject Modal -->
+        <div id="subjectModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="subjectModalTitle">Add New Subject</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="subjectForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="subjectCode">Subject Code</label>
+                                <input type="text" id="subjectCode" name="subjectCode" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subjectName">Subject Name</label>
+                                <input type="text" id="subjectName" name="subjectName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="subjectDepartment">Department</label>
+                                <select id="subjectDepartment" name="subjectDepartment" class="form-control" required>
+                                    <option value="">Select Department</option>
+                                    <option value="business">Business Administration</option>
+                                    <option value="statistics">Statistics</option>
+                                    <option value="computer_science">Computer Science</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="humanities">Humanities</option>
+                                    <option value="mathematics">Mathematics</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="subjectLevel">Level</label>
+                                <select id="subjectLevel" name="subjectLevel" class="form-control" required>
+                                    <option value="">Select Level</option>
+                                    <option value="undergraduate">Undergraduate</option>
+                                    <option value="graduate">Graduate</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="subjectCredits">Credits</label>
+                                <input type="number" id="subjectCredits" name="subjectCredits" class="form-control"
+                                    min="1" max="6" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subjectStatus">Status</label>
+                                <select id="subjectStatus" name="subjectStatus" class="form-control" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subjectPrerequisites">Prerequisites</label>
+                            <input type="text" id="subjectPrerequisites" name="subjectPrerequisites"
+                                class="form-control" placeholder="Comma separated subject codes or 'None'">
+                        </div>
+                        <div class="form-group">
+                            <label for="subjectDescription">Subject Description</label>
+                            <textarea id="subjectDescription" name="subjectDescription" class="form-control"
+                                rows="4"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelSubjectBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveSubjectBtn">Save Subject</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignment Modal -->
+        <div id="assignmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="assignmentModalTitle">Assign Subject</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="assignmentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="assignmentType">Assignment Type</label>
+                                <select id="assignmentType" name="assignmentType" class="form-control" required>
+                                    <option value="">Select Type</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="student">Student</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentSubject">Subject</label>
+                                <select id="assignmentSubject" name="assignmentSubject" class="form-control" required>
+                                    <option value="">Select Subject</option>
+                                    <!-- Subject options will be loaded dynamically -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="assignmentPerson">Assign To</label>
+                                <select id="assignmentPerson" name="assignmentPerson" class="form-control" required>
+                                    <option value="">Select Person</option>
+                                    <!-- Person options will be loaded dynamically based on type -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="assignmentSemester">Semester</label>
+                                <select id="assignmentSemester" name="assignmentSemester" class="form-control" required>
+                                    <option value="">Select Semester</option>
+                                    <option value="fall2024">Fall 2024</option>
+                                    <option value="spring2025">Spring 2025</option>
+                                    <option value="summer2025">Summer 2025</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="assignmentGradeGroup" style="display: none;">
+                            <label for="assignmentGrade">Grade (For Students Only)</label>
+                            <select id="assignmentGrade" name="assignmentGrade" class="form-control">
+                                <option value="">Not Graded Yet</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="F">F</option>
+                                <option value="I">I (Incomplete)</option>
+                                <option value="W">W (Withdrawn)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignmentNotes">Notes</label>
+                            <textarea id="assignmentNotes" name="assignmentNotes" class="form-control"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelAssignmentBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveAssignmentBtn">Save
+                                Assignment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Subject Details Modal -->
+        <div id="viewSubjectModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Subject Details</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="subject-details">
+                        <div class="subject-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div class="subject-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Subject Code:</span>
+                                <span class="info-value" id="viewSubjectCode"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Subject Name:</span>
+                                <span class="info-value" id="viewSubjectName"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Department:</span>
+                                <span class="info-value" id="viewSubjectDepartment"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Level:</span>
+                                <span class="info-value" id="viewSubjectLevel"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Credits:</span>
+                                <span class="info-value" id="viewSubjectCredits"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Prerequisites:</span>
+                                <span class="info-value" id="viewSubjectPrerequisites"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value" id="viewSubjectStatus"></span>
+                            </div>
+                        </div>
+                        <div class="subject-description">
+                            <h4>Subject Description</h4>
+                            <p id="viewSubjectDescription"></p>
+                        </div>
+                        <div class="subject-assignments">
+                            <h4>Current Assignments</h4>
+                            <div class="assignment-tabs">
+                                <button class="assignment-tab active" data-type="faculty">Faculty</button>
+                                <button class="assignment-tab" data-type="student">Students</button>
+                            </div>
+                            <div class="assignment-content" id="facultyAssignments">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Faculty ID</th>
+                                            <th>Name</th>
+                                            <th>Semester</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="viewSubjectFaculty">
+                                        <!-- Faculty assignments will be loaded dynamically -->
+                                        <tr>
+                                            <td colspan="4" class="empty-state-message">No faculty assigned to this
+                                                subject.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="assignment-content" id="studentAssignments" style="display: none;">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Semester</th>
+                                            <th>Grade</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="viewSubjectStudents">
+                                        <!-- Student assignments will be loaded dynamically -->
+                                        <tr>
+                                            <td colspan="5" class="empty-state-message">No students assigned to this
+                                                subject.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subject-actions">
+                        <button class="btn btn-secondary" id="closeViewSubjectBtn">Close</button>
+                        <button class="btn btn-primary" id="editFromViewSubjectBtn">Edit Subject</button>
+                        <button class="btn btn-success" id="assignFromViewSubjectBtn">Assign Subject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Assignment Details Modal -->
+        <div id="viewAssignmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Assignment Details</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="assignment-details">
+                        <div class="assignment-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="assignment-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Assignment ID:</span>
+                                <span class="info-value" id="viewAssignmentId"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Subject:</span>
+                                <span class="info-value" id="viewAssignmentSubject"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Type:</span>
+                                <span class="info-value" id="viewAssignmentType"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Assigned To:</span>
+                                <span class="info-value" id="viewAssignmentPerson"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Semester:</span>
+                                <span class="info-value" id="viewAssignmentSemester"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Assigned Date:</span>
+                                <span class="info-value" id="viewAssignmentDate"></span>
+                            </div>
+                            <div class="info-item" id="viewGradeItem" style="display: none;">
+                                <span class="info-label">Grade:</span>
+                                <span class="info-value" id="viewAssignmentGrade"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value" id="viewAssignmentStatus"></span>
+                            </div>
+                        </div>
+                        <div class="assignment-notes">
+                            <h4>Notes</h4>
+                            <p id="viewAssignmentNotes"></p>
+                        </div>
+                    </div>
+                    <div class="assignment-actions">
+                        <button class="btn btn-secondary" id="closeViewAssignmentBtn">Close</button>
+                        <button class="btn btn-primary" id="editFromViewAssignmentBtn">Edit Assignment</button>
+                        <button class="btn btn-danger" id="removeAssignmentBtn">Remove Assignment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteConfirmModal" class="modal">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <h3 id="deleteConfirmTitle">Confirm Deletion</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteConfirmMessage">Are you sure you want to delete this item? This action cannot be
+                        undone.</p>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/notifications.js}"></script>
+    <script th:src="@{/js/sidebar-nav.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tab switching functionality
+            const subjectsTab = document.getElementById('subjectsTab');
+            const assignmentsTab = document.getElementById('assignmentsTab');
+            const subjectsPanel = document.getElementById('subjectsPanel');
+            const assignmentsPanel = document.getElementById('assignmentsPanel');
+
+            subjectsTab.addEventListener('click', function () {
+                subjectsTab.classList.add('active');
+                assignmentsTab.classList.remove('active');
+                subjectsPanel.style.display = 'block';
+                assignmentsPanel.style.display = 'none';
+            });
+
+            assignmentsTab.addEventListener('click', function () {
+                assignmentsTab.classList.add('active');
+                subjectsTab.classList.remove('active');
+                assignmentsPanel.style.display = 'block';
+                subjectsPanel.style.display = 'none';
+            });
+
+            // Modal elements
+            const subjectModal = document.getElementById('subjectModal');
+            const assignmentModal = document.getElementById('assignmentModal');
+            const viewSubjectModal = document.getElementById('viewSubjectModal');
+            const viewAssignmentModal = document.getElementById('viewAssignmentModal');
+            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+            const addSubjectBtn = document.getElementById('addSubjectBtn');
+            const assignSubjectBtn = document.getElementById('assignSubjectBtn');
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            const cancelSubjectBtn = document.getElementById('cancelSubjectBtn');
+            const cancelAssignmentBtn = document.getElementById('cancelAssignmentBtn');
+            const closeViewSubjectBtn = document.getElementById('closeViewSubjectBtn');
+            const closeViewAssignmentBtn = document.getElementById('closeViewAssignmentBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+            // Open add modals
+            addSubjectBtn.addEventListener('click', function () {
+                document.getElementById('subjectModalTitle').textContent = 'Add New Subject';
+                document.getElementById('subjectForm').reset();
+                subjectModal.style.display = 'block';
+            });
+
+            assignSubjectBtn.addEventListener('click', function () {
+                document.getElementById('assignmentModalTitle').textContent = 'Assign Subject';
+                document.getElementById('assignmentForm').reset();
+                assignmentModal.style.display = 'block';
+            });
+
+            // Close all modals
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    subjectModal.style.display = 'none';
+                    assignmentModal.style.display = 'none';
+                    viewSubjectModal.style.display = 'none';
+                    viewAssignmentModal.style.display = 'none';
+                    deleteConfirmModal.style.display = 'none';
+                });
+            });
+
+            cancelSubjectBtn.addEventListener('click', function () {
+                subjectModal.style.display = 'none';
+            });
+
+            cancelAssignmentBtn.addEventListener('click', function () {
+                assignmentModal.style.display = 'none';
+            });
+
+            closeViewSubjectBtn.addEventListener('click', function () {
+                viewSubjectModal.style.display = 'none';
+            });
+
+            closeViewAssignmentBtn.addEventListener('click', function () {
+                viewAssignmentModal.style.display = 'none';
+            });
+
+            cancelDeleteBtn.addEventListener('click', function () {
+                deleteConfirmModal.style.display = 'none';
+            });
+
+            // Assignment type change handler
+            document.getElementById('assignmentType').addEventListener('change', function () {
+                const gradeGroup = document.getElementById('assignmentGradeGroup');
+                if (this.value === 'student') {
+                    gradeGroup.style.display = 'block';
+                } else {
+                    gradeGroup.style.display = 'none';
+                }
+
+                // In a real implementation, this would also update the assignmentPerson dropdown
+                // based on the selected type (faculty or student)
+                loadAssignablePeople(this.value);
+            });
+
+            // Subject form submission
+            document.getElementById('subjectForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    subjectCode: document.getElementById('subjectCode').value,
+                    subjectName: document.getElementById('subjectName').value,
+                    department: document.getElementById('subjectDepartment').value,
+                    level: document.getElementById('subjectLevel').value,
+                    credits: document.getElementById('subjectCredits').value,
+                    prerequisites: document.getElementById('subjectPrerequisites').value,
+                    status: document.getElementById('subjectStatus').value,
+                    description: document.getElementById('subjectDescription').value
+                };
+
+                console.log('Ready to send subject data to server:', formData);
+                alert('Subject data ready to be saved to database');
+                subjectModal.style.display = 'none';
+
+                // In a real implementation, this would make an AJAX call to save the data
+                // and then refresh the subjects table
+                loadSubjects();
+            });
+
+            // Assignment form submission
+            document.getElementById('assignmentForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    type: document.getElementById('assignmentType').value,
+                    subject: document.getElementById('assignmentSubject').value,
+                    person: document.getElementById('assignmentPerson').value,
+                    semester: document.getElementById('assignmentSemester').value,
+                    notes: document.getElementById('assignmentNotes').value
+                };
+
+                if (formData.type === 'student') {
+                    formData.grade = document.getElementById('assignmentGrade').value;
+                }
+
+                console.log('Ready to send assignment data to server:', formData);
+                alert('Assignment data ready to be saved to database');
+                assignmentModal.style.display = 'none';
+
+                // In a real implementation, this would make an AJAX call to save the data
+                // and then refresh the assignments table
+                loadAssignments();
+            });
+
+            // Assignment tabs in view subject modal
+            document.querySelectorAll('.assignment-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const type = this.getAttribute('data-type');
+                    document.querySelectorAll('.assignment-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    if (type === 'faculty') {
+                        document.getElementById('facultyAssignments').style.display = 'block';
+                        document.getElementById('studentAssignments').style.display = 'none';
+                    } else {
+                        document.getElementById('facultyAssignments').style.display = 'none';
+                        document.getElementById('studentAssignments').style.display = 'block';
+                    }
+                });
+            });
+
+            // Edit from view modals
+            document.getElementById('editFromViewSubjectBtn').addEventListener('click', function () {
+                viewSubjectModal.style.display = 'none';
+                document.getElementById('subjectModalTitle').textContent = 'Edit Subject';
+
+                // In a real implementation, this would populate the form with the subject data
+                subjectModal.style.display = 'block';
+            });
+
+            document.getElementById('editFromViewAssignmentBtn').addEventListener('click', function () {
+                viewAssignmentModal.style.display = 'none';
+                document.getElementById('assignmentModalTitle').textContent = 'Edit Assignment';
+
+                // In a real implementation, this would populate the form with the assignment data
+                assignmentModal.style.display = 'block';
+            });
+
+            // Assign from view subject
+            document.getElementById('assignFromViewSubjectBtn').addEventListener('click', function () {
+                viewSubjectModal.style.display = 'none';
+                document.getElementById('assignmentModalTitle').textContent = 'Assign Subject';
+                document.getElementById('assignmentForm').reset();
+
+                // In a real implementation, this would pre-select the subject in the assignment form
+                assignmentModal.style.display = 'block';
+            });
+
+            // Remove assignment
+            document.getElementById('removeAssignmentBtn').addEventListener('click', function () {
+                const assignmentId = document.getElementById('viewAssignmentId').textContent;
+                document.getElementById('deleteConfirmTitle').textContent = 'Remove Assignment';
+                document.getElementById('deleteConfirmMessage').textContent = `Are you sure you want to remove this assignment? This action cannot be undone.`;
+
+                document.getElementById('confirmDeleteBtn').onclick = function () {
+                    console.log('Removing assignment:', assignmentId);
+                    alert(`Assignment would be removed from the database`);
+                    deleteConfirmModal.style.display = 'none';
+                    viewAssignmentModal.style.display = 'none';
+
+                    // In a real implementation, this would make an AJAX call to remove the assignment
+                    // and then refresh the assignments table
+                    loadAssignments();
+                };
+
+                deleteConfirmModal.style.display = 'block';
+            });
+
+            // Search functionality
+            document.getElementById('subjectSearchInput').addEventListener('keyup', function () {
+                const searchTerm = this.value.trim().toLowerCase();
+                if (searchTerm.length >= 2) {
+                    console.log('Searching for subjects with term:', searchTerm);
+                    // In a real implementation, this would make an AJAX call to search for subjects
+                    // or filter the existing table
+                }
+            });
+
+            document.getElementById('assignmentSearchInput').addEventListener('keyup', function () {
+                const searchTerm = this.value.trim().toLowerCase();
+                if (searchTerm.length >= 2) {
+                    console.log('Searching for assignments with term:', searchTerm);
+                    // In a real implementation, this would make an AJAX call to search for assignments
+                    // or filter the existing table
+                }
+            });
+
+            // Filters
+            document.getElementById('departmentFilter').addEventListener('change', applySubjectsFilters);
+            document.getElementById('levelFilter').addEventListener('change', applySubjectsFilters);
+            document.getElementById('statusFilter').addEventListener('change', applySubjectsFilters);
+
+            document.getElementById('subjectFilter').addEventListener('change', applyAssignmentsFilters);
+            document.getElementById('assignmentTypeFilter').addEventListener('change', applyAssignmentsFilters);
+            document.getElementById('semesterFilter').addEventListener('change', applyAssignmentsFilters);
+
+            function applySubjectsFilters() {
+                const department = document.getElementById('departmentFilter').value;
+                const level = document.getElementById('levelFilter').value;
+                const status = document.getElementById('statusFilter').value;
+                console.log('Filtering subjects - Department:', department, 'Level:', level, 'Status:', status);
+
+                // In a real implementation, this would make an AJAX call to filter subjects
+                // or filter the existing table
+            }
+
+            function applyAssignmentsFilters() {
+                const subject = document.getElementById('subjectFilter').value;
+                const type = document.getElementById('assignmentTypeFilter').value;
+                const semester = document.getElementById('semesterFilter').value;
+                console.log('Filtering assignments - Subject:', subject, 'Type:', type, 'Semester:', semester);
+
+                // In a real implementation, this would make an AJAX call to filter assignments
+                // or filter the existing table
+            }
+
+            // Export functionality
+            document.getElementById('exportSubjectsBtn').addEventListener('click', function () {
+                console.log('Exporting subjects data');
+                alert('Subject export functionality ready for implementation');
+
+                // In a real implementation, this would make an AJAX call to export subjects data
+                // to a CSV or Excel file
+            });
+
+            document.getElementById('exportAssignmentsBtn').addEventListener('click', function () {
+                console.log('Exporting assignments data');
+                alert('Assignment export functionality ready for implementation');
+
+                // In a real implementation, this would make an AJAX call to export assignments data
+                // to a CSV or Excel file
+            });
+
+            // Functions to load data from the server
+            function loadSubjects() {
+                console.log('Loading subjects');
+
+                // In a real implementation, this would make an AJAX call to load subjects
+                // and populate the subjects table
+            }
+
+            function loadAssignments() {
+                console.log('Loading assignments');
+
+                // In a real implementation, this would make an AJAX call to load assignments
+                // and populate the assignments table
+            }
+
+            function loadAssignablePeople(type) {
+                console.log('Loading assignable people of type:', type);
+
+                // In a real implementation, this would make an AJAX call to load faculty or students
+                // based on the selected type and populate the assignmentPerson dropdown
+            }
+
+            // Initialize the page
+            loadSubjects();
+            loadAssignments();
+        });
+    </script>
+
+    <style>
+        /* Tab Navigation Styles */
+        .tab-navigation {
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0.5rem;
+            position: relative;
+        }
+
+        .tab-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 0.5rem;
+            z-index: 0;
+        }
+
+        .tab-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            font-family: 'Cinzel', serif;
+            color: #6B3A1D;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .tab-button:hover {
+            color: #8B4513;
+        }
+
+        .tab-button.active {
+            color: #B25000;
+            font-weight: 600;
+        }
+
+        /* Panel Header Styling */
+        .panel-header {
+            background-color: #fff;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            color: #6B3A1D;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Empty State Styles */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .empty-state svg {
+            margin-bottom: 1rem;
+            opacity: 0.6;
+        }
+
+        .empty-state p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .empty-state-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-pagination-message {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Modal Styles for Subject/Assignment Details */
+        .subject-details,
+        .assignment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .subject-icon,
+        .assignment-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .subject-info-grid,
+        .assignment-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #6B3A1D;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+        }
+
+        .subject-description,
+        .assignment-notes,
+        .subject-assignments {
+            margin-top: 1rem;
+        }
+
+        .subject-description h4,
+        .assignment-notes h4,
+        .subject-assignments h4 {
+            color: #6B3A1D;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .subject-actions,
+        .assignment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Assignment Tabs in View Subject Modal */
+        .assignment-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .assignment-tab {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: #6B3A1D;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .assignment-tab:hover {
+            color: #8B4513;
+        }
+
+        .assignment-tab.active {
+            color: #B25000;
+            font-weight: 600;
+        }
+
+        .assignment-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #B25000;
+        }
+
+        /* Status Badge Styles */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge.active {
+            background-color: rgba(0, 128, 0, 0.1);
+            color: green;
+        }
+
+        .status-badge.inactive {
+            background-color: rgba(128, 128, 128, 0.1);
+            color: #666;
+        }
+
+        /* Small Modal */
+        .modal-sm {
+            max-width: 500px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            .subject-info-grid,
+            .assignment-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-button {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</body>
+
+</html>

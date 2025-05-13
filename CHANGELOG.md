@@ -1,5 +1,21 @@
 # Changelog
 
+## [05.13.251109]
+
+### Changes
+- Remove the Main Navigation Bar
+- Added Side Panel Bar 
+
+### Added
+- Admin Dashboard
+- Admin Course/Section Management
+- Admin Subject Management
+- Admin Enrollment and Grade Management [beta]
+- Admin User Management [beta]
+
+[beta]
+- Changes need to be made in the Side panel bar
+
 ## [05.12.250048]
 
 #### Added
