@@ -8,9 +8,53 @@
     <!-- Link to the external CSS files -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
+    <style>
+        .tab-navigation {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .tab-navigation ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .tab-navigation li {
+            margin: 0;
+        }
+        .tab-navigation a.tab-link {
+            display: block;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: #6B3A1D;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-size: 14px;
+        }
+        .tab-navigation a.tab-link:hover {
+            background-color: rgba(107, 58, 29, 0.1);
+        }
+        .tab-navigation a.tab-link.active {
+            color: #B25000;
+            border-bottom: 3px solid #B25000;
+            background-color: rgba(178, 80, 0, 0.05);
+        }
+    </style>
 </head>
 
 <body>
@@ -278,13 +322,28 @@
         <!-- Main Content -->
         <div class="content-wrapper" id="contentWrapper">
             <main class="dashboard-content">
-                <!-- Tab Navigation -->
-                <div class="tab-navigation">
-                    <div class="tab-container">
-                        <button class="tab-button active" id="subjectsTab">SUBJECTS</button>
-                        <button class="tab-button" id="assignmentsTab">ASSIGNMENTS</button>
+                <!-- Header Section (Welcome) -->
+                <section class="welcome-section">
+                    <div class="welcome-header">
+                        <div class="welcome-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="welcome-text">
+                            <h2>Subject Management</h2>
+                            <p>Manage subjects and assignments for courses</p>
+                        </div>
                     </div>
-                </div>
+                </section>
+                <!-- Tab Navigation -->
+                <nav class="tab-navigation">
+                    <ul>
+                        <li><a href="#" class="tab-link active" data-tab="subjectsPanel">Subjects</a></li>
+                        <li><a href="#" class="tab-link" data-tab="assignmentsPanel">Assignments</a></li>
+                    </ul>
+                </nav>
 
                 <!-- Subjects Tab Content -->
                 <section class="content-panel" id="subjectsPanel">
@@ -850,24 +909,23 @@
     <script th:src="@{/js/sidebar-nav.js}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Tab switching functionality
-            const subjectsTab = document.getElementById('subjectsTab');
-            const assignmentsTab = document.getElementById('assignmentsTab');
-            const subjectsPanel = document.getElementById('subjectsPanel');
-            const assignmentsPanel = document.getElementById('assignmentsPanel');
+            // Tab Navigation
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.content-panel');
 
-            subjectsTab.addEventListener('click', function () {
-                subjectsTab.classList.add('active');
-                assignmentsTab.classList.remove('active');
-                subjectsPanel.style.display = 'block';
-                assignmentsPanel.style.display = 'none';
-            });
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
 
-            assignmentsTab.addEventListener('click', function () {
-                assignmentsTab.classList.add('active');
-                subjectsTab.classList.remove('active');
-                assignmentsPanel.style.display = 'block';
-                subjectsPanel.style.display = 'none';
+                    // Remove active class from all tabs and contents
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to current tab and content
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
             });
 
             // Modal elements
@@ -1148,245 +1206,6 @@
             loadAssignments();
         });
     </script>
-
-    <style>
-        /* Tab Navigation Styles */
-        .tab-navigation {
-            padding: 1rem;
-            margin-bottom: 2rem;
-            border-radius: 0.5rem;
-            position: relative;
-        }
-
-        .tab-navigation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 0.5rem;
-            z-index: 0;
-        }
-
-        .tab-container {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tab-button {
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            font-family: 'Cinzel', serif;
-            color: #6B3A1D;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-
-        .tab-button:hover {
-            color: #8B4513;
-        }
-
-        .tab-button.active {
-            color: #B25000;
-            font-weight: 600;
-        }
-
-        /* Panel Header Styling */
-        .panel-header {
-            background-color: #fff;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .section-title {
-            color: #6B3A1D;
-            font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Empty State Styles */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .empty-state svg {
-            margin-bottom: 1rem;
-            opacity: 0.6;
-        }
-
-        .empty-state p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .empty-state-message {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .empty-pagination-message {
-            text-align: center;
-            color: #888;
-            font-size: 0.9rem;
-            padding: 0.5rem;
-            font-style: italic;
-        }
-
-        /* Modal Styles for Subject/Assignment Details */
-        .subject-details,
-        .assignment-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .subject-icon,
-        .assignment-icon {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .subject-info-grid,
-        .assignment-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #6B3A1D;
-            font-size: 0.9rem;
-        }
-
-        .info-value {
-            font-size: 1rem;
-        }
-
-        .subject-description,
-        .assignment-notes,
-        .subject-assignments {
-            margin-top: 1rem;
-        }
-
-        .subject-description h4,
-        .assignment-notes h4,
-        .subject-assignments h4 {
-            color: #6B3A1D;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-
-        .subject-actions,
-        .assignment-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        /* Assignment Tabs in View Subject Modal */
-        .assignment-tabs {
-            display: flex;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .assignment-tab {
-            padding: 0.5rem 1rem;
-            background: none;
-            border: none;
-            font-size: 1rem;
-            color: #6B3A1D;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .assignment-tab:hover {
-            color: #8B4513;
-        }
-
-        .assignment-tab.active {
-            color: #B25000;
-            font-weight: 600;
-        }
-
-        .assignment-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #B25000;
-        }
-
-        /* Status Badge Styles */
-        .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .status-badge.active {
-            background-color: rgba(0, 128, 0, 0.1);
-            color: green;
-        }
-
-        .status-badge.inactive {
-            background-color: rgba(128, 128, 128, 0.1);
-            color: #666;
-        }
-
-        /* Small Modal */
-        .modal-sm {
-            max-width: 500px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-
-            .subject-info-grid,
-            .assignment-info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tab-button {
-                padding: 0.5rem 1rem;
-                font-size: 1rem;
-            }
-        }
-    </style>
 </body>
 
 </html>

@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.14.251650]
+
+### Changes
+- Improved Admin Pages Design
+
 ## [05.13.252048]
 
 ### Changes
