@@ -6,49 +6,49 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StudentController {
 
-    @GetMapping("/home")
+    @GetMapping("/student-home")
     public String home() {
-        return "/student/home";
+        return "/student/student-home";
     }
 
-    @GetMapping("/announcements")
+    @GetMapping("/student-announcements")
     public String announcements() {
-        return "redirect:/home";
+        return "redirect:/student-home";
     }
 
-    @GetMapping("/events")
+    @GetMapping("/student-events")
     public String events() {
-        return "/student/events";
+        return "/student/student-events";
     }
 
-    @GetMapping("/contact")
+    @GetMapping("/student-contact")
     public String contact() {
-        return "/student/contact";
+        return "/student/student-contact";
     }
 
-    @GetMapping("/schedule")
+    @GetMapping("/student-schedule")
     public String schedule() {
-        return "/student/schedule";
+        return "/student/student-schedule";
     }
 
-    @GetMapping("/grades")
+    @GetMapping("/student-grades")
     public String grades() {
-        return "/student/grades";
+        return "/student/student-grades";
     }
 
-    @GetMapping("/enrollment")
+    @GetMapping("/student-enrollment")
     public String enrollment() {
-        return "/student/enrollment";
+        return "/student/student-enrollment";
     }
 
-    @GetMapping("/faculty-evaluation")
+    @GetMapping("/student-faculty-evaluation")
     public String facultyevaluation() {
-        return "/student/faculty-evaluation";
+        return "/student/student-faculty-evaluation";
     }
 
-    @GetMapping("/faculty-evaluation-form")
+    @GetMapping("/student-faculty-evaluation-form")
     public String EvaluationForm() {
-        return "/student/faculty-evaluation-form";
+        return "/student/student-faculty-evaluation-form";
     }
 
     @GetMapping("/logout")
@@ -56,8 +56,8 @@ public class StudentController {
         return "redirect:/login";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/student-profile")
     public String profile() {
-        return "/student/profile";
+        return "/student/student-profile";
     }
 }

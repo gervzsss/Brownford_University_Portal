@@ -78,11 +78,11 @@
         <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/home}">Home</a></li>
-                <li><a th:href="@{/schedule}">Schedule</a></li>
-                <li><a th:href="@{/grades}">Grades</a></li>
-                <li><a th:href="@{/enrollment}">Enrollment</a></li>
-                <li><a th:href="@{/faculty-evaluation}" class="active">Faculty Evaluation</a></li>
+                <li><a th:href="@{/student-home}">Home</a></li>
+                <li><a th:href="@{/student-schedule}">Schedule</a></li>
+                <li><a th:href="@{/student-grades}">Grades</a></li>
+                <li><a th:href="@{/student-enrollment}">Enrollment</a></li>
+                <li><a th:href="@{/student-faculty-evaluation}" class="active">Faculty Evaluation</a></li>
             </ul>
         </nav>
 
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="professor-action">
-                        <a th:href="@{/faculty-evaluation-form(professorId=1, courseCode='GENED07')}"
+                        <a th:href="@{/student-faculty-evaluation-form(professorId=1, courseCode='GENED07')}"
                             class="evaluate-button">Evaluate</a>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div class="professor-action">
-                        <a th:href="@{/faculty-evaluation-form(professorId=2, courseCode='GENED02')}"
+                        <a th:href="@{/student-faculty-evaluation-form(professorId=2, courseCode='GENED02')}"
                             class="evaluate-button">Evaluate</a>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                     <div class="professor-action">
-                        <a th:href="@{/faculty-evaluation-form(professorId=3, courseCode='PFIT400')}"
+                        <a th:href="@{/student-faculty-evaluation-form(professorId=3, courseCode='PFIT400')}"
                             class="evaluate-button">Evaluate</a>
                     </div>
                 </div>

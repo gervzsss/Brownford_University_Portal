@@ -4,62 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
-
 import java.util.Map;
+import org.springframework.ui.Model;
 
 @Controller
 public class LoginController {
 
-    // STEP 1: Static users with role and password
-    private static final Map<String, User> USERS = Map.of(
-        "admin", new User("qwe", "admin"),
-        "faculty1", new User("zxc", "faculty"),
-        "asd", new User("asd", "student")
-    );
-
-    // STEP 2: Show login page
     @GetMapping("/login")
-    public String loginPage() {
+    public String login() {
         return "/Global/login";
-    }
-
-    // STEP 3: Handle login and redirect based on role
-    @PostMapping("/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        Model model) {
-        User user = USERS.get(username);
-
-        if (user != null && user.getPassword().equals(password)) {
-            String role = user.getRole();
-            if (role.equals("admin")) {
-                return "redirect:/admin-dashboard";
-            } else if (role.equals("faculty")) {
-                return "redirect:/faculty-dashboard";
-            } else if (role.equals("student")) {
-                return "redirect:/home";
-            }
-        }
-
-        model.addAttribute("error", "Invalid username or password");
-        return "/Global/login";
-    }
-
-    // STEP 4: Dummy pages for redirection
-    @GetMapping("/admin")
-    public String adminPage() {
-        return "/admin/admin-dashboard"; // admin.html
-    }
-
-    @GetMapping("/faculty")
-    public String facultyPage() {
-        return "/faculty/faculty-dashboard"; // faculty.html
-    }
-
-    @GetMapping("/student")
-    public String studentPage() {
-        return "/student/home"; // student.html
     }
 
     @GetMapping("/forgot-password")
@@ -67,8 +20,26 @@ public class LoginController {
         return "/Global/forgot-password";
     }
 
+    private static final Map<String, String> USERS = Map.of(
+            "admin", "qwe",
+            "faculty", "zxc",
+            "asd", "asd");
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username,
+            @RequestParam String password,
+            Model model) {
+        if (USERS.containsKey(username) && USERS.get(username).equals(password)) {
+            return "redirect:/student-home";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "redirect:/login";
+        }
+    }
+
     @GetMapping("/error")
     public String error() {
-        return "error";
+        return "/Global/error";
     }
+
 }

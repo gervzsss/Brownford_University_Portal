@@ -1,5 +1,16 @@
 # Changelog
 
+## [05.15.251112]
+
+### Changes
+- Temporarily Changed the Background Image in all of Pages
+- Renamed All the HTML files of Students
+
+### Removed
+- Removed Vertical Scroll Bar when Scrolling in all of pages for Design Contsistency
+- Removed Profile, Settings, Reports in the Admin Page
+- Temporarily Removed the Login credentials for all users
+
 ## [05.14.251650]
 
 ### Changes

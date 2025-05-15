@@ -53,7 +53,7 @@
 
                 <!-- Profile Icon -->
                 <div class="profile-icon">
-                    <a th:href="@{/profile}" class="profile-link">
+                    <a th:href="@{/student-profile}" class="profile-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                             stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -78,11 +78,11 @@
         <!-- Main Navigation -->
         <nav class="main-nav">
             <ul>
-                <li><a th:href="@{/home}" class="active">Home</a></li>
-                <li><a th:href="@{/schedule}">Schedule</a></li>
-                <li><a th:href="@{/grades}">Grades</a></li>
-                <li><a th:href="@{/enrollment}">Enrollment</a></li>
-                <li><a th:href="@{/faculty-evaluation}">Faculty Evaluation</a></li>
+                <li><a th:href="@{/student-home}" class="active">Home</a></li>
+                <li><a th:href="@{/student-schedule}">Schedule</a></li>
+                <li><a th:href="@{/student-grades}">Grades</a></li>
+                <li><a th:href="@{/student-enrollment}">Enrollment</a></li>
+                <li><a th:href="@{/student-faculty-evaluation}">Faculty Evaluation</a></li>
             </ul>
         </nav>
 
@@ -97,9 +97,9 @@
 
             </div>
             <div class="secondary-nav-links">
-                <a th:href="@{/announcements}" class="active-second-navi">ANNOUNCEMENTS </a>
-                <a th:href="@{/events}">EVENTS</a>
-                <a th:href="@{/contact}">CONTACT</a>
+                <a th:href="@{/student-announcements}" class="active-second-navi">ANNOUNCEMENTS </a>
+                <a th:href="@{/student-events}">EVENTS</a>
+                <a th:href="@{/student-contact}">CONTACT</a>
             </div>
         </div>
 
@@ -126,7 +126,7 @@
             <section class="quick-links-section">
                 <h3 class="section-title">Quick Links</h3>
                 <div class="quick-links-container">
-                    <a href="/schedule" class="quick-link-card">
+                    <a href="/student-schedule" class="quick-link-card">
                         <div class="quick-link-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
@@ -142,7 +142,7 @@
                             <p>View your current class schedule</p>
                         </div>
                     </a>
-                    <a href="/grades" class="quick-link-card">
+                    <a href="/student-grades" class="quick-link-card">
                         <div class="quick-link-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
@@ -159,7 +159,7 @@
                             <p>Check your academic performance</p>
                         </div>
                     </a>
-                    <a href="/enrollment" class="quick-link-card">
+                    <a href="/student-enrollment" class="quick-link-card">
                         <div class="quick-link-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
@@ -173,7 +173,7 @@
                             <p>Manage your course enrollment</p>
                         </div>
                     </a>
-                    <a href="/faculty-evaluation" class="quick-link-card">
+                    <a href="/student-faculty-evaluation" class="quick-link-card">
                         <div class="quick-link-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
@@ -212,7 +212,7 @@
                         </div>
                         <div class="announcement-footer">
                             <span class="announcement-date">Posted: May 15, 2024</span>
-                            <a href="/enrollment" class="announcement-action">Enroll Now</a>
+                            <a href="/student-enrollment" class="announcement-action">Enroll Now</a>
                         </div>
                     </div>
 
@@ -236,7 +236,7 @@
                         </div>
                         <div class="announcement-footer">
                             <span class="announcement-date">Posted: May 10, 2024</span>
-                            <a href="/schedule" class="announcement-action">View Schedule</a>
+                            <a href="/student-schedule" class="announcement-action">View Schedule</a>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
                     </div>
                 </div>
                 <div class="view-all-container">
-                    <a href="/events" class="view-all-link">View All Events</a>
+                    <a href="/student-events" class="view-all-link">View All Events</a>
                 </div>
             </section>
 

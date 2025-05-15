@@ -20,6 +20,7 @@
             position: relative;
             z-index: 2;
         }
+
         .tab-navigation ul {
             display: flex;
             list-style: none;
@@ -30,9 +31,11 @@
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .tab-navigation li {
             margin: 0;
         }
+
         .tab-navigation a.tab-link {
             display: block;
             padding: 12px 24px;
@@ -46,9 +49,11 @@
             border-bottom: 3px solid transparent;
             font-size: 14px;
         }
+
         .tab-navigation a.tab-link:hover {
             background-color: rgba(107, 58, 29, 0.1);
         }
+
         .tab-navigation a.tab-link.active {
             color: #B25000;
             border-bottom: 3px solid #B25000;
@@ -206,41 +211,6 @@
                                 Management</a>
                         </div>
                     </li>
-
-                    <div class="sidebar-section-title">System</div>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-settings}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                    <path
-                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Settings</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-reports}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Reports</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
             <div class="sidebar-footer">
@@ -295,17 +265,6 @@
                     </div>
                 </div>
 
-                <!-- Profile Icon -->
-                <div class="profile-icon">
-                    <a th:href="@{/admin-profile}" class="profile-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </a>
-                </div>
-
                 <!-- Interactive Logout Icon as an anchor tag -->
                 <div class="logout-icon">
                     <a th:href="@{/logout}" class="logout-link">
@@ -326,7 +285,9 @@
                 <section class="welcome-section">
                     <div class="welcome-header">
                         <div class="welcome-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
                             </svg>
