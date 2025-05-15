@@ -1,5 +1,13 @@
 # Changelog
 
+## [05.15.251224]
+
+### Changes
+- Changes to the Student Home Page
+
+### Removed
+- Removed the Secondary Navigation Page in the Student Home Page
+
 ## [05.15.251112]
 
 ### Changes
