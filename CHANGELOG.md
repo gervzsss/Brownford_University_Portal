@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.19.250104]
+
+### Changes
+- Minor Changes in the User Management Page[ADMIN]
+
 ## [05.18.252028]
 
 ### Changes

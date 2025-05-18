@@ -486,8 +486,6 @@
                     </div>
                     <div class="user-actions">
                         <button class="btn btn-secondary" id="closeViewBtn">Close</button>
-                        <button class="btn btn-primary" id="editFromViewBtn">Edit User</button>
-                        <button class="btn btn-danger" id="resetPasswordBtn">Reset Password</button>
                     </div>
                 </div>
             </div>
@@ -495,6 +493,7 @@
     </div>
 
     <script th:src="@{/js/notifications.js}"></script>
+    <script th:src="@{/js/sidebar-nav.js}"></script>
     <script>
         let editingUserId = null;
         let currentSearch = '';
@@ -512,7 +511,7 @@
             const departmentGroup = document.getElementById('departmentGroup');
             const programGroup = document.getElementById('programGroup');
             const closeViewBtn = document.getElementById('closeViewBtn');
-            const editFromViewBtn = document.getElementById('editFromViewBtn');
+
 
             loadUsers();
 
@@ -801,8 +800,9 @@
             }
         }
     </script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
+
     <style>
+        /* Empty state styles */
         .empty-state {
             display: flex;
             flex-direction: column;
@@ -832,6 +832,82 @@
             font-size: 0.9rem;
             padding: 0.5rem;
             font-style: italic;
+        }
+
+        /* Action buttons styling */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-user-btn,
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: "Cinzel", serif;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-user-btn {
+            background-color: #8B4513;
+            color: white;
+        }
+
+        .add-user-btn:hover {
+            background-color: #6B3A1D;
+        }
+
+        .export-btn {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .export-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Table action buttons */
+        .table-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-family: "Cinzel", serif;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .btn-view,
+        .btn-edit {
+            background-color: #8B4513;
+            color: white;
+        }
+
+        .btn-view:hover,
+        .btn-edit:hover {
+            background-color: #6B3A1D;
+        }
+
+        .btn-delete {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-delete:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </body>
