@@ -497,6 +497,9 @@
     <script th:src="@{/js/notifications.js}"></script>
     <script>
         let editingUserId = null;
+        let currentSearch = '';
+        let currentRole = 'all';
+        let currentStatus = 'all';
 
         document.addEventListener('DOMContentLoaded', function () {
             // Modal elements
@@ -556,7 +559,7 @@
                 e.preventDefault();
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirmPassword').value;
-                if (password && password !== confirmPassword) {
+                if (!editingUserId && (!password || password !== confirmPassword)) {
                     alert('Passwords do not match!');
                     return;
                 }
@@ -566,13 +569,15 @@
                     lastName: document.getElementById('lastName').value,
                     email: document.getElementById('email').value,
                     role: document.getElementById('userRole').value,
-                    status: document.getElementById('status').value,
-                    password: password
+                    status: document.getElementById('status').value
                 };
                 if (formData.role === 'faculty') {
                     formData.department = document.getElementById('department').value;
                 } else if (formData.role === 'student') {
                     formData.program = document.getElementById('program').value;
+                }
+                if (!editingUserId || password) {
+                    formData.password = password;
                 }
                 try {
                     let url = '/api/admin/users';
@@ -600,38 +605,34 @@
                 editingUserId = null;
             });
 
-            // Reset password (placeholder)
-            document.getElementById('resetPasswordBtn').addEventListener('click', function () {
-                if (confirm('Are you sure you want to reset this user\'s password?')) {
-                    const userId = document.getElementById('viewUserId').textContent;
-                    // Implement password reset logic here
-                    alert('Password reset functionality ready for implementation');
-                }
-            });
-
-            // Search and filter (placeholders)
+            // Search functionality
             document.getElementById('searchInput').addEventListener('keyup', function () {
-                const searchTerm = this.value.trim();
-                if (searchTerm.length >= 2) {
-                    // Implement search logic here
-                    console.log('Searching for users with term:', searchTerm);
-                }
+                currentSearch = this.value.trim();
+                loadUsers();
             });
+            // Filter functionality
             document.getElementById('roleFilter').addEventListener('change', function () {
-                applyFilters();
+                currentRole = this.value;
+                loadUsers();
             });
             document.getElementById('statusFilter').addEventListener('change', function () {
-                applyFilters();
+                currentStatus = this.value;
+                loadUsers();
             });
-            function applyFilters() {
-                const roleValue = document.getElementById('roleFilter').value;
-                const statusValue = document.getElementById('statusFilter').value;
-                // Implement filter logic here
-                console.log('Filtering users - Role:', roleValue, 'Status:', statusValue);
-            }
-            // Export (placeholder)
+            // Export 
             document.getElementById('exportUsersBtn').addEventListener('click', function () {
-                alert('User export functionality ready for implementation');
+                let url = '/api/admin/users/export?';
+                if (currentSearch) url += `search=${encodeURIComponent(currentSearch)}&`;
+                if (currentRole && currentRole !== 'all') url += `role=${encodeURIComponent(currentRole)}&`;
+                if (currentStatus && currentStatus !== 'all') url += `status=${encodeURIComponent(currentStatus)}&`;
+
+                // Create a hidden link and click it to trigger download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'users.csv';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             });
             // Close modals when clicking outside
             window.addEventListener('click', function (event) {
@@ -644,10 +645,14 @@
             });
         });
 
-        // Load users from the API and render them in the table
+        // Load users from the API and render them in the table, with search and filters
         async function loadUsers() {
             try {
-                const response = await fetch('/api/admin/users');
+                let url = '/api/admin/users?';
+                if (currentSearch) url += `search=${encodeURIComponent(currentSearch)}&`;
+                if (currentRole && currentRole !== 'all') url += `role=${encodeURIComponent(currentRole)}&`;
+                if (currentStatus && currentStatus !== 'all') url += `status=${encodeURIComponent(currentStatus)}&`;
+                const response = await fetch(url);
                 const users = await response.json();
                 renderUsersTable(users);
             } catch (err) {
@@ -691,7 +696,13 @@
                     </tr>
                 `;
             }
-            // Add event listeners for edit and delete buttons
+            // Add event listeners for view, edit, and delete buttons
+            document.querySelectorAll('.btn-view').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const userId = this.getAttribute('data-id');
+                    viewUser(userId);
+                });
+            });
             document.querySelectorAll('.btn-edit').forEach(btn => {
                 btn.addEventListener('click', function () {
                     const userId = this.getAttribute('data-id');
@@ -706,6 +717,37 @@
             });
         }
 
+        // View user details in the modal
+        async function viewUser(userId) {
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`);
+                if (!response.ok) throw new Error('User not found');
+                const user = await response.json();
+                document.getElementById('viewUserId').textContent = user.id;
+                document.getElementById('viewUsername').textContent = user.username;
+                document.getElementById('viewFullName').textContent = user.firstName + ' ' + user.lastName;
+                document.getElementById('viewEmail').textContent = user.email;
+                document.getElementById('viewRole').textContent = user.role;
+                document.getElementById('viewStatus').textContent = user.status;
+                // Show/hide department or program based on role
+                if (user.role === 'faculty') {
+                    document.getElementById('viewDepartmentItem').style.display = 'block';
+                    document.getElementById('viewProgramItem').style.display = 'none';
+                    document.getElementById('viewDepartment').textContent = user.department;
+                } else if (user.role === 'student') {
+                    document.getElementById('viewDepartmentItem').style.display = 'none';
+                    document.getElementById('viewProgramItem').style.display = 'block';
+                    document.getElementById('viewProgram').textContent = user.program;
+                } else {
+                    document.getElementById('viewDepartmentItem').style.display = 'none';
+                    document.getElementById('viewProgramItem').style.display = 'none';
+                }
+                document.getElementById('viewUserModal').style.display = 'block';
+            } catch (err) {
+                alert('Failed to load user details: ' + err);
+            }
+        }
+
         // Start editing a user (fetch user data and fill the form)
         async function startEditUser(userId) {
             try {
@@ -714,6 +756,7 @@
                 const user = await response.json();
                 editingUserId = user.id;
                 document.getElementById('modalTitle').textContent = 'Edit User';
+                document.getElementById('userForm').reset();
                 document.getElementById('username').value = user.username;
                 document.getElementById('firstName').value = user.firstName;
                 document.getElementById('lastName').value = user.lastName;
@@ -722,6 +765,8 @@
                 document.getElementById('status').value = user.status;
                 document.getElementById('password').value = '';
                 document.getElementById('confirmPassword').value = '';
+                document.getElementById('password').required = false;
+                document.getElementById('confirmPassword').required = false;
                 if (user.role === 'faculty') {
                     document.getElementById('department').value = user.department || '';
                     departmentGroup.style.display = 'block';

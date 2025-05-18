@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +21,32 @@ public class AdminUserRestController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String status) {
+        List<User> users = userRepository.findAll();
+
+        // Filter by search
+        if (search != null && !search.isEmpty()) {
+            String searchLower = search.toLowerCase();
+            users = users.stream().filter(user -> user.getUsername().toLowerCase().contains(searchLower) ||
+                    user.getFirstName().toLowerCase().contains(searchLower) ||
+                    user.getLastName().toLowerCase().contains(searchLower) ||
+                    user.getEmail().toLowerCase().contains(searchLower)).toList();
+        }
+
+        // Filter by role
+        if (role != null && !role.equalsIgnoreCase("all") && !role.isEmpty()) {
+            users = users.stream().filter(user -> user.getRole().equalsIgnoreCase(role)).toList();
+        }
+
+        // Filter by status
+        if (status != null && !status.equalsIgnoreCase("all") && !status.isEmpty()) {
+            users = users.stream().filter(user -> user.getStatus().equalsIgnoreCase(status)).toList();
+        }
+
+        return users;
     }
 
     @GetMapping("/{id}")
@@ -46,7 +74,9 @@ public class AdminUserRestController {
         user.setEmail(userDetails.getEmail());
         user.setRole(userDetails.getRole());
         user.setStatus(userDetails.getStatus());
-        user.setPassword(userDetails.getPassword());
+        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+            user.setPassword(userDetails.getPassword());
+        }
         user.setDepartment(userDetails.getDepartment());
         user.setProgram(userDetails.getProgram());
         user.setLastLogin(userDetails.getLastLogin());
@@ -61,4 +91,31 @@ public class AdminUserRestController {
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-} 
+
+    @GetMapping("/export")
+    public void exportUsers(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) String status,
+            HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=users.csv");
+
+        // Reuse your filtering logic
+        List<User> users = getAllUsers(search, role, status);
+
+        PrintWriter writer = response.getWriter();
+        writer.println("ID,Username,First Name,Last Name,Email,Role,Status");
+        for (User user : users) {
+            writer.printf("%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n",
+                    user.getId(),
+                    user.getUsername().replace("\"", "\"\""),
+                    user.getFirstName().replace("\"", "\"\""),
+                    user.getLastName().replace("\"", "\"\""),
+                    user.getEmail().replace("\"", "\"\""),
+                    user.getRole().replace("\"", "\"\""),
+                    user.getStatus().replace("\"", "\"\""));
+        }
+        writer.flush();
+    }
+}

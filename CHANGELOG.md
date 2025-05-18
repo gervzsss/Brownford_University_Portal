@@ -1,5 +1,13 @@
 # Changelog
 
+## [05.18.252028]
+
+### Changes
+- Made the User Management Fully Functionable[ADMIN]
+
+ ### Fixed
+ - Fixed User Roles in the Config
+
 ## [05.18.251737]
 
 ### Added
