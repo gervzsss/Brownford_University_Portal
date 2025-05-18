@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.18.251717]
+
+### Added
+- Adding a new User is now possible in the User Management[ADMIN]
+
 ## [05.15.251317]
 
 ### Changes
