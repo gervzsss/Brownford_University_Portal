@@ -105,9 +105,10 @@
             </div>
 
             <div class="evaluation-status-box">
-                <h3>Evaluation Status: <span class="status-open">OPEN</span></h3>
-                <p>Evaluation Period: April 15, 2024 - April 30, 2024</p>
-                <p>Please complete all faculty evaluations before the deadline to access your final grades.</p>
+                <h3>Evaluation Status: <span th:class="${evaluationStatus.isOpen ? 'status-open' : ''}"
+                        th:text="${evaluationStatus.status}">Status</span></h3>
+                <p th:text="'Evaluation Period: ' + ${evaluationStatus.period}">Evaluation Period</p>
+                <p th:text="${evaluationStatus.message}">Status message</p>
             </div>
 
             <div class="evaluation-instructions-box">
@@ -117,7 +118,8 @@
             </div>
 
             <div class="professors-list">
-                <div class="professor-card">
+                <div th:each="professor : ${professors}"
+                    th:class="${professor.completed ? 'professor-card completed' : 'professor-card'}">
                     <div class="professor-info">
                         <div class="professor-avatar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
@@ -128,81 +130,19 @@
                             </svg>
                         </div>
                         <div class="professor-details">
-                            <h3 class="professor-name">Dr. Ma. Regine M. Javier</h3>
-                            <p class="professor-course">Science, Technology And Society (GENED07)</p>
-                            <p class="professor-schedule">MTH 07:00PM-08:30PM</p>
+                            <h3 class="professor-name" th:text="${professor.name}">Professor Name</h3>
+                            <p class="professor-course" th:text="${professor.course}">Course</p>
+                            <p class="professor-schedule" th:text="${professor.schedule}">Schedule</p>
                         </div>
                     </div>
                     <div class="professor-action">
-                        <a th:href="@{/student-faculty-evaluation-form(professorId=1, courseCode='GENED07')}"
-                            class="evaluate-button">Evaluate</a>
-                    </div>
-                </div>
-
-                <div class="professor-card">
-                    <div class="professor-info">
-                        <div class="professor-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="professor-details">
-                            <h3 class="professor-name">Prof. Gervy S. Masbate</h3>
-                            <p class="professor-course">Readings In Philippine History (GENED02)</p>
-                            <p class="professor-schedule">MTH 05:30PM-07:00PM</p>
-                        </div>
-                    </div>
-                    <div class="professor-action">
-                        <a th:href="@{/student-faculty-evaluation-form(professorId=2, courseCode='GENED02')}"
-                            class="evaluate-button">Evaluate</a>
-                    </div>
-                </div>
-
-                <div class="professor-card">
-                    <div class="professor-info">
-                        <div class="professor-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="professor-details">
-                            <h3 class="professor-name">Prof. Cj Loyd B. Torres</h3>
-                            <p class="professor-course">Menu Of Courses (PFIT400)</p>
-                            <p class="professor-schedule">TH 02:00PM-04:00PM</p>
-                        </div>
-                    </div>
-                    <div class="professor-action">
-                        <a th:href="@{/student-faculty-evaluation-form(professorId=3, courseCode='PFIT400')}"
-                            class="evaluate-button">Evaluate</a>
-                    </div>
-                </div>
-
-                <div class="professor-card completed">
-                    <div class="professor-info">
-                        <div class="professor-avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </div>
-                        <div class="professor-details">
-                            <h3 class="professor-name">Dr. Cruz</h3>
-                            <p class="professor-course">Interdisciplinary Elective 2 (GEL2000)</p>
-                            <p class="professor-schedule">MTH 04:00PM-05:30PM</p>
-                        </div>
-                    </div>
-                    <div class="professor-action">
-                        <span class="status-completed">Completed</span>
-                        <a th:href="@{/view-evaluation(professorId=4, courseCode='GEL2000')}"
+                        <span th:if="${professor.completed}" class="status-completed">Completed</span>
+                        <a th:if="${professor.completed}"
+                            th:href="@{/view-evaluation(professorId=${professor.id}, courseCode=${professor.courseCode})}"
                             class="view-button">View</a>
+                        <a th:unless="${professor.completed}"
+                            th:href="@{/student-faculty-evaluation-form(professorId=${professor.id}, courseCode=${professor.courseCode})}"
+                            class="evaluate-button">Evaluate</a>
                     </div>
                 </div>
             </div>
@@ -211,9 +151,12 @@
                 <h3 class="progress-title">Your Evaluation Progress</h3>
                 <div class="progress-bar-container">
                     <div class="progress-bar">
-                        <div class="progress" style="width: 25%;">25%</div>
+                        <div class="progress" th:style="'width: ' + ${evaluationProgress.percentage} + '%;'"
+                            th:text="${evaluationProgress.percentage} + '%'">Progress</div>
                     </div>
-                    <p class="progress-text">1 of 4 evaluations completed</p>
+                    <p class="progress-text"
+                        th:text="${evaluationProgress.completed} + ' of ' + ${evaluationProgress.total} + ' evaluations completed'">
+                        Progress text</p>
                 </div>
             </div>
         </main>

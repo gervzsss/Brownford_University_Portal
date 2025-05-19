@@ -1,5 +1,13 @@
 # Changelog
 
+## [05.19.251041]
+
+### Removed
+- Removed the Hardcoded Data in the Student Side
+
+### Fixes
+- Fixes some of the error after removing the Hardcoded Data
+
 ## [05.19.250104]
 
 ### Changes

@@ -103,17 +103,20 @@
                     </div>
                 </div>
                 <div class="student-info">
-                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Gervy Silvano Mabate'}">
-                        Gervy Silvano Masbate</h3>
-                    <p class="student-id">Student ID: 2022-12345</p>
+                    <h3 class="student-name" th:text="${student.fullName}">Student Name</h3>
+                    <p class="student-id" th:text="'Student ID: ' + ${student.studentId}">Student ID</p>
                 </div>
             </div>
 
             <div class="enrollment-status">
                 <div class="status-box">
-                    <h3>Enrollment Status: <span class="status-open">OPEN</span></h3>
-                    <p>Enrollment Period: June 1, 2024 - July 15, 2024</p>
-                    <p>Your enrollment window opens on: <strong>June 5, 2024 at 9:00 AM</strong></p>
+                    <h3>Enrollment Status: <span
+                            th:class="${enrollmentStatus != null and enrollmentStatus.isOpen} ? 'status-open' : ''"
+                            th:text="${enrollmentStatus != null ? enrollmentStatus.status : 'Unknown'}">Status</span>
+                    </h3>
+                    <p th:text="'Enrollment Period: ' + ${enrollmentStatus.period}">Enrollment Period</p>
+                    <p th:if="${enrollmentStatus.windowDate != null}">Your enrollment window opens on: <strong
+                            th:text="${enrollmentStatus.windowDate}">Window Date</strong></p>
                 </div>
             </div>
 
@@ -121,45 +124,16 @@
             <div class="enrollment-steps">
                 <h3 class="steps-title">Enrollment Steps</h3>
                 <div class="steps-container">
-                    <div class="step">
-                        <div class="step-number">1</div>
+                    <div th:each="step : ${enrollmentSteps}" class="step">
+                        <div class="step-number" th:text="${step.stepNumber}">1</div>
                         <div class="step-content">
-                            <h4>Pre-Enrollment Assessment</h4>
-                            <p>Complete your pre-enrollment assessment with your academic advisor.</p>
-                            <span class="step-status completed">Completed</span>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Financial Clearance</h4>
-                            <p>Settle any outstanding balances from previous semesters.</p>
-                            <span class="step-status completed">Completed</span>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Course Selection</h4>
-                            <p>Select your courses for the upcoming semester.</p>
-                            <span class="step-status pending">Pending</span>
-                            <a href="#" class="action-button">Select Courses</a>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>Payment of Fees</h4>
-                            <p>Pay your tuition and other fees for the semester.</p>
-                            <span class="step-status pending">Pending</span>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h4>Confirmation</h4>
-                            <p>Confirm your enrollment for the semester.</p>
-                            <span class="step-status pending">Pending</span>
+                            <h4 th:text="${step.title}">Step Title</h4>
+                            <p th:text="${step.description}">Step description</p>
+                            <span
+                                th:class="${step.status == 'Completed' ? 'step-status completed' : 'step-status pending'}"
+                                th:text="${step.status}">Status</span>
+                            <a th:if="${step.actionUrl != null}" th:href="${step.actionUrl}" class="action-button"
+                                th:text="${step.actionText}">Action</a>
                         </div>
                     </div>
                 </div>
@@ -167,7 +141,9 @@
 
             <!-- Available Courses -->
             <div class="available-courses">
-                <h3 class="courses-title">Available Courses for 3RD YEAR / 1ST SEMESTER</h3>
+                <h3 class="courses-title"
+                    th:text="'Available Courses for ' + ${student.yearLevel} + ' / ' + ${semester}">Available Courses
+                </h3>
                 <div class="courses-table-container">
                     <table class="courses-table">
                         <thead>
@@ -182,50 +158,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>BAPRMM5</td>
-                                <td>Strategic Marketing</td>
-                                <td>3.0</td>
-                                <td>MWF 10:00AM-11:30AM</td>
-                                <td>Dr. Santos</td>
-                                <td>25/40</td>
-                                <td><a href="#" class="enroll-button">Enroll</a></td>
+                            <tr th:if="${availableCourses.empty}">
+                                <td colspan="7" style="text-align: center;">No courses available for enrollment</td>
                             </tr>
-                            <tr>
-                                <td>BACORE6</td>
-                                <td>Business Ethics</td>
-                                <td>3.0</td>
-                                <td>TTH 1:00PM-2:30PM</td>
-                                <td>Prof. Garcia</td>
-                                <td>18/35</td>
-                                <td><a href="#" class="enroll-button">Enroll</a></td>
-                            </tr>
-                            <tr>
-                                <td>BAFIN1</td>
-                                <td>Financial Management</td>
-                                <td>3.0</td>
-                                <td>MWF 1:00PM-2:30PM</td>
-                                <td>Dr. Reyes</td>
-                                <td>30/40</td>
-                                <td><a href="#" class="enroll-button">Enroll</a></td>
-                            </tr>
-                            <tr>
-                                <td>GENED08</td>
-                                <td>Art Appreciation</td>
-                                <td>3.0</td>
-                                <td>TTH 8:30AM-10:00AM</td>
-                                <td>Prof. Cruz</td>
-                                <td>15/30</td>
-                                <td><a href="#" class="enroll-button">Enroll</a></td>
-                            </tr>
-                            <tr>
-                                <td>BAELEC1</td>
-                                <td>E-Commerce</td>
-                                <td>3.0</td>
-                                <td>TTH 3:00PM-4:30PM</td>
-                                <td>Dr. Lim</td>
-                                <td>20/35</td>
-                                <td><a href="#" class="enroll-button">Enroll</a></td>
+                            <tr th:each="course : ${availableCourses}">
+                                <td th:text="${course.code}">Course Code</td>
+                                <td th:text="${course.title}">Course Title</td>
+                                <td th:text="${course.units}">Units</td>
+                                <td th:text="${course.schedule}">Schedule</td>
+                                <td th:text="${course.instructor}">Instructor</td>
+                                <td th:text="${course.slots}">Slots</td>
+                                <td>
+                                    <a th:href="@{/enroll-course(courseId=${course.id})}"
+                                        class="enroll-button">Enroll</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

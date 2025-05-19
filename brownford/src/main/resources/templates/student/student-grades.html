@@ -69,7 +69,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                             stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 0 0 0 7.5 21h6a2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                         </svg>
                     </a>
                 </div>
@@ -103,13 +103,14 @@
                     </div>
                     <div>
                         <h2 class="grades-title">ACADEMIC GRADES</h2>
-                        <p class="semester-info">2023-2025 / BSBA - Marketing Management</p>
+                        <p class="semester-info"
+                            th:text="${academicYears} + ' / ' + ${student.program} + ' - ' + ${student.major}">Academic
+                            Years / Program</p>
                     </div>
                 </div>
                 <div class="student-info">
-                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Gervy Silvano Mabate'}">
-                        Gervy Silvano Masbate</h3>
-                    <p class="student-id">Student ID: 2022-12345</p>
+                    <h3 class="student-name" th:text="${student.fullName}">Student Name</h3>
+                    <p class="student-id" th:text="'Student ID: ' + ${student.studentId}">Student ID</p>
                 </div>
             </div>
 
@@ -124,10 +125,8 @@
                     <div class="filter-group">
                         <label for="academicYear">Academic Year:</label>
                         <select id="academicYear" class="filter-select">
-                            <option value="2023-2024">2023-2024 (1ST YEAR)</option>
-                            <option value="2024-2025">2024-2025 (2ND YEAR)</option>
-                            <option value="2025-2026">2025-2026 (3RD YEAR)</option>
-                            <option value="2026-2027">2026-2027 (4TH YEAR)</option>
+                            <option th:each="year : ${academicYears}" th:value="${year.value}" th:text="${year.label}">
+                                Academic Year</option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -211,103 +210,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Sample data for grades - mapping academic years to year levels
-            const yearLevelMap = {
-                "2023-2024": "1",
-                "2024-2025": "2",
-                "2025-2026": "3",
-                "2026-2027": "4"
-            };
-
-            // Sample data for grades
-            const gradesData = {
-                "1": {
-                    "1": [
-                        { code: "GENED01", title: "Understanding the Self", units: 3.0, midterm: 91.0, finals: 93.5, finalGrade: 92.25, remarks: "PASSED" },
-                        { code: "GENED03", title: "Mathematics in the Modern World", units: 3.0, midterm: 89.5, finals: 90.0, finalGrade: 89.75, remarks: "PASSED" },
-                        { code: "GENED04", title: "Purposive Communication", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BACORE1", title: "Organization and Management", units: 3.0, midterm: 88.0, finals: 91.0, finalGrade: 89.5, remarks: "PASSED" },
-                        { code: "BACORE2", title: "Business Economics", units: 3.0, midterm: 87.5, finals: 89.0, finalGrade: 88.25, remarks: "PASSED" },
-                        { code: "PFIT100", title: "Physical Education 1", units: 2.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
-                        { code: "NSTP1", title: "National Service Training Program 1", units: 3.0, midterm: 94.0, finals: 95.0, finalGrade: 94.5, remarks: "PASSED" }
-                    ],
-                    "2": [
-                        { code: "GENED05", title: "Art Appreciation", units: 3.0, midterm: 90.0, finals: 92.5, finalGrade: 91.25, remarks: "PASSED" },
-                        { code: "GENED06", title: "Ethics", units: 3.0, midterm: 88.5, finals: 91.0, finalGrade: 89.75, remarks: "PASSED" },
-                        { code: "BACORE3", title: "Business Law", units: 3.0, midterm: 86.0, finals: 89.0, finalGrade: 87.5, remarks: "PASSED" },
-                        { code: "BACORE4", title: "Financial Accounting", units: 3.0, midterm: 85.0, finals: 88.0, finalGrade: 86.5, remarks: "PASSED" },
-                        { code: "BAPRMM1", title: "Principles of Marketing", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
-                        { code: "PFIT200", title: "Physical Education 2", units: 2.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" },
-                        { code: "NSTP2", title: "National Service Training Program 2", units: 3.0, midterm: 92.5, finals: 94.5, finalGrade: 93.5, remarks: "PASSED" }
-                    ],
-                    "gpa1": "91.18 (1.25) - Dean's Lister",
-                    "gpa2": "90.79 (1.25) - Dean's Lister"
-                },
-                "2": {
-                    "1": [
-                        { code: "GENED02", title: "Readings in Philippine History", units: 3.0, midterm: 88.0, finals: 91.5, finalGrade: 89.75, remarks: "PASSED" },
-                        { code: "GEL1000", title: "Interdisciplinary Elective 1", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BAPRMM2", title: "Consumer Behavior", units: 3.0, midterm: 91.5, finals: 93.0, finalGrade: 92.25, remarks: "PASSED" },
-                        { code: "BACORE5", title: "Human Resource Management", units: 3.0, midterm: 89.0, finals: 92.0, finalGrade: 90.5, remarks: "PASSED" },
-                        { code: "PFIT300", title: "Physical Education 3", units: 2.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
-                        { code: "BAPRMM3", title: "Marketing Management", units: 3.0, midterm: 90.0, finals: 93.5, finalGrade: 91.75, remarks: "PASSED" },
-                        { code: "BAPRMM4", title: "Distribution Management", units: 3.0, midterm: 89.5, finals: 92.0, finalGrade: 90.75, remarks: "PASSED" }
-                    ],
-                    "2": [
-                        { code: "GENED07", title: "Science, Technology And Society", units: 3.0, midterm: 92.5, finals: 90.0, finalGrade: 91.25, remarks: "PASSED" },
-                        { code: "GENED02", title: "Readings In Philippine History", units: 3.0, midterm: 88.0, finals: 91.5, finalGrade: 89.75, remarks: "PASSED" },
-                        { code: "PFIT400", title: "Menu Of Courses", units: 2.0, midterm: 85.0, finals: 87.0, finalGrade: 86.0, remarks: "PASSED" },
-                        { code: "BAPRMM3", title: "Marketing Management", units: 3.0, midterm: 90.0, finals: 93.5, finalGrade: 91.75, remarks: "PASSED" },
-                        { code: "GEL2000", title: "Interdisciplinary Elective 2", units: 3.0, midterm: 87.5, finals: 89.0, finalGrade: 88.25, remarks: "PASSED" },
-                        { code: "BACORE5", title: "Human Resource Management", units: 3.0, midterm: 91.0, finals: 94.0, finalGrade: 92.5, remarks: "PASSED" },
-                        { code: "BAPRMM4", title: "Distribution Management", units: 3.0, midterm: 89.5, finals: 92.0, finalGrade: 90.75, remarks: "PASSED" }
-                    ],
-                    "gpa1": "91.29 (1.25) - Dean's Lister",
-                    "gpa2": "90.04 (1.25) - Dean's Lister"
-                },
-                "3": {
-                    "1": [
-                        { code: "BAPRMM5", title: "Marketing Research", units: 3.0, midterm: 88.0, finals: 90.0, finalGrade: 89.0, remarks: "PASSED" },
-                        { code: "BAPRMM6", title: "Product Management", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
-                        { code: "BACORE6", title: "Strategic Management", units: 3.0, midterm: 89.5, finals: 92.5, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BACORE7", title: "Operations Management", units: 3.0, midterm: 87.0, finals: 89.0, finalGrade: 88.0, remarks: "PASSED" },
-                        { code: "GEL3000", title: "Interdisciplinary Elective 3", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BAPRMM7", title: "Digital Marketing", units: 3.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" }
-                    ],
-                    "2": [
-                        { code: "BAPRMM8", title: "Advertising and Promotions", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BAPRMM9", title: "Sales Management", units: 3.0, midterm: 88.5, finals: 90.5, finalGrade: 89.5, remarks: "PASSED" },
-                        { code: "BACORE8", title: "Business Research", units: 3.0, midterm: 87.0, finals: 89.0, finalGrade: 88.0, remarks: "PASSED" },
-                        { code: "BACORE9", title: "Business Ethics and Social Responsibility", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
-                        { code: "GEL4000", title: "Interdisciplinary Elective 4", units: 3.0, midterm: 89.0, finals: 91.0, finalGrade: 90.0, remarks: "PASSED" },
-                        { code: "BAPRMM10", title: "International Marketing", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" }
-                    ],
-                    "gpa1": "90.83 (1.25) - Dean's Lister",
-                    "gpa2": "90.58 (1.25) - Dean's Lister"
-                },
-                "4": {
-                    "1": [
-                        { code: "BAPRMM11", title: "Marketing Strategy", units: 3.0, midterm: 91.0, finals: 93.0, finalGrade: 92.0, remarks: "PASSED" },
-                        { code: "BAPRMM12", title: "Brand Management", units: 3.0, midterm: 89.5, finals: 91.5, finalGrade: 90.5, remarks: "PASSED" },
-                        { code: "BACORE10", title: "Business Policy", units: 3.0, midterm: 88.0, finals: 90.0, finalGrade: 89.0, remarks: "PASSED" },
-                        { code: "BAPRMM13", title: "Retail Marketing", units: 3.0, midterm: 90.0, finals: 92.0, finalGrade: 91.0, remarks: "PASSED" },
-                        { code: "BAPRMM14", title: "Marketing Analytics", units: 3.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
-                        { code: "PRACTICUM1", title: "Practicum 1", units: 3.0, midterm: 94.0, finals: 96.0, finalGrade: 95.0, remarks: "PASSED" }
-                    ],
-                    "2": [
-                        { code: "BAPRMM15", title: "Marketing Capstone Project", units: 6.0, midterm: 92.0, finals: 94.0, finalGrade: 93.0, remarks: "PASSED" },
-                        { code: "PRACTICUM2", title: "Practicum 2", units: 6.0, midterm: 93.0, finals: 95.0, finalGrade: 94.0, remarks: "PASSED" }
-                    ],
-                    "gpa1": "91.75 (1.0) - President's Lister",
-                    "gpa2": "93.50 (1.0) - President's Lister"
-                }
-            };
-
             const academicYearSelect = document.getElementById('academicYear');
             const semesterSelect = document.getElementById('semester');
             const viewGradesBtn = document.getElementById('viewGradesBtn');
             const gradesTableBody = document.getElementById('gradesTableBody');
             const semesterGPA = document.getElementById('semesterGPA');
+            const cumulativeGPA = document.getElementById('cumulativeGPA');
+            const gradePoint = document.getElementById('gradePoint');
+            const academicStanding = document.getElementById('academicStanding');
+            const totalUnits = document.getElementById('totalUnits');
 
             // Function to update the grades table
             function updateGradesTable() {
@@ -315,44 +226,66 @@
                 gradesTableBody.innerHTML = '';
 
                 const academicYear = academicYearSelect.value;
-                const yearLevel = yearLevelMap[academicYear]; // Get year level from academic year
                 const semester = semesterSelect.value;
 
-                // Check if data exists for the selected year level and semester
-                if (gradesData[yearLevel] && gradesData[yearLevel][semester]) {
-                    const semesterData = gradesData[yearLevel][semester];
+                // Show loading indicator
+                gradesTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading grades...</td></tr>';
 
-                    // Populate the table with the semester data
-                    semesterData.forEach(course => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${course.code}</td>
-                            <td>${course.title}</td>
-                            <td>${course.units}</td>
-                            <td>${course.midterm}</td>
-                            <td>${course.finals}</td>
-                            <td>${course.finalGrade}</td>
-                            <td>${course.remarks}</td>
-                        `;
-                        gradesTableBody.appendChild(row);
+                // Fetch grades data from server
+                fetch(`/api/student/grades?academicYear=${academicYear}&semester=${semester}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        gradesTableBody.innerHTML = '';
+
+                        if (data.courses && data.courses.length > 0) {
+                            // Populate the table with the semester data
+                            data.courses.forEach(course => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${course.code}</td>
+                                    <td>${course.title}</td>
+                                    <td>${course.units}</td>
+                                    <td>${course.midterm}</td>
+                                    <td>${course.finals}</td>
+                                    <td>${course.finalGrade}</td>
+                                    <td>${course.remarks}</td>
+                                `;
+                                gradesTableBody.appendChild(row);
+                            });
+
+                            // Update the GPA
+                            semesterGPA.innerHTML = `<strong>${data.semesterGPA}</strong>`;
+
+                            // Update cumulative info
+                            if (data.cumulativeInfo) {
+                                cumulativeGPA.textContent = data.cumulativeInfo.gpa;
+                                gradePoint.textContent = data.cumulativeInfo.gradePoint;
+                                academicStanding.textContent = data.cumulativeInfo.standing;
+                                academicStanding.className = data.cumulativeInfo.standing.includes('Dean') ||
+                                    data.cumulativeInfo.standing.includes('President') ?
+                                    'cumulative-value status-good' : 'cumulative-value';
+                                totalUnits.textContent = data.cumulativeInfo.totalUnits;
+                            }
+                        } else {
+                            // No data available for this semester
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td colspan="7" style="text-align: center;">No grades available for this semester</td>
+                            `;
+                            gradesTableBody.appendChild(row);
+                            semesterGPA.innerHTML = '<strong>N/A</strong>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching grades:', error);
+                        gradesTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Error loading grades. Please try again later.</td></tr>';
+                        semesterGPA.innerHTML = '<strong>Error</strong>';
                     });
-
-                    // Update the GPA
-                    const gpaKey = `gpa${semester}`;
-                    if (gradesData[yearLevel][gpaKey]) {
-                        semesterGPA.innerHTML = `<strong>${gradesData[yearLevel][gpaKey]}</strong>`;
-                    } else {
-                        semesterGPA.innerHTML = '<strong>No GPA available</strong>';
-                    }
-                } else {
-                    // No data available for this semester
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td colspan="7" style="text-align: center;">No grades available for this semester</td>
-                    `;
-                    gradesTableBody.appendChild(row);
-                    semesterGPA.innerHTML = '<strong>N/A</strong>';
-                }
             }
 
             // Add click event listener to view grades button

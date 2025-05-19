@@ -1841,6 +1841,134 @@
             loadGradesData();
         });
     </script>
+    <script>
+    /**
+     * Example: How to use
+     * - Call loadGradesForStudent(studentId) when a student is selected.
+     * - Call saveAllGrades(studentId) when the admin clicks "Save All Changes".
+     */
+
+    // Load grades for a student and populate the table
+    async function loadGradesForStudent(studentId) {
+        const response = await fetch(`/api/grades/student/${studentId}`);
+        const grades = response.ok ? await response.json() : [];
+        const tbody = document.querySelector('#gradesTable tbody');
+        tbody.innerHTML = '';
+
+        if (grades.length === 0) {
+            document.getElementById('gradesEmptyState').style.display = 'block';
+            document.getElementById('gradesTable').style.display = 'none';
+            return;
+        }
+
+        document.getElementById('gradesEmptyState').style.display = 'none';
+        document.getElementById('gradesTable').style.display = '';
+        grades.forEach((grade, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${grade.student.studentId || ''}</td>
+                <td>${grade.student.firstName} ${grade.student.lastName}</td>
+                <td><input type="text" class="course-code-input" value="${grade.courseCode || ''}" data-grade-id="${grade.id}"></td>
+                <td><input type="text" class="course-title-input" value="${grade.courseTitle || ''}" data-grade-id="${grade.id}"></td>
+                <td><input type="number" class="units-input" value="${grade.units || 0}" data-grade-id="${grade.id}"></td>
+                <td><input type="number" class="grade-value-input" value="${grade.gradeValue || 0}" step="0.01" data-grade-id="${grade.id}"></td>
+                <td>
+                    <button class="btn btn-primary save-grade-btn" data-grade-id="${grade.id}">Save</button>
+                    <button class="btn btn-outline delete-grade-btn" data-grade-id="${grade.id}">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Add event listeners for save and delete buttons
+        document.querySelectorAll('.save-grade-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const gradeId = this.getAttribute('data-grade-id');
+                saveGrade(gradeId, studentId);
+            });
+        });
+        document.querySelectorAll('.delete-grade-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const gradeId = this.getAttribute('data-grade-id');
+                deleteGrade(gradeId, studentId);
+            });
+        });
+    }
+
+    // Save a single grade (update)
+    async function saveGrade(gradeId, studentId) {
+        const row = document.querySelector(`input[data-grade-id="${gradeId}"]`).closest('tr');
+        const gradeData = {
+            courseCode: row.querySelector('.course-code-input').value,
+            courseTitle: row.querySelector('.course-title-input').value,
+            units: parseInt(row.querySelector('.units-input').value),
+            gradeValue: parseFloat(row.querySelector('.grade-value-input').value)
+        };
+        const response = await fetch(`/api/grades/${gradeId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(gradeData)
+        });
+        if (response.ok) {
+            alert('Grade updated!');
+            loadGradesForStudent(studentId);
+        } else {
+            alert('Failed to update grade.');
+        }
+    }
+
+    // Delete a grade
+    async function deleteGrade(gradeId, studentId) {
+        if (!confirm('Are you sure you want to delete this grade?')) return;
+        const response = await fetch(`/api/grades/${gradeId}`, { method: 'DELETE' });
+        if (response.ok) {
+            alert('Grade deleted!');
+            loadGradesForStudent(studentId);
+        } else {
+            alert('Failed to delete grade.');
+        }
+    }
+
+    // Save all grades (for new grades, you can add a row with empty data-grade-id and use POST)
+    async function saveAllGrades(studentId) {
+        const tbody = document.querySelector('#gradesTable tbody');
+        const rows = tbody.querySelectorAll('tr');
+        for (const row of rows) {
+            const gradeId = row.querySelector('.course-code-input').getAttribute('data-grade-id');
+            const gradeData = {
+                courseCode: row.querySelector('.course-code-input').value,
+                courseTitle: row.querySelector('.course-title-input').value,
+                units: parseInt(row.querySelector('.units-input').value),
+                gradeValue: parseFloat(row.querySelector('.grade-value-input').value)
+            };
+            if (!gradeId) {
+                // New grade, use POST
+                await fetch(`/api/grades/student/${studentId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(gradeData)
+                });
+            } else {
+                // Existing grade, use PUT
+                await fetch(`/api/grades/${gradeId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(gradeData)
+                });
+            }
+        }
+        alert('All grades saved!');
+        loadGradesForStudent(studentId);
+    }
+
+    // Example: Call this when a student is selected
+    // loadGradesForStudent(selectedStudentId);
+
+    // Example: Hook up to your "Save All Changes" button
+    // document.getElementById('saveAllGradesBtn').addEventListener('click', function() {
+    //     saveAllGrades(selectedStudentId);
+    // });
+    </script>
 </body>
 
 </html>

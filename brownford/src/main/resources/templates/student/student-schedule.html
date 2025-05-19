@@ -101,13 +101,14 @@
                     </div>
                     <div>
                         <h2 class="enrolled-subjects-title">ENROLLED SUBJECTS</h2>
-                        <p class="semester-info">2024-2025 / 2ND SEMESTER / 2ND YEAR / BSBA</p>
+                        <p class="semester-info"
+                            th:text="${academicYear} + ' / ' + ${semester} + ' / ' + ${student.yearLevel} + ' / ' + ${student.program}">
+                            Academic Year / Semester / Year Level / Program</p>
                     </div>
                 </div>
                 <div class="student-info">
-                    <h3 class="student-name" th:text="${studentName != null ? studentName : 'Gervy Silvano Mabate'}">
-                        Gervy Silvano Masbate</h3>
-                    <p class="student-id">Student ID: 2022-12345</p>
+                    <h3 class="student-name" th:text="${student.fullName}">Student Name</h3>
+                    <p class="student-id" th:text="'Student ID: ' + ${student.studentId}">Student ID</p>
                 </div>
             </div>
 
@@ -132,82 +133,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- If you have a list of courses from your controller, you can use th:each to iterate -->
-                        <!-- <tr th:each="course : ${courses}"> -->
-                        <!-- <td th:text="${course.block}">BSBA2MM5</td> -->
-                        <!-- ... other fields ... -->
-                        <!-- </tr> -->
-
-                        <!-- Static data for demonstration -->
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>GENED07-BSBA2MM5</td>
-                            <td>Science, Technology And Society</td>
-                            <td>MTH</td>
-                            <td>07:00PM-08:30PM</td>
-                            <td>410</td>
-                            <td>ul6ecce</td>
-                            <td><a href="#" class="download-link">Download</a></td>
+                        <tr th:if="${schedules.empty}">
+                            <td colspan="8" style="text-align: center;">No schedule available for this semester</td>
                         </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>GENED02-BSBA2MM5</td>
-                            <td>Readings In Philippine History</td>
-                            <td>MTH</td>
-                            <td>05:30PM-07:00PM</td>
-                            <td>321</td>
-                            <td>amqew2y</td>
-                            <td><a href="#" class="download-link">Download</a></td>
-                        </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>PFIT400-BSBA2MM5</td>
-                            <td>Menu Of Courses</td>
-                            <td>TH</td>
-                            <td>02:00PM-04:00PM</td>
-                            <td>CC</td>
-                            <td>z6lhco6</td>
-                            <td><a href="#" class="download-link">Download</a></td>
-                        </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>BAPRMM3-BSBA2MM5</td>
-                            <td>Marketing Management</td>
-                            <td>W</td>
-                            <td>05:30PM-08:30PM</td>
-                            <td>321</td>
-                            <td>lf3tnsr</td>
-                            <td><a href="#" class="download-link">Download</a></td>
-                        </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>GEL2000-BSBA2MM5</td>
-                            <td>Interdisciplinary Elective 2</td>
-                            <td>MTH</td>
-                            <td>04:00PM-05:30PM</td>
-                            <td>403</td>
-                            <td>dgokiaq</td>
-                            <td><a href="#" class="download-link">Download</a></td>
-                        </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>BACORE5-BSBA2MM5</td>
-                            <td>Human Resource Management</td>
-                            <td>W</td>
-                            <td>01:00PM-04:00PM</td>
-                            <td>317</td>
-                            <td>todnma5</td>
-                            <td><a href="#" class="download-link">Download</a></td>
-                        </tr>
-                        <tr>
-                            <td>BSBA2MM5</td>
-                            <td>BAPRMM4-BSBA2MM5</td>
-                            <td>Distribution Management</td>
-                            <td>F</td>
-                            <td>06:00PM-09:00PM</td>
-                            <td>LMS</td>
-                            <td>gce4hbj</td>
-                            <td><a href="#" class="download-link">Download</a></td>
+                        <tr th:each="schedule : ${schedules}">
+                            <td th:text="${schedule.block}">Block</td>
+                            <td th:text="${schedule.section}">Section</td>
+                            <td th:text="${schedule.courseTitle}">Course Title</td>
+                            <td th:text="${schedule.classDays}">Class Days</td>
+                            <td th:text="${schedule.classTime}">Class Time</td>
+                            <td th:text="${schedule.room}">Room</td>
+                            <td th:text="${schedule.gcrCode}">GCR Code</td>
+                            <td>
+                                <a th:if="${schedule.syllabusUrl != null}" th:href="${schedule.syllabusUrl}"
+                                    class="download-link">Download</a>
+                                <span th:unless="${schedule.syllabusUrl != null}">Not Available</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

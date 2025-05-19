@@ -97,7 +97,7 @@
                     </svg>
                 </div>
                 <div class="profile-title">
-                    <h2 class="profile-name">Gervy Masbate</h2>
+                    <h2 class="profile-name" th:text="${student.firstName + ' ' + student.lastName}">Student Name</h2>
                     <p class="profile-subtitle">Student Profile</p>
                 </div>
             </div>
@@ -108,27 +108,27 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Student ID:</span>
-                            <span class="info-value">2022-12345</span>
+                            <span class="info-value" th:text="${student.studentId}">Student ID</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Full Name:</span>
-                            <span class="info-value">Gervy Silvano Masbate</span>
+                            <span class="info-value" th:text="${student.fullName}">Full Name</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Date of Birth:</span>
-                            <span class="info-value">January 15, 2002</span>
+                            <span class="info-value" th:text="${student.dateOfBirth}">Date of Birth</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Gender:</span>
-                            <span class="info-value">Male</span>
+                            <span class="info-value" th:text="${student.gender}">Gender</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Nationality:</span>
-                            <span class="info-value">Filipino</span>
+                            <span class="info-value" th:text="${student.nationality}">Nationality</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Civil Status:</span>
-                            <span class="info-value">Single</span>
+                            <span class="info-value" th:text="${student.civilStatus}">Civil Status</span>
                         </div>
                     </div>
                 </div>
@@ -138,27 +138,29 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Program:</span>
-                            <span class="info-value">Bachelor of Science in Business Administration</span>
+                            <span class="info-value" th:text="${student.program}">Program</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Major:</span>
-                            <span class="info-value">Marketing Management</span>
+                            <span class="info-value" th:text="${student.major}">Major</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Year Level:</span>
-                            <span class="info-value">2nd Year</span>
+                            <span class="info-value" th:text="${student.yearLevel}">Year Level</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Section:</span>
-                            <span class="info-value">BSBA2MM5</span>
+                            <span class="info-value" th:text="${student.section}">Section</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Academic Status:</span>
-                            <span class="info-value status-good">Good Standing</span>
+                            <span class="info-value"
+                                th:class="${student.academicStatus == 'Good Standing' ? 'status-good' : ''}"
+                                th:text="${student.academicStatus}">Academic Status</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Admission Date:</span>
-                            <span class="info-value">August 2022</span>
+                            <span class="info-value" th:text="${student.admissionDate}">Admission Date</span>
                         </div>
                     </div>
                 </div>
@@ -168,19 +170,19 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Email Address:</span>
-                            <span class="info-value">gervzsss@student.brownford.edu</span>
+                            <span class="info-value" th:text="${student.email}">Email</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Mobile Number:</span>
-                            <span class="info-value">+63 912 345 6789</span>
+                            <span class="info-value" th:text="${student.mobileNumber}">Mobile Number</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Home Address:</span>
-                            <span class="info-value">123 Maharlika St., Brgy. San Jose, Quezon City, Metro Manila</span>
+                            <span class="info-value" th:text="${student.address}">Address</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Emergency Contact:</span>
-                            <span class="info-value">Ivy Silvano Masbate (Mother) - +63 923 456 7890</span>
+                            <span class="info-value" th:text="${student.emergencyContact}">Emergency Contact</span>
                         </div>
                     </div>
                 </div>
@@ -190,19 +192,19 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Scholarship Status:</span>
-                            <span class="info-value">Academic Scholar (50% Tuition Discount)</span>
+                            <span class="info-value" th:text="${student.scholarshipStatus}">Scholarship Status</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Payment Scheme:</span>
-                            <span class="info-value">Installment (4 payments per semester)</span>
+                            <span class="info-value" th:text="${student.paymentScheme}">Payment Scheme</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Outstanding Balance:</span>
-                            <span class="info-value">₱0.00</span>
+                            <span class="info-value" th:text="${student.outstandingBalance}">Outstanding Balance</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Last Payment:</span>
-                            <span class="info-value">March 15, 2024 - ₱12,500.00</span>
+                            <span class="info-value" th:text="${student.lastPayment}">Last Payment</span>
                         </div>
                     </div>
                 </div>
