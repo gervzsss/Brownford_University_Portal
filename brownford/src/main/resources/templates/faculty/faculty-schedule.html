@@ -4,36 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University - Faculty Workload</title>
+    <title>Brown Ford University - Faculty Schedule</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/faculty.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
-    <style>
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .grading-button-small {
-            display: inline-block;
-            padding: 6px 12px;
-            background-color: #8B4513;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-
-        .grading-button-small:hover {
-            background-color: #6B3A1D;
-        }
-    </style>
 </head>
 
 <body>
@@ -71,7 +48,7 @@
                         </a>
                     </li>
                     <li class="sidebar-nav-item">
-                        <a href="/faculty-workload" class="sidebar-nav-link active">
+                        <a href="/faculty-workload" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -84,7 +61,7 @@
                         </a>
                     </li>
                     <li class="sidebar-nav-item">
-                        <a href="/faculty-schedule" class="sidebar-nav-link">
+                        <a href="/faculty-schedule" class="sidebar-nav-link active">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -188,12 +165,14 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
                                 fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
                         </div>
                         <div>
-                            <h2 class="enrolled-subjects-title">FACULTY WORKLOAD</h2>
+                            <h2 class="enrolled-subjects-title">TEACHING SCHEDULE</h2>
                             <p class="semester-info">2024-2025 / 2ND SEMESTER</p>
                         </div>
                     </div>
@@ -233,95 +212,62 @@
                     </div>
                 </div>
 
-                <!-- Workload Table -->
-                <div id="workloadTable" class="schedule-table-container">
+                <!-- Weekly Schedule Table -->
+                <div id="scheduleTable" class="schedule-table-container">
                     <table class="schedule-table">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Section</th>
-                                <th>Subject Code</th>
-                                <th>Description</th>
-                                <th>Schedule</th>
-                                <th>Room</th>
-                                <th>Units</th>
-                                <th>Actions</th>
+                                <th>Time</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>BSSTAT 1-1</td>
-                                <td>STAT104</td>
-                                <td>Linear Regression</td>
-                                <td>M/M 9:00AM-12:00PM/1:30PM-4:30PM</td>
-                                <td>Room 410</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT1-1&subject=STAT104"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=STAT104"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
+                                <td>7:00 AM - 10:00 AM</td>
+                                <td></td>
+                                <td></td>
+                                <td>NSTP102<br>BSSTAT 1-1<br>Room 305</td>
+                                <td>NSTP102<br>BSSTAT 1-1<br>Room 305</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>BSSTAT 2-1</td>
-                                <td>STAT104</td>
-                                <td>Linear Regression</td>
-                                <td>T/T 8:00AM-11:00PM/1:00PM-4:00PM</td>
-                                <td>Room 412</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT2-1&subject=STAT104"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT2-1&subject=STAT104"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
+                                <td>9:00 AM - 12:00 PM</td>
+                                <td>STAT104<br>BSSTAT 1-1<br>Room 410</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                                <td>3</td>
-                                <td>BSSTAT 1-1</td>
-                                <td>NSTP102</td>
-                                <td>National Service Training Program 2</td>
-                                <td>W/TH 7:00AM-10:00AM/7:00AM-10:00AM</td>
-                                <td>Room 305</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT1-1&subject=NSTP102"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=NSTP102"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
+                                <td>1:00 PM - 4:00 PM</td>
+                                <td></td>
+                                <td>STAT104<br>BSSTAT 2-1<br>Room 412</td>
+                                <td>NSTP102<br>BSSTAT 2-2<br>Room 305</td>
+                                <td>NSTP102<br>BSSTAT 2-2<br>Room 305</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             <tr>
-                                <td>4</td>
-                                <td>BSSTAT 2-2</td>
-                                <td>NSTP102</td>
-                                <td>National Service Training Program 2</td>
-                                <td>W/TH 1:00PM-4:00PM/1:00PM-4:00PM</td>
-                                <td>Room 305</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT2-2&subject=NSTP102"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT2-2&subject=NSTP102"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
+                                <td>1:30 PM - 4:30 PM</td>
+                                <td>STAT104<br>BSSTAT 1-1<br>Room 410</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Certificate Button -->
+                <!-- Download Button -->
                 <div class="certificate-button-container">
                     <a href="#" class="certificate-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -331,7 +277,7 @@
                             <line x1="12" y1="15" x2="12" y2="3"></line>
                         </svg>
                         <span class="certificate-text">
-                            DOWNLOAD<br>WORKLOAD REPORT
+                            DOWNLOAD<br>SCHEDULE
                         </span>
                     </a>
                 </div>
@@ -344,26 +290,40 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const viewButton = document.getElementById('viewButton');
-            const workloadTable = document.getElementById('workloadTable');
+            const scheduleTable = document.getElementById('scheduleTable');
             const schoolYearSelect = document.getElementById('schoolYear');
             const semesterSelect = document.getElementById('semester');
 
             // Initially show the table
-            workloadTable.style.display = 'block';
+            scheduleTable.style.display = 'block';
 
             // Show table when View button is clicked
             viewButton.addEventListener('click', function () {
-                workloadTable.style.display = 'block';
+                scheduleTable.style.display = 'block';
             });
 
             // For demonstration purposes, hide table when selections change
             schoolYearSelect.addEventListener('change', function () {
-                workloadTable.style.display = 'none';
+                scheduleTable.style.display = 'none';
             });
 
             semesterSelect.addEventListener('change', function () {
-                workloadTable.style.display = 'none';
+                scheduleTable.style.display = 'none';
             });
+
+            // Highlight current day
+            const today = new Date().getDay(); // 0 is Sunday, 1 is Monday, etc.
+            if (today > 0 && today < 7) { // Only highlight weekdays (Monday to Saturday)
+                const dayIndex = today === 6 ? 6 : today; // Adjust for Sunday
+                const rows = document.querySelectorAll('.schedule-table tbody tr');
+
+                rows.forEach(row => {
+                    const cell = row.querySelector(`td:nth-child(${dayIndex + 1})`); // +1 because first column is time
+                    if (cell && cell.textContent.trim() !== '') {
+                        cell.style.backgroundColor = '#f0e6dd';
+                    }
+                });
+            }
         });
     </script>
 </body>

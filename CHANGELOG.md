@@ -1,5 +1,10 @@
 # Changelog
 
+## [05.22.251128]
+
+### Changes
+- Improved Faculty Pages
+
 ## [05.19.251041]
 
 ### Removed
