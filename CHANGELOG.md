@@ -1,5 +1,18 @@
 # Changelog
 
+## [05.23.251030]
+
+### ### Changes
+- Changes in the Admin Pages
+
+## [05.22.251333]
+
+### Changes
+- Separated the Courses, Enrollment, sections, Grades to have their own Webpages
+
+### Bugs
+- Enrollment Page have the same page as the Grades
+
 ## [05.22.251128]
 
 ### Changes

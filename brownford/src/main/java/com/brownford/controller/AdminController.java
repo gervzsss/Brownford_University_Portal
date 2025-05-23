@@ -10,24 +10,34 @@ public class AdminController {
     public String adminDashboard() {
         return "/admin/admin-dashboard";
     }
-
-    @GetMapping("/admin-course-section")
-    public String adminCourseSection() {
-        return "/admin/admin-course-section";
-    }
-
+    
     @GetMapping("/admin-subject-management")
     public String adminSubjectManagement() {
         return "/admin/admin-subject-management";
     }
 
-    @GetMapping("/admin-enrollment-grades")
-    public String adminEnrollmentGrades() {
-        return "/admin/admin-enrollment-grades";
-    }
-
     @GetMapping("/admin-users")
     public String adminUsers() {
         return "/admin/admin-users";
+    }
+
+    @GetMapping("/admin-courses")
+    public String adminCourses() {
+        return "/admin/admin-courses";
+    }
+
+    @GetMapping("/admin-sections")
+    public String adminSections() {
+        return "/admin/admin-sections";
+    }
+
+    @GetMapping("/admin-enrollment")
+    public String adminEnrollment() {
+        return "/admin/admin-enrollment";
+    }
+
+    @GetMapping("/admin-grades")
+    public String adminGrades() {
+        return "/admin/admin-grades";
     }
 }

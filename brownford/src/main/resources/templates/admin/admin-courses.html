@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University - Course & Section Management</title>
+    <title>Brown Ford University - Course Management</title>
     <!-- Link to the external CSS files -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link
@@ -12,54 +12,6 @@
         rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <style>
-        .tab-navigation {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-navigation ul {
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-navigation li {
-            margin: 0;
-        }
-
-        .tab-navigation a.tab-link {
-            display: block;
-            padding: 12px 24px;
-            text-decoration: none;
-            color: #6B3A1D;
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            font-size: 14px;
-        }
-
-        .tab-navigation a.tab-link:hover {
-            background-color: rgba(107, 58, 29, 0.1);
-        }
-
-        .tab-navigation a.tab-link.active {
-            color: #B25000;
-            border-bottom: 3px solid #B25000;
-            background-color: rgba(178, 80, 0, 0.05);
-        }
-    </style>
 </head>
 
 <body>
@@ -150,7 +102,7 @@
                     <div class="sidebar-section-title">Academic Management</div>
 
                     <li class="sidebar-nav-item active">
-                        <a th:href="@{/admin-course-section}" class="sidebar-nav-link">
+                        <a th:href="@{/admin-courses}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -159,7 +111,23 @@
                                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                 </svg>
                             </span>
-                            <span class="sidebar-nav-text">Course & Section</span>
+                            <span class="sidebar-nav-text">Courses</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-sections}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Sections</span>
                         </a>
                     </li>
 
@@ -181,16 +149,32 @@
                     </li>
 
                     <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-enrollment-grades}" class="sidebar-nav-link">
+                        <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
                                 </svg>
                             </span>
-                            <span class="sidebar-nav-text">Enrollment & Grades</span>
+                            <span class="sidebar-nav-text">Enrollment</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-grades}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Grades</span>
                         </a>
                     </li>
 
@@ -292,20 +276,13 @@
                             </svg>
                         </div>
                         <div class="welcome-text">
-                            <h2>Course & Section Management</h2>
-                            <p>Manage courses and sections for the academic program</p>
+                            <h2>Course Management</h2>
+                            <p>Manage courses for the academic program</p>
                         </div>
                     </div>
                 </section>
-                <!-- Tab Navigation -->
-                <nav class="tab-navigation">
-                    <ul>
-                        <li><a href="#" class="tab-link active" data-tab="coursesPanel">Courses</a></li>
-                        <li><a href="#" class="tab-link" data-tab="sectionsPanel">Sections</a></li>
-                    </ul>
-                </nav>
 
-                <!-- Courses Tab Content -->
+                <!-- Courses Content -->
                 <section class="content-panel" id="coursesPanel">
                     <div class="panel-header">
                         <h2 class="section-title">Course Management</h2>
@@ -388,7 +365,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
                                                     viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
                                                     stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0-3-3H2z"></path>
+                                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0-3-3H2z"></path>
                                                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                                 </svg>
                                                 <p>No courses found. Add courses or adjust your search filters to see
@@ -402,114 +379,6 @@
 
                         <!-- Pagination -->
                         <div class="pagination" id="coursesPaginationContainer">
-                            <div class="empty-pagination-message">
-                                <p>Pagination will appear when there are enough records to display multiple pages.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Sections Tab Content -->
-                <section class="content-panel" id="sectionsPanel" style="display: none;">
-                    <div class="panel-header">
-                        <h2 class="section-title">Section Management</h2>
-                    </div>
-                    <div class="panel-content">
-                        <!-- Search and Filter Controls -->
-                        <div class="user-controls">
-                            <div class="search-filter-container">
-                                <div class="search-container">
-                                    <input type="text" placeholder="Search sections..." id="sectionSearchInput">
-                                    <button class="search-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="filter-container">
-                                    <select id="courseFilter" class="filter-select">
-                                        <option value="all">All Courses</option>
-                                        <option value="CS101">CS101 - Intro to Computer Science</option>
-                                        <option value="MATH201">MATH201 - Calculus I</option>
-                                        <option value="BUS301">BUS301 - Business Ethics</option>
-                                    </select>
-                                    <select id="semesterFilter" class="filter-select">
-                                        <option value="all">All Semesters</option>
-                                        <option value="fall2024">Fall 2024</option>
-                                        <option value="spring2025">Spring 2025</option>
-                                        <option value="summer2025">Summer 2025</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="action-buttons">
-                                <button id="addSectionBtn" class="add-user-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="12" y1="11" x2="12" y2="17"></line>
-                                        <line x1="9" y1="14" x2="15" y2="14"></line>
-                                    </svg>
-                                    Add New Section
-                                </button>
-                                <button id="exportSectionsBtn" class="export-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                    Export
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Sections Table -->
-                        <div class="table-container">
-                            <table class="data-table" id="sectionsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Section ID</th>
-                                        <th>Course</th>
-                                        <th>Instructor</th>
-                                        <th>Schedule</th>
-                                        <th>Room</th>
-                                        <th>Capacity</th>
-                                        <th>Enrolled</th>
-                                        <th>Semester</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="sectionsTableBody">
-                                    <!-- Section data will be loaded dynamically from the database -->
-                                    <tr class="empty-state-row">
-                                        <td colspan="9" class="empty-state-message">
-                                            <div class="empty-state">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                                </svg>
-                                                <p>No sections found. Add sections or adjust your search filters to see
-                                                    results.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="pagination" id="sectionsPaginationContainer">
                             <div class="empty-pagination-message">
                                 <p>Pagination will appear when there are enough records to display multiple pages.</p>
                             </div>
@@ -579,87 +448,6 @@
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" id="cancelCourseBtn">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="saveCourseBtn">Save Course</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section Modal -->
-        <div id="sectionModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="sectionModalTitle">Add New Section</h3>
-                    <span class="close-modal">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <form id="sectionForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sectionId">Section ID</label>
-                                <input type="text" id="sectionId" name="sectionId" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sectionCourse">Course</label>
-                                <select id="sectionCourse" name="sectionCourse" class="form-control" required>
-                                    <option value="">Select Course</option>
-                                    <option value="CS101">CS101 - Intro to Computer Science</option>
-                                    <option value="MATH201">MATH201 - Calculus I</option>
-                                    <option value="BUS301">BUS301 - Business Ethics</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sectionInstructor">Instructor</label>
-                                <select id="sectionInstructor" name="sectionInstructor" class="form-control" required>
-                                    <option value="">Select Instructor</option>
-                                    <option value="1">Dr. Alan Turing</option>
-                                    <option value="2">Dr. Katherine Johnson</option>
-                                    <option value="3">Prof. Maria Rodriguez</option>
-                                    <option value="4">Dr. James Watson</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="sectionSemester">Semester</label>
-                                <select id="sectionSemester" name="sectionSemester" class="form-control" required>
-                                    <option value="">Select Semester</option>
-                                    <option value="fall2024">Fall 2024</option>
-                                    <option value="spring2025">Spring 2025</option>
-                                    <option value="summer2025">Summer 2025</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sectionSchedule">Schedule</label>
-                                <input type="text" id="sectionSchedule" name="sectionSchedule" class="form-control"
-                                    placeholder="e.g., MWF 10:00 AM - 11:15 AM" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sectionRoom">Room</label>
-                                <input type="text" id="sectionRoom" name="sectionRoom" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sectionCapacity">Capacity</label>
-                                <input type="number" id="sectionCapacity" name="sectionCapacity" class="form-control"
-                                    min="1" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="sectionEnrolled">Currently Enrolled</label>
-                                <input type="number" id="sectionEnrolled" name="sectionEnrolled" class="form-control"
-                                    min="0" value="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="sectionNotes">Notes</label>
-                            <textarea id="sectionNotes" name="sectionNotes" class="form-control" rows="3"></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="cancelSectionBtn">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="saveSectionBtn">Save Section</button>
                         </div>
                     </form>
                 </div>
@@ -744,77 +532,6 @@
             </div>
         </div>
 
-        <!-- View Section Details Modal -->
-        <div id="viewSectionModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Section Details</h3>
-                    <span class="close-modal">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="section-details">
-                        <div class="section-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                        </div>
-                        <div class="section-info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Section ID:</span>
-                                <span class="info-value" id="viewSectionId"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Course:</span>
-                                <span class="info-value" id="viewSectionCourse"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Instructor:</span>
-                                <span class="info-value" id="viewSectionInstructor"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Schedule:</span>
-                                <span class="info-value" id="viewSectionSchedule"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Room:</span>
-                                <span class="info-value" id="viewSectionRoom"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Semester:</span>
-                                <span class="info-value" id="viewSectionSemester"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Capacity:</span>
-                                <span class="info-value" id="viewSectionCapacity"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Enrolled:</span>
-                                <span class="info-value" id="viewSectionEnrolled"></span>
-                            </div>
-                        </div>
-                        <div class="section-notes">
-                            <h4>Notes</h4>
-                            <p id="viewSectionNotes"></p>
-                        </div>
-                        <div class="section-roster">
-                            <h4>Student Roster</h4>
-                            <button class="btn btn-secondary" id="viewRosterBtn">View Complete Roster</button>
-                        </div>
-                    </div>
-                    <div class="section-actions">
-                        <button class="btn btn-secondary" id="closeViewSectionBtn">Close</button>
-                        <button class="btn btn-primary" id="editFromViewSectionBtn">Edit Section</button>
-                        <button class="btn btn-danger" id="cancelSectionBtn">Cancel Section</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Delete Confirmation Modal -->
         <div id="deleteConfirmModal" class="modal">
             <div class="modal-content modal-sm">
@@ -837,38 +554,14 @@
     <script th:src="@{/js/notifications.js}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Tab Navigation
-            const tabLinks = document.querySelectorAll('.tab-link');
-            const tabContents = document.querySelectorAll('.content-panel');
-
-            tabLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const tabId = this.getAttribute('data-tab');
-
-                    // Remove active class from all tabs and contents
-                    tabLinks.forEach(link => link.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Add active class to current tab and content
-                    this.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-
             // Modal elements
             const courseModal = document.getElementById('courseModal');
-            const sectionModal = document.getElementById('sectionModal');
             const viewCourseModal = document.getElementById('viewCourseModal');
-            const viewSectionModal = document.getElementById('viewSectionModal');
             const deleteConfirmModal = document.getElementById('deleteConfirmModal');
             const addCourseBtn = document.getElementById('addCourseBtn');
-            const addSectionBtn = document.getElementById('addSectionBtn');
             const closeModalBtns = document.querySelectorAll('.close-modal');
             const cancelCourseBtn = document.getElementById('cancelCourseBtn');
-            const cancelSectionBtn = document.getElementById('cancelSectionBtn');
             const closeViewCourseBtn = document.getElementById('closeViewCourseBtn');
-            const closeViewSectionBtn = document.getElementById('closeViewSectionBtn');
             const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
             // Open add modals
@@ -878,19 +571,11 @@
                 courseModal.style.display = 'block';
             });
 
-            addSectionBtn.addEventListener('click', function () {
-                document.getElementById('sectionModalTitle').textContent = 'Add New Section';
-                document.getElementById('sectionForm').reset();
-                sectionModal.style.display = 'block';
-            });
-
             // Close all modals
             closeModalBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
                     courseModal.style.display = 'none';
-                    sectionModal.style.display = 'none';
                     viewCourseModal.style.display = 'none';
-                    viewSectionModal.style.display = 'none';
                     deleteConfirmModal.style.display = 'none';
                 });
             });
@@ -899,16 +584,8 @@
                 courseModal.style.display = 'none';
             });
 
-            cancelSectionBtn.addEventListener('click', function () {
-                sectionModal.style.display = 'none';
-            });
-
             closeViewCourseBtn.addEventListener('click', function () {
                 viewCourseModal.style.display = 'none';
-            });
-
-            closeViewSectionBtn.addEventListener('click', function () {
-                viewSectionModal.style.display = 'none';
             });
 
             cancelDeleteBtn.addEventListener('click', function () {
@@ -934,44 +611,6 @@
                 courseModal.style.display = 'none';
             });
 
-            // Section form submission
-            document.getElementById('sectionForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const formData = {
-                    sectionId: document.getElementById('sectionId').value,
-                    course: document.getElementById('sectionCourse').value,
-                    instructor: document.getElementById('sectionInstructor').value,
-                    semester: document.getElementById('sectionSemester').value,
-                    schedule: document.getElementById('sectionSchedule').value,
-                    room: document.getElementById('sectionRoom').value,
-                    capacity: document.getElementById('sectionCapacity').value,
-                    enrolled: document.getElementById('sectionEnrolled').value,
-                    notes: document.getElementById('sectionNotes').value
-                };
-
-                console.log('Ready to send section data to server:', formData);
-                alert('Section data ready to be saved to database');
-                sectionModal.style.display = 'none';
-            });
-
-            // View buttons
-            document.querySelectorAll('.btn-view').forEach(btn => {
-                if (btn.closest('#coursesTable')) {
-                    btn.addEventListener('click', function () {
-                        const courseId = this.getAttribute('data-id');
-                        console.log('Viewing course details for:', courseId);
-                        viewCourseModal.style.display = 'block';
-                    });
-                } else if (btn.closest('#sectionsTable')) {
-                    btn.addEventListener('click', function () {
-                        const sectionId = this.getAttribute('data-id');
-                        console.log('Viewing section details for:', sectionId);
-                        viewSectionModal.style.display = 'block';
-                    });
-                }
-            });
-
             // Edit buttons
             document.querySelectorAll('#coursesTable .btn-edit').forEach(btn => {
                 btn.addEventListener('click', function () {
@@ -979,15 +618,6 @@
                     console.log('Editing course:', courseId);
                     document.getElementById('courseModalTitle').textContent = 'Edit Course';
                     courseModal.style.display = 'block';
-                });
-            });
-
-            document.querySelectorAll('#sectionsTable .btn-edit').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const sectionId = this.getAttribute('data-id');
-                    console.log('Editing section:', sectionId);
-                    document.getElementById('sectionModalTitle').textContent = 'Edit Section';
-                    sectionModal.style.display = 'block';
                 });
             });
 
@@ -1008,22 +638,6 @@
                 });
             });
 
-            document.querySelectorAll('#sectionsTable .btn-delete').forEach(btn => {
-                btn.addEventListener('click', function () {
-                    const sectionId = this.getAttribute('data-id');
-                    document.getElementById('deleteConfirmTitle').textContent = 'Delete Section';
-                    document.getElementById('deleteConfirmMessage').textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
-
-                    document.getElementById('confirmDeleteBtn').onclick = function () {
-                        console.log('Deleting section:', sectionId);
-                        alert(`Section ${sectionId} would be deleted from the database`);
-                        deleteConfirmModal.style.display = 'none';
-                    };
-
-                    deleteConfirmModal.style.display = 'block';
-                });
-            });
-
             // Edit from view modals
             document.getElementById('editFromViewCourseBtn').addEventListener('click', function () {
                 viewCourseModal.style.display = 'none';
@@ -1031,25 +645,11 @@
                 courseModal.style.display = 'block';
             });
 
-            document.getElementById('editFromViewSectionBtn').addEventListener('click', function () {
-                viewSectionModal.style.display = 'none';
-                document.getElementById('sectionModalTitle').textContent = 'Edit Section';
-                sectionModal.style.display = 'block';
-            });
-
             // Add section from course view
             document.getElementById('addSectionFromCourseBtn').addEventListener('click', function () {
                 viewCourseModal.style.display = 'none';
-                document.getElementById('sectionModalTitle').textContent = 'Add New Section';
-                document.getElementById('sectionForm').reset();
-                document.getElementById('sectionCourse').value = document.getElementById('viewCourseCode').textContent;
-                sectionModal.style.display = 'block';
-            });
-
-            // View roster
-            document.getElementById('viewRosterBtn').addEventListener('click', function () {
-                const sectionId = document.getElementById('viewSectionId').textContent;
-                alert(`Viewing roster for section ${sectionId}`);
+                // Redirect to sections page with course pre-selected
+                window.location.href = '/admin-sections?course=' + document.getElementById('viewCourseCode').textContent;
             });
 
             // Search
@@ -1061,30 +661,14 @@
                 }
             });
 
-            document.getElementById('sectionSearchInput').addEventListener('keyup', function () {
-                const searchTerm = this.value.trim().toLowerCase();
-                if (searchTerm.length >= 2) {
-                    console.log('Searching for sections with term:', searchTerm);
-                    filterTableRows('sectionsTable', searchTerm);
-                }
-            });
-
             // Filters
             document.getElementById('departmentFilter').addEventListener('change', applyCoursesFilters);
             document.getElementById('statusFilter').addEventListener('change', applyCoursesFilters);
-            document.getElementById('courseFilter').addEventListener('change', applySectionsFilters);
-            document.getElementById('semesterFilter').addEventListener('change', applySectionsFilters);
 
             function applyCoursesFilters() {
                 const department = document.getElementById('departmentFilter').value;
                 const status = document.getElementById('statusFilter').value;
                 console.log('Filtering courses - Department:', department, 'Status:', status);
-            }
-
-            function applySectionsFilters() {
-                const course = document.getElementById('courseFilter').value;
-                const semester = document.getElementById('semesterFilter').value;
-                console.log('Filtering sections - Course:', course, 'Semester:', semester);
             }
 
             // Dummy table filter (implement your own logic here)
@@ -1097,18 +681,10 @@
         });
 
         // Functions to load data from the server
-        function loadSubjects() {
-            console.log('Loading subjects');
-
-            // In a real implementation, this would make an AJAX call to load subjects
-            // and populate the subjects table
-        }
-
-        function loadAssignments() {
-            console.log('Loading assignments');
-
-            // In a real implementation, this would make an AJAX call to load assignments
-            // and populate the assignments table
+        function loadCourses() {
+            console.log('Loading courses');
+            // In a real implementation, this would make an AJAX call to load courses
+            // and populate the courses table
         }
     </script>
     <script th:src="@{/js/sidebar-nav.js}"></script>

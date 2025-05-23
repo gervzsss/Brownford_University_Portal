@@ -94,7 +94,7 @@
                     <div class="sidebar-section-title">Academic Management</div>
 
                     <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-course-section}" class="sidebar-nav-link">
+                        <a th:href="@{/admin-courses}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -103,11 +103,27 @@
                                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                 </svg>
                             </span>
-                            <span class="sidebar-nav-text">Course & Section</span>
+                            <span class="sidebar-nav-text">Courses</span>
                         </a>
                     </li>
 
                     <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-sections}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Sections</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item active">
                         <a th:href="@{/admin-subject-management}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -125,16 +141,32 @@
                     </li>
 
                     <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-enrollment-grades}" class="sidebar-nav-link">
+                        <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
                                 </svg>
                             </span>
-                            <span class="sidebar-nav-text">Enrollment & Grades</span>
+                            <span class="sidebar-nav-text">Enrollment</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-grades}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Grades</span>
                         </a>
                     </li>
 
@@ -770,11 +802,11 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-                    <div class="subject-actions">
-                        <button class="btn btn-secondary" id="closeViewSubjectBtn">Close</button>
-                        <button class="btn btn-primary" id="editFromViewSubjectBtn">Edit Subject</button>
-                        <button class="btn btn-success" id="assignFromViewSubjectBtn">Assign Subject</button>
+                        <div class="subject-actions">
+                            <button class="btn btn-secondary" id="closeViewSubjectBtn">Close</button>
+                            <button class="btn btn-primary" id="editFromViewSubjectBtn">Edit Subject</button>
+                            <button class="btn btn-success" id="assignFromViewSubjectBtn">Assign Subject</button>
+                        </div>
                     </div>
                 </div>
             </div>
