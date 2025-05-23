@@ -1,8 +1,13 @@
 # Changelog
 
+## [05.23.251321]
+
+### Changes
+- Changes in the Admin Pages
+
 ## [05.23.251030]
 
-### ### Changes
+### Changes
 - Changes in the Admin Pages
 
 ## [05.22.251333]

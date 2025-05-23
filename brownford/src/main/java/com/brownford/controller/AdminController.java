@@ -36,8 +36,28 @@ public class AdminController {
         return "/admin/admin-enrollment";
     }
 
-    @GetMapping("/admin-grades")
-    public String adminGrades() {
-        return "/admin/admin-grades";
+    @GetMapping("/admin-faculty-list")
+    public String adminFacultyList() {
+        return "/admin/admin-faculty-list";
+    }
+
+    @GetMapping("/admin-faculty-workload")
+    public String adminFacultyWorkload() {
+        return "/admin/admin-faculty-workload";
+    }
+
+    @GetMapping("/admin-faculty-evaluation")
+    public String adminFacultyEvaluation() {
+        return "/admin/admin-faculty-evaluation";
+    }
+
+    @GetMapping("/admin-student-list")
+    public String adminStudentList() {
+        return "/admin/admin-student-list";
+    }
+
+    @GetMapping("/admin-student-records")
+    public String adminStudentRecords() {
+        return "/admin/admin-student-records";
     }
 }
