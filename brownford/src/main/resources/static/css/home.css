@@ -5,13 +5,28 @@
   font-family: "Alice", "Cinzel", "Cinzel Decorative", "Cormorant Garamond", serif;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   background-color: #f5f5f5;
 }
 
+/* Scrollbar Prevention*/
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Brave */
+  display: none;
+  /* Chrome, Safari, Brave */
 }
+
+/* Sidebar Scrollbar Prevention*/
+.sidebar {
+  overflow: auto;
+  max-height: 100vh;
+  /* or whatever height you want */
+  overscroll-behavior: contain;
+}
+
 
 .background-container {
   position: relative;
