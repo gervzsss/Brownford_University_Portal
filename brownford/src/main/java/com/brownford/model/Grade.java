@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "grades")
 public class Grade {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,21 +20,51 @@ public class Grade {
     private User student;
 
     // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getCourseCode() { return courseCode; }
-    public void setCourseCode(String courseCode) { this.courseCode = courseCode; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getCourseTitle() { return courseTitle; }
-    public void setCourseTitle(String courseTitle) { this.courseTitle = courseTitle; }
+    public String getCourseCode() {
+        return courseCode;
+    }
 
-    public int getUnits() { return units; }
-    public void setUnits(int units) { this.units = units; }
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
 
-    public double getGradeValue() { return gradeValue; }
-    public void setGradeValue(double gradeValue) { this.gradeValue = gradeValue; }
+    public String getCourseTitle() {
+        return courseTitle;
+    }
 
-    public User getStudent() { return student; }
-    public void setStudent(User student) { this.student = student; }
-} 
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
+    }
+
+    public int getUnits() {
+        return units;
+    }
+
+    public void setUnits(int units) {
+        this.units = units;
+    }
+
+    public double getGradeValue() {
+        return gradeValue;
+    }
+
+    public void setGradeValue(double gradeValue) {
+        this.gradeValue = gradeValue;
+    }
+
+    public User getStudent() {
+        return student;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+}

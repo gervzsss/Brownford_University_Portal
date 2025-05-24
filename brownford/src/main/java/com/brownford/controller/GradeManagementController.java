@@ -1,9 +1,10 @@
 package com.brownford.controller;
 
 import com.brownford.model.Grade;
-import com.brownford.model.GradeRepository;
 import com.brownford.model.User;
-import com.brownford.model.UserRepository;
+import com.brownford.repository.GradeRepository;
+import com.brownford.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,8 @@ public class GradeManagementController {
     @GetMapping("/student/{studentId}")
     public List<Grade> getGradesForStudent(@PathVariable Long studentId) {
         User student = userRepository.findById(studentId).orElse(null);
-        if (student == null) return List.of();
+        if (student == null)
+            return List.of();
         return gradeRepository.findByStudent(student);
     }
 
@@ -32,7 +34,8 @@ public class GradeManagementController {
     @PostMapping("/student/{studentId}")
     public ResponseEntity<Grade> addGrade(@PathVariable Long studentId, @RequestBody Grade grade) {
         User student = userRepository.findById(studentId).orElse(null);
-        if (student == null) return ResponseEntity.notFound().build();
+        if (student == null)
+            return ResponseEntity.notFound().build();
         grade.setStudent(student);
         Grade saved = gradeRepository.save(grade);
         return ResponseEntity.ok(saved);
@@ -42,21 +45,22 @@ public class GradeManagementController {
     @PutMapping("/{gradeId}")
     public ResponseEntity<Grade> updateGrade(@PathVariable Long gradeId, @RequestBody Grade updatedGrade) {
         return gradeRepository.findById(gradeId)
-            .map(grade -> {
-                grade.setCourseCode(updatedGrade.getCourseCode());
-                grade.setCourseTitle(updatedGrade.getCourseTitle());
-                grade.setUnits(updatedGrade.getUnits());
-                grade.setGradeValue(updatedGrade.getGradeValue());
-                Grade saved = gradeRepository.save(grade);
-                return ResponseEntity.ok(saved);
-            })
-            .orElse(ResponseEntity.notFound().build());
+                .map(grade -> {
+                    grade.setCourseCode(updatedGrade.getCourseCode());
+                    grade.setCourseTitle(updatedGrade.getCourseTitle());
+                    grade.setUnits(updatedGrade.getUnits());
+                    grade.setGradeValue(updatedGrade.getGradeValue());
+                    Grade saved = gradeRepository.save(grade);
+                    return ResponseEntity.ok(saved);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Delete a grade
     @DeleteMapping("/{gradeId}")
     public ResponseEntity<Void> deleteGrade(@PathVariable Long gradeId) {
-        if (!gradeRepository.existsById(gradeId)) return ResponseEntity.notFound().build();
+        if (!gradeRepository.existsById(gradeId))
+            return ResponseEntity.notFound().build();
         gradeRepository.deleteById(gradeId);
         return ResponseEntity.noContent().build();
     }
