@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.brownford.model.UserRepository;
+
+import com.brownford.repository.GradeRepository;
+import com.brownford.repository.UserRepository;
 import com.brownford.model.User;
 import java.util.Collections;
 import java.util.List;
 import com.brownford.model.Grade;
-import com.brownford.model.GradeRepository;
 
 @Controller
 public class StudentController {
@@ -103,16 +104,28 @@ public class StudentController {
                 this.period = period;
                 this.windowDate = windowDate;
             }
-            public boolean isOpen() { return isOpen; }
-            public String getStatus() { return status; }
-            public String getPeriod() { return period; }
-            public String getWindowDate() { return windowDate; }
+
+            public boolean isOpen() {
+                return isOpen;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public String getPeriod() {
+                return period;
+            }
+
+            public String getWindowDate() {
+                return windowDate;
+            }
         }
         EnrollmentStatus enrollmentStatus = new EnrollmentStatus(
-            true, // isOpen
-            "Open", // status
-            "May 20 - June 10, 2025", // period
-            "May 20, 2025" // windowDate
+                true, // isOpen
+                "Open", // status
+                "May 20 - June 10, 2025", // period
+                "May 20, 2025" // windowDate
         );
         model.addAttribute("enrollmentStatus", enrollmentStatus);
 
@@ -124,7 +137,9 @@ public class StudentController {
             public String status;
             public String actionUrl;
             public String actionText;
-            public EnrollmentStep(int stepNumber, String title, String description, String status, String actionUrl, String actionText) {
+
+            public EnrollmentStep(int stepNumber, String title, String description, String status, String actionUrl,
+                    String actionText) {
                 this.stepNumber = stepNumber;
                 this.title = title;
                 this.description = description;
@@ -132,18 +147,37 @@ public class StudentController {
                 this.actionUrl = actionUrl;
                 this.actionText = actionText;
             }
-            public int getStepNumber() { return stepNumber; }
-            public String getTitle() { return title; }
-            public String getDescription() { return description; }
-            public String getStatus() { return status; }
-            public String getActionUrl() { return actionUrl; }
-            public String getActionText() { return actionText; }
+
+            public int getStepNumber() {
+                return stepNumber;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public String getActionUrl() {
+                return actionUrl;
+            }
+
+            public String getActionText() {
+                return actionText;
+            }
         }
         List<EnrollmentStep> enrollmentSteps = List.of(
-            new EnrollmentStep(1, "Check Requirements", "Review your prerequisites and requirements.", "Completed", null, null),
-            new EnrollmentStep(2, "Select Courses", "Choose your courses for the semester.", "Pending", "/student-courses", "Select Courses"),
-            new EnrollmentStep(3, "Confirm Enrollment", "Finalize your enrollment.", "Pending", null, null)
-        );
+                new EnrollmentStep(1, "Check Requirements", "Review your prerequisites and requirements.", "Completed",
+                        null, null),
+                new EnrollmentStep(2, "Select Courses", "Choose your courses for the semester.", "Pending",
+                        "/student-courses", "Select Courses"),
+                new EnrollmentStep(3, "Confirm Enrollment", "Finalize your enrollment.", "Pending", null, null));
         model.addAttribute("enrollmentSteps", enrollmentSteps);
 
         // --- Dummy availableCourses and semester for template completeness ---
