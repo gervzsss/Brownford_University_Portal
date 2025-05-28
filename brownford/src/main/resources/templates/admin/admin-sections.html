@@ -1,1135 +1,849 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brown Ford University - Section Management</title>
-    <!-- Link to the external CSS files -->
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-  </head>
 
-  <body>
-    <div class="background-container">
-      <div class="background-image"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brown Ford University - Section Management</title>
+  <!-- Link to the external CSS files -->
+  <link rel="stylesheet" th:href="@{/css/home.css}" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
+  <link rel="stylesheet" th:href="@{/css/common.css}" />
+</head>
 
-      <!-- Header -->
-      <header class="header">
-        <button class="sidebar-toggle" id="sidebarToggle">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#8B4513"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-        <div class="logo-container">
-          <div class="logo">
-            <div class="logo-inner">
-              <img
-                th:src="@{/images/logo.png}"
-                alt="Brown Ford University Logo"
-                class="university-logo"
-              />
+<body>
+  <div class="background-container">
+    <div class="background-image"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8B4513"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <div class="logo-container">
+        <div class="logo">
+          <div class="logo-inner">
+            <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo" />
+          </div>
+        </div>
+        <h1 class="university-name">Brown Ford University</h1>
+      </div>
+      <div class="header-icons">
+        <!-- Notification Icon -->
+        <div class="notification-icon">
+          <a href="#" class="notification-link" id="notificationToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </a>
+          <!-- Notification Dropdown -->
+          <div class="notification-dropdown" id="notificationDropdown">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <a href="#" class="mark-all-read">Mark all as read</a>
+            </div>
+            <div class="notification-list">
+              <p>No notifications available.</p>
+            </div>
+            <div class="notification-footer">
+              <a href="#" class="view-all">View All Notifications</a>
             </div>
           </div>
-          <h1 class="university-name">Brown Ford University</h1>
         </div>
-        <div class="header-icons">
-          <!-- Notification Icon -->
-          <div class="notification-icon">
-            <a href="#" class="notification-link" id="notificationToggle">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8B4513"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
+
+        <!-- Interactive Logout Icon as an anchor tag -->
+        <div class="logout-icon">
+          <a th:href="@{/logout}" class="logout-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+              stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
+          <span class="sidebar-title">Admin Portal</span>
+        </div>
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+      </div>
+      <div class="sidebar-content">
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Dashboard</span>
             </a>
-            <!-- Notification Dropdown -->
-            <div class="notification-dropdown" id="notificationDropdown">
-              <div class="notification-header">
-                <h3>Notifications</h3>
-                <a href="#" class="mark-all-read">Mark all as read</a>
-              </div>
-              <div class="notification-list">
-                <p>No notifications available.</p>
-              </div>
-              <div class="notification-footer">
-                <a href="#" class="view-all">View All Notifications</a>
-              </div>
+          </li>
+
+          <div class="sidebar-section-title">Academic Management</div>
+
+          <li class="sidebar-nav-item active">
+            <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Departments</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-courses}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Courses</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-sections}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Sections</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-subject-management}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Subject Management</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Enrollment</span>
+            </a>
+          </li>
+
+          <div class="sidebar-section-title">User Management</div>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-users}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">User Management</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item sidebar-dropdown">
+            <button class="sidebar-dropdown-toggle">
+              <span class="sidebar-dropdown-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+                </svg>
+              </span>
+              <span class="sidebar-dropdown-text">Faculty</span>
+              <span class="sidebar-dropdown-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="sidebar-dropdown-menu">
+              <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
+              <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
+                Management</a>
+              <a th:href="@{/admin-faculty-evaluation}" class="sidebar-dropdown-item">Evaluations</a>
+            </div>
+          </li>
+
+          <li class="sidebar-nav-item sidebar-dropdown">
+            <button class="sidebar-dropdown-toggle">
+              <span class="sidebar-dropdown-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <span class="sidebar-dropdown-text">Students</span>
+              <span class="sidebar-dropdown-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="sidebar-dropdown-menu">
+              <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
+              <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-footer">
+        <p>Brown Ford University &copy; 2025</p>
+        <p>Admin Portal v1.0</p>
+      </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="content-wrapper" id="contentWrapper">
+      <main class="dashboard-content">
+        <!-- Header Section (Welcome) -->
+        <section class="welcome-section">
+          <div class="welcome-header">
+            <div class="welcome-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="welcome-text">
+              <h2>Section Management</h2>
+              <p>Manage sections for the academic program</p>
             </div>
           </div>
+        </section>
 
-          <!-- Interactive Logout Icon as an anchor tag -->
-          <div class="logout-icon">
-            <a th:href="@{/logout}" class="logout-link">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#8B4513"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-                />
-              </svg>
-            </a>
+        <!-- Sections Content -->
+        <section class="content-panel" id="sectionsPanel">
+          <div class="panel-header">
+            <h2 class="section-title">Section Management</h2>
           </div>
-        </div>
-      </header>
-
-      <!-- Sidebar Navigation -->
-      <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-          <div class="sidebar-logo">
-            <img
-              th:src="@{/images/logo.png}"
-              alt="Brown Ford University Logo"
-            />
-            <span class="sidebar-title">Admin Portal</span>
-          </div>
-          <button class="sidebar-close" id="sidebarClose">&times;</button>
-        </div>
-        <div class="sidebar-content">
-          <ul class="sidebar-nav">
-            <li class="sidebar-nav-item">
-              <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                    ></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                  </svg>
-                </span>
-                <span class="sidebar-nav-text">Dashboard</span>
-              </a>
-            </li>
-
-            <div class="sidebar-section-title">Academic Management</div>
-
-            <li class="sidebar-nav-item">
-              <a th:href="@{/admin-courses}" class="sidebar-nav-link">
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                  </svg>
-                </span>
-                <span class="sidebar-nav-text">Courses</span>
-              </a>
-            </li>
-
-            <li class="sidebar-nav-item active">
-              <a th:href="@{/admin-sections}" class="sidebar-nav-link">
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <rect
-                      x="3"
-                      y="4"
-                      width="18"
-                      height="18"
-                      rx="2"
-                      ry="2"
-                    ></rect>
+          <div class="panel-content">
+            <!-- Search and Filter Controls -->
+            <div class="user-controls">
+              <div class="search-filter-container">
+                <div class="search-container">
+                  <input type="text" placeholder="Search sections..." id="sectionSearchInput" />
+                  <button class="search-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                  </button>
+                </div>
+                <div class="filter-container">
+                  <select id="courseFilter" class="filter-select">
+                    <option value="all">All Courses</option>
+                    <option value="CS101">
+                      CS101 - Intro to Computer Science
+                    </option>
+                    <option value="MATH201">MATH201 - Calculus I</option>
+                    <option value="BUS301">BUS301 - Business Ethics</option>
+                  </select>
+                  <select id="semesterFilter" class="filter-select">
+                    <option value="all">All Semesters</option>
+                    <option value="fall2024">Fall 2024</option>
+                    <option value="spring2025">Spring 2025</option>
+                    <option value="summer2025">Summer 2025</option>
+                  </select>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <button id="addSectionBtn" class="add-user-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                    <line x1="9" y1="14" x2="15" y2="14"></line>
                   </svg>
-                </span>
-                <span class="sidebar-nav-text">Sections</span>
-              </a>
-            </li>
-
-            <li class="sidebar-nav-item">
-              <a
-                th:href="@{/admin-subject-management}"
-                class="sidebar-nav-link"
-              >
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path
-                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                    ></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
-                </span>
-                <span class="sidebar-nav-text">Subject Management</span>
-              </a>
-            </li>
-
-            <li class="sidebar-nav-item">
-              <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="8.5" cy="7" r="4"></circle>
-                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                  </svg>
-                </span>
-                <span class="sidebar-nav-text">Enrollment</span>
-              </a>
-            </li>
-
-            <div class="sidebar-section-title">User Management</div>
-
-            <li class="sidebar-nav-item">
-              <a th:href="@{/admin-users}" class="sidebar-nav-link">
-                <span class="sidebar-nav-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                  </svg>
-                </span>
-                <span class="sidebar-nav-text">User Management</span>
-              </a>
-            </li>
-
-            <li class="sidebar-nav-item sidebar-dropdown">
-              <button class="sidebar-dropdown-toggle">
-                <span class="sidebar-dropdown-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="8.5" cy="7" r="4"></circle>
-                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                  </svg>
-                </span>
-                <span class="sidebar-dropdown-text">Faculty</span>
-                <span class="sidebar-dropdown-arrow">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </span>
-              </button>
-              <div class="sidebar-dropdown-menu">
-                <a
-                  th:href="@{/admin-faculty-list}"
-                  class="sidebar-dropdown-item"
-                  >Faculty List</a
-                >
-                <a
-                  th:href="@{/admin-faculty-workload}"
-                  class="sidebar-dropdown-item"
-                  >Workload Management</a
-                >
-                <a
-                  th:href="@{/admin-faculty-evaluation}"
-                  class="sidebar-dropdown-item"
-                  >Evaluations</a
-                >
-              </div>
-            </li>
-
-            <li class="sidebar-nav-item sidebar-dropdown">
-              <button class="sidebar-dropdown-toggle">
-                <span class="sidebar-dropdown-icon">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                  </svg>
-                </span>
-                <span class="sidebar-dropdown-text">Students</span>
-                <span class="sidebar-dropdown-arrow">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </span>
-              </button>
-              <div class="sidebar-dropdown-menu">
-                <a
-                  th:href="@{/admin-student-list}"
-                  class="sidebar-dropdown-item"
-                  >Student List</a
-                >
-                <a
-                  th:href="@{/admin-student-records}"
-                  class="sidebar-dropdown-item"
-                  >Academic Records</a
-                >
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="sidebar-footer">
-          <p>Brown Ford University &copy; 2025</p>
-          <p>Admin Portal v1.0</p>
-        </div>
-      </div>
-
-      <!-- Sidebar Overlay -->
-      <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-      <div class="content-wrapper" id="contentWrapper">
-        <main class="dashboard-content">
-          <!-- Header Section (Welcome) -->
-          <section class="welcome-section">
-            <div class="welcome-header">
-              <div class="welcome-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="40"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6B3A1D"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </div>
-              <div class="welcome-text">
-                <h2>Section Management</h2>
-                <p>Manage sections for the academic program</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Sections Content -->
-          <section class="content-panel" id="sectionsPanel">
-            <div class="panel-header">
-              <h2 class="section-title">Section Management</h2>
-            </div>
-            <div class="panel-content">
-              <!-- Search and Filter Controls -->
-              <div class="user-controls">
-                <div class="search-filter-container">
-                  <div class="search-container">
-                    <input
-                      type="text"
-                      placeholder="Search sections..."
-                      id="sectionSearchInput"
-                    />
-                    <button class="search-button">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                      </svg>
-                    </button>
-                  </div>
-                  <div class="filter-container">
-                    <select id="courseFilter" class="filter-select">
-                      <option value="all">All Courses</option>
-                      <option value="CS101">
-                        CS101 - Intro to Computer Science
-                      </option>
-                      <option value="MATH201">MATH201 - Calculus I</option>
-                      <option value="BUS301">BUS301 - Business Ethics</option>
-                    </select>
-                    <select id="semesterFilter" class="filter-select">
-                      <option value="all">All Semesters</option>
-                      <option value="fall2024">Fall 2024</option>
-                      <option value="spring2025">Spring 2025</option>
-                      <option value="summer2025">Summer 2025</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="action-buttons">
-                  <button id="addSectionBtn" class="add-user-btn">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <rect
-                        x="3"
-                        y="4"
-                        width="18"
-                        height="18"
-                        rx="2"
-                        ry="2"
-                      ></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="12" y1="11" x2="12" y2="17"></line>
-                      <line x1="9" y1="14" x2="15" y2="14"></line>
-                    </svg>
-                    Add New Section
-                  </button>
-                  <button id="exportSectionsBtn" class="export-btn">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path
-                        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                      ></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Export
-                  </button>
-                </div>
-              </div>
-
-              <!-- Sections Table -->
-              <div class="table-container">
-                <table class="data-table" id="sectionsTable">
-                  <thead>
-                    <tr>
-                      <th>Section ID</th>
-                      <th>Course</th>
-                      <th>Instructor</th>
-                      <th>Schedule</th>
-                      <th>Room</th>
-                      <th>Capacity</th>
-                      <th>Enrolled</th>
-                      <th>Semester</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sectionsTableBody">
-                    <!-- Section data will be loaded dynamically from the database -->
-                    <tr class="empty-state-row">
-                      <td colspan="9" class="empty-state-message">
-                        <div class="empty-state">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="48"
-                            height="48"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#8B4513"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          >
-                            <rect
-                              x="3"
-                              y="4"
-                              width="18"
-                              height="18"
-                              rx="2"
-                              ry="2"
-                            ></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                          </svg>
-                          <p>
-                            No sections found. Add sections or adjust your
-                            search filters to see results.
-                          </p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Pagination -->
-              <div class="pagination" id="sectionsPaginationContainer">
-                <div class="empty-pagination-message">
-                  <p>
-                    Pagination will appear when there are enough records to
-                    display multiple pages.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-
-      <!-- Section Modal -->
-      <div id="sectionModal" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 id="sectionModalTitle">Add New Section</h3>
-            <span class="close-modal">&times;</span>
-          </div>
-          <div class="modal-body">
-            <form id="sectionForm">
-              <input type="hidden" id="sectionId" name="sectionId" />
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="sectionCourses">Courses</label>
-                  <select
-                    id="sectionCourses"
-                    name="sectionCourses"
-                    class="form-control"
-                    multiple
-                    required
-                  >
-                    <option value="">Loading courses...</option>
-                  </select>
-                  <small>Select one or more courses for this section</small>
-                </div>
-                <div class="form-group">
-                  <label for="sectionName">Section Name</label>
-                  <input
-                    type="text"
-                    id="sectionName"
-                    name="sectionName"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="sectionSemester">Semester</label>
-                  <select
-                    id="sectionSemester"
-                    name="sectionSemester"
-                    class="form-control"
-                    required
-                  >
-                    <option value="">Select Semester</option>
-                    <option value="1st Semester">1st Semester</option>
-                    <option value="2nd Semester">2nd Semester</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="sectionYearLevel">Year Level</label>
-                  <select
-                    id="sectionYearLevel"
-                    name="sectionYearLevel"
-                    class="form-control"
-                    required
-                  >
-                    <option value="">Select Year Level</option>
-                    <option value="1st Year">1st Year</option>
-                    <option value="2nd Year">2nd Year</option>
-                    <option value="3rd Year">3rd Year</option>
-                    <option value="4th Year">4th Year</option>
-                    <option value="5th Year">5th Year (Special Case)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="sectionMaxStudents">Max Students</label>
-                  <input
-                    type="number"
-                    id="sectionMaxStudents"
-                    name="sectionMaxStudents"
-                    class="form-control"
-                    min="1"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="sectionSchedule">Schedule</label>
-                  <input
-                    type="text"
-                    id="sectionSchedule"
-                    name="sectionSchedule"
-                    class="form-control"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="sectionRoom">Room</label>
-                  <input
-                    type="text"
-                    id="sectionRoom"
-                    name="sectionRoom"
-                    class="form-control"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="sectionStatus">Status</label>
-                  <select
-                    id="sectionStatus"
-                    name="sectionStatus"
-                    class="form-control"
-                    required
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="sectionInstructor">Faculty</label>
-                  <select
-                    id="sectionInstructor"
-                    name="sectionInstructor"
-                    class="form-control"
-                    required
-                  >
-                    <option value="">Loading faculty...</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-actions">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  id="cancelSectionBtn"
-                >
-                  Cancel
+                  Add New Section
                 </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  id="saveSectionBtn"
-                >
-                  Save Section
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- View Section Details Modal -->
-      <div id="viewSectionModal" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Section Details</h3>
-            <span class="close-modal">&times;</span>
-          </div>
-          <div class="modal-body">
-            <div class="section-details">
-              <div class="section-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="80"
-                  height="80"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6B3A1D"
-                  stroke-width="1"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </div>
-              <div class="section-info-grid">
-                <div class="info-item">
-                  <span class="info-label">Section ID:</span>
-                  <span class="info-value" id="viewSectionId"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Course:</span>
-                  <span class="info-value" id="viewSectionCourse"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Instructor:</span>
-                  <span class="info-value" id="viewSectionInstructor"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Schedule:</span>
-                  <span class="info-value" id="viewSectionSchedule"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Room:</span>
-                  <span class="info-value" id="viewSectionRoom"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Semester:</span>
-                  <span class="info-value" id="viewSectionSemester"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Capacity:</span>
-                  <span class="info-value" id="viewSectionCapacity"></span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Enrolled:</span>
-                  <span class="info-value" id="viewSectionEnrolled"></span>
-                </div>
-              </div>
-              <div class="section-notes">
-                <h4>Notes</h4>
-                <p id="viewSectionNotes"></p>
-              </div>
-              <div class="section-roster">
-                <h4>Student Roster</h4>
-                <button class="btn btn-secondary" id="viewRosterBtn">
-                  View Complete Roster
+                <button id="exportSectionsBtn" class="export-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  Export
                 </button>
               </div>
             </div>
-            <div class="section-actions">
-              <button class="btn btn-secondary" id="closeViewSectionBtn">
-                Close
-              </button>
-              <button class="btn btn-primary" id="editFromViewSectionBtn">
-                Edit Section
-              </button>
-              <button class="btn btn-danger" id="cancelSectionBtn">
-                Cancel Section
-              </button>
+
+            <!-- Sections Table -->
+            <div class="table-container">
+              <table class="data-table" id="sectionsTable">
+                <thead>
+                  <tr>
+                    <th>Section ID</th>
+                    <th>Course</th>
+                    <th>Instructor</th>
+                    <th>Schedule</th>
+                    <th>Room</th>
+                    <th>Capacity</th>
+                    <th>Enrolled</th>
+                    <th>Semester</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sectionsTableBody">
+                  <!-- Section data will be loaded dynamically from the database -->
+                  <tr class="empty-state-row">
+                    <td colspan="9" class="empty-state-message">
+                      <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                          stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="16" y1="2" x2="16" y2="6"></line>
+                          <line x1="8" y1="2" x2="8" y2="6"></line>
+                          <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <p>
+                          No sections found. Add sections or adjust your
+                          search filters to see results.
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="sectionsPaginationContainer">
+              <div class="empty-pagination-message">
+                <p>
+                  Pagination will appear when there are enough records to
+                  display multiple pages.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
+    </div>
 
-      <!-- Delete Confirmation Modal -->
-      <div id="deleteConfirmModal" class="modal">
-        <div class="modal-content modal-sm">
-          <div class="modal-header">
-            <h3 id="deleteConfirmTitle">Confirm Deletion</h3>
-            <span class="close-modal">&times;</span>
-          </div>
-          <div class="modal-body">
-            <p id="deleteConfirmMessage">
-              Are you sure you want to delete this item? This action cannot be
-              undone.
-            </p>
+    <!-- Section Modal -->
+    <div id="sectionModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="sectionModalTitle">Add New Section</h3>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="sectionForm">
+            <input type="hidden" id="sectionId" name="sectionId" />
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sectionCourses">Courses</label>
+                <select id="sectionCourses" name="sectionCourses" class="form-control" multiple required>
+                  <option value="">Loading courses...</option>
+                </select>
+                <small>Select one or more courses for this section</small>
+              </div>
+              <div class="form-group">
+                <label for="sectionName">Section Name</label>
+                <input type="text" id="sectionName" name="sectionName" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sectionSemester">Semester</label>
+                <select id="sectionSemester" name="sectionSemester" class="form-control" required>
+                  <option value="">Select Semester</option>
+                  <option value="1st Semester">1st Semester</option>
+                  <option value="2nd Semester">2nd Semester</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sectionYearLevel">Year Level</label>
+                <select id="sectionYearLevel" name="sectionYearLevel" class="form-control" required>
+                  <option value="">Select Year Level</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="5th Year">5th Year (Special Case)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sectionMaxStudents">Max Students</label>
+                <input type="number" id="sectionMaxStudents" name="sectionMaxStudents" class="form-control" min="1"
+                  required />
+              </div>
+              <div class="form-group">
+                <label for="sectionSchedule">Schedule</label>
+                <input type="text" id="sectionSchedule" name="sectionSchedule" class="form-control" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sectionRoom">Room</label>
+                <input type="text" id="sectionRoom" name="sectionRoom" class="form-control" required />
+              </div>
+              <div class="form-group">
+                <label for="sectionStatus">Status</label>
+                <select id="sectionStatus" name="sectionStatus" class="form-control" required>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sectionInstructor">Faculty</label>
+                <select id="sectionInstructor" name="sectionInstructor" class="form-control" required>
+                  <option value="">Loading faculty...</option>
+                </select>
+              </div>
+            </div>
             <div class="form-actions">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                id="cancelDeleteBtn"
-              >
+              <button type="button" class="btn btn-secondary" id="cancelSectionBtn">
                 Cancel
               </button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                id="confirmDeleteBtn"
-              >
-                Delete
+              <button type="submit" class="btn btn-primary" id="saveSectionBtn">
+                Save Section
               </button>
             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Section Details Modal -->
+    <div id="viewSectionModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Section Details</h3>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="section-details">
+            <div class="section-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
+                stroke="#6B3A1D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="section-info-grid">
+              <div class="info-item">
+                <span class="info-label">Section ID:</span>
+                <span class="info-value" id="viewSectionId"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Course:</span>
+                <span class="info-value" id="viewSectionCourse"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Instructor:</span>
+                <span class="info-value" id="viewSectionInstructor"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Schedule:</span>
+                <span class="info-value" id="viewSectionSchedule"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Room:</span>
+                <span class="info-value" id="viewSectionRoom"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Semester:</span>
+                <span class="info-value" id="viewSectionSemester"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Capacity:</span>
+                <span class="info-value" id="viewSectionCapacity"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Enrolled:</span>
+                <span class="info-value" id="viewSectionEnrolled"></span>
+              </div>
+            </div>
+            <div class="section-notes">
+              <h4>Notes</h4>
+              <p id="viewSectionNotes"></p>
+            </div>
+            <div class="section-roster">
+              <h4>Student Roster</h4>
+              <button class="btn btn-secondary" id="viewRosterBtn">
+                View Complete Roster
+              </button>
+            </div>
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-secondary" id="closeViewSectionBtn">
+              Close
+            </button>
+            <button class="btn btn-primary" id="editFromViewSectionBtn">
+              Edit Section
+            </button>
+            <button class="btn btn-danger" id="cancelSectionBtn">
+              Cancel Section
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <script th:src="@{/js/notifications.js}"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Modal elements
-        const sectionModal = document.getElementById("sectionModal");
-        const viewSectionModal = document.getElementById("viewSectionModal");
-        const deleteConfirmModal =
-          document.getElementById("deleteConfirmModal");
-        const addSectionBtn = document.getElementById("addSectionBtn");
-        const closeModalBtns = document.querySelectorAll(".close-modal");
-        const cancelSectionBtn = document.getElementById("cancelSectionBtn");
-        const closeViewSectionBtn = document.getElementById(
-          "closeViewSectionBtn"
-        );
-        const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmModal" class="modal">
+      <div class="modal-content modal-sm">
+        <div class="modal-header">
+          <h3 id="deleteConfirmTitle">Confirm Deletion</h3>
+          <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p id="deleteConfirmMessage">
+            Are you sure you want to delete this item? This action cannot be
+            undone.
+          </p>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Check for course parameter in URL (for when redirected from courses page)
-        const urlParams = new URLSearchParams(window.location.search);
-        const courseParam = urlParams.get("course");
+  <script th:src="@{/js/notifications.js}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Modal elements
+      const sectionModal = document.getElementById("sectionModal");
+      const viewSectionModal = document.getElementById("viewSectionModal");
+      const deleteConfirmModal =
+        document.getElementById("deleteConfirmModal");
+      const addSectionBtn = document.getElementById("addSectionBtn");
+      const closeModalBtns = document.querySelectorAll(".close-modal");
+      const cancelSectionBtn = document.getElementById("cancelSectionBtn");
+      const closeViewSectionBtn = document.getElementById(
+        "closeViewSectionBtn"
+      );
+      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
-        // Open add modals
-        addSectionBtn.addEventListener("click", function () {
-          document.getElementById("sectionModalTitle").textContent =
-            "Add New Section";
-          document.getElementById("sectionForm").reset();
+      // Check for course parameter in URL (for when redirected from courses page)
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseParam = urlParams.get("course");
 
-          // If redirected from courses page with a course parameter, pre-select that course
-          if (courseParam) {
-            document.getElementById("sectionCourse").value = courseParam;
+      // Open add modals
+      addSectionBtn.addEventListener("click", function () {
+        document.getElementById("sectionModalTitle").textContent =
+          "Add New Section";
+        document.getElementById("sectionForm").reset();
+
+        // If redirected from courses page with a course parameter, pre-select that course
+        if (courseParam) {
+          document.getElementById("sectionCourse").value = courseParam;
+        }
+
+        sectionModal.style.display = "block";
+      });
+
+      // Close all modals
+      closeModalBtns.forEach((btn) => {
+        btn.addEventListener("click", function () {
+          sectionModal.style.display = "none";
+          viewSectionModal.style.display = "none";
+          deleteConfirmModal.style.display = "none";
+        });
+      });
+
+      cancelSectionBtn.addEventListener("click", function () {
+        sectionModal.style.display = "none";
+      });
+
+      closeViewSectionBtn.addEventListener("click", function () {
+        viewSectionModal.style.display = "none";
+      });
+
+      cancelDeleteBtn.addEventListener("click", function () {
+        deleteConfirmModal.style.display = "none";
+      });
+
+      // Section form submission
+      document
+        .getElementById("sectionForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const selectedCourses = Array.from(
+            document.getElementById("sectionCourses").selectedOptions
+          ).map((opt) => opt.value);
+          const formData = {
+            id: document.getElementById("sectionId").value,
+            courses: selectedCourses,
+            sectionName: document.getElementById("sectionName").value,
+            semester: document.getElementById("sectionSemester").value,
+            yearLevel: document.getElementById("sectionYearLevel").value,
+            maxStudents: document.getElementById("sectionMaxStudents").value,
+            schedule: document.getElementById("sectionSchedule").value,
+            room: document.getElementById("sectionRoom").value,
+            status: document.getElementById("sectionStatus").value,
+            faculty: document.getElementById("sectionInstructor").value,
+          };
+          // Determine if add or edit
+          const isEdit = !!formData.id;
+          let url = "/api/sections";
+          let method = "POST";
+          if (isEdit) {
+            url += "/" + formData.id;
+            method = "PUT";
           }
+          try {
+            const response = await fetch(url, {
+              method: method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(formData),
+            });
+            if (!response.ok) throw new Error("Failed to save section");
+            sectionModal.style.display = "none";
+            // Optionally reload sections table here
+          } catch (err) {
+            alert("Error saving section: " + err.message);
+          }
+        });
 
+      // View buttons
+      document.querySelectorAll(".btn-view").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const sectionId = this.getAttribute("data-id");
+          console.log("Viewing section details for:", sectionId);
+          viewSectionModal.style.display = "block";
+        });
+      });
+
+      // Edit buttons
+      document.querySelectorAll(".btn-edit").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const sectionId = this.getAttribute("data-id");
+          console.log("Editing section:", sectionId);
+          document.getElementById("sectionModalTitle").textContent =
+            "Edit Section";
+          sectionModal.style.display = "block";
+        });
+      });
+
+      // Delete buttons
+      document.querySelectorAll(".btn-delete").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const sectionId = this.getAttribute("data-id");
+          document.getElementById("deleteConfirmTitle").textContent =
+            "Delete Section";
+          document.getElementById(
+            "deleteConfirmMessage"
+          ).textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
+
+          document.getElementById("confirmDeleteBtn").onclick = function () {
+            console.log("Deleting section:", sectionId);
+            alert(`Section ${sectionId} would be deleted from the database`);
+            deleteConfirmModal.style.display = "none";
+          };
+
+          deleteConfirmModal.style.display = "block";
+        });
+      });
+
+      // Edit from view modals
+      document
+        .getElementById("editFromViewSectionBtn")
+        .addEventListener("click", function () {
+          viewSectionModal.style.display = "none";
+          document.getElementById("sectionModalTitle").textContent =
+            "Edit Section";
           sectionModal.style.display = "block";
         });
 
-        // Close all modals
-        closeModalBtns.forEach((btn) => {
-          btn.addEventListener("click", function () {
-            sectionModal.style.display = "none";
-            viewSectionModal.style.display = "none";
-            deleteConfirmModal.style.display = "none";
-          });
+      // View roster
+      document
+        .getElementById("viewRosterBtn")
+        .addEventListener("click", function () {
+          const sectionId =
+            document.getElementById("viewSectionId").textContent;
+          alert(`Viewing roster for section ${sectionId}`);
         });
 
-        cancelSectionBtn.addEventListener("click", function () {
-          sectionModal.style.display = "none";
+      // Search
+      document
+        .getElementById("sectionSearchInput")
+        .addEventListener("keyup", function () {
+          const searchTerm = this.value.trim().toLowerCase();
+          if (searchTerm.length >= 2) {
+            console.log("Searching for sections with term:", searchTerm);
+            filterTableRows("sectionsTable", searchTerm);
+          }
         });
 
-        closeViewSectionBtn.addEventListener("click", function () {
-          viewSectionModal.style.display = "none";
-        });
+      // Filters
+      document
+        .getElementById("courseFilter")
+        .addEventListener("change", applySectionsFilters);
+      document
+        .getElementById("semesterFilter")
+        .addEventListener("change", applySectionsFilters);
 
-        cancelDeleteBtn.addEventListener("click", function () {
-          deleteConfirmModal.style.display = "none";
-        });
-
-        // Section form submission
-        document
-          .getElementById("sectionForm")
-          .addEventListener("submit", async function (e) {
-            e.preventDefault();
-            const selectedCourses = Array.from(
-              document.getElementById("sectionCourses").selectedOptions
-            ).map((opt) => opt.value);
-            const formData = {
-              id: document.getElementById("sectionId").value,
-              courses: selectedCourses,
-              sectionName: document.getElementById("sectionName").value,
-              semester: document.getElementById("sectionSemester").value,
-              yearLevel: document.getElementById("sectionYearLevel").value,
-              maxStudents: document.getElementById("sectionMaxStudents").value,
-              schedule: document.getElementById("sectionSchedule").value,
-              room: document.getElementById("sectionRoom").value,
-              status: document.getElementById("sectionStatus").value,
-              faculty: document.getElementById("sectionInstructor").value,
-            };
-            // Determine if add or edit
-            const isEdit = !!formData.id;
-            let url = "/api/sections";
-            let method = "POST";
-            if (isEdit) {
-              url += "/" + formData.id;
-              method = "PUT";
-            }
-            try {
-              const response = await fetch(url, {
-                method: method,
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-              });
-              if (!response.ok) throw new Error("Failed to save section");
-              sectionModal.style.display = "none";
-              // Optionally reload sections table here
-            } catch (err) {
-              alert("Error saving section: " + err.message);
-            }
-          });
-
-        // View buttons
-        document.querySelectorAll(".btn-view").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            console.log("Viewing section details for:", sectionId);
-            viewSectionModal.style.display = "block";
-          });
-        });
-
-        // Edit buttons
-        document.querySelectorAll(".btn-edit").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            console.log("Editing section:", sectionId);
-            document.getElementById("sectionModalTitle").textContent =
-              "Edit Section";
-            sectionModal.style.display = "block";
-          });
-        });
-
-        // Delete buttons
-        document.querySelectorAll(".btn-delete").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            document.getElementById("deleteConfirmTitle").textContent =
-              "Delete Section";
-            document.getElementById(
-              "deleteConfirmMessage"
-            ).textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
-
-            document.getElementById("confirmDeleteBtn").onclick = function () {
-              console.log("Deleting section:", sectionId);
-              alert(`Section ${sectionId} would be deleted from the database`);
-              deleteConfirmModal.style.display = "none";
-            };
-
-            deleteConfirmModal.style.display = "block";
-          });
-        });
-
-        // Edit from view modals
-        document
-          .getElementById("editFromViewSectionBtn")
-          .addEventListener("click", function () {
-            viewSectionModal.style.display = "none";
-            document.getElementById("sectionModalTitle").textContent =
-              "Edit Section";
-            sectionModal.style.display = "block";
-          });
-
-        // View roster
-        document
-          .getElementById("viewRosterBtn")
-          .addEventListener("click", function () {
-            const sectionId =
-              document.getElementById("viewSectionId").textContent;
-            alert(`Viewing roster for section ${sectionId}`);
-          });
-
-        // Search
-        document
-          .getElementById("sectionSearchInput")
-          .addEventListener("keyup", function () {
-            const searchTerm = this.value.trim().toLowerCase();
-            if (searchTerm.length >= 2) {
-              console.log("Searching for sections with term:", searchTerm);
-              filterTableRows("sectionsTable", searchTerm);
-            }
-          });
-
-        // Filters
-        document
-          .getElementById("courseFilter")
-          .addEventListener("change", applySectionsFilters);
-        document
-          .getElementById("semesterFilter")
-          .addEventListener("change", applySectionsFilters);
-
-        function applySectionsFilters() {
-          const course = document.getElementById("courseFilter").value;
-          const semester = document.getElementById("semesterFilter").value;
-          console.log(
-            "Filtering sections - Course:",
-            course,
-            "Semester:",
-            semester
-          );
-        }
-
-        // Dummy table filter (implement your own logic here)
-        function filterTableRows(tableId, term) {
-          const rows = document.querySelectorAll(`#${tableId} tbody tr`);
-          rows.forEach((row) => {
-            row.style.display = row.textContent.toLowerCase().includes(term)
-              ? ""
-              : "none";
-          });
-        }
-
-        // If there's a course parameter, also filter the table by that course
-        if (courseParam) {
-          document.getElementById("courseFilter").value = courseParam;
-          applySectionsFilters();
-        }
-      });
-
-      // Functions to load data from the server
-      function loadSections() {
-        console.log("Loading sections");
-        // In a real implementation, this would make an AJAX call to load sections
-        // and populate the sections table
+      function applySectionsFilters() {
+        const course = document.getElementById("courseFilter").value;
+        const semester = document.getElementById("semesterFilter").value;
+        console.log(
+          "Filtering sections - Course:",
+          course,
+          "Semester:",
+          semester
+        );
       }
 
-      async function populateCourseDropdown() {
-        const courseSelect = document.getElementById("sectionCourses");
-        courseSelect.innerHTML = '<option value="">Loading courses...</option>';
-        try {
-          const response = await fetch("/api/courses");
-          if (!response.ok) throw new Error("Failed to fetch courses");
-          const courses = await response.json();
-          if (!courses.length) {
-            courseSelect.innerHTML =
-              '<option value="">No courses available</option>';
-            return;
-          }
-          courseSelect.innerHTML = courses
+      // Dummy table filter (implement your own logic here)
+      function filterTableRows(tableId, term) {
+        const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+        rows.forEach((row) => {
+          row.style.display = row.textContent.toLowerCase().includes(term)
+            ? ""
+            : "none";
+        });
+      }
+
+      // If there's a course parameter, also filter the table by that course
+      if (courseParam) {
+        document.getElementById("courseFilter").value = courseParam;
+        applySectionsFilters();
+      }
+    });
+
+    // Functions to load data from the server
+    function loadSections() {
+      console.log("Loading sections");
+      // In a real implementation, this would make an AJAX call to load sections
+      // and populate the sections table
+    }
+
+    async function populateCourseDropdown() {
+      const courseSelect = document.getElementById("sectionCourses");
+      courseSelect.innerHTML = '<option value="">Loading courses...</option>';
+      try {
+        const response = await fetch("/api/courses");
+        if (!response.ok) throw new Error("Failed to fetch courses");
+        const courses = await response.json();
+        if (!courses.length) {
+          courseSelect.innerHTML =
+            '<option value="">No courses available</option>';
+          return;
+        }
+        courseSelect.innerHTML = courses
+          .map(
+            (c) =>
+              `<option value="${c.id}">${c.courseCode} - ${c.courseTitle}</option>`
+          )
+          .join("");
+      } catch (err) {
+        courseSelect.innerHTML =
+          '<option value="">Error loading courses</option>';
+      }
+    }
+
+    async function populateFacultyDropdown() {
+      const facultySelect = document.getElementById("sectionInstructor");
+      facultySelect.innerHTML =
+        '<option value="">Loading faculty...</option>';
+      try {
+        const response = await fetch("/api/admin/users?role=faculty");
+        if (!response.ok) throw new Error("Failed to fetch faculty");
+        const users = await response.json();
+        if (!users.length) {
+          facultySelect.innerHTML =
+            '<option value="">No faculty available</option>';
+          return;
+        }
+        facultySelect.innerHTML =
+          '<option value="">Select Faculty</option>' +
+          users
             .map(
-              (c) =>
-                `<option value="${c.id}">${c.courseCode} - ${c.courseTitle}</option>`
+              (u) =>
+                `<option value="${u.id}">${u.firstName} ${u.lastName} (${u.username})</option>`
             )
             .join("");
-        } catch (err) {
-          courseSelect.innerHTML =
-            '<option value="">Error loading courses</option>';
-        }
-      }
-
-      async function populateFacultyDropdown() {
-        const facultySelect = document.getElementById("sectionInstructor");
+      } catch (err) {
         facultySelect.innerHTML =
-          '<option value="">Loading faculty...</option>';
-        try {
-          const response = await fetch("/api/admin/users?role=faculty");
-          if (!response.ok) throw new Error("Failed to fetch faculty");
-          const users = await response.json();
-          if (!users.length) {
-            facultySelect.innerHTML =
-              '<option value="">No faculty available</option>';
-            return;
-          }
-          facultySelect.innerHTML =
-            '<option value="">Select Faculty</option>' +
-            users
-              .map(
-                (u) =>
-                  `<option value="${u.id}">${u.firstName} ${u.lastName} (${u.username})</option>`
-              )
-              .join("");
-        } catch (err) {
-          facultySelect.innerHTML =
-            '<option value="">Error loading faculty</option>';
-        }
+          '<option value="">Error loading faculty</option>';
       }
+    }
 
-      // When opening the modal, populate the dropdown
-      addSectionBtn.addEventListener("click", function () {
-        populateCourseDropdown();
-        populateFacultyDropdown();
-        // ...existing code for opening modal...
-      });
-    </script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
-  </body>
+    // When opening the modal, populate the dropdown
+    addSectionBtn.addEventListener("click", function () {
+      populateCourseDropdown();
+      populateFacultyDropdown();
+      // ...existing code for opening modal...
+    });
+  </script>
+  <script th:src="@{/js/sidebar-nav.js}"></script>
+</body>
+
 </html>

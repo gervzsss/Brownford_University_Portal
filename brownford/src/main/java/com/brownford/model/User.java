@@ -31,7 +31,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String department; // nullable, for faculty
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     private String program; // nullable, for students
     @Column(unique = true)
     private String studentId;  // Format: S-YY-XXXXX (e.g., S-24-00001)
@@ -108,11 +111,11 @@ public class User {
         this.password = password;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

@@ -16,7 +16,11 @@ public class Course {
     private String description;
     private String prerequisites;
     private String corequisites;
-    private String department;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     private String status;
 
     // Getters and Setters...
@@ -76,11 +80,11 @@ public class Course {
         this.corequisites = corequisites;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

@@ -1,9 +1,15 @@
 # Changelog
 
+## [05.28.251453]
+
+### Added
+- Department Management Page [ADMIN]
+
 ## [05.28.251338]
 
 ### Fixes
 - Fixed the Faculty Information Correctly Displays based on who logged in
+
 ## [05.28.251040]
 
 ## Fixes

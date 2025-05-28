@@ -60,4 +60,9 @@ public class AdminController {
     public String adminStudentRecords() {
         return "/admin/admin-student-records";
     }
+
+    @GetMapping("/admin-department-management")
+    public String adminDepartmentManagement() {
+        return "/admin/admin-department-management";
+    }
 }
