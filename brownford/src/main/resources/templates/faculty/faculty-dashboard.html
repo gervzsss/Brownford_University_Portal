@@ -171,8 +171,8 @@
                             </svg>
                         </div>
                         <div class="welcome-text">
-                            <h2>Welcome, Prof. Gervy Silvano Masbate</h2>
-                            <p>Faculty ID: F-2022-0123 | Department of Statistics | Academic Year 2024-2025</p>
+                            <h2>Welcome, Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
+                            <p>Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span> | Department of <span th:text="${faculty.department}">Statistics</span> | Academic Year 2024-2025</p>
                         </div>
                     </div>
                 </section>

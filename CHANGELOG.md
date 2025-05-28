@@ -1,11 +1,15 @@
 # Changelog
 
+## [05.28.251338]
+
+### Fixes
+- Fixed the Faculty Information Correctly Displays based on who logged in
 ## [05.28.251040]
 
 ## Fixes
 - Fixed the Last Login Feature
 
- ## Added
+ ### Added
  - Added the FacultyID and StudentID Feature
 
 ## [05.23.251403]

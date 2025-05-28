@@ -168,7 +168,7 @@
                         </svg>
                     </div>
                     <div class="profile-title">
-                        <h2 class="profile-name">Prof. Gervy Silvano Masbate</h2>
+                        <h2 class="profile-name">Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
                         <p class="profile-subtitle">Faculty Profile</p>
                     </div>
                 </div>
@@ -179,27 +179,27 @@
                         <div class="profile-info-grid">
                             <div class="info-item">
                                 <span class="info-label">Faculty ID:</span>
-                                <span class="info-value">F-2022-0123</span>
+                                <span class="info-value" th:text="${faculty.facultyId}">F-2022-0123</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Full Name:</span>
-                                <span class="info-value">Gervy Silvano Masbate</span>
+                                <span class="info-value" th:text="${faculty.firstName + ' ' + faculty.lastName}">Full Name</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Date of Birth:</span>
-                                <span class="info-value">June 15, 1985</span>
+                                <span class="info-label">Email:</span>
+                                <span class="info-value" th:text="${faculty.email}">email@example.com</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Gender:</span>
-                                <span class="info-value">Male</span>
+                                <span class="info-label">Department:</span>
+                                <span class="info-value" th:text="${faculty.department}">Department</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Nationality:</span>
-                                <span class="info-value">Filipino</span>
+                                <span class="info-label">Status:</span>
+                                <span class="info-value" th:text="${faculty.status}">Status</span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Civil Status:</span>
-                                <span class="info-value">Married</span>
+                                <span class="info-label">Last Login:</span>
+                                <span class="info-value" th:text="${#temporals.format(faculty.lastLogin, 'MMM dd, yyyy HH:mm')}">Last Login</span>
                             </div>
                         </div>
                     </div>
