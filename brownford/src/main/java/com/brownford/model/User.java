@@ -33,9 +33,13 @@ public class User {
 
     private String department; // nullable, for faculty
     private String program; // nullable, for students
-    private String studentId;
+    @Column(unique = true)
+    private String studentId;  // Format: S-YY-XXXXX (e.g., S-24-00001)
     private String yearLevel;
     private String major;
+
+    @Column(unique = true)
+    private String facultyId;  // Format: F-YY-XXXX (e.g., F-24-0001)
 
     private LocalDateTime lastLogin;
 
@@ -154,5 +158,13 @@ public class User {
 
     public String getFullName() {
         return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+    }
+
+    public String getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(String facultyId) {
+        this.facultyId = facultyId;
     }
 }

@@ -331,6 +331,7 @@
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Status</th>
+                                        <th>Student/Faculty ID</th>
                                         <th>Last Login</th>
                                         <th>Actions</th>
                                     </tr>
@@ -692,6 +693,7 @@
                         <td>${user.email}</td>
                         <td><span class="role-badge ${user.role.toLowerCase()}">${user.role}</span></td>
                         <td><span class="status-badge ${user.status.toLowerCase()}">${user.status}</span></td>
+                        <td>${user.role === 'student' ? user.studentId : user.role === 'faculty' ? user.facultyId : '-'}</td>
                         <td>${user.lastLogin ? user.lastLogin : ''}</td>
                         <td>
                             <div class="table-actions">

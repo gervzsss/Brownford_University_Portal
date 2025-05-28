@@ -2,6 +2,7 @@ package com.brownford.controller;
 
 import com.brownford.model.User;
 import com.brownford.repository.UserRepository;
+import com.brownford.service.UserIdentifierService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class AdminUserRestController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserIdentifierService userIdentifierService;
 
     @GetMapping
     public List<User> getAllUsers(
@@ -59,6 +63,7 @@ public class AdminUserRestController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
+        userIdentifierService.assignIdentifier(user);
         return userRepository.save(user);
     }
 
@@ -69,6 +74,12 @@ public class AdminUserRestController {
             return ResponseEntity.notFound().build();
         }
         User user = optionalUser.get();
+        
+        // Only assign new ID if role is changing
+        if (!user.getRole().equals(userDetails.getRole())) {
+            userIdentifierService.assignIdentifier(userDetails);
+        }
+        
         user.setUsername(userDetails.getUsername());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());

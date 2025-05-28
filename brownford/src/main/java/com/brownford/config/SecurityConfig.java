@@ -13,9 +13,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -30,37 +34,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for API endpoints
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .successHandler(customSuccessHandler())
+                        .successHandler(customAuthenticationSuccessHandler)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll());
         return http.build();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler customSuccessHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                    Authentication authentication) throws IOException, ServletException {
-                for (GrantedAuthority auth : authentication.getAuthorities()) {
-                    String role = auth.getAuthority();
-                    if ("admin".equalsIgnoreCase(role)) {
-                        response.sendRedirect("/admin-dashboard");
-                        return;
-                    } else if ("faculty".equalsIgnoreCase(role)) {
-                        response.sendRedirect("/faculty-dashboard");
-                        return;
-                    } else if ("student".equalsIgnoreCase(role)) {
-                        response.sendRedirect("/student-home");
-                        return;
-                    }
-                }
-                response.sendRedirect("/"); // fallback
-            }
-        };
     }
 
     @Bean

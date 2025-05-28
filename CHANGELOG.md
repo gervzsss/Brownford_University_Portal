@@ -1,5 +1,13 @@
 # Changelog
 
+## [05.28.251040]
+
+## Fixes
+- Fixed the Last Login Feature
+
+ ## Added
+ - Added the FacultyID and StudentID Feature
+
 ## [05.23.251403]
 
 ### Changes
