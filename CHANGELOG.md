@@ -2,6 +2,11 @@
 
 ## [05.28.251453]
 
+### Changes
+- Fixed the UI of the Action Buttons in the Department Management Page [ADMIN]
+
+## [05.28.251453]
+
 ### Added
 - Department Management Page [ADMIN]
 
