@@ -343,7 +343,6 @@
                                         <th>Description</th>
                                         <th>Faculty Count</th>
                                         <th>Course Count</th>
-                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -391,13 +390,6 @@
                             <textarea id="departmentDescription" name="departmentDescription" class="form-control"
                                 rows="3"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="departmentStatus">Status</label>
-                            <select id="departmentStatus" name="departmentStatus" class="form-control" required>
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" id="cancelDepartmentBtn">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="saveDepartmentBtn">Save
@@ -435,16 +427,8 @@
                                 <span class="info-value" id="viewDepartmentName"></span>
                             </div>
                             <div class="info-item">
-                                <span class="info-label">Status:</span>
-                                <span class="info-value" id="viewDepartmentStatus"></span>
-                            </div>
-                            <div class="info-item">
                                 <span class="info-label">Faculty Count:</span>
                                 <span class="info-value" id="viewFacultyCount"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Course Count:</span>
-                                <span class="info-value" id="viewCourseCount"></span>
                             </div>
                         </div>
                         <div class="department-description">
@@ -533,8 +517,7 @@
                 const formData = {
                     code: document.getElementById('departmentCode').value,
                     name: document.getElementById('departmentName').value,
-                    description: document.getElementById('departmentDescription').value,
-                    status: document.getElementById('departmentStatus').value
+                    description: document.getElementById('departmentDescription').value
                 };
 
                 try {
@@ -545,17 +528,38 @@
                         method = 'PUT';
                     }
 
+                    console.log('Sending request:', {
+                        url,
+                        method,
+                        data: formData
+                    });
+
                     const response = await fetch(url, {
                         method: method,
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
                         body: JSON.stringify(formData)
                     });
 
-                    if (!response.ok) throw new Error('Failed to save department');
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('Server response:', {
+                            status: response.status,
+                            statusText: response.statusText,
+                            error: errorText
+                        });
+                        throw new Error(`Failed to save department: ${errorText}`);
+                    }
 
+                    const savedDepartment = await response.json();
+                    console.log('Department saved successfully:', savedDepartment);
+                    
                     departmentModal.style.display = 'none';
                     loadDepartments();
                 } catch (err) {
+                    console.error('Error saving department:', err);
                     alert('Error saving department: ' + err.message);
                 }
             });
@@ -631,7 +635,6 @@
                     <td>${dept.description || 'No description'}</td>
                     <td>${dept.facultyCount || 0}</td>
                     <td>${dept.courseCount || 0}</td>
-                    <td><span class="status-badge ${dept.status === 'active' ? 'active' : 'inactive'}">${dept.status || 'active'}</span></td>
                     <td>
                         <div class="table-actions">
                             <button class="action-btn btn-view" data-id="${dept.id}" title="View Details">View</button>
@@ -682,9 +685,7 @@
 
                 document.getElementById('viewDepartmentCode').textContent = dept.code;
                 document.getElementById('viewDepartmentName').textContent = dept.name;
-                document.getElementById('viewDepartmentStatus').innerHTML = `<span class="status-badge ${dept.status === 'active' ? 'active' : 'inactive'}">${dept.status}</span>`;
                 document.getElementById('viewFacultyCount').textContent = dept.facultyCount || 0;
-                document.getElementById('viewCourseCount').textContent = dept.courseCount || 0;
                 document.getElementById('viewDepartmentDescription').textContent = dept.description || 'No description available';
 
                 document.getElementById('viewDepartmentModal').style.display = 'block';
@@ -704,7 +705,6 @@
                 document.getElementById('departmentCode').value = dept.code;
                 document.getElementById('departmentName').value = dept.name;
                 document.getElementById('departmentDescription').value = dept.description || '';
-                document.getElementById('departmentStatus').value = dept.status || 'active';
 
                 editingDepartmentId = deptId;
                 document.getElementById('departmentModal').style.display = 'block';

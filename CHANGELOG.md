@@ -1,5 +1,13 @@
 # Changelog
 
+## [05.30.250126]
+
+### Changes
+- Removed the Department Status
+
+### Bugs
+- The Edit feature in the Department Management Page is still not working
+
 ## [05.29.251308]
 
 ### Changes

@@ -40,28 +40,44 @@ public class DepartmentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody Department departmentDetails) {
-        Optional<Department> optionalDepartment = departmentRepository.findById(id);
-        if (optionalDepartment.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        try {
+            Optional<Department> optionalDepartment = departmentRepository.findById(id);
+            if (optionalDepartment.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
 
-        Department department = optionalDepartment.get();
-        
-        // Check if new name or code conflicts with existing departments
-        if (!department.getName().equals(departmentDetails.getName()) && 
-            departmentRepository.existsByName(departmentDetails.getName())) {
-            return ResponseEntity.badRequest().build();
-        }
-        if (!department.getCode().equals(departmentDetails.getCode()) && 
-            departmentRepository.existsByCode(departmentDetails.getCode())) {
-            return ResponseEntity.badRequest().build();
-        }
+            Department department = optionalDepartment.get();
+            
+            // Check if new name or code conflicts with existing departments
+            if (!department.getName().equals(departmentDetails.getName()) && 
+                departmentRepository.existsByName(departmentDetails.getName())) {
+                return ResponseEntity.badRequest()
+                    .body(null);
+            }
+            if (!department.getCode().equals(departmentDetails.getCode()) && 
+                departmentRepository.existsByCode(departmentDetails.getCode())) {
+                return ResponseEntity.badRequest()
+                    .body(null);
+            }
 
-        department.setName(departmentDetails.getName());
-        department.setCode(departmentDetails.getCode());
-        department.setDescription(departmentDetails.getDescription());
+            // Validate required fields
+            if (departmentDetails.getName() == null || departmentDetails.getName().trim().isEmpty() ||
+                departmentDetails.getCode() == null || departmentDetails.getCode().trim().isEmpty()) {
+                return ResponseEntity.badRequest()
+                    .body(null);
+            }
 
-        return ResponseEntity.ok(departmentRepository.save(department));
+            department.setName(departmentDetails.getName().trim());
+            department.setCode(departmentDetails.getCode().trim());
+            department.setDescription(departmentDetails.getDescription() != null ? 
+                departmentDetails.getDescription().trim() : null);
+
+            Department savedDepartment = departmentRepository.save(department);
+            return ResponseEntity.ok(savedDepartment);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(null);
+        }
     }
 
     @DeleteMapping("/{id}")

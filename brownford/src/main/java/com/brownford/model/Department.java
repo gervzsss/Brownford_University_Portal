@@ -24,9 +24,6 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Course> courses;
 
-    @Column(nullable = false)
-    private String status;
-
     // Getters and Setters
     public Long getId() {
         return id;
@@ -76,11 +73,4 @@ public class Department {
         this.courses = courses;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
