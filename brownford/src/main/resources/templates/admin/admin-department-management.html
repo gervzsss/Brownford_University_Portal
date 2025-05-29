@@ -631,7 +631,7 @@
                     <td>${dept.description || 'No description'}</td>
                     <td>${dept.facultyCount || 0}</td>
                     <td>${dept.courseCount || 0}</td>
-                    <td><span class="status-badge ${dept.status === 'active' ? 'active' : 'inactive'}">${dept.status}</span></td>
+                    <td><span class="status-badge ${dept.status === 'active' ? 'active' : 'inactive'}">${dept.status || 'active'}</span></td>
                     <td>
                         <div class="table-actions">
                             <button class="action-btn btn-view" data-id="${dept.id}" title="View Details">View</button>
@@ -682,7 +682,7 @@
 
                 document.getElementById('viewDepartmentCode').textContent = dept.code;
                 document.getElementById('viewDepartmentName').textContent = dept.name;
-                document.getElementById('viewDepartmentStatus').textContent = dept.status;
+                document.getElementById('viewDepartmentStatus').innerHTML = `<span class="status-badge ${dept.status === 'active' ? 'active' : 'inactive'}">${dept.status}</span>`;
                 document.getElementById('viewFacultyCount').textContent = dept.facultyCount || 0;
                 document.getElementById('viewCourseCount').textContent = dept.courseCount || 0;
                 document.getElementById('viewDepartmentDescription').textContent = dept.description || 'No description available';
@@ -704,7 +704,7 @@
                 document.getElementById('departmentCode').value = dept.code;
                 document.getElementById('departmentName').value = dept.name;
                 document.getElementById('departmentDescription').value = dept.description || '';
-                document.getElementById('departmentStatus').value = dept.status;
+                document.getElementById('departmentStatus').value = dept.status || 'active';
 
                 editingDepartmentId = deptId;
                 document.getElementById('departmentModal').style.display = 'block';
@@ -844,45 +844,6 @@
         }
 
         /* Status badges */
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: capitalize;
-        }
-
-        .status-badge.active {
-            background-color: #e6f4ea;
-            color: #1e7e34;
-        }
-
-        .status-badge.inactive {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            position: relative;
-        }
 
         .modal-sm {
             max-width: 400px;

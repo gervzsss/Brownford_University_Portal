@@ -1,6 +1,11 @@
 # Changelog
 
-## [05.28.251453]
+## [05.29.251308]
+
+### Changes
+- Fixed some of the UI in the Department Management Page [ADMIN]
+
+## [05.29.251205]
 
 ### Changes
 - Fixed the UI of the Action Buttons in the Department Management Page [ADMIN]
@@ -17,7 +22,7 @@
 
 ## [05.28.251040]
 
-## Fixes
+### Fixes
 - Fixed the Last Login Feature
 
  ### Added
