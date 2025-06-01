@@ -100,6 +100,8 @@
 
                     <div class="sidebar-section-title">Academic Management</div>
 
+                    <!-- Remove department management link from sidebar -->
+                    <!--
                     <li class="sidebar-nav-item active">
                         <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
@@ -113,6 +115,7 @@
                             <span class="sidebar-nav-text">Departments</span>
                         </a>
                     </li>
+                    -->
 
                     <li class="sidebar-nav-item">
                         <a th:href="@{/admin-courses}" class="sidebar-nav-link">
@@ -301,14 +304,12 @@
                                     </button>
                                 </div>
                                 <div class="filter-container">
+                                    <!-- Remove department filter from faculty list -->
+                                    <!--
                                     <select id="departmentFilter" class="filter-select">
                                         <option value="all">All Departments</option>
-                                        <option value="business">Business Administration</option>
-                                        <option value="statistics">Statistics</option>
-                                        <option value="computer_science">Computer Science</option>
-                                        <option value="engineering">Engineering</option>
-                                        <option value="humanities">Humanities</option>
                                     </select>
+                                    -->
                                     <select id="statusFilter" class="filter-select">
                                         <option value="all">All Status</option>
                                         <option value="active">Active</option>
@@ -347,7 +348,6 @@
                                     <tr>
                                         <th>Faculty ID</th>
                                         <th>Name</th>
-                                        <th>Department</th>
                                         <th>Email</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -357,7 +357,6 @@
                                     <tr th:each="faculty : ${facultyList}">
                                         <td th:text="${faculty.id}">F-0001</td>
                                         <td th:text="${faculty.name}">John Doe</td>
-                                        <td th:text="${faculty.department}">Mathematics</td>
                                         <td th:text="${faculty.email}">john@brownford.edu</td>
                                         <td><span class="status-badge"
                                                 th:classappend="${faculty.status == 'Active' ? 'active' : 'inactive'}"

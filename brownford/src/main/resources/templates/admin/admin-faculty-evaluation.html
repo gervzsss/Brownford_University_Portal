@@ -98,8 +98,8 @@
                         </a>
                     </li>
 
-                    <div class="sidebar-section-title">Academic Management</div>
-
+                    <!-- Remove department management link from sidebar -->
+                    <!--
                     <li class="sidebar-nav-item active">
                         <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
@@ -113,6 +113,7 @@
                             <span class="sidebar-nav-text">Departments</span>
                         </a>
                     </li>
+                    -->
 
                     <li class="sidebar-nav-item">
                         <a th:href="@{/admin-courses}" class="sidebar-nav-link">
@@ -300,6 +301,7 @@
                                     </button>
                                 </div>
                                 <div class="filter-container">
+                                    <!--
                                     <select id="departmentFilter" class="filter-select">
                                         <option value="all">All Departments</option>
                                         <option value="business">Business Administration</option>
@@ -308,6 +310,7 @@
                                         <option value="engineering">Engineering</option>
                                         <option value="humanities">Humanities</option>
                                     </select>
+                                    -->
                                     <select id="scoreFilter" class="filter-select">
                                         <option value="all">All Scores</option>
                                         <option value="excellent">Excellent (4.5-5.0)</option>
@@ -337,7 +340,10 @@
                                     <tr>
                                         <th>Faculty ID</th>
                                         <th>Name</th>
+                                        <!-- Remove department column from table -->
+                                        <!--
                                         <th>Department</th>
+                                        -->
                                         <th>Last Evaluation</th>
                                         <th>Score</th>
                                         <th>Actions</th>
@@ -347,7 +353,10 @@
                                     <tr th:each="faculty : ${facultyList}">
                                         <td th:text="${faculty.id}">F-0001</td>
                                         <td th:text="${faculty.name}">John Doe</td>
+                                        <!-- Remove department cell from table -->
+                                        <!--
                                         <td th:text="${faculty.department}">Mathematics</td>
+                                        -->
                                         <td th:text="${faculty.lastEvaluation}">2024-05-01</td>
                                         <td th:text="${faculty.evaluationScore}">4.5</td>
                                         <td>

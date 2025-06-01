@@ -1,5 +1,16 @@
 # Changelog
 
+## [06.02.250218]
+
+### Changes
+- User Management Page Improvement 
+
+## [06.01.252109]
+
+### Changes
+- Removal of Department in the User Management Page
+- Deleted some files (HTML)
+
 ## [06.01.252109]
 
 ### Changes

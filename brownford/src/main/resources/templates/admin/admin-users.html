@@ -101,6 +101,7 @@
 
                     <div class="sidebar-section-title">Academic Management</div>
 
+                    <!--
                     <li class="sidebar-nav-item active">
                         <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
@@ -114,6 +115,7 @@
                             <span class="sidebar-nav-text">Departments</span>
                         </a>
                     </li>
+                    -->
 
                     <li class="sidebar-nav-item">
                         <a th:href="@{/admin-courses}" class="sidebar-nav-link">
@@ -144,25 +146,6 @@
                             <span class="sidebar-nav-text">Sections</span>
                         </a>
                     </li>
-
-                    <!-- Commented out the Subject Management link
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-subject-management}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Subject Management</span>
-                        </a>
-                    </li>
-                    -->
 
                     <li class="sidebar-nav-item">
                         <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
@@ -438,17 +421,6 @@
                                     required>
                             </div>
                         </div>
-                        <div class="form-group" id="departmentGroup" style="display: none;">
-                            <label for="department">Department</label>
-                            <select id="department" name="department" class="form-control">
-                                <option value="">Select Department</option>
-                                <option value="business">Business Administration</option>
-                                <option value="statistics">Statistics</option>
-                                <option value="computer_science">Computer Science</option>
-                                <option value="engineering">Engineering</option>
-                                <option value="humanities">Humanities</option>
-                            </select>
-                        </div>
                         <div class="form-group" id="programGroup" style="display: none;">
                             <label for="program">Program</label>
                             <select id="program" name="program" class="form-control">
@@ -519,10 +491,6 @@
                                 <span class="info-label">Last Login:</span>
                                 <span class="info-value" id="viewLastLogin">May 10, 2025 9:15 AM</span>
                             </div>
-                            <div class="info-item" id="viewDepartmentItem" style="display: none;">
-                                <span class="info-label">Department:</span>
-                                <span class="info-value" id="viewDepartment">Statistics</span>
-                            </div>
                             <div class="info-item" id="viewProgramItem" style="display: none;">
                                 <span class="info-label">Program:</span>
                                 <span class="info-value" id="viewProgram">BSBA - Marketing Management</span>
@@ -553,7 +521,6 @@
             const cancelBtn = document.getElementById('cancelBtn');
             const closeModalBtns = document.querySelectorAll('.close-modal');
             const userRoleSelect = document.getElementById('userRole');
-            const departmentGroup = document.getElementById('departmentGroup');
             const programGroup = document.getElementById('programGroup');
             const closeViewBtn = document.getElementById('closeViewBtn');
 
@@ -567,33 +534,29 @@
                 editingUserId = null;
                 document.getElementById('password').required = true;
                 document.getElementById('confirmPassword').required = true;
-                userModal.style.display = 'block';
+                userModal.style.display = 'flex';
+                setTimeout(() => showModal(userModal), 10);
             });
 
             // Close modals
             closeModalBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
-                    userModal.style.display = 'none';
-                    viewUserModal.style.display = 'none';
+                    hideModal(userModal);
+                    hideModal(viewUserModal);
                 });
             });
             cancelBtn.addEventListener('click', function () {
-                userModal.style.display = 'none';
+                hideModal(userModal);
             });
             closeViewBtn.addEventListener('click', function () {
-                viewUserModal.style.display = 'none';
+                hideModal(viewUserModal);
             });
 
-            // Show/hide department and program fields based on role
+            // Show/hide program fields based on role
             userRoleSelect.addEventListener('change', function () {
-                if (this.value === 'faculty') {
-                    departmentGroup.style.display = 'block';
-                    programGroup.style.display = 'none';
-                } else if (this.value === 'student') {
-                    departmentGroup.style.display = 'none';
+                if (this.value === 'student') {
                     programGroup.style.display = 'block';
                 } else {
-                    departmentGroup.style.display = 'none';
                     programGroup.style.display = 'none';
                 }
             });
@@ -615,9 +578,7 @@
                     role: document.getElementById('userRole').value,
                     status: document.getElementById('status').value
                 };
-                if (formData.role === 'faculty') {
-                    formData.department = document.getElementById('department').value;
-                } else if (formData.role === 'student') {
+                if (formData.role === 'student') {
                     formData.program = document.getElementById('program').value;
                 }
                 if (!editingUserId || password) {
@@ -681,14 +642,22 @@
             // Close modals when clicking outside
             window.addEventListener('click', function (event) {
                 if (event.target === userModal) {
-                    userModal.style.display = 'none';
+                    hideModal(userModal);
                 }
                 if (event.target === viewUserModal) {
-                    viewUserModal.style.display = 'none';
+                    hideModal(viewUserModal);
                 }
             });
         });
 
+        // Modal show/hide with fade/scale effect
+        function showModal(modal) {
+            modal.classList.add('show');
+        }
+        function hideModal(modal) {
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 200);
+        }
         // Load users from the API and render them in the table, with search and filters
         async function loadUsers() {
             try {
@@ -774,20 +743,14 @@
                 document.getElementById('viewEmail').textContent = user.email;
                 document.getElementById('viewRole').textContent = user.role;
                 document.getElementById('viewStatus').textContent = user.status;
-                // Show/hide department or program based on role
-                if (user.role === 'faculty') {
-                    document.getElementById('viewDepartmentItem').style.display = 'block';
-                    document.getElementById('viewProgramItem').style.display = 'none';
-                    document.getElementById('viewDepartment').textContent = user.department;
-                } else if (user.role === 'student') {
-                    document.getElementById('viewDepartmentItem').style.display = 'none';
+                if (user.role === 'student') {
                     document.getElementById('viewProgramItem').style.display = 'block';
                     document.getElementById('viewProgram').textContent = user.program;
                 } else {
-                    document.getElementById('viewDepartmentItem').style.display = 'none';
                     document.getElementById('viewProgramItem').style.display = 'none';
                 }
-                document.getElementById('viewUserModal').style.display = 'block';
+                viewUserModal.style.display = 'flex';
+                setTimeout(() => showModal(viewUserModal), 10);
             } catch (err) {
                 alert('Failed to load user details: ' + err);
             }
@@ -812,19 +775,14 @@
                 document.getElementById('confirmPassword').value = '';
                 document.getElementById('password').required = false;
                 document.getElementById('confirmPassword').required = false;
-                if (user.role === 'faculty') {
-                    document.getElementById('department').value = user.department || '';
-                    departmentGroup.style.display = 'block';
-                    programGroup.style.display = 'none';
-                } else if (user.role === 'student') {
+                if (user.role === 'student') {
                     document.getElementById('program').value = user.program || '';
-                    departmentGroup.style.display = 'none';
                     programGroup.style.display = 'block';
                 } else {
-                    departmentGroup.style.display = 'none';
                     programGroup.style.display = 'none';
                 }
-                userModal.style.display = 'block';
+                userModal.style.display = 'flex';
+                setTimeout(() => showModal(userModal), 10);
             } catch (err) {
                 alert('Failed to load user for editing: ' + err);
             }
@@ -954,6 +912,182 @@
 
         .btn-delete:hover {
             background-color: #e0e0e0;
+        }
+
+        /* Modal overlay and modal improvements */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(30, 20, 10, 0.25);
+            backdrop-filter: blur(6px) saturate(120%);
+            -webkit-backdrop-filter: blur(6px) saturate(120%);
+            transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal.show {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18), 0 1.5px 6px rgba(139, 69, 19, 0.08);
+            margin: 4vh auto;
+            padding: 2.5rem 2rem 2rem 2rem;
+            max-width: 420px;
+            min-width: 320px;
+            position: relative;
+            animation: modalPopIn 0.32s cubic-bezier(.4,0,.2,1);
+        }
+        @media (max-width: 600px) {
+            .modal-content {
+                max-width: 98vw;
+                min-width: unset;
+                padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+            }
+        }
+        @keyframes modalPopIn {
+            0% { transform: scale(0.92) translateY(30px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eeeeee;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1.2rem;
+        }
+        .modal-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: #ffffff;
+            margin: 0;
+        }
+        .close-modal {
+            font-size: 1.7rem;
+            color: #ffffff;
+            cursor: pointer;
+            border-radius: 50%;
+            padding: 0 0.5rem;
+            transition: background 0.2s;
+        }
+        .close-modal:hover {
+            background: #cfbdb1;
+        }
+        .modal-body {
+            padding: 0;
+        }
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #6B3A1D;
+            margin-bottom: 0.3rem;
+        }
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #d6cfc7;
+            padding: 0.5rem 0.7rem;
+            font-size: 1rem;
+            background: #faf8f6;
+            transition: border 0.2s;
+        }
+        .form-control:focus {
+            border: 1.5px solid #8B4513;
+            outline: none;
+            background: #fff;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.7rem;
+            margin-top: 1.2rem;
+        }
+        .btn {
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1.2rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-primary {
+            background: #8B4513;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #6B3A1D;
+        }
+        .btn-secondary {
+            background: #f5ece6;
+            color: #8B4513;
+        }
+        .btn-secondary:hover {
+            background: #e7d7c7;
+        }
+        /* User details modal grid improvements */
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.7rem 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        @media (max-width: 600px) {
+            .user-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+        .info-label {
+            font-size: 0.97rem;
+            color: #8B4513;
+            font-weight: 500;
+        }
+        .info-value {
+            font-size: 1.05rem;
+            color: #333;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .user-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        .user-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.2rem;
+        }
+        /* Modal fade/scale transitions */
+        .modal {
+            transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
+        }
+        .modal-content {
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), opacity 0.3s cubic-bezier(.4,0,.2,1);
         }
     </style>
 </body>
