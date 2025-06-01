@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.01.252109]
+
+### Changes
+- Removed Subject Management Page
+- All Named Subject in the Page Renamed to Course
+
 ## [05.30.250126]
 
 ### Changes

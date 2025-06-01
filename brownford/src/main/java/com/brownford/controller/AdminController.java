@@ -11,10 +11,10 @@ public class AdminController {
         return "/admin/admin-dashboard";
     }
     
-    @GetMapping("/admin-subject-management")
+    /*@GetMapping("/admin-subject-management")
     public String adminSubjectManagement() {
         return "/admin/admin-subject-management";
-    }
+    }*/
 
     @GetMapping("/admin-users")
     public String adminUsers() {

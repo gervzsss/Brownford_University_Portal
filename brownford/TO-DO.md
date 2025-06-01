@@ -89,5 +89,3 @@ Log Out
 (Optional: Manage user roles or admins)
 
 Prompt: Design a [component/page/section] that matches the existing theme and design of the website. It should use a similar color palette, typography, and layout style. The design must feel cohesive with the rest of the site and maintain a consistent user experience.
-
-#### MYSQL PASSWORD: [G&f5rvj66F@QPWP]
