@@ -89,7 +89,6 @@ public class CourseController {
         course.setCourseCode(courseDetails.getCourseCode());
         course.setCourseTitle(courseDetails.getCourseTitle());
         course.setUnits(courseDetails.getUnits());
-        course.setDepartment(courseDetails.getDepartment());
         course.setStatus(courseDetails.getStatus());
         course.setDescription(courseDetails.getDescription());
         course.setPrerequisites(courseDetails.getPrerequisites());

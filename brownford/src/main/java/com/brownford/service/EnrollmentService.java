@@ -32,15 +32,11 @@ public class EnrollmentService {
     private SectionRepository sectionRepository;
 
     public List<Course> getAvailableCoursesForStudent(Long studentId) {
-        User student = userRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-
         // Get all courses
         List<Course> allCourses = courseRepository.findAll();
 
         // Filter courses based on department
         return allCourses.stream()
-                .filter(course -> course.getDepartment().equals(student.getDepartment()))
                 .collect(Collectors.toList());
     }
 
@@ -51,11 +47,6 @@ public class EnrollmentService {
                 .orElseThrow(() -> new RuntimeException("Course not found"));
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new RuntimeException("Section not found"));
-
-        // Check if student's department matches course's department
-        if (!student.getDepartment().equals(course.getDepartment())) {
-            return false;
-        }
 
         // Check if student is already enrolled in this course
         if (enrollmentRepository.existsByStudentAndCourseAndStatus(student, course, "ENROLLED")) {
@@ -119,4 +110,4 @@ public class EnrollmentService {
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         return enrollmentRepository.findByStudentAndStatus(student, "ENROLLED");
     }
-} 
+}

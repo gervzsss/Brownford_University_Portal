@@ -3,6 +3,11 @@
 ## [06.01.252109]
 
 ### Changes
+- Removed the Department in the Admin and some in the Faculty Pages
+
+## [06.01.252242]
+
+### Changes
 - Removed Subject Management Page
 - All Named Subject in the Page Renamed to Course
 

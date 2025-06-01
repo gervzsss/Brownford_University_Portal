@@ -289,21 +289,6 @@
                     </svg>
                   </button>
                 </div>
-                <div class="filter-container">
-                  <select id="departmentFilter" class="filter-select">
-                    <option value="all">All Departments</option>
-                    <option value="business">Business Administration</option>
-                    <option value="statistics">Statistics</option>
-                    <option value="computer_science">Computer Science</option>
-                    <option value="engineering">Engineering</option>
-                    <option value="humanities">Humanities</option>
-                  </select>
-                  <select id="statusFilter" class="filter-select">
-                    <option value="all">All Status</option>
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </div>
               </div>
               <div class="action-buttons">
                 <button id="addCourseBtn" class="add-user-btn">
@@ -335,7 +320,6 @@
                   <tr>
                     <th>Course Code</th>
                     <th>Course Title</th>
-                    <th>Department</th>
                     <th>Units</th>
                     <th>Prerequisites</th>
                     <th>Status</th>
@@ -382,18 +366,6 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group">
-                <label for="courseDepartment">Department</label>
-                <select id="courseDepartment" name="courseDepartment" class="form-control" required>
-                  <option value="">Select Department</option>
-                  <option value="business">Business Administration</option>
-                  <option value="statistics">Statistics</option>
-                  <option value="computer_science">Computer Science</option>
-                  <option value="engineering">Engineering</option>
-                  <option value="humanities">Humanities</option>
-                  <option value="mathematics">Mathematics</option>
-                </select>
-              </div>
               <div class="form-group">
                 <label for="courseUnits">Units</label>
                 <input type="number" id="courseUnits" name="courseUnits" class="form-control" min="1" max="6"
@@ -455,10 +427,6 @@
               <div class="info-item">
                 <span class="info-label">Course Title:</span>
                 <span class="info-value" id="viewCourseTitle"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Department:</span>
-                <span class="info-value" id="viewCourseDepartment"></span>
               </div>
               <div class="info-item">
                 <span class="info-label">Units:</span>
@@ -593,7 +561,6 @@
           const formData = {
             courseCode: document.getElementById("courseCode").value,
             courseTitle: document.getElementById("courseTitle").value,
-            department: document.getElementById("courseDepartment").value,
             units: document.getElementById("courseUnits").value,
             prerequisites: document.getElementById("coursePrerequisites")
               .value,
@@ -642,8 +609,6 @@
               document.getElementById("courseCode").value = course.courseCode;
               document.getElementById("courseTitle").value =
                 course.courseTitle;
-              document.getElementById("courseDepartment").value =
-                course.department;
               document.getElementById("courseUnits").value = course.credits;
               document.getElementById("coursePrerequisites").value =
                 course.prerequisites || "";
@@ -699,35 +664,6 @@
           }
         });
 
-      // Filters
-      document
-        .getElementById("departmentFilter")
-        .addEventListener("change", applyCoursesFilters);
-      document
-        .getElementById("statusFilter")
-        .addEventListener("change", applyCoursesFilters);
-
-      function applyCoursesFilters() {
-        const department = document.getElementById("departmentFilter").value;
-        const status = document.getElementById("statusFilter").value;
-        console.log(
-          "Filtering courses - Department:",
-          department,
-          "Status:",
-          status
-        );
-      }
-
-      // Dummy table filter (implement your own logic here)
-      function filterTableRows(tableId, term) {
-        const rows = document.querySelectorAll(`#${tableId} tbody tr`);
-        rows.forEach((row) => {
-          row.style.display = row.textContent.toLowerCase().includes(term)
-            ? ""
-            : "none";
-        });
-      }
-
       // Load courses from backend and populate table
       loadCourses();
     });
@@ -758,7 +694,6 @@
           <tr>
             <td>${course.courseCode}</td>
             <td>${course.courseTitle}</td>
-            <td>${course.department}</td>
             <td>${course.units}</td>
             <td>${course.prerequisites || "None"}</td>
             <td>${course.status}</td>

@@ -89,8 +89,6 @@ public class AdminUserRestController {
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
             user.setPassword(userDetails.getPassword());
         }
-        user.setDepartment(userDetails.getDepartment());
-        user.setProgram(userDetails.getProgram());
         user.setLastLogin(userDetails.getLastLogin());
         return ResponseEntity.ok(userRepository.save(user));
     }
