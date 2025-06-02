@@ -7,12 +7,10 @@ import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import com.brownford.repository.UserRepository;
 import com.brownford.model.User;
 import java.util.Collections;
 import java.util.List;
-
 
 @Controller
 public class StudentController {
@@ -33,6 +31,7 @@ public class StudentController {
         addStudentToModel(model, principal);
         return "/student/student-home";
     }
+
     @GetMapping("/student-grades")
     public String grades(Model model, Principal principal) {
         addStudentToModel(model, principal);
@@ -63,8 +62,6 @@ public class StudentController {
         model.addAttribute("schedules", Collections.emptyList());
         return "/student/student-schedule";
     }
-
-    
 
     @GetMapping("/student-enrollment")
     public String enrollment(Model model, Principal principal) {

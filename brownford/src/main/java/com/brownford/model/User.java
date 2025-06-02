@@ -34,14 +34,14 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Program program; // nullable, for students
     @Column(unique = true)
-    private String studentId;  // Format: S-YY-XXXXX (e.g., S-24-00001)
+    private String studentId; // Format: S-YY-XXXXX (e.g., S-24-00001)
     private String yearLevel;
 
     @Column(unique = true)
-    private String facultyId;  // Format: F-YY-XXXX (e.g., F-24-0001)
+    private String facultyId; // Format: F-YY-XXXX (e.g., F-24-0001)
 
     private LocalDateTime lastLogin;
 

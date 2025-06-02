@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        
+
         // Update last login time
         String username = authentication.getName();
         userRepository.findByUsername(username).ifPresent(user -> {
@@ -47,4 +47,4 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
         response.sendRedirect("/"); // fallback
     }
-} 
+}

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.02.251336]
+
+### Changes
+- Format the Whole Codebase
+
 ## [06.02.251321]
 
 ### Changes

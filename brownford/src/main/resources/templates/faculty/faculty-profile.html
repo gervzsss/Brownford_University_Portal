@@ -168,7 +168,8 @@
                         </svg>
                     </div>
                     <div class="profile-title">
-                        <h2 class="profile-name">Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
+                        <h2 class="profile-name">Prof. <span
+                                th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
                         <p class="profile-subtitle">Faculty Profile</p>
                     </div>
                 </div>
@@ -183,7 +184,8 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Full Name:</span>
-                                <span class="info-value" th:text="${faculty.firstName + ' ' + faculty.lastName}">Full Name</span>
+                                <span class="info-value" th:text="${faculty.firstName + ' ' + faculty.lastName}">Full
+                                    Name</span>
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Email:</span>
@@ -195,7 +197,9 @@
                             </div>
                             <div class="info-item">
                                 <span class="info-label">Last Login:</span>
-                                <span class="info-value" th:text="${#temporals.format(faculty.lastLogin, 'MMM dd, yyyy HH:mm')}">Last Login</span>
+                                <span class="info-value"
+                                    th:text="${#temporals.format(faculty.lastLogin, 'MMM dd, yyyy HH:mm')}">Last
+                                    Login</span>
                             </div>
                         </div>
                     </div>

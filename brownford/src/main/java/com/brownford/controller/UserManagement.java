@@ -74,12 +74,12 @@ public class UserManagement {
             return ResponseEntity.notFound().build();
         }
         User user = optionalUser.get();
-        
+
         // Only assign new ID if role is changing
         if (!user.getRole().equals(userDetails.getRole())) {
             userIdentifierService.assignIdentifier(userDetails);
         }
-        
+
         user.setUsername(userDetails.getUsername());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
@@ -90,7 +90,7 @@ public class UserManagement {
             user.setPassword(userDetails.getPassword());
         }
         user.setLastLogin(userDetails.getLastLogin());
-        
+
         if (userDetails.getRole().equalsIgnoreCase("student")) {
             if (userDetails.getProgram() != null) {
                 user.setProgram(userDetails.getProgram());
@@ -100,7 +100,7 @@ public class UserManagement {
         } else {
             user.setProgram(null);
         }
-        
+
         return ResponseEntity.ok(userRepository.save(user));
     }
 
