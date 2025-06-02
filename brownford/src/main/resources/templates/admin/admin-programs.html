@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Management | Brownford University</title>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cormorant+Garamond&display=swap" rel="stylesheet" />
+    <style>
+        .program-table th, .program-table td { padding: 0.7rem 1rem; text-align: left; }
+        .program-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+        .program-table th { background: #f5ece6; color: #6B3A1D; }
+        .program-table tr:nth-child(even) { background: #faf8f6; }
+        .program-table tr:hover { background: #f0e6d6; }
+        .action-btn { border: none; background: none; cursor: pointer; margin-right: 0.5rem; font-size: 1.1rem; }
+        .btn-add { background: #8B4513; color: #fff; border-radius: 6px; padding: 0.5rem 1.2rem; font-family: 'Cinzel', serif; font-weight: 600; margin-bottom: 1rem; }
+        .btn-add:hover { background: #6B3A1D; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(30, 20, 10, 0.25); backdrop-filter: blur(6px) saturate(120%); -webkit-backdrop-filter: blur(6px) saturate(120%); transition: opacity 0.3s cubic-bezier(.4,0,.2,1); opacity: 0; pointer-events: none; }
+        .modal.show { display: block; opacity: 1; pointer-events: auto; }
+        .modal-content { background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18), 0 1.5px 6px rgba(139, 69, 19, 0.08); margin: 4vh auto; padding: 2.5rem 2rem 2rem 2rem; max-width: 420px; min-width: 320px; position: relative; animation: modalPopIn 0.32s cubic-bezier(.4,0,.2,1); }
+        @keyframes modalPopIn { 0% { transform: scale(0.92) translateY(30px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        .modal-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 0.7rem; margin-bottom: 1.2rem; }
+        .modal-header h3 { font-family: 'Cinzel', serif; font-size: 1.25rem; color: #6B3A1D; margin: 0; }
+        .close-modal { font-size: 1.7rem; color: #8B4513; cursor: pointer; border-radius: 50%; padding: 0 0.5rem; transition: background 0.2s; }
+        .close-modal:hover { background: #f5ece6; }
+        .form-group label { font-weight: 500; color: #6B3A1D; margin-bottom: 0.3rem; }
+        .form-control { border-radius: 6px; border: 1px solid #d6cfc7; padding: 0.5rem 0.7rem; font-size: 1rem; background: #faf8f6; transition: border 0.2s; width: 100%; }
+        .form-control:focus { border: 1.5px solid #8B4513; outline: none; background: #fff; }
+        .form-actions { display: flex; justify-content: flex-end; gap: 0.7rem; margin-top: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <header class="header">
+            <button class="sidebar-toggle" id="sidebarToggle">&#9776;</button>
+            <h1>Program Management</h1>
+        </header>
+        <div class="content-wrapper">
+            <main class="dashboard-content">
+                <section class="content-panel">
+                    <div class="panel-header">
+                        <h2 class="section-title">Programs</h2>
+                        <button class="btn-add" id="addProgramBtn">Add Program</button>
+                    </div>
+                    <div class="panel-content">
+                        <table class="program-table" id="programTable">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Years</th>
+                                    <th>Total Units</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Program rows will be inserted here by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <!-- Modal for Add/Edit Program -->
+    <div id="programModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="programModalTitle">Add Program</h3>
+                <span class="close-modal" id="closeProgramModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="programForm">
+                    <input type="hidden" id="programId">
+                    <div class="form-group">
+                        <label for="programCode">Program Code</label>
+                        <input type="text" id="programCode" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="programName">Program Name</label>
+                        <input type="text" id="programName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="programYears">Years</label>
+                        <input type="number" id="programYears" class="form-control" min="1" max="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="programUnits">Total Units</label>
+                        <input type="number" id="programUnits" class="form-control" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="programStatus">Status</label>
+                        <select id="programStatus" class="form-control" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelProgramBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Program</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JS for loading, adding, editing, deleting programs
+        let editingProgramId = null;
+        async function loadPrograms() {
+            const response = await fetch('/api/programs');
+            const programs = await response.json();
+            const tbody = document.querySelector('#programTable tbody');
+            tbody.innerHTML = programs.length ? programs.map(p => `
+                <tr>
+                    <td>${p.code}</td>
+                    <td>${p.name}</td>
+                    <td>${p.years}</td>
+                    <td>${p.totalUnits}</td>
+                    <td>${p.status}</td>
+                    <td>
+                        <button class="action-btn" onclick="editProgram(${p.id})">Edit</button>
+                        <button class="action-btn" onclick="deleteProgram(${p.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('') : '<tr><td colspan="6">No programs found.</td></tr>';
+        }
+        document.getElementById('addProgramBtn').onclick = function() {
+            editingProgramId = null;
+            document.getElementById('programForm').reset();
+            document.getElementById('programModalTitle').textContent = 'Add Program';
+            showModal('programModal');
+        };
+        document.getElementById('cancelProgramBtn').onclick = function() {
+            hideModal('programModal');
+        };
+        document.getElementById('closeProgramModal').onclick = function() {
+            hideModal('programModal');
+        };
+        document.getElementById('programForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const data = {
+                code: document.getElementById('programCode').value,
+                name: document.getElementById('programName').value,
+                years: document.getElementById('programYears').value,
+                totalUnits: document.getElementById('programUnits').value,
+                status: document.getElementById('programStatus').value
+            };
+            let url = '/api/programs', method = 'POST';
+            if (editingProgramId) {
+                url += '/' + editingProgramId;
+                method = 'PUT';
+            }
+            const response = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                hideModal('programModal');
+                loadPrograms();
+            } else {
+                alert('Failed to save program');
+            }
+        };
+        window.editProgram = async function(id) {
+            const response = await fetch('/api/programs/' + id);
+            if (!response.ok) return alert('Program not found');
+            const p = await response.json();
+            editingProgramId = id;
+            document.getElementById('programCode').value = p.code;
+            document.getElementById('programName').value = p.name;
+            document.getElementById('programYears').value = p.years;
+            document.getElementById('programUnits').value = p.totalUnits;
+            document.getElementById('programStatus').value = p.status;
+            document.getElementById('programModalTitle').textContent = 'Edit Program';
+            showModal('programModal');
+        };
+        window.deleteProgram = async function(id) {
+            if (!confirm('Delete this program?')) return;
+            const response = await fetch('/api/programs/' + id, { method: 'DELETE' });
+            if (response.ok) loadPrograms();
+            else alert('Failed to delete program');
+        };
+        function showModal(id) {
+            document.getElementById(id).classList.add('show');
+        }
+        function hideModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+        window.onload = loadPrograms;
+    </script>
+</body>
+</html>

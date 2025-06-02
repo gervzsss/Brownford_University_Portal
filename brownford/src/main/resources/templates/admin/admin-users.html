@@ -234,6 +234,15 @@
                             <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
                         </div>
                     </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-programs}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </span>
+                            <span class="sidebar-nav-text">Program Management</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="sidebar-footer">
@@ -421,16 +430,9 @@
                                     required>
                             </div>
                         </div>
-                        <div class="form-group" id="programGroup" style="display: none;">
+                        <div class="form-group" id="programGroup" style="display:none;">
                             <label for="program">Program</label>
-                            <select id="program" name="program" class="form-control">
-                                <option value="">Select Program</option>
-                                <option value="bsba">BSBA - Marketing Management</option>
-                                <option value="bsstat">BS Statistics</option>
-                                <option value="bscs">BS Computer Science</option>
-                                <option value="bsit">BS Information Technology</option>
-                                <option value="bsece">BS Electronics Engineering</option>
-                            </select>
+                            <select id="program" name="program" class="form-control"></select>
                         </div>
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -579,7 +581,8 @@
                     status: document.getElementById('status').value
                 };
                 if (formData.role === 'student') {
-                    formData.program = document.getElementById('program').value;
+                    const programId = document.getElementById('program').value;
+                    formData.program = programId ? { id: parseInt(programId) } : null;
                 }
                 if (!editingUserId || password) {
                     formData.password = password;
@@ -745,7 +748,7 @@
                 document.getElementById('viewStatus').textContent = user.status;
                 if (user.role === 'student') {
                     document.getElementById('viewProgramItem').style.display = 'block';
-                    document.getElementById('viewProgram').textContent = user.program;
+                    document.getElementById('viewProgram').textContent = user.program ? (user.program.code + ' - ' + user.program.name) : '';
                 } else {
                     document.getElementById('viewProgramItem').style.display = 'none';
                 }
@@ -776,10 +779,19 @@
                 document.getElementById('password').required = false;
                 document.getElementById('confirmPassword').required = false;
                 if (user.role === 'student') {
-                    document.getElementById('program').value = user.program || '';
+                    // Populate program dropdown before setting value
+                    const programGroup = document.getElementById('programGroup');
+                    const programSelect = document.getElementById('program');
                     programGroup.style.display = 'block';
+                    programSelect.innerHTML = '<option value="">Loading...</option>';
+                    const response = await fetch('/api/programs');
+                    const programs = await response.json();
+                    programSelect.innerHTML = '<option value="">Select Program</option>' +
+                        programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
+                    // Set the value after options are loaded
+                    programSelect.value = user.program ? user.program.id : '';
                 } else {
-                    programGroup.style.display = 'none';
+                    document.getElementById('programGroup').style.display = 'none';
                 }
                 userModal.style.display = 'flex';
                 setTimeout(() => showModal(userModal), 10);
@@ -803,6 +815,22 @@
                 alert('Error deleting user: ' + err);
             }
         }
+
+        // Populate program dropdown dynamically when role is student
+        document.getElementById('userRole').addEventListener('change', async function() {
+            const programGroup = document.getElementById('programGroup');
+            if (this.value === 'student') {
+                const programSelect = document.getElementById('program');
+                programSelect.innerHTML = '<option value="">Loading...</option>';
+                programGroup.style.display = 'block';
+                const response = await fetch('/api/programs');
+                const programs = await response.json();
+                programSelect.innerHTML = '<option value="">Select Program</option>' +
+                    programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
+            } else {
+                programGroup.style.display = 'none';
+            }
+        });
     </script>
 
     <style>

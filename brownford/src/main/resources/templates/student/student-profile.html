@@ -138,7 +138,7 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Program:</span>
-                            <span class="info-value" th:text="${student.program}">Program</span>
+                            <span class="info-value" th:text="${student.program != null ? student.program.code + ' - ' + student.program.name : ''}">Program</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Major:</span>

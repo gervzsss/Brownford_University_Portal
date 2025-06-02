@@ -1,5 +1,6 @@
 package com.brownford.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -31,11 +32,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String program; // nullable, for students
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "program_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Program program; // nullable, for students
     @Column(unique = true)
     private String studentId;  // Format: S-YY-XXXXX (e.g., S-24-00001)
     private String yearLevel;
-    private String major;
 
     @Column(unique = true)
     private String facultyId;  // Format: F-YY-XXXX (e.g., F-24-0001)
@@ -107,11 +110,11 @@ public class User {
         this.password = password;
     }
 
-    public String getProgram() {
+    public Program getProgram() {
         return program;
     }
 
-    public void setProgram(String program) {
+    public void setProgram(Program program) {
         this.program = program;
     }
 
@@ -129,14 +132,6 @@ public class User {
 
     public void setYearLevel(String yearLevel) {
         this.yearLevel = yearLevel;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
     }
 
     public LocalDateTime getLastLogin() {

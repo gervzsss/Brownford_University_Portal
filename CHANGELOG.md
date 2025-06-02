@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.02.251321]
+
+### Changes
+- Temporarily Removed some of the Not Used Backend Files
+- Created the Program Management Page
+- Connects the Programs to the User 
+
 ## [06.02.250218]
 
 ### Changes

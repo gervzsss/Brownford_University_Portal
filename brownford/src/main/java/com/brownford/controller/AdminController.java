@@ -10,11 +10,11 @@ public class AdminController {
     public String adminDashboard() {
         return "/admin/admin-dashboard";
     }
-    
-    /*@GetMapping("/admin-subject-management")
-    public String adminSubjectManagement() {
-        return "/admin/admin-subject-management";
-    }*/
+
+    @GetMapping("/admin-programs")
+    public String programManagementPage() {
+        return "admin/admin-programs";
+    }
 
     @GetMapping("/admin-users")
     public String adminUsers() {

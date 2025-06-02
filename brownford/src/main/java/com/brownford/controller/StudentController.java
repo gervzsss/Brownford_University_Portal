@@ -7,21 +7,18 @@ import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.brownford.repository.GradeRepository;
+
 import com.brownford.repository.UserRepository;
 import com.brownford.model.User;
 import java.util.Collections;
 import java.util.List;
-import com.brownford.model.Grade;
+
 
 @Controller
 public class StudentController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private GradeRepository gradeRepository;
 
     private void addStudentToModel(Model model, Principal principal) {
         if (principal != null) {
@@ -35,6 +32,11 @@ public class StudentController {
     public String home(Model model, Principal principal) {
         addStudentToModel(model, principal);
         return "/student/student-home";
+    }
+    @GetMapping("/student-grades")
+    public String grades(Model model, Principal principal) {
+        addStudentToModel(model, principal);
+        return "/student/student-grades";
     }
 
     @GetMapping("/student-announcements")
@@ -62,29 +64,7 @@ public class StudentController {
         return "/student/student-schedule";
     }
 
-    @GetMapping("/student-grades")
-    public String grades(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        User student = (User) model.getAttribute("student");
-        if (student != null) {
-            List<Grade> grades = gradeRepository.findByStudent(student);
-            double totalUnits = 0;
-            double totalWeighted = 0;
-            for (Grade g : grades) {
-                totalUnits += g.getUnits();
-                totalWeighted += g.getUnits() * g.getGradeValue();
-            }
-            double gpa = totalUnits > 0 ? totalWeighted / totalUnits : 0;
-            model.addAttribute("grades", grades);
-            model.addAttribute("gpa", gpa);
-            model.addAttribute("totalUnits", totalUnits);
-        } else {
-            model.addAttribute("grades", java.util.Collections.emptyList());
-            model.addAttribute("gpa", 0);
-            model.addAttribute("totalUnits", 0);
-        }
-        return "/student/student-grades";
-    }
+    
 
     @GetMapping("/student-enrollment")
     public String enrollment(Model model, Principal principal) {
