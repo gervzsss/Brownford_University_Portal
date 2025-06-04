@@ -1,9 +1,12 @@
 package com.brownford.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 
 @Entity
 @Table(name = "programs")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Program {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,10 @@ public class Program {
 
     @Column(nullable = false)
     private String status; // e.g., Active, Inactive
+
+    @ManyToMany(mappedBy = "programs")
+    @JsonIgnoreProperties("programs")
+    private List<Course> courses;
 
     // Getters and Setters
     public Long getId() {
@@ -71,5 +78,13 @@ public class Program {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

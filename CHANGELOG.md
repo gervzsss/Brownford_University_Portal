@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.05.250113]
+
+### Changes
+- Course Management Page is now Fully Functionable and is connected to the Program Enity Model
+
+### To Improve
+- Admin Pages (Course, User, Program, etc.)
+
 ## [06.04.252213]
 
 ### Changes

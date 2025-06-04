@@ -12,6 +12,45 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
     rel="stylesheet" />
+  <style>
+    .program-checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      border: 1px solid #d1bfa3;
+      border-radius: 6px;
+      padding: 12px 10px 6px 10px;
+      background: #f9f6f2;
+      margin-bottom: 8px;
+      min-height: 48px;
+    }
+
+    .program-checkbox-group label {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 4px;
+      padding: 4px 10px 4px 6px;
+      box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 1rem;
+      border: 1px solid #e5d6c2;
+    }
+
+    .program-checkbox-group label:hover {
+      background: #f3e9d7;
+      border-color: #c7a97a;
+    }
+
+    .program-checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #8b4513;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
@@ -100,22 +139,6 @@
 
           <div class="sidebar-section-title">Academic Management</div>
 
-          <!-- Remove department management link from sidebar -->
-          <!--
-          <li class="sidebar-nav-item active">
-            <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Departments</span>
-            </a>
-          </li>
-          -->
-
           <li class="sidebar-nav-item">
             <a th:href="@{/admin-courses}" class="sidebar-nav-link">
               <span class="sidebar-nav-icon">
@@ -143,24 +166,6 @@
               <span class="sidebar-nav-text">Sections</span>
             </a>
           </li>
-
-          <!--
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-subject-management}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Subject Management</span>
-            </a>
-          </li>
-          -->
 
           <li class="sidebar-nav-item">
             <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
@@ -331,6 +336,18 @@
               </div>
             </div>
 
+            <!-- Filter by Year Level -->
+            <div class="filter-controls" style="margin-bottom: 12px;">
+              <label for="yearLevelFilter" style="margin-right: 8px;">Filter by Year Level:</label>
+              <select id="yearLevelFilter" class="form-control" style="width: 180px; display: inline-block;">
+                <option value="">All Years</option>
+                <option value="1">First Year</option>
+                <option value="2">Second Year</option>
+                <option value="3">Third Year</option>
+                <option value="4">Fourth Year</option>
+              </select>
+            </div>
+
             <!-- Courses Table -->
             <div class="table-container">
               <table class="data-table" id="coursesTable">
@@ -340,6 +357,7 @@
                     <th>Course Name</th>
                     <th>Program</th>
                     <th>Status</th>
+                    <th>Year Level</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -381,19 +399,21 @@
                 <label for="courseTitle">Course Name</label>
                 <input type="text" id="courseTitle" name="courseTitle" class="form-control" required />
               </div>
+              <div class="form-group">
+                <label for="courseYearLevel">Year Level</label>
+                <select id="courseYearLevel" name="courseYearLevel" class="form-control">
+                  <option value="">Select Year Level</option>
+                  <option value="1">First Year</option>
+                  <option value="2">Second Year</option>
+                  <option value="3">Third Year</option>
+                  <option value="4">Fourth Year</option>
+                </select>
+              </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label for="courseProgram">Program</label>
-                <select id="courseProgram" name="courseProgram" class="form-control" required>
-                  <option value="">Select Program</option>
-                  <option value="Computer Science">Computer Science</option>
-                  <option value="Business Administration">Business Administration</option>
-                  <option value="Engineering">Engineering</option>
-                  <option value="Liberal Arts">Liberal Arts</option>
-                  <option value="Education">Education</option>
-                  <option value="Health Sciences">Health Sciences</option>
-                </select>
+                <div id="programCheckboxes" class="program-checkbox-group"></div>
               </div>
               <div class="form-group">
                 <label for="courseUnits">Units</label>
@@ -405,6 +425,11 @@
               <div class="form-group">
                 <label for="coursePrerequisites">Prerequisites</label>
                 <input type="text" id="coursePrerequisites" name="coursePrerequisites" class="form-control"
+                  placeholder="Comma separated course codes or 'None'" />
+              </div>
+              <div class="form-group">
+                <label for="courseCorequisites">Corequisites</label>
+                <input type="text" id="courseCorequisites" name="courseCorequisites" class="form-control"
                   placeholder="Comma separated course codes or 'None'" />
               </div>
               <div class="form-group">
@@ -466,8 +491,20 @@
                 <span class="info-value" id="viewCoursePrerequisites"></span>
               </div>
               <div class="info-item">
+                <span class="info-label">Corequisites:</span>
+                <span class="info-value" id="viewCourseCorequisites"></span>
+              </div>
+              <div class="info-item">
                 <span class="info-label">Status:</span>
                 <span class="info-value" id="viewCourseStatus"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Programs:</span>
+                <span class="info-value" id="viewCoursePrograms"></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Year Level:</span>
+                <span class="info-value" id="viewCourseYearLevel"></span>
               </div>
             </div>
             <div class="course-description">
@@ -553,17 +590,17 @@
       const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
       // 1. Fetch programs and populate the dropdown in the course modal
-      async function populateProgramDropdown(selectedId) {
-        const select = document.getElementById('courseProgram');
-        select.innerHTML = '<option value="">Loading...</option>';
+      async function populateProgramCheckboxes(selectedIds) {
+        const container = document.getElementById('programCheckboxes');
+        container.innerHTML = 'Loading...';
         try {
           const response = await fetch('/api/programs');
           const programs = await response.json();
-          select.innerHTML = '<option value="">Select Program</option>' +
-            programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
-          if (selectedId) select.value = selectedId;
+          container.innerHTML = programs.map(p =>
+            `<label><input type='checkbox' name='programIds' value='${p.id}' ${selectedIds && selectedIds.includes(p.id) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
+          ).join('');
         } catch (err) {
-          select.innerHTML = '<option value="">Failed to load programs</option>';
+          container.innerHTML = '<span style="color:red">Failed to load programs</span>';
         }
       }
 
@@ -573,7 +610,7 @@
           "Add New Course";
         document.getElementById("courseForm").reset();
         courseForm.removeAttribute("data-edit-id");
-        populateProgramDropdown();
+        populateProgramCheckboxes([]);
         courseModal.style.display = "block";
       });
 
@@ -604,14 +641,18 @@
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
+          const selectedPrograms = Array.from(document.querySelectorAll('#programCheckboxes input[type=checkbox]:checked')).map(cb => cb.value);
+          let yearLevelValue = document.getElementById("courseYearLevel").value;
           const formData = {
             courseCode: document.getElementById("courseCode").value,
             courseTitle: document.getElementById("courseTitle").value,
-            programId: document.getElementById("courseProgram").value,
+            programIds: selectedPrograms,
             units: document.getElementById("courseUnits").value,
             prerequisites: document.getElementById("coursePrerequisites").value,
+            corequisites: document.getElementById("courseCorequisites").value,
             status: document.getElementById("courseStatus").value,
             description: document.getElementById("courseDescription").value,
+            yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
           };
           const isEdit = courseForm.getAttribute("data-edit-id");
           try {
@@ -654,19 +695,44 @@
                 "Edit Course";
               document.getElementById("courseCode").value = course.courseCode;
               document.getElementById("courseTitle").value = course.courseTitle;
-              await populateProgramDropdown(course.program ? course.program.id : "");
-              document.getElementById("courseUnits").value = course.credits;
-              document.getElementById("coursePrerequisites").value =
-                course.prerequisites || "";
+              await populateProgramCheckboxes(course.programs ? course.programs.map(p => p.id) : []);
+              document.getElementById("courseUnits").value = course.units || course.credits || "";
+              document.getElementById("coursePrerequisites").value = course.prerequisites || "";
+              document.getElementById("courseCorequisites").value = course.corequisites || "";
               document.getElementById("courseStatus").value = course.status;
-              document.getElementById("courseDescription").value =
-                course.description || "";
+              document.getElementById("courseDescription").value = course.description || "";
+              document.getElementById("courseYearLevel").value = course.yearLevel ? String(course.yearLevel) : "";
               courseForm.setAttribute("data-edit-id", courseId);
               courseModal.style.display = "block";
             } catch (err) {
               alert("Error loading course: " + err.message);
             }
           }
+
+          // View buttons (delegated)
+          document.getElementById("coursesTableBody").addEventListener("click", async function (e) {
+            if (e.target.classList.contains("btn-view")) {
+              const courseId = e.target.getAttribute("data-id");
+              try {
+                const response = await fetch(`/api/courses/${courseId}`);
+                if (!response.ok) throw new Error("Failed to fetch course");
+                const course = await response.json();
+                document.getElementById("viewCourseCode").textContent = course.courseCode;
+                document.getElementById("viewCourseTitle").textContent = course.courseTitle;
+                document.getElementById("viewCourseCredits").textContent = course.units;
+                document.getElementById("viewCoursePrerequisites").textContent = course.prerequisites || "None";
+                document.getElementById("viewCourseCorequisites").textContent = course.corequisites || "None";
+                document.getElementById("viewCourseStatus").textContent = course.status;
+                document.getElementById("viewCourseDescription").textContent = course.description || "";
+                document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
+                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year","Second Year","Third Year","Fourth Year"][course.yearLevel-1]) : "N/A";
+                // Show the modal
+                viewCourseModal.style.display = "block";
+              } catch (err) {
+                alert("Error loading course: " + err.message);
+              }
+            }
+          });
         });
 
       // Delete buttons (delegated)
@@ -710,6 +776,19 @@
           }
         });
 
+      // Year Level Filter
+      document.getElementById("yearLevelFilter").addEventListener("change", function() {
+        const selected = this.value;
+        const rows = document.querySelectorAll("#coursesTableBody tr");
+        rows.forEach(row => {
+          if (!selected || row.querySelector("td:nth-child(5)").textContent === (["First Year","Second Year","Third Year","Fourth Year"][selected-1])) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      });
+
       // Load courses from backend and populate table
       loadCourses();
     });
@@ -740,9 +819,18 @@
         <tr>
           <td><strong>${course.courseCode}</strong></td>
           <td>${course.courseTitle}</td>
-          <td><span class="program-badge">${course.program || 'Not Assigned'}</span></td>
+          <td><span class="program-badge">${course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned'}</span></td>
           <td><span class="status-badge status-${course.status.toLowerCase()}">${course.status}</span></td>
+          <td>${course.yearLevel ? (["First Year","Second Year","Third Year","Fourth Year"][course.yearLevel-1]) : "N/A"}</td>
           <td class="action-buttons">
+            <button class="btn btn-sm btn-view" data-id="${course.id}" title="View Course">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="8"></line>
+              </svg>
+              View
+            </button>
             <button class="btn btn-sm btn-edit" data-id="${course.id}" title="Edit Course">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
