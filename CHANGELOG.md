@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.04.252026]
+
+### Changes
+- Improvement in the Program Management Page [ADMIN]
+- Slight Improvement in the User Management Page [ADMIN]
+
 ## [06.02.251336]
 
 ### Changes

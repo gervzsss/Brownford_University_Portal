@@ -1,13 +1,5 @@
 /* Common utility and shared styles for Brown Ford University */
 
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Alice", "Cinzel", "Cinzel Decorative", "Cormorant Garamond", serif;
-}
-
 /* Empty state and pagination messages */
 .empty-state {
   display: flex;

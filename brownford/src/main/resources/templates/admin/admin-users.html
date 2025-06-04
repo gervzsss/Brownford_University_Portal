@@ -101,22 +101,6 @@
 
                     <div class="sidebar-section-title">Academic Management</div>
 
-                    <!--
-                    <li class="sidebar-nav-item active">
-                        <a th:href="@{/admin-department-management}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Departments</span>
-                        </a>
-                    </li>
-                    -->
-
                     <li class="sidebar-nav-item">
                         <a th:href="@{/admin-courses}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
@@ -701,9 +685,15 @@
                         <td>${user.lastLogin ? user.lastLogin : ''}</td>
                         <td>
                             <div class="table-actions">
-                                <button class="action-btn btn-view" data-id="${user.id}" title="View Details">View</button>
-                                <button class="action-btn btn-edit" data-id="${user.id}" title="Edit User">Edit</button>
-                                <button class="action-btn btn-delete" data-id="${user.id}" title="Delete User">Delete</button>
+                                <button class="action-btn btn-view" data-id="${user.id}" title="View">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M2.05 12a9.94 9.94 0 0 1 19.9 0 9.94 9.94 0 0 1-19.9 0z"></path></svg>
+                                </button>
+                                <button class="action-btn btn-edit" data-id="${user.id}" title="Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"></path></svg>
+                                </button>
+                                <button class="action-btn btn-delete" data-id="${user.id}" title="Delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b71c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                </button>
                             </div>
                         </td>
                     `;
@@ -871,82 +861,6 @@
             font-size: 0.9rem;
             padding: 0.5rem;
             font-style: italic;
-        }
-
-        /* Action buttons styling */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .add-user-btn,
-        .export-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-family: "Cinzel", serif;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .add-user-btn {
-            background-color: #8B4513;
-            color: white;
-        }
-
-        .add-user-btn:hover {
-            background-color: #6B3A1D;
-        }
-
-        .export-btn {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-
-        .export-btn:hover {
-            background-color: #e0e0e0;
-        }
-
-        /* Table action buttons */
-        .table-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .action-btn {
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-family: "Cinzel", serif;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .btn-view,
-        .btn-edit {
-            background-color: #8B4513;
-            color: white;
-        }
-
-        .btn-view:hover,
-        .btn-edit:hover {
-            background-color: #6B3A1D;
-        }
-
-        .btn-delete {
-            background-color: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-delete:hover {
-            background-color: #e0e0e0;
         }
 
         /* Modal overlay and modal improvements */

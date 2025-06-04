@@ -2292,6 +2292,7 @@ body::-webkit-scrollbar {
   font-size: 14px;
 }
 
+/* Action buttons styling */
 .action-buttons {
   display: flex;
   gap: 10px;
@@ -2301,28 +2302,28 @@ body::-webkit-scrollbar {
 .export-btn {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
+  gap: 8px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: "Cinzel", serif;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .add-user-btn {
-  background-color: #6b3a1d;
+  background-color: #8B4513;
   color: white;
 }
 
 .add-user-btn:hover {
-  background-color: #8b4513;
+  background-color: #6B3A1D;
 }
 
 .export-btn {
   background-color: #f0f0f0;
   color: #333;
-  border: 1px solid #ddd;
 }
 
 .export-btn:hover {
@@ -2399,35 +2400,38 @@ body::-webkit-scrollbar {
   color: #292727;
 }
 
-/* Action Buttons */
-.table-actions {
-  display: flex;
-  gap: 8px;
-}
+/* Table action buttons */
 
 .action-btn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
+  padding: 5px 10px;
   border-radius: 4px;
+  font-weight: bold;
+  font-family: "Cinzel", serif;
+  border: none;
   cursor: pointer;
+  transition: background-color 0.3s;
+  min-width: 60px;
+  text-align: center;
+}
+
+.btn-view,
+.btn-edit {
+  background-color: #f0f0f0;
   color: white;
 }
 
-.btn-view {
-  background-color: #6b3a1d;
+.btn-view:hover,
+.btn-edit:hover {
+  background-color: #6B3A1D;
 }
 
-.btn-edit {
-  background-color: #8b4513;
+.btn-delete {
+  background-color: #f0f0f0;
+  color: #333;
 }
 
-.btn-lock,
-.btn-unlock {
-  background-color: #8b4513;
+.btn-delete:hover {
+  background-color: #e0e0e0;
 }
 
 .action-btn:hover {
