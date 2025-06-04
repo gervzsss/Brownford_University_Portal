@@ -337,9 +337,8 @@
                 <thead>
                   <tr>
                     <th>Course Code</th>
-                    <th>Course Title</th>
-                    <th>Units</th>
-                    <th>Prerequisites</th>
+                    <th>Course Name</th>
+                    <th>Program</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -379,11 +378,23 @@
                 <input type="text" id="courseCode" name="courseCode" class="form-control" required />
               </div>
               <div class="form-group">
-                <label for="courseTitle">Course Title</label>
+                <label for="courseTitle">Course Name</label>
                 <input type="text" id="courseTitle" name="courseTitle" class="form-control" required />
               </div>
             </div>
             <div class="form-row">
+              <div class="form-group">
+                <label for="courseProgram">Program</label>
+                <select id="courseProgram" name="courseProgram" class="form-control" required>
+                  <option value="">Select Program</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Business Administration">Business Administration</option>
+                  <option value="Engineering">Engineering</option>
+                  <option value="Liberal Arts">Liberal Arts</option>
+                  <option value="Education">Education</option>
+                  <option value="Health Sciences">Health Sciences</option>
+                </select>
+              </div>
               <div class="form-group">
                 <label for="courseUnits">Units</label>
                 <input type="number" id="courseUnits" name="courseUnits" class="form-control" min="1" max="6"
@@ -541,11 +552,28 @@
         document.getElementById("closeViewCourseBtn");
       const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
+      // 1. Fetch programs and populate the dropdown in the course modal
+      async function populateProgramDropdown(selectedId) {
+        const select = document.getElementById('courseProgram');
+        select.innerHTML = '<option value="">Loading...</option>';
+        try {
+          const response = await fetch('/api/programs');
+          const programs = await response.json();
+          select.innerHTML = '<option value="">Select Program</option>' +
+            programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
+          if (selectedId) select.value = selectedId;
+        } catch (err) {
+          select.innerHTML = '<option value="">Failed to load programs</option>';
+        }
+      }
+
       // Open add modals
       addCourseBtn.addEventListener("click", function () {
         document.getElementById("courseModalTitle").textContent =
           "Add New Course";
         document.getElementById("courseForm").reset();
+        courseForm.removeAttribute("data-edit-id");
+        populateProgramDropdown();
         courseModal.style.display = "block";
       });
 
@@ -579,9 +607,9 @@
           const formData = {
             courseCode: document.getElementById("courseCode").value,
             courseTitle: document.getElementById("courseTitle").value,
+            programId: document.getElementById("courseProgram").value,
             units: document.getElementById("courseUnits").value,
-            prerequisites: document.getElementById("coursePrerequisites")
-              .value,
+            prerequisites: document.getElementById("coursePrerequisites").value,
             status: document.getElementById("courseStatus").value,
             description: document.getElementById("courseDescription").value,
           };
@@ -625,8 +653,8 @@
               document.getElementById("courseModalTitle").textContent =
                 "Edit Course";
               document.getElementById("courseCode").value = course.courseCode;
-              document.getElementById("courseTitle").value =
-                course.courseTitle;
+              document.getElementById("courseTitle").value = course.courseTitle;
+              await populateProgramDropdown(course.program ? course.program.id : "");
               document.getElementById("courseUnits").value = course.credits;
               document.getElementById("coursePrerequisites").value =
                 course.prerequisites || "";
@@ -703,27 +731,37 @@
     function populateCoursesTable(courses) {
       const tbody = document.getElementById("coursesTableBody");
       if (!courses || courses.length === 0) {
-        tbody.innerHTML = `<tr class='empty-state-row'><td colspan='7' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0-3-3H2z'></path><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'></path></svg><p>No courses found. Add courses or adjust your search filters to see results.</p></div></td></tr>`;
+        tbody.innerHTML = `<tr class='empty-state-row'><td colspan='5' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'></path><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'></path></svg><p>No courses found. Add courses or adjust your search filters to see results.</p></div></td></tr>`;
         return;
       }
       tbody.innerHTML = courses
         .map(
           (course) => `
-          <tr>
-            <td>${course.courseCode}</td>
-            <td>${course.courseTitle}</td>
-            <td>${course.units}</td>
-            <td>${course.prerequisites || "None"}</td>
-            <td>${course.status}</td>
-            <td>
-              <button class="btn btn-primary btn-view" data-id="${course.id
-            }">View</button>
-              <button class="btn btn-edit" data-id="${course.id}">Edit</button>
-              <button class="btn btn-danger btn-delete" data-id="${course.id
-            }">Delete</button>
-            </td>
-          </tr>
-        `
+        <tr>
+          <td><strong>${course.courseCode}</strong></td>
+          <td>${course.courseTitle}</td>
+          <td><span class="program-badge">${course.program || 'Not Assigned'}</span></td>
+          <td><span class="status-badge status-${course.status.toLowerCase()}">${course.status}</span></td>
+          <td class="action-buttons">
+            <button class="btn btn-sm btn-edit" data-id="${course.id}" title="Edit Course">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+              </svg>
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger btn-delete" data-id="${course.id}" title="Delete Course">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+              Delete
+            </button>
+          </td>
+        </tr>
+      `
         )
         .join("");
     }

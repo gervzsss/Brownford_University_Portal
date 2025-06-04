@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.04.252213]
+
+### Changes
+- Course Management Page Changes
+
 ## [06.04.252026]
 
 ### Changes
