@@ -140,6 +140,21 @@
           <div class="sidebar-section-title">Academic Management</div>
 
           <li class="sidebar-nav-item">
+            <a th:href="@{/admin-programs}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Program Management</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
             <a th:href="@{/admin-courses}" class="sidebar-nav-link">
               <span class="sidebar-nav-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -247,21 +262,6 @@
               <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
               <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
             </div>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-programs}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Program Management</span>
-            </a>
           </li>
         </ul>
       </div>
@@ -725,7 +725,7 @@
                 document.getElementById("viewCourseStatus").textContent = course.status;
                 document.getElementById("viewCourseDescription").textContent = course.description || "";
                 document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
-                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year","Second Year","Third Year","Fourth Year"][course.yearLevel-1]) : "N/A";
+                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A";
                 // Show the modal
                 viewCourseModal.style.display = "block";
               } catch (err) {
@@ -777,11 +777,11 @@
         });
 
       // Year Level Filter
-      document.getElementById("yearLevelFilter").addEventListener("change", function() {
+      document.getElementById("yearLevelFilter").addEventListener("change", function () {
         const selected = this.value;
         const rows = document.querySelectorAll("#coursesTableBody tr");
         rows.forEach(row => {
-          if (!selected || row.querySelector("td:nth-child(5)").textContent === (["First Year","Second Year","Third Year","Fourth Year"][selected-1])) {
+          if (!selected || row.querySelector("td:nth-child(5)").textContent === (["First Year", "Second Year", "Third Year", "Fourth Year"][selected - 1])) {
             row.style.display = "";
           } else {
             row.style.display = "none";
@@ -821,7 +821,7 @@
           <td>${course.courseTitle}</td>
           <td><span class="program-badge">${course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned'}</span></td>
           <td><span class="status-badge status-${course.status.toLowerCase()}">${course.status}</span></td>
-          <td>${course.yearLevel ? (["First Year","Second Year","Third Year","Fourth Year"][course.yearLevel-1]) : "N/A"}</td>
+          <td>${course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A"}</td>
           <td class="action-buttons">
             <button class="btn btn-sm btn-view" data-id="${course.id}" title="View Course">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.09.250036]
+
+### Changes
+- Sidebar Navigation Fix
+
 ## [06.05.250113]
 
 ### Changes
