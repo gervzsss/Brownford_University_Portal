@@ -98,4 +98,9 @@ public class CourseController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/by-program-year")
+    public List<Course> getCoursesByProgramAndYear(@RequestParam Long programId, @RequestParam Integer yearLevel) {
+        return courseService.getCoursesByProgramAndYear(programId, yearLevel);
+    }
 }

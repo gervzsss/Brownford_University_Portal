@@ -62,4 +62,8 @@ public class CourseService {
         }
         return false;
     }
+
+    public List<Course> getCoursesByProgramAndYear(Long programId, Integer yearLevel) {
+        return courseRepository.findByProgramIdAndYearLevel(programId, yearLevel);
+    }
 }

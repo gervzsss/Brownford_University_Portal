@@ -9,10 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -138,5 +142,29 @@ public class UserManagement {
                     user.getStatus().replace("\"", "\"\""));
         }
         writer.flush();
+    }
+
+    @GetMapping("/search-students")
+    public List<Map<String, String>> searchStudents(@RequestParam String search) {
+        List<User> students = userRepository.findAll().stream()
+            .filter(u -> "student".equalsIgnoreCase(u.getRole()))
+            .filter(u -> {
+                String s = search.toLowerCase();
+                return (u.getStudentId() != null && u.getStudentId().toLowerCase().contains(s)) ||
+                       (u.getFirstName() != null && u.getFirstName().toLowerCase().contains(s)) ||
+                       (u.getLastName() != null && u.getLastName().toLowerCase().contains(s)) ||
+                       (u.getFullName() != null && u.getFullName().toLowerCase().contains(s));
+            })
+            .toList();
+        List<Map<String, String>> result = new ArrayList<>();
+        for (User u : students) {
+            if (u.getStudentId() != null) {
+                Map<String, String> map = new HashMap<>();
+                map.put("studentId", u.getStudentId());
+                map.put("fullName", u.getFullName());
+                result.add(map);
+            }
+        }
+        return result;
     }
 }

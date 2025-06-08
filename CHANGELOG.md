@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.09.250248]
+
+### Changes
+- New Enrollment Page [BETA]
+
 ## [06.09.250036]
 
 ### Changes
