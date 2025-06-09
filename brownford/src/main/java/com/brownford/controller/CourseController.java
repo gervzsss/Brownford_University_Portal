@@ -38,7 +38,7 @@ public class CourseController {
             course.setPrerequisites((String) payload.get("prerequisites"));
             course.setCorequisites((String) payload.get("corequisites"));
             course.setStatus((String) payload.get("status"));
-            course.setDescription((String) payload.get("description"));
+            course.setSemester((String) payload.get("courseSemester"));
             Integer yearLevel = null;
             if (payload.get("yearLevel") != null && !payload.get("yearLevel").toString().isEmpty()) {
                 yearLevel = Integer.parseInt(payload.get("yearLevel").toString());
@@ -69,7 +69,7 @@ public class CourseController {
             updated.setPrerequisites((String) payload.get("prerequisites"));
             updated.setCorequisites((String) payload.get("corequisites"));
             updated.setStatus((String) payload.get("status"));
-            updated.setDescription((String) payload.get("description"));
+            updated.setSemester((String) payload.get("courseSemester"));
             Integer yearLevel = null;
             if (payload.get("yearLevel") != null && !payload.get("yearLevel").toString().isEmpty()) {
                 yearLevel = Integer.parseInt(payload.get("yearLevel").toString());

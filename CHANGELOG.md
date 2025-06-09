@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.10.250143]
+
+### Changes (Course Management Page)
+- Added Semester Feature.
+- Added Program, Semester Filter alongside Year Level for easier Access.
+- Fixed the Selection of Program.
+- Removed Course Description.
+
 ## [06.09.251339]
 
 ### Fixes

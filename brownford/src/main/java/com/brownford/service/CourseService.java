@@ -42,9 +42,9 @@ public class CourseService {
             course.setUnits(updated.getUnits());
             course.setPrerequisites(updated.getPrerequisites());
             course.setStatus(updated.getStatus());
-            course.setDescription(updated.getDescription());
             course.setCorequisites(updated.getCorequisites());
             course.setYearLevel(updated.getYearLevel());
+            course.setSemester(updated.getSemester());
             if (programIds != null && !programIds.isEmpty()) {
                 List<Program> programs = programRepository.findAllById(programIds);
                 course.setPrograms(programs);

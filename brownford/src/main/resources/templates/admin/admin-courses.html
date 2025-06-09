@@ -50,6 +50,34 @@
       margin-right: 8px;
       cursor: pointer;
     }
+
+    .dropdown-multiselect {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .dropdown-multiselect-list {
+      display: none;
+      position: absolute;
+      background: #fff;
+      border: 1px solid #d1bfa3;
+      border-radius: 6px;
+      z-index: 1000;
+      max-height: 220px;
+      overflow-y: auto;
+      min-width: 220px;
+    }
+
+    .dropdown-multiselect-list label {
+      display: block;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-multiselect-list label:hover {
+      background: #f3e9d7;
+    }
   </style>
 </head>
 
@@ -336,15 +364,24 @@
               </div>
             </div>
 
-            <!-- Filter by Year Level -->
-            <div class="filter-controls" style="margin-bottom: 12px;">
-              <label for="yearLevelFilter" style="margin-right: 8px;">Filter by Year Level:</label>
-              <select id="yearLevelFilter" class="form-control" style="width: 180px; display: inline-block;">
+            <!-- Filter by Year Level, Program, and Semester -->
+            <div class="filter-controls" style="margin-bottom: 12px; display: flex; gap: 16px; align-items: center;">
+              <label for="yearLevelFilter" style="margin-right: 8px;">Year Level:</label>
+              <select id="yearLevelFilter" class="form-control" style="width: 140px;">
                 <option value="">All Years</option>
                 <option value="1">First Year</option>
                 <option value="2">Second Year</option>
                 <option value="3">Third Year</option>
                 <option value="4">Fourth Year</option>
+              </select>
+              <label for="programFilter" style="margin-left: 12px; margin-right: 8px;">Program:</label>
+              <select id="programFilter" class="form-control" style="width: 180px;"></select>
+              <label for="semesterFilter" style="margin-left: 12px; margin-right: 8px;">Semester:</label>
+              <select id="semesterFilter" class="form-control" style="width: 150px;">
+                <option value="">All Semesters</option>
+                <option value="1st Semester">1st Semester</option>
+                <option value="2nd Semester">2nd Semester</option>
+                <option value="Summer">Summer</option>
               </select>
             </div>
 
@@ -413,7 +450,14 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="courseProgram">Program</label>
-                <div id="programCheckboxes" class="program-checkbox-group"></div>
+                <div class="dropdown-multiselect" id="programDropdownContainer">
+                  <button type="button" class="form-control" id="programDropdownBtn">Select Program(s)</button>
+                  <div class="dropdown-multiselect-list" id="programDropdownList"
+                    style="display:none; position:absolute; background:#fff; border:1px solid #d1bfa3; border-radius:6px; z-index:1000; max-height:220px; overflow-y:auto; min-width:220px;">
+                    <!-- Program checkboxes will be loaded here -->
+                  </div>
+                </div>
+                <input type="hidden" id="programIdsHidden" name="programIds" />
               </div>
               <div class="form-group">
                 <label for="courseUnits">Units</label>
@@ -441,8 +485,13 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="courseDescription">Course Description</label>
-              <textarea id="courseDescription" name="courseDescription" class="form-control" rows="4"></textarea>
+              <label for="courseSemester">Semester</label>
+              <select id="courseSemester" name="courseSemester" class="form-control">
+                <option value="">Select Semester</option>
+                <option value="1st Semester">1st Semester</option>
+                <option value="2nd Semester">2nd Semester</option>
+                <option value="Summer">Summer</option>
+              </select>
             </div>
             <div class="form-actions">
               <button type="button" class="btn btn-secondary" id="cancelCourseBtn">
@@ -506,10 +555,10 @@
                 <span class="info-label">Year Level:</span>
                 <span class="info-value" id="viewCourseYearLevel"></span>
               </div>
-            </div>
-            <div class="course-description">
-              <h4>Course Description</h4>
-              <p id="viewCourseDescription"></p>
+              <div class="info-item">
+                <span class="info-label">Semester:</span>
+                <span class="info-value" id="viewCourseSemester"></span>
+              </div>
             </div>
             <div class="course-sections">
               <h4>Active Sections</h4>
@@ -576,6 +625,59 @@
 
   <script th:src="@{/js/notifications.js}"></script>
   <script>
+    // --- Move these functions to global scope ---
+    // Populate Program Filter dropdown
+    async function populateProgramFilter() {
+      const programFilter = document.getElementById('programFilter');
+      if (!programFilter) return;
+      programFilter.innerHTML = '<option value="">All Programs</option>';
+      try {
+        const response = await fetch('/api/programs');
+        const programs = await response.json();
+        programFilter.innerHTML += programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
+      } catch (err) {
+        programFilter.innerHTML = '<option value="">All Programs</option>';
+      }
+    }
+    // Add this to global scope so it is available everywhere
+    async function populateProgramDropdown(selectedIds) {
+      try {
+        const response = await fetch('/api/programs');
+        const programs = await response.json();
+        setupProgramDropdown(programs, selectedIds);
+      } catch (err) {
+        const list = document.getElementById('programDropdownList');
+        if (list) list.innerHTML = '<span style="color:red">Failed to load programs</span>';
+      }
+    }
+    // Unified filter logic for Year Level, Program, and Semester
+    function filterCoursesTable() {
+      const yearLevel = document.getElementById('yearLevelFilter').value;
+      const programId = document.getElementById('programFilter').value;
+      const semester = document.getElementById('semesterFilter').value;
+      const rows = document.querySelectorAll('#coursesTableBody tr');
+      rows.forEach(row => {
+        let show = true;
+        // Year Level
+        if (yearLevel) {
+          const yearCell = row.querySelector('td:nth-child(5)');
+          const yearText = yearCell ? yearCell.textContent.trim() : '';
+          const yearMap = { '1': 'First Year', '2': 'Second Year', '3': 'Third Year', '4': 'Fourth Year' };
+          if (yearText !== yearMap[yearLevel]) show = false;
+        }
+        // Program
+        if (programId) {
+          const programIds = row.getAttribute('data-program-ids');
+          if (!programIds || !programIds.split(',').includes(programId)) show = false;
+        }
+        // Semester
+        if (semester) {
+          const semesterCell = row.getAttribute('data-semester');
+          if (semesterCell !== semester) show = false;
+        }
+        row.style.display = show ? '' : 'none';
+      });
+    }
     document.addEventListener("DOMContentLoaded", function () {
       // Modal elements
       const courseModal = document.getElementById("courseModal");
@@ -604,13 +706,62 @@
         }
       }
 
+      // Dropdown multiselect for programs
+      function setupProgramDropdown(programs, selectedIds) {
+        const btn = document.getElementById('programDropdownBtn');
+        const list = document.getElementById('programDropdownList');
+        let selected = selectedIds ? [...selectedIds.map(String)] : [];
+        // Render checkboxes
+        list.innerHTML = programs.map(p =>
+          `<label style='display:block; padding:4px 10px;'><input type='checkbox' value='${p.id}' ${selected.includes(String(p.id)) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
+        ).join('');
+        // Update button text
+        function updateBtnText() {
+          if (!selected.length) btn.textContent = 'Select Program(s)';
+          else btn.textContent = programs.filter(p => selected.includes(String(p.id))).map(p => p.code).join(', ');
+          document.getElementById('programIdsHidden').value = selected.join(',');
+        }
+        updateBtnText();
+        // Remove any previous event listeners by cloning
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        // Toggle dropdown
+        newBtn.onclick = function(e) {
+          e.stopPropagation();
+          list.style.display = list.style.display === 'block' ? 'none' : 'block';
+        };
+        // Prevent closing when clicking inside the dropdown
+        list.onmousedown = function(e) { e.stopPropagation(); };
+        // Handle checkbox change
+        list.querySelectorAll('input[type=checkbox]').forEach(cb => {
+          cb.onchange = function() {
+            if (cb.checked && !selected.includes(cb.value)) selected.push(cb.value);
+            else selected = selected.filter(id => id !== cb.value);
+            updateBtnText();
+          };
+        });
+        // Only one document click listener at a time
+        if (window._programDropdownDocListener) {
+          document.removeEventListener('click', window._programDropdownDocListener);
+        }
+        window._programDropdownDocListener = function(e) {
+          if (!list.contains(e.target) && e.target !== newBtn) {
+            list.style.display = 'none';
+          }
+        };
+        document.addEventListener('click', window._programDropdownDocListener);
+      }
+
       // Open add modals
       addCourseBtn.addEventListener("click", function () {
         document.getElementById("courseModalTitle").textContent =
           "Add New Course";
         document.getElementById("courseForm").reset();
         courseForm.removeAttribute("data-edit-id");
-        populateProgramCheckboxes([]);
+        // Always fetch and populate dropdown
+        fetch('/api/programs').then(r => r.json()).then(programs => {
+          setupProgramDropdown(programs, []);
+        });
         courseModal.style.display = "block";
       });
 
@@ -641,7 +792,9 @@
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const selectedPrograms = Array.from(document.querySelectorAll('#programCheckboxes input[type=checkbox]:checked')).map(cb => cb.value);
+          const selectedPrograms = document.getElementById('programIdsHidden').value
+            ? document.getElementById('programIdsHidden').value.split(',').filter(Boolean)
+            : [];
           let yearLevelValue = document.getElementById("courseYearLevel").value;
           const formData = {
             courseCode: document.getElementById("courseCode").value,
@@ -651,8 +804,8 @@
             prerequisites: document.getElementById("coursePrerequisites").value,
             corequisites: document.getElementById("courseCorequisites").value,
             status: document.getElementById("courseStatus").value,
-            description: document.getElementById("courseDescription").value,
             yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
+            courseSemester: document.getElementById("courseSemester").value,
           };
           const isEdit = courseForm.getAttribute("data-edit-id");
           try {
@@ -695,13 +848,15 @@
                 "Edit Course";
               document.getElementById("courseCode").value = course.courseCode;
               document.getElementById("courseTitle").value = course.courseTitle;
-              await populateProgramCheckboxes(course.programs ? course.programs.map(p => p.id) : []);
+              fetch('/api/programs').then(r => r.json()).then(programs => {
+                setupProgramDropdown(programs, course.programs ? course.programs.map(p => String(p.id)) : []);
+              });
               document.getElementById("courseUnits").value = course.units || course.credits || "";
               document.getElementById("coursePrerequisites").value = course.prerequisites || "";
               document.getElementById("courseCorequisites").value = course.corequisites || "";
               document.getElementById("courseStatus").value = course.status;
-              document.getElementById("courseDescription").value = course.description || "";
               document.getElementById("courseYearLevel").value = course.yearLevel ? String(course.yearLevel) : "";
+              document.getElementById("courseSemester").value = course.semester || "";
               courseForm.setAttribute("data-edit-id", courseId);
               courseModal.style.display = "block";
             } catch (err) {
@@ -723,9 +878,9 @@
                 document.getElementById("viewCoursePrerequisites").textContent = course.prerequisites || "None";
                 document.getElementById("viewCourseCorequisites").textContent = course.corequisites || "None";
                 document.getElementById("viewCourseStatus").textContent = course.status;
-                document.getElementById("viewCourseDescription").textContent = course.description || "";
                 document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
                 document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A";
+                document.getElementById("viewCourseSemester").textContent = course.semester || "N/A";
                 // Show the modal
                 viewCourseModal.style.display = "block";
               } catch (err) {
@@ -776,18 +931,13 @@
           }
         });
 
-      // Year Level Filter
-      document.getElementById("yearLevelFilter").addEventListener("change", function () {
-        const selected = this.value;
-        const rows = document.querySelectorAll("#coursesTableBody tr");
-        rows.forEach(row => {
-          if (!selected || row.querySelector("td:nth-child(5)").textContent === (["First Year", "Second Year", "Third Year", "Fourth Year"][selected - 1])) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
-      });
+      // Populate Program Filter dropdown
+      populateProgramFilter();
+
+      // Attach filter event listeners
+      document.getElementById('yearLevelFilter').addEventListener('change', filterCoursesTable);
+      document.getElementById('programFilter').addEventListener('change', filterCoursesTable);
+      document.getElementById('semesterFilter').addEventListener('change', filterCoursesTable);
 
       // Load courses from backend and populate table
       loadCourses();
@@ -807,6 +957,7 @@
       }
     }
 
+    // Update populateCoursesTable to call filterCoursesTable after rendering
     function populateCoursesTable(courses) {
       const tbody = document.getElementById("coursesTableBody");
       if (!courses || courses.length === 0) {
@@ -815,8 +966,10 @@
       }
       tbody.innerHTML = courses
         .map(
-          (course) => `
-        <tr>
+          (course) => {
+            const programIds = course.programs && course.programs.length > 0 ? course.programs.map(p => p.id).join(',') : '';
+            return `
+        <tr data-program-ids="${programIds}" data-semester="${course.semester || ''}">
           <td><strong>${course.courseCode}</strong></td>
           <td>${course.courseTitle}</td>
           <td><span class="program-badge">${course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned'}</span></td>
@@ -849,9 +1002,11 @@
             </button>
           </td>
         </tr>
-      `
+      `;
+          }
         )
         .join("");
+      filterCoursesTable(); // Apply filters after populating
     }
   </script>
   <script th:src="@{/js/sidebar-nav.js}"></script>

@@ -33,13 +33,13 @@ public class Course {
     @Column(nullable = false)
     private String status;
 
-    @Column(length = 2000)
-    private String description;
-
     private String corequisites;
 
     @Column(name = "yearLevel", nullable = true)
     private Integer yearLevel; // 1=First Year, 2=Second Year, etc.
+
+    @Column(name = "semester", nullable = true)
+    private String semester;
 
     // Getters and setters
     public Long getId() {
@@ -98,14 +98,6 @@ public class Course {
         this.status = status;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCorequisites() {
         return corequisites;
     }
@@ -120,5 +112,13 @@ public class Course {
 
     public void setYearLevel(Integer yearLevel) {
         this.yearLevel = yearLevel;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 }
