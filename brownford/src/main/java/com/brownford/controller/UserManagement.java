@@ -101,8 +101,15 @@ public class UserManagement {
             } else {
                 user.setProgram(null);
             }
+            // --- FIX: Update yearLevel for students ---
+            if (userDetails.getYearLevel() != null && !userDetails.getYearLevel().isEmpty()) {
+                user.setYearLevel(userDetails.getYearLevel());
+            } else {
+                user.setYearLevel(null);
+            }
         } else {
             user.setProgram(null);
+            user.setYearLevel(null); // Always clear yearLevel for non-students
         }
 
         return ResponseEntity.ok(userRepository.save(user));

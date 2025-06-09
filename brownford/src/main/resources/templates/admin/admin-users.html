@@ -421,9 +421,21 @@
                                     required>
                             </div>
                         </div>
-                        <div class="form-group" id="programGroup" style="display:none;">
-                            <label for="program">Program</label>
-                            <select id="program" name="program" class="form-control"></select>
+                        <div class="form-row">
+                            <div class="form-group" id="programGroup" style="display:none;">
+                                <label for="program">Program</label>
+                                <select id="program" name="program" class="form-control"></select>
+                            </div>
+                            <div class="form-group" id="yearLevelGroup" style="display:none;">
+                                <label for="yearLevel">Year Level</label>
+                                <select id="yearLevel" name="yearLevel" class="form-control">
+                                    <option value="">Select Year Level</option>
+                                    <option value="1">First Year</option>
+                                    <option value="2">Second Year</option>
+                                    <option value="3">Third Year</option>
+                                    <option value="4">Fourth Year</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -488,6 +500,10 @@
                                 <span class="info-label">Program:</span>
                                 <span class="info-value" id="viewProgram">BSBA - Marketing Management</span>
                             </div>
+                            <div class="info-item" id="viewYearLevelItem" style="display: none;">
+                                <span class="info-label">Year Level:</span>
+                                <span class="info-value" id="viewYearLevel">Third Year</span>
+                            </div>
                         </div>
                     </div>
                     <div class="user-actions">
@@ -515,6 +531,7 @@
             const closeModalBtns = document.querySelectorAll('.close-modal');
             const userRoleSelect = document.getElementById('userRole');
             const programGroup = document.getElementById('programGroup');
+            const yearLevelGroup = document.getElementById('yearLevelGroup');
             const closeViewBtn = document.getElementById('closeViewBtn');
 
 
@@ -545,12 +562,14 @@
                 hideModal(viewUserModal);
             });
 
-            // Show/hide program fields based on role
+            // Show/hide program and year level fields based on role
             userRoleSelect.addEventListener('change', function () {
                 if (this.value === 'student') {
                     programGroup.style.display = 'block';
+                    yearLevelGroup.style.display = 'block';
                 } else {
                     programGroup.style.display = 'none';
+                    yearLevelGroup.style.display = 'none';
                 }
             });
 
@@ -574,6 +593,11 @@
                 if (formData.role === 'student') {
                     const programId = document.getElementById('program').value;
                     formData.program = programId ? { id: parseInt(programId) } : null;
+                    const yearLevel = document.getElementById('yearLevel').value;
+                    formData.yearLevel = yearLevel !== '' ? yearLevel : null;
+                } else {
+                    // Ensure yearLevel is removed if not student
+                    formData.yearLevel = null;
                 }
                 if (!editingUserId || password) {
                     formData.password = password;
@@ -746,8 +770,15 @@
                 if (user.role === 'student') {
                     document.getElementById('viewProgramItem').style.display = 'block';
                     document.getElementById('viewProgram').textContent = user.program ? (user.program.code + ' - ' + user.program.name) : '';
+                    if (document.getElementById('viewYearLevelItem')) {
+                        document.getElementById('viewYearLevelItem').style.display = 'block';
+                        document.getElementById('viewYearLevel').textContent = user.yearLevel ? yearLevelToText(user.yearLevel) : '';
+                    }
                 } else {
                     document.getElementById('viewProgramItem').style.display = 'none';
+                    if (document.getElementById('viewYearLevelItem')) {
+                        document.getElementById('viewYearLevelItem').style.display = 'none';
+                    }
                 }
                 viewUserModal.style.display = 'flex';
                 setTimeout(() => showModal(viewUserModal), 10);
@@ -778,8 +809,11 @@
                 if (user.role === 'student') {
                     // Populate program dropdown before setting value
                     const programGroup = document.getElementById('programGroup');
+                    const yearLevelGroup = document.getElementById('yearLevelGroup');
                     const programSelect = document.getElementById('program');
+                    const yearLevelSelect = document.getElementById('yearLevel');
                     programGroup.style.display = 'block';
+                    yearLevelGroup.style.display = 'block';
                     programSelect.innerHTML = '<option value="">Loading...</option>';
                     const response = await fetch('/api/programs');
                     const programs = await response.json();
@@ -787,8 +821,10 @@
                         programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
                     // Set the value after options are loaded
                     programSelect.value = user.program ? user.program.id : '';
+                    yearLevelSelect.value = (user.yearLevel === null || user.yearLevel === undefined) ? '' : String(user.yearLevel);
                 } else {
                     document.getElementById('programGroup').style.display = 'none';
+                    document.getElementById('yearLevelGroup').style.display = 'none';
                 }
                 userModal.style.display = 'flex';
                 setTimeout(() => showModal(userModal), 10);
@@ -813,19 +849,33 @@
             }
         }
 
+        // Helper to convert year level number to text
+        function yearLevelToText(val) {
+            switch(val) {
+                case '1': return 'First Year';
+                case '2': return 'Second Year';
+                case '3': return 'Third Year';
+                case '4': return 'Fourth Year';
+                default: return val || '';
+            }
+        }
+
         // Populate program dropdown dynamically when role is student
         document.getElementById('userRole').addEventListener('change', async function () {
             const programGroup = document.getElementById('programGroup');
+            const yearLevelGroup = document.getElementById('yearLevelGroup');
             if (this.value === 'student') {
                 const programSelect = document.getElementById('program');
                 programSelect.innerHTML = '<option value="">Loading...</option>';
                 programGroup.style.display = 'block';
+                yearLevelGroup.style.display = 'block';
                 const response = await fetch('/api/programs');
                 const programs = await response.json();
                 programSelect.innerHTML = '<option value="">Select Program</option>' +
                     programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
             } else {
                 programGroup.style.display = 'none';
+                yearLevelGroup.style.display = 'none';
             }
         });
     </script>

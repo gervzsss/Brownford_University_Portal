@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.09.251307]
+
+### Fixes
+- Fixed the Year Level in the User Management Page [ADMIN]
+
 ## [06.09.250248]
 
 ### Changes
