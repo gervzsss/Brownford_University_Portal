@@ -174,4 +174,11 @@ public class UserManagement {
         }
         return result;
     }
+
+    // Get user by studentId (for autofill)
+    @GetMapping("/by-student-id/{studentId}")
+    public ResponseEntity<User> getUserByStudentId(@PathVariable String studentId) {
+        Optional<User> user = userRepository.findByStudentId(studentId);
+        return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }

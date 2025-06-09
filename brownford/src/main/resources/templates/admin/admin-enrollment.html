@@ -510,7 +510,15 @@
       // Re-enable program select so value is submitted
       programInput.disabled = false;
       // Use raw yearLevel value if present
-      const yearLevelRaw = yearLevelInput.dataset.value || yearLevelInput.value;
+      let yearLevelRaw = yearLevelInput.dataset.value || yearLevelInput.value;
+      // If yearLevelRaw is not a number, try to convert from text
+      if (isNaN(yearLevelRaw) && yearLevelRaw) {
+        yearLevelRaw = yearLevelTextToNumber(yearLevelRaw);
+      } else if (yearLevelRaw !== null && yearLevelRaw !== undefined && yearLevelRaw !== '') {
+        yearLevelRaw = parseInt(yearLevelRaw, 10);
+      } else {
+        yearLevelRaw = null;
+      }
       const selectedCourses = Array.from(document.getElementById("subjectsInput").selectedOptions).map(o => ({ courseCode: o.value }));
       const payload = {
         student: { studentId: document.getElementById("studentIdInput").value },
@@ -570,60 +578,80 @@
       }
     }
 
-    // Display student name when a student ID is selected
+    // Display student name when a student ID is selected or entered
+    function updateStudentNameDisplay(studentId) {
+      const datalist = document.getElementById('studentIdDatalist');
+      const nameSpan = document.getElementById('studentNameDisplay');
+      if (!studentId || !datalist) {
+        nameSpan.textContent = '';
+        return;
+      }
+      // Try to find the matching option and extract the name
+      const match = Array.from(datalist.options).find(opt => opt.value === studentId);
+      if (match) {
+        // Option label is in the format: 'Full Name (StudentId)'
+        const label = match.label || match.text || '';
+        // Remove the studentId in parentheses if present
+        const name = label.replace(/\s*\([^)]*\)\s*$/, '').trim();
+        nameSpan.textContent = name;
+      } else {
+        nameSpan.textContent = '';
+      }
+    }
+
     document.getElementById('studentIdInput').addEventListener('input', function() {
       populateStudentIdDatalist(this.value);
       updateStudentNameDisplay(this.value);
     });
 
-    async function updateStudentNameDisplay(studentId) {
-      const nameField = document.getElementById('studentNameDisplay');
-      if (!studentId || studentId.length < 2) {
-        if (nameField) nameField.textContent = '';
-        return;
-      }
+    // --- Robust Student Autofill Logic ---
+    // Helper: check if input matches a datalist option
+    function isStudentIdInDatalist(inputId, datalistId) {
+      const input = document.getElementById(inputId);
+      const datalist = document.getElementById(datalistId);
+      if (!input || !datalist) return false;
+      const val = input.value;
+      return Array.from(datalist.options).some(opt => opt.value === val);
+    }
+
+    // Helper: fetch user by exact studentId
+    async function fetchUserByStudentId(studentId) {
+      if (!studentId) return null;
       try {
-        const response = await fetch(`/api/admin/users/search-students?search=${encodeURIComponent(studentId)}`);
-        const students = await response.json();
-        const match = students.find(s => s.studentId === studentId);
-        if (nameField) nameField.textContent = match ? match.fullName : '';
-      } catch (err) {
-        if (nameField) nameField.textContent = '';
+        const res = await fetch(`/api/admin/users/by-student-id/${encodeURIComponent(studentId)}`);
+        if (!res.ok) return null;
+        return await res.json();
+      } catch {
+        return null;
       }
     }
 
-    // When a student is selected, fetch their info and update program/year/courses
-    document.getElementById('studentIdInput').addEventListener('change', async function() {
+    // Autofill on blur, only if input matches datalist
+    document.getElementById('studentIdInput').addEventListener('blur', async function() {
       const studentId = this.value;
-      if (!studentId) return;
-      try {
-        const res = await fetch(`/api/admin/users/search-students?search=${encodeURIComponent(studentId)}`);
-        const students = await res.json();
-        const student = students.find(s => s.studentId === studentId);
-        if (!student) return;
-        // Fetch full user info
-        const userRes = await fetch(`/api/admin/users?search=${encodeURIComponent(studentId)}&role=student`);
-        const users = await userRes.json();
-        const user = users.find(u => u.studentId === studentId);
-        if (user) {
-          // Populate program dropdown and set value after population
-          await populateProgramDropdown(user.program ? user.program.id : "");
-          const programInput = document.getElementById('programInput');
-          programInput.value = user.program ? user.program.id : '';
-          programInput.disabled = true; // Use disabled, not readonly
-
-          // Set year level (convert to text for display, but store value for submission)
-          const yearLevelInput = document.getElementById('yearLevelInput');
-          yearLevelInput.value = user.yearLevel ? yearLevelToText(user.yearLevel) : '';
-          yearLevelInput.setAttribute('readonly', 'readonly');
-          yearLevelInput.dataset.value = user.yearLevel || '';
-
-          // Fetch and populate courses
-          if (user.program && user.yearLevel) {
-            await populateCoursesForProgramYear(user.program.id, user.yearLevel);
-          }
-        }
-      } catch (err) {}
+      if (!isStudentIdInDatalist('studentIdInput', 'studentIdDatalist')) {
+        // Not a valid/exact studentId, clear autofill fields
+        await populateProgramDropdown();
+        document.getElementById('programInput').value = '';
+        document.getElementById('programInput').disabled = false;
+        document.getElementById('yearLevelInput').value = '';
+        document.getElementById('yearLevelInput').removeAttribute('readonly');
+        document.getElementById('yearLevelInput').dataset.value = '';
+        return;
+      }
+      // Valid/exact studentId, fetch and autofill
+      const user = await fetchUserByStudentId(studentId);
+      if (user) {
+        await populateProgramDropdown(user.program ? user.program.id : "");
+        const programInput = document.getElementById('programInput');
+        programInput.value = user.program ? user.program.id : '';
+        programInput.disabled = true;
+        const yearLevelInput = document.getElementById('yearLevelInput');
+        yearLevelInput.value = user.yearLevel ? yearLevelToText(user.yearLevel) : '';
+        yearLevelInput.setAttribute('readonly', 'readonly');
+        yearLevelInput.dataset.value = user.yearLevel || '';
+      }
+      updateStudentNameDisplay(this.value);
     });
 
     // Helper to convert year level number to text
@@ -635,6 +663,17 @@
         case '4': return 'Fourth Year';
         case '5': return 'Fifth Year';
         default: return val || '';
+      }
+    }
+    // Helper to convert year level text to number
+    function yearLevelTextToNumber(text) {
+      switch(text) {
+        case 'First Year': return 1;
+        case 'Second Year': return 2;
+        case 'Third Year': return 3;
+        case 'Fourth Year': return 4;
+        case 'Fifth Year': return 5;
+        default: return null;
       }
     }
 

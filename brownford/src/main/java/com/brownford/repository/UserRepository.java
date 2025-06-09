@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findTopByRoleOrderByStudentIdDesc(String role);
 
     Optional<User> findTopByRoleOrderByFacultyIdDesc(String role);
+
+    Optional<User> findByStudentId(String studentId);
 }

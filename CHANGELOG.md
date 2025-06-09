@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.09.251339]
+
+### Fixes
+- Fixed the Year Level and Program Not Being AutoFilled as the admin enter the specific StudentID [ADMIN]
+
 ## [06.09.251309]
 
 ### Fixes
