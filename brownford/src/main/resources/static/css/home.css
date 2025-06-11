@@ -1195,17 +1195,6 @@ body::-webkit-scrollbar {
   color: #856404;
 }
 
-.action-button {
-  display: inline-block;
-  background-color: #6b3a1d;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 3px;
-  text-decoration: none;
-  margin-left: 10px;
-  font-size: 14px;
-}
-
 .available-courses {
   margin-bottom: 30px;
 }
@@ -2293,11 +2282,6 @@ body::-webkit-scrollbar {
 }
 
 /* Action buttons styling */
-.action-buttons {
-  display: flex;
-  gap: 10px;
-}
-
 .add-user-btn,
 .export-btn {
   display: flex;
@@ -2643,11 +2627,6 @@ body::-webkit-scrollbar {
 
   .filter-container {
     width: 100%;
-  }
-
-  .action-buttons {
-    width: 100%;
-    justify-content: space-between;
   }
 
   .form-row {

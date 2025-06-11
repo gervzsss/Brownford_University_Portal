@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.11.251629]
+
+### Changes
+- Mimor UI Changes in the Action Buttons [ADMIN]
+
 ## [06.11.251529]
 
 ### Changes
