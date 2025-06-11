@@ -1,6 +1,5 @@
 package com.brownford.config;
 
-import com.brownford.model.User;
 import com.brownford.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.12.250241]
+
+### Changes
+- Minor File Changes
+- The password now support BCrypt
+
 ## [06.11.252152]
 
 ### Changes

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.brownford.repository.UserRepository;
 import com.brownford.model.User;
 import java.util.Collections;
-import java.util.List;
 
 @Controller
 public class StudentController {
@@ -66,101 +65,6 @@ public class StudentController {
     @GetMapping("/student-enrollment")
     public String enrollment(Model model, Principal principal) {
         addStudentToModel(model, principal);
-
-        // --- Dummy EnrollmentStatus class for demonstration ---
-        // Replace with your real EnrollmentStatus fetching logic
-        class EnrollmentStatus {
-            private boolean isOpen;
-            private String status;
-            private String period;
-            private String windowDate;
-
-            public EnrollmentStatus(boolean isOpen, String status, String period, String windowDate) {
-                this.isOpen = isOpen;
-                this.status = status;
-                this.period = period;
-                this.windowDate = windowDate;
-            }
-
-            public boolean isOpen() {
-                return isOpen;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public String getPeriod() {
-                return period;
-            }
-
-            public String getWindowDate() {
-                return windowDate;
-            }
-        }
-        EnrollmentStatus enrollmentStatus = new EnrollmentStatus(
-                true, // isOpen
-                "Open", // status
-                "May 20 - June 10, 2025", // period
-                "May 20, 2025" // windowDate
-        );
-        model.addAttribute("enrollmentStatus", enrollmentStatus);
-
-        // --- Dummy Enrollment Steps ---
-        class EnrollmentStep {
-            public int stepNumber;
-            public String title;
-            public String description;
-            public String status;
-            public String actionUrl;
-            public String actionText;
-
-            public EnrollmentStep(int stepNumber, String title, String description, String status, String actionUrl,
-                    String actionText) {
-                this.stepNumber = stepNumber;
-                this.title = title;
-                this.description = description;
-                this.status = status;
-                this.actionUrl = actionUrl;
-                this.actionText = actionText;
-            }
-
-            public int getStepNumber() {
-                return stepNumber;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public String getActionUrl() {
-                return actionUrl;
-            }
-
-            public String getActionText() {
-                return actionText;
-            }
-        }
-        List<EnrollmentStep> enrollmentSteps = List.of(
-                new EnrollmentStep(1, "Check Requirements", "Review your prerequisites and requirements.", "Completed",
-                        null, null),
-                new EnrollmentStep(2, "Select Courses", "Choose your courses for the semester.", "Pending",
-                        "/student-courses", "Select Courses"),
-                new EnrollmentStep(3, "Confirm Enrollment", "Finalize your enrollment.", "Pending", null, null));
-        model.addAttribute("enrollmentSteps", enrollmentSteps);
-
-        // --- Dummy availableCourses and semester for template completeness ---
-        model.addAttribute("availableCourses", Collections.emptyList());
-        model.addAttribute("semester", "1st Semester");
-
         return "/student/student-enrollment";
     }
 

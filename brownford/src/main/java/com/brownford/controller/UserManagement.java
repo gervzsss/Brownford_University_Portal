@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/api/admin/users")
@@ -28,6 +29,9 @@ public class UserManagement {
 
     @Autowired
     private UserIdentifierService userIdentifierService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<User> getAllUsers(
@@ -68,6 +72,8 @@ public class UserManagement {
     @PostMapping
     public User createUser(@RequestBody User user) {
         userIdentifierService.assignIdentifier(user);
+        // Hash the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -91,7 +97,8 @@ public class UserManagement {
         user.setRole(userDetails.getRole());
         user.setStatus(userDetails.getStatus());
         if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
-            user.setPassword(userDetails.getPassword());
+            // Hash the password if it's being updated
+            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
         user.setLastLogin(userDetails.getLastLogin());
 
