@@ -267,13 +267,14 @@
                     <th>Section ID/Name</th>
                     <th>Enrolled Students</th>
                     <th>Section Slot/Capacity</th>
+                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="sectionsTableBody">
                   <!-- Section data will be loaded dynamically from the database -->
                   <tr class="empty-state-row">
-                    <td colspan="4" class="empty-state-message">
+                    <td colspan="5" class="empty-state-message">
                       <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                           stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -680,13 +681,13 @@
     // Functions to load data from the server
     async function loadSections() {
       const tbody = document.getElementById("sectionsTableBody");
-      tbody.innerHTML = '<tr><td colspan="4">Loading sections...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5">Loading sections...</td></tr>';
       try {
         const response = await fetch("/api/sections");
         if (!response.ok) throw new Error("Failed to fetch sections");
         const sections = await response.json();
         if (!sections.length) {
-          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="4" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
+          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="5" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
           return;
         }
         tbody.innerHTML = sections.map(section => `
@@ -694,6 +695,11 @@
             <td><strong>${section.sectionCode}</strong></td>
             <td>${section.enrolledCount != null ? section.enrolledCount : 0}</td>
             <td>${section.maxStudents || '-'}</td>
+            <td>
+              <span class="status-badge ${section.status === 'active' ? 'status-active' : 'status-inactive'}">
+                ${section.status === 'active' ? 'Active' : 'Inactive'}
+              </span>
+            </td>
             <td class="action-buttons">
               <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">View</button>
               <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">Edit</button>
@@ -736,7 +742,7 @@
           });
         });
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="4">Error loading sections: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5">Error loading sections: ${err.message}</td></tr>`;
       }
     }
 

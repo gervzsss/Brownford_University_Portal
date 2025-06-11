@@ -105,7 +105,7 @@
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
               </span>
-              <span class="sidebar-nav-text">Program Management</span>
+              <span class="sidebar-nav-text">Programs</span>
             </a>
           </li>
 
@@ -329,9 +329,11 @@
           <div class="form-row">
             <div class="form-group">
               <label for="studentIdInput">Student ID</label>
-              <input type="text" id="studentIdInput" class="form-control" autocomplete="off" required list="studentIdDatalist" />
+              <input type="text" id="studentIdInput" class="form-control" autocomplete="off" required
+                list="studentIdDatalist" />
               <datalist id="studentIdDatalist"></datalist>
-              <span id="studentNameDisplay" class="student-name-display" style="display:block;min-height:1.5em;margin-top:2px;color:#6B3A1D;font-weight:500;"></span>
+              <span id="studentNameDisplay" class="student-name-display"
+                style="display:block;min-height:1.5em;margin-top:2px;color:#6B3A1D;font-weight:500;"></span>
             </div>
             <div class="form-group">
               <label for="programInput">Program</label>
@@ -599,7 +601,7 @@
       }
     }
 
-    document.getElementById('studentIdInput').addEventListener('input', function() {
+    document.getElementById('studentIdInput').addEventListener('input', function () {
       populateStudentIdDatalist(this.value);
       updateStudentNameDisplay(this.value);
     });
@@ -627,7 +629,7 @@
     }
 
     // Autofill on blur, only if input matches datalist
-    document.getElementById('studentIdInput').addEventListener('blur', async function() {
+    document.getElementById('studentIdInput').addEventListener('blur', async function () {
       const studentId = this.value;
       if (!isStudentIdInDatalist('studentIdInput', 'studentIdDatalist')) {
         // Not a valid/exact studentId, clear autofill fields
@@ -656,7 +658,7 @@
 
     // Helper to convert year level number to text
     function yearLevelToText(val) {
-      switch(val) {
+      switch (val) {
         case '1': return 'First Year';
         case '2': return 'Second Year';
         case '3': return 'Third Year';
@@ -667,7 +669,7 @@
     }
     // Helper to convert year level text to number
     function yearLevelTextToNumber(text) {
-      switch(text) {
+      switch (text) {
         case 'First Year': return 1;
         case 'Second Year': return 2;
         case 'Third Year': return 3;

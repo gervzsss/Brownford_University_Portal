@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.11.252152]
+
+### Changes
+- Program Management changed to Programs in the sidebar navigation.
+- The Section Management Page now shows it's status info.
+- The Course Management Page now shows it's semester info.
+
 ## [06.11.252022]
 
 ### Changes
