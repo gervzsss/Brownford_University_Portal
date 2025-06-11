@@ -2,8 +2,6 @@ package com.brownford.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "sections")
 public class Section {
@@ -23,12 +21,6 @@ public class Section {
 
     @Column(nullable = false)
     private String semester;
-
-    @Column(nullable = false)
-    private String schedule;
-
-    @Column(nullable = false)
-    private String room;
 
     @Column(nullable = false)
     private Integer maxStudents;
@@ -75,22 +67,6 @@ public class Section {
 
     public void setSemester(String semester) {
         this.semester = semester;
-    }
-
-    public String getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
     }
 
     public Integer getMaxStudents() {

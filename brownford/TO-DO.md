@@ -29,63 +29,34 @@
 - SECTION
 - SUBJECTS
 
-
-
- Suggested Main Navigation Controls for Admin
-🔷 1. Dashboard
-Overview of total students, faculty, courses, active enrollment, recent activity
-
-Shortcuts to assignments or management pages
-
-🔷 2. Student Management
-View All Students
-
-Add / Edit / Delete Student
-
-Assign Student to Course
-
-Assign Student to Schedule
-
-Assign Subjects to Student
-
-🔷 3. Faculty Management
-View All Faculty
-
-Add / Edit / Delete Faculty
-
-Assign Schedule to Faculty
-
-Assign Subjects to Faculty
-
-🔷 4. Course & Section Management
-View/Add/Edit/Delete Courses
-
-View/Add/Edit/Delete Sections
-
-🔷 5. Subject Management
-View/Add/Edit/Delete Subjects
-
-Assign to Students / Faculty
-
-🔷 6. Enrollment & Grade Encoding
-Enroll Students (or manage open enrollment)
-
-Encode or Edit Grades for Students
-
-View Enrolled Subjects
-
-🔷 7. Announcements & Events
-Create / Edit / Delete Announcements
-
-Create / Edit / Delete Events
-
-Publish to students/faculty dashboard
-
-🔷 8. Account / System Management
-Change Password
-
-Log Out
-
-(Optional: Manage user roles or admins)
-
 Prompt: Design a [component/page/section] that matches the existing theme and design of the website. It should use a similar color palette, typography, and layout style. The design must feel cohesive with the rest of the site and maintain a consistent user experience.
+
+
+#### University FaQs
+
+** In Brown Ford University, the students only Occupy a single classroom [per_section], it will change based on their semester and their Year Level, 
+
+Example if it is a first semester, they will go ROOM 1A, if the semester ends, they will then occupy ROOM 1B in the whole second semester, then they will Occupy ROOM 2A for the 2nd Year 1st Semester.
+
+
+
+## Side Bar Navigation
+
+### Section Management Page
+- Create a Section
+- Section ID (BSIT2425)
+- ROOM/s
+- Enrolled Students
+- Section SLOT/CAPACITY
+- 
+
+### Faculty List
+- View all the Faculty that the University have
+- View Assigned Courses to them
+- Their Schedule
+- 
+
+### Workload Management
+- Assign a Faculty to a certain Courses (up to 5 courses per Faculy Member)
+- Assign a Schedule to said faculty members
+- Assign Room for each  

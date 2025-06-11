@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.11.252022]
+
+### Changes
+- Functionable Section Management Page
+
+### Bugs
+- The logic of limiting the slots/capacity based on what is set, is still not working
+
 ## [06.11.251629]
 
 ### Changes

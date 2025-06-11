@@ -237,7 +237,6 @@
 
     <div class="content-wrapper" id="contentWrapper">
       <main class="dashboard-content">
-        <!-- Header Section (Welcome) -->
         <section class="welcome-section">
           <div class="welcome-header">
             <div class="welcome-icon">
@@ -255,87 +254,26 @@
             </div>
           </div>
         </section>
-
-        <!-- Sections Content -->
         <section class="content-panel" id="sectionsPanel">
           <div class="panel-header">
             <h2 class="section-title">Section Management</h2>
+            <button id="addSectionBtn" class="add-user-btn">Add New Section</button>
           </div>
           <div class="panel-content">
-            <!-- Search and Filter Controls -->
-            <div class="user-controls">
-              <div class="search-filter-container">
-                <div class="search-container">
-                  <input type="text" placeholder="Search sections..." id="sectionSearchInput" />
-                  <button class="search-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                  </button>
-                </div>
-                <div class="filter-container">
-                  <select id="courseFilter" class="filter-select">
-                    <option value="all">All Courses</option>
-                    <option value="CS101">
-                      CS101 - Intro to Computer Science
-                    </option>
-                    <option value="MATH201">MATH201 - Calculus I</option>
-                    <option value="BUS301">BUS301 - Business Ethics</option>
-                  </select>
-                  <select id="semesterFilter" class="filter-select">
-                    <option value="all">All Semesters</option>
-                    <option value="fall2024">Fall 2024</option>
-                    <option value="spring2025">Spring 2025</option>
-                    <option value="summer2025">Summer 2025</option>
-                  </select>
-                </div>
-              </div>
-              <div class="action-buttons">
-                <button id="addSectionBtn" class="add-user-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="12" y1="11" x2="12" y2="17"></line>
-                    <line x1="9" y1="14" x2="15" y2="14"></line>
-                  </svg>
-                  Add New Section
-                </button>
-                <button id="exportSectionsBtn" class="export-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  Export
-                </button>
-              </div>
-            </div>
-
-            <!-- Sections Table -->
             <div class="table-container">
               <table class="data-table" id="sectionsTable">
                 <thead>
                   <tr>
-                    <th>Section ID</th>
-                    <th>Course</th>
-                    <th>Instructor</th>
-                    <th>Schedule</th>
-                    <th>Room</th>
-                    <th>Capacity</th>
-                    <th>Enrolled</th>
-                    <th>Semester</th>
+                    <th>Section ID/Name</th>
+                    <th>Enrolled Students</th>
+                    <th>Section Slot/Capacity</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="sectionsTableBody">
                   <!-- Section data will be loaded dynamically from the database -->
                   <tr class="empty-state-row">
-                    <td colspan="9" class="empty-state-message">
+                    <td colspan="4" class="empty-state-message">
                       <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                           stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -344,32 +282,19 @@
                           <line x1="8" y1="2" x2="8" y2="6"></line>
                           <line x1="3" y1="10" x2="21" y2="10"></line>
                         </svg>
-                        <p>
-                          No sections found. Add sections or adjust your
-                          search filters to see results.
-                        </p>
+                        <p>No sections found. Add sections to see results.</p>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <!-- Pagination -->
-            <div class="pagination" id="sectionsPaginationContainer">
-              <div class="empty-pagination-message">
-                <p>
-                  Pagination will appear when there are enough records to
-                  display multiple pages.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
       </main>
     </div>
 
-    <!-- Section Modal -->
+    <!-- Section Modal (consistent with admin-courses.html) -->
     <div id="sectionModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -381,18 +306,28 @@
             <input type="hidden" id="sectionId" name="sectionId" />
             <div class="form-row">
               <div class="form-group">
-                <label for="sectionCourses">Courses</label>
-                <select id="sectionCourses" name="sectionCourses" class="form-control" multiple required>
-                  <option value="">Loading courses...</option>
-                </select>
-                <small>Select one or more courses for this section</small>
+                <label for="sectionCode">Section ID/Name</label>
+                <input type="text" id="sectionCode" name="sectionCode" class="form-control" required />
               </div>
               <div class="form-group">
-                <label for="sectionName">Section Name</label>
-                <input type="text" id="sectionName" name="sectionName" class="form-control" required />
+                <label for="sectionProgram">Program</label>
+                <select id="sectionProgram" name="sectionProgram" class="form-control" required>
+                  <option value="">Loading programs...</option>
+                </select>
               </div>
             </div>
             <div class="form-row">
+              <div class="form-group">
+                <label for="sectionYearLevel">Year Level</label>
+                <select id="sectionYearLevel" name="sectionYearLevel" class="form-control" required>
+                  <option value="">Select Year Level</option>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                  <option value="5">5th Year (Special Case)</option>
+                </select>
+              </div>
               <div class="form-group">
                 <label for="sectionSemester">Semester</label>
                 <select id="sectionSemester" name="sectionSemester" class="form-control" required>
@@ -401,47 +336,20 @@
                   <option value="2nd Semester">2nd Semester</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="sectionYearLevel">Year Level</label>
-                <select id="sectionYearLevel" name="sectionYearLevel" class="form-control" required>
-                  <option value="">Select Year Level</option>
-                  <option value="1st Year">1st Year</option>
-                  <option value="2nd Year">2nd Year</option>
-                  <option value="3rd Year">3rd Year</option>
-                  <option value="4th Year">4th Year</option>
-                  <option value="5th Year">5th Year (Special Case)</option>
-                </select>
-              </div>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="sectionMaxStudents">Max Students</label>
+                <label for="sectionMaxStudents">Section Slot/Capacity</label>
                 <input type="number" id="sectionMaxStudents" name="sectionMaxStudents" class="form-control" min="1"
                   required />
               </div>
-              <div class="form-group">
-                <label for="sectionSchedule">Schedule</label>
-                <input type="text" id="sectionSchedule" name="sectionSchedule" class="form-control" required />
-              </div>
             </div>
             <div class="form-row">
-              <div class="form-group">
-                <label for="sectionRoom">Room</label>
-                <input type="text" id="sectionRoom" name="sectionRoom" class="form-control" required />
-              </div>
               <div class="form-group">
                 <label for="sectionStatus">Status</label>
                 <select id="sectionStatus" name="sectionStatus" class="form-control" required>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="sectionInstructor">Faculty</label>
-                <select id="sectionInstructor" name="sectionInstructor" class="form-control" required>
-                  <option value="">Loading faculty...</option>
                 </select>
               </div>
             </div>
@@ -621,20 +529,23 @@
         .getElementById("sectionForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
+          // Declare and set url and method variables
           const selectedCourses = Array.from(
-            document.getElementById("sectionCourses").selectedOptions
+            document.getElementById("sectionCourses")?.selectedOptions || []
           ).map((opt) => opt.value);
+          const programId = document.getElementById("sectionProgram").value;
+          const yearLevelValue = document.getElementById("sectionYearLevel").value;
           const formData = {
             id: document.getElementById("sectionId").value,
+            sectionCode: document.getElementById("sectionCode").value,
             courses: selectedCourses,
-            sectionName: document.getElementById("sectionName").value,
+            program: programId ? { id: parseInt(programId) } : null,
+            sectionName: document.getElementById("sectionName")?.value,
             semester: document.getElementById("sectionSemester").value,
-            yearLevel: document.getElementById("sectionYearLevel").value,
+            yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
             maxStudents: document.getElementById("sectionMaxStudents").value,
-            schedule: document.getElementById("sectionSchedule").value,
-            room: document.getElementById("sectionRoom").value,
             status: document.getElementById("sectionStatus").value,
-            faculty: document.getElementById("sectionInstructor").value,
+            faculty: document.getElementById("sectionInstructor")?.value,
           };
           // Determine if add or edit
           const isEdit = !!formData.id;
@@ -652,7 +563,7 @@
             });
             if (!response.ok) throw new Error("Failed to save section");
             sectionModal.style.display = "none";
-            // Optionally reload sections table here
+            loadSections(); // Reload table after save
           } catch (err) {
             alert("Error saving section: " + err.message);
           }
@@ -671,10 +582,7 @@
       document.querySelectorAll(".btn-edit").forEach((btn) => {
         btn.addEventListener("click", function () {
           const sectionId = this.getAttribute("data-id");
-          console.log("Editing section:", sectionId);
-          document.getElementById("sectionModalTitle").textContent =
-            "Edit Section";
-          sectionModal.style.display = "block";
+          openEditSectionModal(sectionId);
         });
       });
 
@@ -682,18 +590,20 @@
       document.querySelectorAll(".btn-delete").forEach((btn) => {
         btn.addEventListener("click", function () {
           const sectionId = this.getAttribute("data-id");
-          document.getElementById("deleteConfirmTitle").textContent =
-            "Delete Section";
-          document.getElementById(
-            "deleteConfirmMessage"
-          ).textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
-
-          document.getElementById("confirmDeleteBtn").onclick = function () {
-            console.log("Deleting section:", sectionId);
-            alert(`Section ${sectionId} would be deleted from the database`);
-            deleteConfirmModal.style.display = "none";
+          document.getElementById("deleteConfirmTitle").textContent = "Delete Section";
+          document.getElementById("deleteConfirmMessage").textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
+          document.getElementById("confirmDeleteBtn").onclick = async function () {
+            try {
+              const response = await fetch(`/api/sections/${sectionId}`, {
+                method: "DELETE"
+              });
+              if (!response.ok) throw new Error("Failed to delete section");
+              deleteConfirmModal.style.display = "none";
+              loadSections();
+            } catch (err) {
+              alert("Error deleting section: " + err.message);
+            }
           };
-
           deleteConfirmModal.style.display = "block";
         });
       });
@@ -762,14 +672,78 @@
         document.getElementById("courseFilter").value = courseParam;
         applySectionsFilters();
       }
+
+      // At the end of DOMContentLoaded, load sections
+      loadSections();
     });
 
     // Functions to load data from the server
-    function loadSections() {
-      console.log("Loading sections");
-      // In a real implementation, this would make an AJAX call to load sections
-      // and populate the sections table
+    async function loadSections() {
+      const tbody = document.getElementById("sectionsTableBody");
+      tbody.innerHTML = '<tr><td colspan="4">Loading sections...</td></tr>';
+      try {
+        const response = await fetch("/api/sections");
+        if (!response.ok) throw new Error("Failed to fetch sections");
+        const sections = await response.json();
+        if (!sections.length) {
+          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="4" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
+          return;
+        }
+        tbody.innerHTML = sections.map(section => `
+          <tr>
+            <td><strong>${section.sectionCode}</strong></td>
+            <td>${section.enrolledCount != null ? section.enrolledCount : 0}</td>
+            <td>${section.maxStudents || '-'}</td>
+            <td class="action-buttons">
+              <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">View</button>
+              <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">Edit</button>
+              <button class="btn btn-sm btn-danger btn-delete" data-id="${section.id}" title="Delete Section">Delete</button>
+            </td>
+          </tr>
+        `).join("");
+        // Re-attach event listeners for new buttons
+        document.querySelectorAll(".btn-view").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-id");
+            // Optionally fetch and display section details
+            viewSectionModal.style.display = "block";
+          });
+        });
+        document.querySelectorAll(".btn-edit").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-id");
+            openEditSectionModal(sectionId);
+          });
+        });
+        document.querySelectorAll(".btn-delete").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-id");
+            document.getElementById("deleteConfirmTitle").textContent = "Delete Section";
+            document.getElementById("deleteConfirmMessage").textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
+            document.getElementById("confirmDeleteBtn").onclick = async function () {
+              try {
+                const response = await fetch(`/api/sections/${sectionId}`, {
+                  method: "DELETE"
+                });
+                if (!response.ok) throw new Error("Failed to delete section");
+                deleteConfirmModal.style.display = "none";
+                loadSections();
+              } catch (err) {
+                alert("Error deleting section: " + err.message);
+              }
+            };
+            deleteConfirmModal.style.display = "block";
+          });
+        });
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="4">Error loading sections: ${err.message}</td></tr>`;
+      }
     }
+
+    // Call loadSections on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      loadSections();
+    });
 
     async function populateCourseDropdown() {
       const courseSelect = document.getElementById("sectionCourses");
@@ -822,12 +796,54 @@
       }
     }
 
+    async function populateProgramDropdown() {
+      const programSelect = document.getElementById("sectionProgram");
+      programSelect.innerHTML = '<option value="">Loading programs...</option>';
+      try {
+        const response = await fetch("/api/programs");
+        if (!response.ok) throw new Error("Failed to fetch programs");
+        const programs = await response.json();
+        if (!programs.length) {
+          programSelect.innerHTML = '<option value="">No programs available</option>';
+          return;
+        }
+        programSelect.innerHTML = '<option value="">Select Program</option>' +
+          programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join("");
+      } catch (err) {
+        programSelect.innerHTML = '<option value="">Error loading programs</option>';
+      }
+    }
+
     // When opening the modal, populate the dropdown
     addSectionBtn.addEventListener("click", function () {
+      populateProgramDropdown();
       populateCourseDropdown();
       populateFacultyDropdown();
       // ...existing code for opening modal...
     });
+
+    // Helper to open and populate the edit section modal
+    async function openEditSectionModal(sectionId) {
+      try {
+        await populateProgramDropdown();
+        // If you have course/faculty dropdowns, also repopulate them here
+        // Fetch section details
+        const response = await fetch(`/api/sections/${sectionId}`);
+        if (!response.ok) throw new Error("Failed to fetch section details");
+        const section = await response.json();
+        document.getElementById("sectionModalTitle").textContent = "Edit Section";
+        document.getElementById("sectionId").value = section.id || "";
+        document.getElementById("sectionCode").value = section.sectionCode || "";
+        document.getElementById("sectionProgram").value = section.program ? section.program.id : "";
+        document.getElementById("sectionYearLevel").value = section.yearLevel || "";
+        document.getElementById("sectionSemester").value = section.semester || "";
+        document.getElementById("sectionMaxStudents").value = section.maxStudents || "";
+        document.getElementById("sectionStatus").value = section.status || "";
+        sectionModal.style.display = "block";
+      } catch (err) {
+        alert("Error loading section details: " + err.message);
+      }
+    }
   </script>
   <script th:src="@{/js/sidebar-nav.js}"></script>
 </body>

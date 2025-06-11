@@ -40,8 +40,6 @@ public class SectionController {
             s.setProgram(updated.getProgram());
             s.setYearLevel(updated.getYearLevel());
             s.setSemester(updated.getSemester());
-            s.setSchedule(updated.getSchedule());
-            s.setRoom(updated.getRoom());
             s.setMaxStudents(updated.getMaxStudents());
             s.setStatus(updated.getStatus());
             return ResponseEntity.ok(sectionService.saveSection(s));

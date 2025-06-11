@@ -22,6 +22,7 @@ public class SectionService {
     }
 
     public Section saveSection(Section section) {
+        // Room is removed, so nothing to set for room
         return sectionRepository.save(section);
     }
 
