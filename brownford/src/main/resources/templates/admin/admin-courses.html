@@ -12,73 +12,6 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
     rel="stylesheet" />
-  <style>
-    .program-checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      border: 1px solid #d1bfa3;
-      border-radius: 6px;
-      padding: 12px 10px 6px 10px;
-      background: #f9f6f2;
-      margin-bottom: 8px;
-      min-height: 48px;
-    }
-
-    .program-checkbox-group label {
-      display: flex;
-      align-items: center;
-      background: #fff;
-      border-radius: 4px;
-      padding: 4px 10px 4px 6px;
-      box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
-      cursor: pointer;
-      transition: background 0.2s;
-      font-size: 1rem;
-      border: 1px solid #e5d6c2;
-    }
-
-    .program-checkbox-group label:hover {
-      background: #f3e9d7;
-      border-color: #c7a97a;
-    }
-
-    .program-checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #8b4513;
-      margin-right: 8px;
-      cursor: pointer;
-    }
-
-    .dropdown-multiselect {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .dropdown-multiselect-list {
-      display: none;
-      position: absolute;
-      background: #fff;
-      border: 1px solid #d1bfa3;
-      border-radius: 6px;
-      z-index: 1000;
-      max-height: 220px;
-      overflow-y: auto;
-      min-width: 220px;
-    }
-
-    .dropdown-multiselect-list label {
-      display: block;
-      padding: 4px 10px;
-      cursor: pointer;
-    }
-
-    .dropdown-multiselect-list label:hover {
-      background: #f3e9d7;
-    }
-  </style>
 </head>
 
 <body>
@@ -726,15 +659,15 @@
         const newBtn = btn.cloneNode(true);
         btn.parentNode.replaceChild(newBtn, btn);
         // Toggle dropdown
-        newBtn.onclick = function(e) {
+        newBtn.onclick = function (e) {
           e.stopPropagation();
           list.style.display = list.style.display === 'block' ? 'none' : 'block';
         };
         // Prevent closing when clicking inside the dropdown
-        list.onmousedown = function(e) { e.stopPropagation(); };
+        list.onmousedown = function (e) { e.stopPropagation(); };
         // Handle checkbox change
         list.querySelectorAll('input[type=checkbox]').forEach(cb => {
-          cb.onchange = function() {
+          cb.onchange = function () {
             if (cb.checked && !selected.includes(cb.value)) selected.push(cb.value);
             else selected = selected.filter(id => id !== cb.value);
             updateBtnText();
@@ -744,7 +677,7 @@
         if (window._programDropdownDocListener) {
           document.removeEventListener('click', window._programDropdownDocListener);
         }
-        window._programDropdownDocListener = function(e) {
+        window._programDropdownDocListener = function (e) {
           if (!list.contains(e.target) && e.target !== newBtn) {
             list.style.display = 'none';
           }
@@ -1010,6 +943,74 @@
     }
   </script>
   <script th:src="@{/js/sidebar-nav.js}"></script>
+
+  <style>
+    .program-checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      border: 1px solid #d1bfa3;
+      border-radius: 6px;
+      padding: 12px 10px 6px 10px;
+      background: #f9f6f2;
+      margin-bottom: 8px;
+      min-height: 48px;
+    }
+
+    .program-checkbox-group label {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 4px;
+      padding: 4px 10px 4px 6px;
+      box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 1rem;
+      border: 1px solid #e5d6c2;
+    }
+
+    .program-checkbox-group label:hover {
+      background: #f3e9d7;
+      border-color: #c7a97a;
+    }
+
+    .program-checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #8b4513;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    .dropdown-multiselect {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .dropdown-multiselect-list {
+      display: none;
+      position: absolute;
+      background: #fff;
+      border: 1px solid #d1bfa3;
+      border-radius: 6px;
+      z-index: 1000;
+      max-height: 220px;
+      overflow-y: auto;
+      min-width: 220px;
+    }
+
+    .dropdown-multiselect-list label {
+      display: block;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-multiselect-list label:hover {
+      background: #f3e9d7;
+    }
+  </style>
 </body>
 
 </html>

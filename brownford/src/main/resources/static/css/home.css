@@ -2400,44 +2400,6 @@ body::-webkit-scrollbar {
   color: #292727;
 }
 
-/* Table action buttons */
-
-.action-btn {
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-family: "Cinzel", serif;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  min-width: 60px;
-  text-align: center;
-}
-
-.btn-view,
-.btn-edit {
-  background-color: #f0f0f0;
-  color: white;
-}
-
-.btn-view:hover,
-.btn-edit:hover {
-  background-color: #6B3A1D;
-}
-
-.btn-delete {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.btn-delete:hover {
-  background-color: #e0e0e0;
-}
-
-.action-btn:hover {
-  opacity: 0.9;
-}
-
 /* Pagination */
 .pagination {
   display: flex;

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.11.251529]
+
+### Changes
+- Minor Action Button UI Improvements in the User Management Page [ADMIN]
+
 ## [06.10.250143]
 
 ### Changes (Course Management Page)

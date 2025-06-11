@@ -182,7 +182,7 @@
   text-decoration: none;
   border: 1px solid transparent;
 }
-
+.btn-view,
 .btn-edit {
   background-color: #8b4513;
   color: white;
