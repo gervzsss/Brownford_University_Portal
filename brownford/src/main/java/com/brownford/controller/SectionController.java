@@ -50,7 +50,12 @@ public class SectionController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSection(@PathVariable Long id) {
-        sectionService.deleteSection(id);
-        return ResponseEntity.noContent().build();
+        try {
+            sectionService.deleteSection(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            // Log the error if needed
+            return ResponseEntity.status(409).build(); // 409 Conflict
+        }
     }
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.12.251307]
+
+### Changes
+- Removed Faculty Evaluation [ADMIN]
+- Removed Enrollment Page
+- Fixed the BUG that prevents from deleting a section in the Section Management Page [ADMIN]
+
 ## [06.12.250241]
 
 ### Changes

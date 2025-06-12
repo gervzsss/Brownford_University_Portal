@@ -143,21 +143,6 @@
             </a>
           </li>
 
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-enrollment}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="8.5" cy="7" r="4"></circle>
-                  <line x1="20" y1="8" x2="20" y2="14"></line>
-                  <line x1="23" y1="11" x2="17" y2="11"></line>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Enrollment</span>
-            </a>
-          </li>
-
           <div class="sidebar-section-title">User Management</div>
 
           <li class="sidebar-nav-item">
@@ -198,7 +183,6 @@
               <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
               <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
                 Management</a>
-              <a th:href="@{/admin-faculty-evaluation}" class="sidebar-dropdown-item">Evaluations</a>
             </div>
           </li>
 
@@ -265,6 +249,9 @@
                 <thead>
                   <tr>
                     <th>Section ID/Name</th>
+                    <th>Program</th>
+                    <th>Year Level</th>
+                    <th>Semester</th>
                     <th>Enrolled Students</th>
                     <th>Section Slot/Capacity</th>
                     <th>Status</th>
@@ -274,7 +261,7 @@
                 <tbody id="sectionsTableBody">
                   <!-- Section data will be loaded dynamically from the database -->
                   <tr class="empty-state-row">
-                    <td colspan="5" class="empty-state-message">
+                    <td colspan="8" class="empty-state-message">
                       <div class="empty-state">
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
                           stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -588,26 +575,39 @@
       });
 
       // Delete buttons
+      let sectionIdToDelete = null;
+
       document.querySelectorAll(".btn-delete").forEach((btn) => {
         btn.addEventListener("click", function () {
-          const sectionId = this.getAttribute("data-id");
-          document.getElementById("deleteConfirmTitle").textContent = "Delete Section";
-          document.getElementById("deleteConfirmMessage").textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
-          document.getElementById("confirmDeleteBtn").onclick = async function () {
-            try {
-              const response = await fetch(`/api/sections/${sectionId}`, {
-                method: "DELETE"
-              });
-              if (!response.ok) throw new Error("Failed to delete section");
-              deleteConfirmModal.style.display = "none";
-              loadSections();
-            } catch (err) {
-              alert("Error deleting section: " + err.message);
-            }
-          };
+          sectionIdToDelete = this.getAttribute("data-id");
           deleteConfirmModal.style.display = "block";
         });
       });
+
+      // Confirm delete button logic
+      const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+      if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener("click", async function () {
+          if (!sectionIdToDelete) return;
+          try {
+            const response = await fetch(`/api/sections/${sectionIdToDelete}`, {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+            });
+            if (response.ok) {
+              deleteConfirmModal.style.display = "none";
+              sectionIdToDelete = null;
+              loadSections(); // Refresh table
+            } else if (response.status === 409) {
+              alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
+            } else {
+              alert("Failed to delete section. It may be in use or there was a server error.");
+            }
+          } catch (err) {
+            alert("Error deleting section: " + err.message);
+          }
+        });
+      }
 
       // Edit from view modals
       document
@@ -629,15 +629,16 @@
         });
 
       // Search
-      document
-        .getElementById("sectionSearchInput")
-        .addEventListener("keyup", function () {
+      const sectionSearchInput = document.getElementById("sectionSearchInput");
+      if (sectionSearchInput) {
+        sectionSearchInput.addEventListener("keyup", function () {
           const searchTerm = this.value.trim().toLowerCase();
           if (searchTerm.length >= 2) {
             console.log("Searching for sections with term:", searchTerm);
             filterTableRows("sectionsTable", searchTerm);
           }
         });
+      }
 
       // Filters
       document
@@ -693,13 +694,12 @@
         tbody.innerHTML = sections.map(section => `
           <tr>
             <td><strong>${section.sectionCode}</strong></td>
+            <td>${section.program ? (section.program.code + ' - ' + section.program.name) : '-'}</td>
+            <td>${section.yearLevel || '-'}</td>
+            <td>${section.semester || '-'}</td>
             <td>${section.enrolledCount != null ? section.enrolledCount : 0}</td>
             <td>${section.maxStudents || '-'}</td>
-            <td>
-              <span class="status-badge ${section.status === 'active' ? 'status-active' : 'status-inactive'}">
-                ${section.status === 'active' ? 'Active' : 'Inactive'}
-              </span>
-            </td>
+            <td><span class="status-badge ${section.status ? section.status.toLowerCase() : ''}">${section.status || '-'}</span></td>
             <td class="action-buttons">
               <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">View</button>
               <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">Edit</button>
@@ -731,9 +731,14 @@
                 const response = await fetch(`/api/sections/${sectionId}`, {
                   method: "DELETE"
                 });
-                if (!response.ok) throw new Error("Failed to delete section");
-                deleteConfirmModal.style.display = "none";
-                loadSections();
+                if (response.ok) {
+                  deleteConfirmModal.style.display = "none";
+                  loadSections();
+                } else if (response.status === 409) {
+                  alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
+                } else {
+                  alert("Failed to delete section. It may be in use or there was a server error.");
+                }
               } catch (err) {
                 alert("Error deleting section: " + err.message);
               }

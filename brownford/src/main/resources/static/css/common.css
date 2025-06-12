@@ -153,15 +153,13 @@
 }
 
 .status-active {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: #e8f5e9;
+  color: #4caf50;
 }
 
 .status-inactive {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: #f5f5f5;
+  color: #d31515;
 }
 
 /* Action buttons styling */
@@ -182,6 +180,7 @@
   text-decoration: none;
   border: 1px solid transparent;
 }
+
 .btn-view,
 .btn-edit {
   background-color: #8b4513;
