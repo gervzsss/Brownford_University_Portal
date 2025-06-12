@@ -101,8 +101,9 @@
                     <div>
                         <h2 class="enrolled-courses-title">ENROLLED COURSES</h2>
                         <p class="semester-info"
-                            th:text="${academicYear} + ' / ' + ${semester} + ' / ' + ${student.yearLevel} + ' / ' + ${student.program}">
-                            Academic Year / Semester / Year Level / Program</p>
+                            th:text="${currentSemester} + ' / ' + ${student.yearLevel} + ' / ' + ${student.program.name}">
+                            Semester / Year Level / Program
+                        </p>
                     </div>
                 </div>
                 <div class="student-info">
@@ -112,7 +113,9 @@
             </div>
 
             <div class="schedule-description">
-                <h3 class="schedule-title">These are your schedules this 2ND SEMESTER of Academic Year 2024-2025</h3>
+                <h3 class="schedule-title" th:text="'These are your schedules this ' + ${currentSemester}">
+                    These are your schedules this SEMESTER
+                </h3>
                 <p class="schedule-note">Changing of Section is not allowed.</p>
             </div>
 
@@ -121,33 +124,15 @@
                 <table class="schedule-table">
                     <thead>
                         <tr>
-                            <th>Block</th>
-                            <th>Section</th>
-                            <th>Course Title</th>
-                            <th>Class Days</th>
-                            <th>Class Time</th>
-                            <th>Room</th>
-                            <th>GCR Code</th>
-                            <th>Syllabus</th>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Schedule</th>
+                            <th>Professors</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr th:if="${schedules.empty}">
-                            <td colspan="8" style="text-align: center;">No schedule available for this semester</td>
-                        </tr>
-                        <tr th:each="schedule : ${schedules}">
-                            <td th:text="${schedule.block}">Block</td>
-                            <td th:text="${schedule.section}">Section</td>
-                            <td th:text="${schedule.courseTitle}">Course Title</td>
-                            <td th:text="${schedule.classDays}">Class Days</td>
-                            <td th:text="${schedule.classTime}">Class Time</td>
-                            <td th:text="${schedule.room}">Room</td>
-                            <td th:text="${schedule.gcrCode}">GCR Code</td>
-                            <td>
-                                <a th:if="${schedule.syllabusUrl != null}" th:href="${schedule.syllabusUrl}"
-                                    class="download-link">Download</a>
-                                <span th:unless="${schedule.syllabusUrl != null}">Not Available</span>
-                            </td>
+                    <tbody id="scheduleTableBody">
+                        <tr>
+                            <td colspan="4" style="text-align: center;">Loading...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -170,6 +155,34 @@
         </main>
     </div>
     <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tbody = document.querySelector('#scheduleTableBody');
+            if (!tbody) return;
+            fetch('/api/student/schedule')
+                .then(response => response.json())
+                .then(data => {
+                    tbody.innerHTML = '';
+                    if (!data || data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No schedule available for this semester</td></tr>';
+                    } else {
+                        data.forEach(schedule => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td>${schedule.courseCode || ''}</td>
+                        <td>${schedule.courseTitle || ''}</td>
+                        <td>${schedule.classDays || ''} ${schedule.classTime || ''} (${schedule.room || ''})</td>
+                        <td>${schedule.professors || ''}</td>
+                    `;
+                            tbody.appendChild(row);
+                        });
+                    }
+                })
+                .catch(error => {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: red;">Failed to load schedule.</td></tr>';
+                });
+        });
+    </script>
 </body>
 
 </html>

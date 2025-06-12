@@ -10,4 +10,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByStatus(String status);
 
     long countBySection_Id(Long sectionId); // Use Section relation, not sectionId field
+
+    // Add method to get latest enrollment for a student (assuming createdAt is set)
+    Enrollment findTopByStudentIdOrderByCreatedAtDesc(Long studentId);
 }

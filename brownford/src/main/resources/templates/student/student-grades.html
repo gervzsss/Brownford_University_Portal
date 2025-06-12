@@ -101,10 +101,11 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="grades-title">ACADEMIC GRADES</h2>
+                        <h2 class="enrolled-courses-title">ENROLLED COURSES</h2>
                         <p class="semester-info"
-                            th:text="${academicYears} + ' / ' + ${student.program} + ' - ' + ${student.major}">Academic
-                            Years / Program</p>
+                            th:text="${currentSemester} + ' / ' + ${student.yearLevel} + ' / ' + ${student.program.name}">
+                            Semester / Year Level / Program
+                        </p>
                     </div>
                 </div>
                 <div class="student-info">
@@ -122,17 +123,15 @@
             <div class="filter-section">
                 <div class="filter-row">
                     <div class="filter-group">
-                        <label for="academicYear">Academic Year:</label>
-                        <select id="academicYear" class="filter-select">
-                            <option th:each="year : ${academicYears}" th:value="${year.value}" th:text="${year.label}">
-                                Academic Year</option>
+                        <label for="yearLevel">Year Level:</label>
+                        <select id="yearLevel" class="filter-select">
+                            <option th:each="level : ${yearLevels}" th:value="${level}" th:text="${level}">Year Level</option>
                         </select>
                     </div>
                     <div class="filter-group">
                         <label for="semester">Semester:</label>
                         <select id="semester" class="filter-select">
-                            <option value="1">1ST SEMESTER</option>
-                            <option value="2">2ND SEMESTER</option>
+                            <option th:each="sem : ${semesters}" th:value="${sem}" th:text="${sem}">Semester</option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -209,7 +208,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const academicYearSelect = document.getElementById('academicYear');
+            const yearLevelSelect = document.getElementById('yearLevel');
             const semesterSelect = document.getElementById('semester');
             const viewGradesBtn = document.getElementById('viewGradesBtn');
             const gradesTableBody = document.getElementById('gradesTableBody');
@@ -219,19 +218,39 @@
             const academicStanding = document.getElementById('academicStanding');
             const totalUnits = document.getElementById('totalUnits');
 
+            // Populate yearLevel and semester filters from backend
+            fetch('/api/student/grade-filters')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.yearLevels) {
+                        yearLevelSelect.innerHTML = '';
+                        data.yearLevels.forEach(level => {
+                            const option = document.createElement('option');
+                            option.value = level;
+                            option.textContent = level;
+                            yearLevelSelect.appendChild(option);
+                        });
+                    }
+                    if (data.semesters) {
+                        semesterSelect.innerHTML = '';
+                        data.semesters.forEach(sem => {
+                            const option = document.createElement('option');
+                            option.value = sem;
+                            option.textContent = sem;
+                            semesterSelect.appendChild(option);
+                        });
+                    }
+                    // Optionally trigger initial table load after filters are populated
+                    updateGradesTable();
+                });
+
             // Function to update the grades table
             function updateGradesTable() {
-                // Clear the table
                 gradesTableBody.innerHTML = '';
-
-                const academicYear = academicYearSelect.value;
+                const yearLevel = yearLevelSelect.value;
                 const semester = semesterSelect.value;
-
-                // Show loading indicator
                 gradesTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading grades...</td></tr>';
-
-                // Fetch grades data from server
-                fetch(`/api/student/grades?academicYear=${academicYear}&semester=${semester}`)
+                fetch(`/api/student/grades?yearLevel=${encodeURIComponent(yearLevel)}&semester=${encodeURIComponent(semester)}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -240,42 +259,31 @@
                     })
                     .then(data => {
                         gradesTableBody.innerHTML = '';
-
                         if (data.courses && data.courses.length > 0) {
-                            // Populate the table with the semester data
                             data.courses.forEach(course => {
                                 const row = document.createElement('tr');
                                 row.innerHTML = `
-                                    <td>${course.code}</td>
-                                    <td>${course.title}</td>
-                                    <td>${course.units}</td>
-                                    <td>${course.midterm}</td>
-                                    <td>${course.finals}</td>
-                                    <td>${course.finalGrade}</td>
-                                    <td>${course.remarks}</td>
+                                    <td>${course.code ?? ''}</td>
+                                    <td>${course.title ?? ''}</td>
+                                    <td>${course.units ?? ''}</td>
+                                    <td>${course.midterm !== null && course.midterm !== undefined ? course.midterm : 'Pending'}</td>
+                                    <td>${course.finals !== null && course.finals !== undefined ? course.finals : 'Pending'}</td>
+                                    <td>${course.finalGrade !== null && course.finalGrade !== undefined ? course.finalGrade : 'Pending'}</td>
+                                    <td>${course.remarks !== null && course.remarks !== undefined ? course.remarks : 'Pending'}</td>
                                 `;
                                 gradesTableBody.appendChild(row);
                             });
-
-                            // Update the GPA
-                            semesterGPA.innerHTML = `<strong>${data.semesterGPA}</strong>`;
-
-                            // Update cumulative info
+                            semesterGPA.innerHTML = `<strong>${data.semesterGPA ?? 'N/A'}</strong>`;
                             if (data.cumulativeInfo) {
-                                cumulativeGPA.textContent = data.cumulativeInfo.gpa;
-                                gradePoint.textContent = data.cumulativeInfo.gradePoint;
-                                academicStanding.textContent = data.cumulativeInfo.standing;
-                                academicStanding.className = data.cumulativeInfo.standing.includes('Dean') ||
-                                    data.cumulativeInfo.standing.includes('President') ?
-                                    'cumulative-value status-good' : 'cumulative-value';
-                                totalUnits.textContent = data.cumulativeInfo.totalUnits;
+                                cumulativeGPA.textContent = data.cumulativeInfo.gpa ?? 'N/A';
+                                gradePoint.textContent = data.cumulativeInfo.gradePoint ?? 'N/A';
+                                academicStanding.textContent = data.cumulativeInfo.standing ?? 'N/A';
+                                academicStanding.className = data.cumulativeInfo.standing && (data.cumulativeInfo.standing.includes('Dean') || data.cumulativeInfo.standing.includes('President')) ? 'cumulative-value status-good' : 'cumulative-value';
+                                totalUnits.textContent = data.cumulativeInfo.totalUnits ?? 'N/A';
                             }
                         } else {
-                            // No data available for this semester
                             const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td colspan="7" style="text-align: center;">No grades available for this semester</td>
-                            `;
+                            row.innerHTML = `<td colspan="7" style="text-align: center;">No grades available for this semester</td>`;
                             gradesTableBody.appendChild(row);
                             semesterGPA.innerHTML = '<strong>N/A</strong>';
                         }
@@ -289,9 +297,6 @@
 
             // Add click event listener to view grades button
             viewGradesBtn.addEventListener('click', updateGradesTable);
-
-            // Initialize with the first semester
-            updateGradesTable();
         });
     </script>
     <script th:src="@{/js/notifications.js}"></script>

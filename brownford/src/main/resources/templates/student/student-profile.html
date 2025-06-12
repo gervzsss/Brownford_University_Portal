@@ -96,115 +96,58 @@
                     </svg>
                 </div>
                 <div class="profile-title">
-                    <h2 class="profile-name" th:text="${student.firstName + ' ' + student.lastName}">Student Name</h2>
+                    <h2 class="profile-name" id="profileName">Student Name</h2>
                     <p class="profile-subtitle">Student Profile</p>
                 </div>
             </div>
 
             <div class="profile-card">
                 <div class="profile-section">
-                    <h3 class="section-title">Personal Information</h3>
+                    <h3 class="section-title">Student Information</h3>
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Student ID:</span>
-                            <span class="info-value" th:text="${student.studentId}">Student ID</span>
+                            <span class="info-value" id="studentId">Student ID</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Full Name:</span>
-                            <span class="info-value" th:text="${student.fullName}">Full Name</span>
+                            <span class="info-value" id="fullName">Full Name</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Date of Birth:</span>
-                            <span class="info-value" th:text="${student.dateOfBirth}">Date of Birth</span>
+                            <span class="info-label">Email:</span>
+                            <span class="info-value" id="email">Email</span>
                         </div>
-                        <div class="info-item">
-                            <span class="info-label">Gender:</span>
-                            <span class="info-value" th:text="${student.gender}">Gender</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Nationality:</span>
-                            <span class="info-value" th:text="${student.nationality}">Nationality</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Civil Status:</span>
-                            <span class="info-value" th:text="${student.civilStatus}">Civil Status</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h3 class="section-title">Academic Information</h3>
-                    <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Program:</span>
-                            <span class="info-value"
-                                th:text="${student.program != null ? student.program.code + ' - ' + student.program.name : ''}">Program</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Major:</span>
-                            <span class="info-value" th:text="${student.major}">Major</span>
+                            <span class="info-value" id="program">Program</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Year Level:</span>
-                            <span class="info-value" th:text="${student.yearLevel}">Year Level</span>
+                            <span class="info-value" id="yearLevel">Year Level</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Semester:</span>
+                            <span class="info-value" id="semester">Semester</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Section:</span>
-                            <span class="info-value" th:text="${student.section}">Section</span>
+                            <span class="info-value" id="section">Section</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Academic Status:</span>
-                            <span class="info-value"
-                                th:class="${student.academicStatus == 'Good Standing' ? 'status-good' : ''}"
-                                th:text="${student.academicStatus}">Academic Status</span>
+                            <span class="info-label">Address:</span>
+                            <span class="info-value" id="address">Address</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Admission Date:</span>
-                            <span class="info-value" th:text="${student.admissionDate}">Admission Date</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h3 class="section-title">Contact Information</h3>
-                    <div class="profile-info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Email Address:</span>
-                            <span class="info-value" th:text="${student.email}">Email</span>
+                            <span class="info-label">Birthday:</span>
+                            <span class="info-value" id="birthday">Birthday</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Mobile Number:</span>
-                            <span class="info-value" th:text="${student.mobileNumber}">Mobile Number</span>
+                            <span class="info-label">Gender:</span>
+                            <span class="info-value" id="gender">Gender</span>
                         </div>
                         <div class="info-item">
-                            <span class="info-label">Home Address:</span>
-                            <span class="info-value" th:text="${student.address}">Address</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Emergency Contact:</span>
-                            <span class="info-value" th:text="${student.emergencyContact}">Emergency Contact</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h3 class="section-title">Financial Information</h3>
-                    <div class="profile-info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Scholarship Status:</span>
-                            <span class="info-value" th:text="${student.scholarshipStatus}">Scholarship Status</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Payment Scheme:</span>
-                            <span class="info-value" th:text="${student.paymentScheme}">Payment Scheme</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Outstanding Balance:</span>
-                            <span class="info-value" th:text="${student.outstandingBalance}">Outstanding Balance</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Last Payment:</span>
-                            <span class="info-value" th:text="${student.lastPayment}">Last Payment</span>
+                            <span class="info-label">Cellphone Number:</span>
+                            <span class="info-value" id="mobileNumber">Cellphone Number</span>
                         </div>
                     </div>
                 </div>
@@ -240,6 +183,36 @@
         </main>
     </div>
     <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/api/student/profile-info')
+                .then(response => response.json())
+                .then(data => {
+                    function safe(val) { return val && val !== '' ? val : 'N/A'; }
+                    document.getElementById('profileName').textContent = safe(data.fullName);
+                    document.getElementById('studentId').textContent = safe(data.studentId);
+                    document.getElementById('fullName').textContent = safe(data.fullName);
+                    document.getElementById('email').textContent = safe(data.email);
+                    document.getElementById('program').textContent = safe(data.program);
+                    document.getElementById('yearLevel').textContent = safe(data.yearLevel);
+                    document.getElementById('semester').textContent = safe(data.semester);
+                    document.getElementById('section').textContent = safe(data.section);
+                    document.getElementById('address').textContent = safe(data.address);
+                    document.getElementById('birthday').textContent = safe(data.birthday);
+                    document.getElementById('gender').textContent = safe(data.gender);
+                    document.getElementById('mobileNumber').textContent = safe(data.mobileNumber);
+                })
+                .catch(() => {
+                    // On error, set all fields to N/A
+                    [
+                        'profileName','studentId','fullName','email','program','yearLevel','semester','section','address','birthday','gender','mobileNumber'
+                    ].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = 'N/A';
+                    });
+                });
+        });
+    </script>
 </body>
 
 </html>

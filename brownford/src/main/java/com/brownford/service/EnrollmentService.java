@@ -70,4 +70,8 @@ public class EnrollmentService {
     public long countEnrolledStudentsInSection(Long sectionId) {
         return enrollmentRepository.countBySection_Id(sectionId);
     }
+
+    public Enrollment getLatestEnrollmentForStudent(Long studentId) {
+        return enrollmentRepository.findTopByStudentIdOrderByCreatedAtDesc(studentId);
+    }
 }

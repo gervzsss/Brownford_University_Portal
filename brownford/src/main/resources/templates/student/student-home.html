@@ -99,9 +99,10 @@
                     </div>
                     <div class="welcome-text">
                         <h2>Welcome, <span th:text="${student.fullName}">Student Name</span></h2>
-                        <p>Student ID: <span th:text="${student.studentId}">ID</span> | <span
-                                th:text="${student.program}">Program</span> | <span th:text="${student.yearLevel}">Year
-                                Level</span></p>
+                        <p>Student ID: <span th:text="${student.studentId}">ID</span> | 
+                           Program: <span th:text="${student.program.name}">Program</span> | 
+                           Year Level: <span th:text="${student.yearLevel}">Year Level</span> | 
+                           Semester: <span th:text="${currentSemester}">Semester</span></p>
                     </div>
                 </div>
             </section>

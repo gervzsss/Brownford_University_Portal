@@ -1,5 +1,17 @@
 # Changelog
 
+## [06.13.250207]
+
+### Changes
+- Student Page Changes
+  - Home Page Improvements
+  - Schedule Page Improvements
+  - Grades Page Improvements
+  - Profile Page Improvements
+  - 
+ ### Bugs
+ - White Label Error in the Enrollment Page
+
 ## [06.13.250025]
 
 ### Changes
