@@ -1,18 +1,23 @@
 # Changelog
 
+## [06.12.252025]
+
+### Changes
+- Added Section to User Mangement Page [ADMIN].
+- Filtering Courses in the modal based on the selected Program, YearLevel, and Semester.
+
 ## [06.12.251626]
 
 ### Changes
-- Enrollment Feature [BETA]
-- UI Changes on some of the admin pages
-- 
+- Enrollment Feature [BETA].
+- UI Changes on some of the admin pages.
 
 ## [06.12.251307]
 
 ### Changes
-- Removed Faculty Evaluation [ADMIN]
-- Removed Enrollment Page
-- Fixed the BUG that prevents from deleting a section in the Section Management Page [ADMIN]
+- Removed Faculty Evaluation [ADMIN].
+- Removed Enrollment Page.
+- Fixed the BUG that prevents from deleting a section in the Section Management Page [ADMIN].
 
 ## [06.12.250241]
 

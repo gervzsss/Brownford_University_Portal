@@ -453,15 +453,19 @@
                                 <label for="semester">Semester</label>
                                 <select id="semester" name="semester" class="form-control">
                                     <option value="">Select Semester</option>
-                                    <option value="1">1st Semester</option>
-                                    <option value="2">2nd Semester</option>
-                                    <option value="3">Summer</option>
+                                    <option value="1st Semester">1st Semester</option>
+                                    <option value="2nd Semester">2nd Semester</option>
+                                    <option value="Summer">Summer</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="courses">Courses to Enroll</label>
                                 <select id="courses" name="courses" class="form-control" multiple
                                     style="min-height: 80px;"></select>
+                            </div>
+                            <div class="form-group" id="sectionGroup" style="display:none;">
+                                <label for="section">Section</label>
+                                <select id="section" name="section" class="form-control"></select>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -562,6 +566,7 @@
             const enrollmentFields = document.getElementById('enrollmentFields');
             const semesterSelect = document.getElementById('semester');
             const coursesSelect = document.getElementById('courses');
+            const sectionSelect = document.getElementById('section');
             const closeViewBtn = document.getElementById('closeViewBtn');
 
 
@@ -598,34 +603,73 @@
                     programGroup.style.display = 'block';
                     yearLevelGroup.style.display = 'block';
                     enrollmentFields.style.display = 'flex';
-                    // Populate courses dropdown with better formatting
-                    coursesSelect.innerHTML = '<option value="">Loading...</option>';
+                    sectionGroup.style.display = 'block';
+                    // Populate program dropdown
+                    const programSelect = document.getElementById('program');
+                    programSelect.innerHTML = '<option value="">Loading...</option>';
+                    const response = await fetch('/api/programs');
+                    const programs = await response.json();
+                    programSelect.innerHTML = '<option value="">Select Program</option>' +
+                        programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
+                    // Populate section dropdown with all sections from the database
+                    sectionSelect.innerHTML = '<option value="">Loading sections...</option>';
                     try {
-                        const response = await fetch('/api/courses');
-                        const courses = await response.json();
-                        if (Array.isArray(courses) && courses.length > 0) {
-                            coursesSelect.innerHTML = '';
-                            courses.forEach(c => {
-                                // Use courseCode and courseTitle if available, fallback to code/name
-                                const code = c.courseCode || c.code || '';
-                                const title = c.courseTitle || c.name || '';
-                                const option = document.createElement('option');
-                                option.value = c.id;
-                                option.textContent = code && title ? `${code} - ${title}` : (code || title || 'Untitled Course');
-                                coursesSelect.appendChild(option);
-                            });
+                        const response = await fetch('/api/sections');
+                        const sections = await response.json();
+                        if (Array.isArray(sections) && sections.length > 0) {
+                            sectionSelect.innerHTML = '<option value="">Select Section</option>' +
+                                sections.map(s => `<option value="${s.id}">${s.sectionCode}${s.sectionName ? ' - ' + s.sectionName : ''}</option>`).join('');
                         } else {
-                            coursesSelect.innerHTML = '<option value="">No courses available</option>';
+                            sectionSelect.innerHTML = '<option value="">No sections available</option>';
                         }
                     } catch (err) {
-                        coursesSelect.innerHTML = '<option value="">Failed to load courses</option>';
+                        sectionSelect.innerHTML = '<option value="">Failed to load sections</option>';
                     }
+                    // Reset courses dropdown
+                    coursesSelect.innerHTML = '<option value="">Select Program, Year Level, and Semester</option>';
                 } else {
                     programGroup.style.display = 'none';
                     yearLevelGroup.style.display = 'none';
                     enrollmentFields.style.display = 'none';
+                    sectionGroup.style.display = 'none';
+                    sectionSelect.innerHTML = '';
                     coursesSelect.innerHTML = '';
                 }
+            });
+
+            // Filter and populate courses when program, year level, or semester changes
+            ['program', 'yearLevel', 'semester'].forEach(id => {
+                document.getElementById(id).addEventListener('change', async function () {
+                    const programId = document.getElementById('program').value;
+                    const yearLevel = document.getElementById('yearLevel').value;
+                    const semester = document.getElementById('semester').value;
+                    if (programId && yearLevel && semester) {
+                        coursesSelect.innerHTML = '<option value="">Loading courses...</option>';
+                        try {
+                            // Use the new filter endpoint
+                            const url = `/api/courses/filter?programId=${programId}&yearLevel=${yearLevel}&semester=${semester}`;
+                            const response = await fetch(url);
+                            const courses = await response.json();
+                            if (Array.isArray(courses) && courses.length > 0) {
+                                coursesSelect.innerHTML = '';
+                                courses.forEach(c => {
+                                    const code = c.courseCode || c.code || '';
+                                    const title = c.courseTitle || c.name || '';
+                                    const option = document.createElement('option');
+                                    option.value = c.id;
+                                    option.textContent = code && title ? `${code} - ${title}` : (code || title || 'Untitled Course');
+                                    coursesSelect.appendChild(option);
+                                });
+                            } else {
+                                coursesSelect.innerHTML = '<option value="">No courses available</option>';
+                            }
+                        } catch (err) {
+                            coursesSelect.innerHTML = '<option value="">Failed to load courses</option>';
+                        }
+                    } else {
+                        coursesSelect.innerHTML = '<option value="">Select Program, Year Level, and Semester</option>';
+                    }
+                });
             });
 
             // Form submission for add/edit user

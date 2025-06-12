@@ -103,4 +103,25 @@ public class CourseController {
     public List<Course> getCoursesByProgramAndYear(@RequestParam Long programId, @RequestParam Integer yearLevel) {
         return courseService.getCoursesByProgramAndYear(programId, yearLevel);
     }
+
+    @GetMapping("/filter")
+    public List<Course> filterCourses(
+            @RequestParam(required = false) Long programId,
+            @RequestParam(required = false) Integer yearLevel,
+            @RequestParam(required = false) String semester) {
+        // If all filters are present, filter by all
+        if (programId != null && yearLevel != null && semester != null) {
+            return courseService.findByProgramYearSemester(programId, yearLevel, semester);
+        }
+        // If only program and yearLevel
+        if (programId != null && yearLevel != null) {
+            return courseService.getCoursesByProgramAndYear(programId, yearLevel);
+        }
+        // If only program
+        if (programId != null) {
+            return courseService.getCoursesByProgram(programId);
+        }
+        // If no filters, return all
+        return courseService.getAllCourses();
+    }
 }
