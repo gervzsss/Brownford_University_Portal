@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.12.251626]
+
+### Changes
+- Enrollment Feature [BETA]
+- UI Changes on some of the admin pages
+- 
+
 ## [06.12.251307]
 
 ### Changes

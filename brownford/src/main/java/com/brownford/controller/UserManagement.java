@@ -3,6 +3,7 @@ package com.brownford.controller;
 import com.brownford.model.User;
 import com.brownford.repository.UserRepository;
 import com.brownford.service.UserIdentifierService;
+import com.brownford.service.EnrollmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,9 @@ public class UserManagement {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @GetMapping
     public List<User> getAllUsers(
@@ -70,11 +74,43 @@ public class UserManagement {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public User createUser(@RequestBody Map<String, Object> payload) {
+        // Map payload to User object
+        User user = new User();
+        user.setUsername(payload.get("username").toString());
+        user.setFirstName(payload.get("firstName").toString());
+        user.setLastName(payload.get("lastName").toString());
+        user.setEmail(payload.get("email").toString());
+        user.setRole(payload.get("role").toString());
+        user.setStatus(payload.get("status").toString());
+        if (payload.containsKey("password")) {
+            user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
+        }
+        if (user.getRole().equalsIgnoreCase("student")) {
+            if (payload.containsKey("program")) {
+                Object programObj = payload.get("program");
+                if (programObj instanceof Map<?, ?> programMap && programMap.get("id") != null) {
+                    Long programId = Long.valueOf(programMap.get("id").toString());
+                    user.setProgram(new com.brownford.model.Program());
+                    user.getProgram().setId(programId);
+                }
+            }
+            if (payload.containsKey("yearLevel")) {
+                user.setYearLevel(payload.get("yearLevel").toString());
+            }
+        }
         userIdentifierService.assignIdentifier(user);
-        // Hash the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        // If student, create enrollment
+        if (user.getRole().equalsIgnoreCase("student") && payload.containsKey("courses")
+                && payload.containsKey("semester")) {
+            List<?> courseIdsRaw = (List<?>) payload.get("courses");
+            List<Long> courseIds = courseIdsRaw.stream().map(id -> Long.valueOf(id.toString())).toList();
+            String semester = payload.get("semester").toString();
+            String yearLevel = payload.get("yearLevel") != null ? payload.get("yearLevel").toString() : null;
+            enrollmentService.createEnrollment(savedUser.getId(), courseIds, semester, yearLevel);
+        }
+        return savedUser;
     }
 
     @PutMapping("/{id}")
@@ -161,15 +197,15 @@ public class UserManagement {
     @GetMapping("/search-students")
     public List<Map<String, String>> searchStudents(@RequestParam String search) {
         List<User> students = userRepository.findAll().stream()
-            .filter(u -> "student".equalsIgnoreCase(u.getRole()))
-            .filter(u -> {
-                String s = search.toLowerCase();
-                return (u.getStudentId() != null && u.getStudentId().toLowerCase().contains(s)) ||
-                       (u.getFirstName() != null && u.getFirstName().toLowerCase().contains(s)) ||
-                       (u.getLastName() != null && u.getLastName().toLowerCase().contains(s)) ||
-                       (u.getFullName() != null && u.getFullName().toLowerCase().contains(s));
-            })
-            .toList();
+                .filter(u -> "student".equalsIgnoreCase(u.getRole()))
+                .filter(u -> {
+                    String s = search.toLowerCase();
+                    return (u.getStudentId() != null && u.getStudentId().toLowerCase().contains(s)) ||
+                            (u.getFirstName() != null && u.getFirstName().toLowerCase().contains(s)) ||
+                            (u.getLastName() != null && u.getLastName().toLowerCase().contains(s)) ||
+                            (u.getFullName() != null && u.getFullName().toLowerCase().contains(s));
+                })
+                .toList();
         List<Map<String, String>> result = new ArrayList<>();
         for (User u : students) {
             if (u.getStudentId() != null) {

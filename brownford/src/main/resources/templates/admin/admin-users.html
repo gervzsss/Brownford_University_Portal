@@ -342,6 +342,33 @@
                         </div>
                     </div>
                 </section>
+
+                <!-- Pending Enrollments Section -->
+                <section class="content-panel" id="pendingEnrollmentsPanel">
+                    <div class="panel-header">
+                        <h2 class="section-title">Pending Student Enrollments</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="table-container">
+                            <table class="data-table" id="pendingEnrollmentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Program</th>
+                                        <th>Year Level</th>
+                                        <th>Semester</th>
+                                        <th>Courses</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pendingEnrollmentsBody">
+                                    <!-- Pending enrollments will be rendered here by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
 
@@ -418,6 +445,23 @@
                                     <option value="3">Third Year</option>
                                     <option value="4">Fourth Year</option>
                                 </select>
+                            </div>
+                        </div>
+                        <!-- Enrollment fields for students -->
+                        <div class="form-row" id="enrollmentFields" style="display:none;">
+                            <div class="form-group">
+                                <label for="semester">Semester</label>
+                                <select id="semester" name="semester" class="form-control">
+                                    <option value="">Select Semester</option>
+                                    <option value="1">1st Semester</option>
+                                    <option value="2">2nd Semester</option>
+                                    <option value="3">Summer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="courses">Courses to Enroll</label>
+                                <select id="courses" name="courses" class="form-control" multiple
+                                    style="min-height: 80px;"></select>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -515,6 +559,9 @@
             const userRoleSelect = document.getElementById('userRole');
             const programGroup = document.getElementById('programGroup');
             const yearLevelGroup = document.getElementById('yearLevelGroup');
+            const enrollmentFields = document.getElementById('enrollmentFields');
+            const semesterSelect = document.getElementById('semester');
+            const coursesSelect = document.getElementById('courses');
             const closeViewBtn = document.getElementById('closeViewBtn');
 
 
@@ -545,14 +592,39 @@
                 hideModal(viewUserModal);
             });
 
-            // Show/hide program and year level fields based on role
-            userRoleSelect.addEventListener('change', function () {
+            // Show/hide program, year level, and enrollment fields based on role
+            userRoleSelect.addEventListener('change', async function () {
                 if (this.value === 'student') {
                     programGroup.style.display = 'block';
                     yearLevelGroup.style.display = 'block';
+                    enrollmentFields.style.display = 'flex';
+                    // Populate courses dropdown with better formatting
+                    coursesSelect.innerHTML = '<option value="">Loading...</option>';
+                    try {
+                        const response = await fetch('/api/courses');
+                        const courses = await response.json();
+                        if (Array.isArray(courses) && courses.length > 0) {
+                            coursesSelect.innerHTML = '';
+                            courses.forEach(c => {
+                                // Use courseCode and courseTitle if available, fallback to code/name
+                                const code = c.courseCode || c.code || '';
+                                const title = c.courseTitle || c.name || '';
+                                const option = document.createElement('option');
+                                option.value = c.id;
+                                option.textContent = code && title ? `${code} - ${title}` : (code || title || 'Untitled Course');
+                                coursesSelect.appendChild(option);
+                            });
+                        } else {
+                            coursesSelect.innerHTML = '<option value="">No courses available</option>';
+                        }
+                    } catch (err) {
+                        coursesSelect.innerHTML = '<option value="">Failed to load courses</option>';
+                    }
                 } else {
                     programGroup.style.display = 'none';
                     yearLevelGroup.style.display = 'none';
+                    enrollmentFields.style.display = 'none';
+                    coursesSelect.innerHTML = '';
                 }
             });
 
@@ -578,6 +650,10 @@
                     formData.program = programId ? { id: parseInt(programId) } : null;
                     const yearLevel = document.getElementById('yearLevel').value;
                     formData.yearLevel = yearLevel !== '' ? yearLevel : null;
+                    formData.semester = document.getElementById('semester').value;
+                    // Get selected courses as array of IDs
+                    const selectedCourses = Array.from(document.getElementById('courses').selectedOptions).map(opt => parseInt(opt.value));
+                    formData.courses = selectedCourses;
                 } else {
                     // Ensure yearLevel is removed if not student
                     formData.yearLevel = null;
@@ -865,11 +941,14 @@
         document.getElementById('userRole').addEventListener('change', async function () {
             const programGroup = document.getElementById('programGroup');
             const yearLevelGroup = document.getElementById('yearLevelGroup');
+            const enrollmentFields = document.getElementById('enrollmentFields');
+            const coursesSelect = document.getElementById('courses');
             if (this.value === 'student') {
                 const programSelect = document.getElementById('program');
                 programSelect.innerHTML = '<option value="">Loading...</option>';
                 programGroup.style.display = 'block';
                 yearLevelGroup.style.display = 'block';
+                enrollmentFields.style.display = 'flex';
                 const response = await fetch('/api/programs');
                 const programs = await response.json();
                 programSelect.innerHTML = '<option value="">Select Program</option>' +
@@ -877,8 +956,72 @@
             } else {
                 programGroup.style.display = 'none';
                 yearLevelGroup.style.display = 'none';
+                enrollmentFields.style.display = 'none';
+                coursesSelect.innerHTML = '';
             }
         });
+
+        // Load pending enrollments for admin review
+        async function loadPendingEnrollments() {
+            try {
+                const response = await fetch('/api/enrollments/pending');
+                const enrollments = await response.json();
+                renderPendingEnrollments(enrollments);
+            } catch (err) {
+                alert('Failed to load pending enrollments: ' + err);
+            }
+        }
+
+        function renderPendingEnrollments(enrollments) {
+            const tbody = document.getElementById('pendingEnrollmentsBody');
+            tbody.innerHTML = '';
+            if (enrollments && enrollments.length > 0) {
+                enrollments.forEach(enr => {
+                    const coursesList = (enr.courses || []).map(c => `${c.courseCode || c.code} - ${c.courseTitle || c.name}`).join('<br>');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${enr.student ? (enr.student.firstName + ' ' + enr.student.lastName) : ''}</td>
+                        <td>${enr.student && enr.student.program ? (enr.student.program.code + ' - ' + enr.student.program.name) : ''}</td>
+                        <td>${enr.yearLevel ? yearLevelToText(enr.yearLevel) : ''}</td>
+                        <td>${enr.semester ? (enr.semester === '1' ? '1st Semester' : enr.semester === '2' ? '2nd Semester' : 'Summer') : ''}</td>
+                        <td>${coursesList}</td>
+                        <td><span class="status-badge pending">Pending</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="updateEnrollmentStatus(${enr.id}, 'APPROVED')">Accept</button>
+                            <button class="btn btn-danger btn-sm" onclick="updateEnrollmentStatus(${enr.id}, 'DECLINED')">Decline</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="7" class="empty-state-message">No pending enrollments.</td>`;
+                tbody.appendChild(emptyRow);
+            }
+        }
+
+        async function updateEnrollmentStatus(enrollmentId, status) {
+            if (!confirm(`Are you sure you want to ${status === 'APPROVED' ? 'accept' : 'decline'} this enrollment?`)) return;
+            try {
+                const response = await fetch(`/api/enrollments/${enrollmentId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status })
+                });
+                if (response.ok) {
+                    alert('Enrollment status updated!');
+                    loadPendingEnrollments();
+                    loadUsers(); // Refresh user list if needed
+                } else {
+                    alert('Failed to update enrollment status.');
+                }
+            } catch (err) {
+                alert('Error updating enrollment status: ' + err);
+            }
+        }
+
+        // Load pending enrollments on page load
+        loadPendingEnrollments();
     </script>
 
     <style>
@@ -1041,35 +1184,6 @@
             justify-content: flex-end;
             gap: 0.7rem;
             margin-top: 1.2rem;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 6px;
-            padding: 0.6rem 1.2rem;
-            font-family: 'Cinzel', serif;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .btn-primary {
-            background: #8B4513;
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: #6B3A1D;
-        }
-
-        .btn-secondary {
-            background: #f5ece6;
-            color: #8B4513;
-        }
-
-        .btn-secondary:hover {
-            background: #e7d7c7;
         }
 
         /* User details modal grid improvements */

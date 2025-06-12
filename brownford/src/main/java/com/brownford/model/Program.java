@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "programs")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Program {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

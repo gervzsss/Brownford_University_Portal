@@ -18,11 +18,7 @@ public class Course {
     private String courseTitle;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "course_programs",
-        joinColumns = @JoinColumn(name = "course_id"),
-        inverseJoinColumns = @JoinColumn(name = "program_id")
-    )
+    @JoinTable(name = "course_programs", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "program_id"))
     private java.util.List<Program> programs = new java.util.ArrayList<>();
 
     @Column(nullable = false)
