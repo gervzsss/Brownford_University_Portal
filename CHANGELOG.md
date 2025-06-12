@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.12.252110]
+
+### Changes
+- Supports deletion of Student Accounts even if Enrolled
+
 ## [06.12.252025]
 
 ### Changes

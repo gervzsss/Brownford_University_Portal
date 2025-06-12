@@ -163,6 +163,10 @@ public class UserManagement {
         if (!userRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+        // Delete all enrollments for this user (student) before deleting the user
+        enrollmentService.getEnrollmentsForStudent(id).forEach(enrollment -> {
+            enrollmentService.deleteEnrollment(enrollment.getId());
+        });
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

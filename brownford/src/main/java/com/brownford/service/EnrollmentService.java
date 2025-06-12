@@ -49,4 +49,8 @@ public class EnrollmentService {
         enrollment.setStatus(status);
         return enrollmentRepository.save(enrollment);
     }
+
+    public void deleteEnrollment(Long id) {
+        enrollmentRepository.deleteById(id);
+    }
 }
