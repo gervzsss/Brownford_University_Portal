@@ -108,7 +108,13 @@ public class UserManagement {
             List<Long> courseIds = courseIdsRaw.stream().map(id -> Long.valueOf(id.toString())).toList();
             String semester = payload.get("semester").toString();
             String yearLevel = payload.get("yearLevel") != null ? payload.get("yearLevel").toString() : null;
-            enrollmentService.createEnrollment(savedUser.getId(), courseIds, semester, yearLevel);
+            Long sectionId = null;
+            if (payload.containsKey("sectionId") && payload.get("sectionId") != null) {
+                try {
+                    sectionId = Long.valueOf(payload.get("sectionId").toString());
+                } catch (Exception ignored) {}
+            }
+            enrollmentService.createEnrollment(savedUser.getId(), courseIds, semester, yearLevel, sectionId);
         }
         return savedUser;
     }

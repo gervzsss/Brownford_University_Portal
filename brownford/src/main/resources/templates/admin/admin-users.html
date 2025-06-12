@@ -455,7 +455,6 @@
                                     <option value="">Select Semester</option>
                                     <option value="1st Semester">1st Semester</option>
                                     <option value="2nd Semester">2nd Semester</option>
-                                    <option value="Summer">Summer</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -698,6 +697,9 @@
                     // Get selected courses as array of IDs
                     const selectedCourses = Array.from(document.getElementById('courses').selectedOptions).map(opt => parseInt(opt.value));
                     formData.courses = selectedCourses;
+                    // Add sectionId to payload
+                    const sectionId = document.getElementById('section').value;
+                    formData.sectionId = sectionId ? parseInt(sectionId) : null;
                 } else {
                     // Ensure yearLevel is removed if not student
                     formData.yearLevel = null;
@@ -1027,7 +1029,7 @@
                         <td>${enr.student ? (enr.student.firstName + ' ' + enr.student.lastName) : ''}</td>
                         <td>${enr.student && enr.student.program ? (enr.student.program.code + ' - ' + enr.student.program.name) : ''}</td>
                         <td>${enr.yearLevel ? yearLevelToText(enr.yearLevel) : ''}</td>
-                        <td>${enr.semester ? (enr.semester === '1' ? '1st Semester' : enr.semester === '2' ? '2nd Semester' : 'Summer') : ''}</td>
+                        <td>${enr.semester ? (enr.semester === '1st Semester' ? '1st Semester' : enr.semester === '2nd Semester' ? '2nd Semester' : '') : ''}</td>
                         <td>${coursesList}</td>
                         <td><span class="status-badge pending">Pending</span></td>
                         <td>

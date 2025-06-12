@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.12.252301]
+
+### Changes
+- Improve Enrollment Feature in the User Management Page [ADMIN]
+
 ## [06.12.252110]
 
 ### Changes

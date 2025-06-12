@@ -1,6 +1,7 @@
 package com.brownford.controller;
 
 import com.brownford.model.Section;
+import com.brownford.service.EnrollmentService;
 import com.brownford.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import java.util.Optional;
 public class SectionController {
     @Autowired
     private SectionService sectionService;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @GetMapping
     public List<Section> getAllSections() {
@@ -57,5 +61,11 @@ public class SectionController {
             // Log the error if needed
             return ResponseEntity.status(409).build(); // 409 Conflict
         }
+    }
+
+    @GetMapping("/{id}/enrolled-count")
+    public ResponseEntity<Long> getEnrolledCount(@PathVariable Long id) {
+        long count = enrollmentService.countEnrolledStudentsInSection(id);
+        return ResponseEntity.ok(count);
     }
 }

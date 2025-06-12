@@ -260,20 +260,6 @@
                 </thead>
                 <tbody id="sectionsTableBody">
                   <!-- Section data will be loaded dynamically from the database -->
-                  <tr class="empty-state-row">
-                    <td colspan="8" class="empty-state-message">
-                      <div class="empty-state">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
-                          stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                          <line x1="16" y1="2" x2="16" y2="6"></line>
-                          <line x1="8" y1="2" x2="8" y2="6"></line>
-                          <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        <p>No sections found. Add sections to see results.</p>
-                      </div>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -682,52 +668,63 @@
     // Functions to load data from the server
     async function loadSections() {
       const tbody = document.getElementById("sectionsTableBody");
-      tbody.innerHTML = '<tr><td colspan="5">Loading sections...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8">Loading sections...</td></tr>';
       try {
         const response = await fetch("/api/sections");
         if (!response.ok) throw new Error("Failed to fetch sections");
         const sections = await response.json();
         if (!sections.length) {
-          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="5" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
+          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="8" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
           return;
         }
-        tbody.innerHTML = sections.map(section => `
-          <tr>
-            <td><strong>${section.sectionCode}</strong></td>
-            <td>${section.program ? (section.program.code + ' - ' + section.program.name) : '-'}</td>
-            <td>${section.yearLevel || '-'}</td>
-            <td>${section.semester || '-'}</td>
-            <td>${section.enrolledCount != null ? section.enrolledCount : 0}</td>
-            <td>${section.maxStudents || '-'}</td>
-            <td><span class="status-badge ${section.status ? section.status.toLowerCase() : ''}">${section.status || '-'}</span></td>
-            <td class="action-buttons">
-              <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="16" x2="12" y2="12"></line>
-                  <line x1="12" y1="8" x2="12" y2="8"></line>
-                </svg>
-                View
-              </button>
-              <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                </svg>
-                Edit
-              </button>
-              <button class="btn btn-sm btn-danger btn-delete" data-id="${section.id}" title="Delete Section">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="3 6 5 6 21 6"></polyline>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                  <line x1="10" y1="11" x2="10" y2="17"></line>
-                  <line x1="14" y1="11" x2="14" y2="17"></line>
-                </svg>
-                Delete
-              </button>
-            </td>
-          </tr>
-        `).join("");
+        // Fetch enrolled count for each section
+        const sectionRows = await Promise.all(sections.map(async section => {
+          let enrolledCount = 0;
+          try {
+            const countRes = await fetch(`/api/sections/${section.id}/enrolled-count`);
+            if (countRes.ok) {
+              enrolledCount = await countRes.json();
+            }
+          } catch (e) { /* ignore error, default to 0 */ }
+          return `
+            <tr>
+              <td><strong>${section.sectionCode}</strong></td>
+              <td>${section.program ? (section.program.code + ' - ' + section.program.name) : '-'}</td>
+              <td>${section.yearLevel || '-'}</td>
+              <td>${section.semester || '-'}</td>
+              <td>${enrolledCount}</td>
+              <td>${section.maxStudents || '-'}</td>
+              <td><span class="status-badge ${section.status ? section.status.toLowerCase() : ''}">${section.status || '-'}</span></td>
+              <td class="action-buttons">
+                <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12" y2="8"></line>
+                  </svg>
+                  View
+                </button>
+                <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                  </svg>
+                  Edit
+                </button>
+                <button class="btn btn-sm btn-danger btn-delete" data-id="${section.id}" title="Delete Section">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          `;
+        }));
+        tbody.innerHTML = sectionRows.join("");
         // Re-attach event listeners for new buttons
         document.querySelectorAll(".btn-view").forEach((btn) => {
           btn.addEventListener("click", function () {
@@ -768,7 +765,7 @@
           });
         });
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="5">Error loading sections: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8">Error loading sections: ${err.message}</td></tr>`;
       }
     }
 

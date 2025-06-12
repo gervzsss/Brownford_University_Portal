@@ -24,6 +24,11 @@ public class Enrollment {
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "programs" })
     private List<Course> courses;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Section section;
+
     @Column(nullable = false)
     private String semester;
 
@@ -59,6 +64,14 @@ public class Enrollment {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
     }
 
     public String getSemester() {
