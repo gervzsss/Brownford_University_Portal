@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.13.250025]
+
+### Changes
+- Student Pages Optimization
+
 ## [06.12.252301]
 
 ### Changes

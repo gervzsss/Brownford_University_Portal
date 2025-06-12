@@ -31,11 +31,6 @@ public class AdminController {
         return "/admin/admin-sections";
     }
 
-    @GetMapping("/admin-enrollment")
-    public String adminEnrollment() {
-        return "/admin/admin-enrollment";
-    }
-
     @GetMapping("/admin-faculty-list")
     public String adminFacultyList() {
         return "/admin/admin-faculty-list";
@@ -46,11 +41,6 @@ public class AdminController {
         return "/admin/admin-faculty-workload";
     }
 
-    @GetMapping("/admin-faculty-evaluation")
-    public String adminFacultyEvaluation() {
-        return "/admin/admin-faculty-evaluation";
-    }
-
     @GetMapping("/admin-student-list")
     public String adminStudentList() {
         return "/admin/admin-student-list";
@@ -59,10 +49,5 @@ public class AdminController {
     @GetMapping("/admin-student-records")
     public String adminStudentRecords() {
         return "/admin/admin-student-records";
-    }
-
-    @GetMapping("/admin-department-management")
-    public String adminDepartmentManagement() {
-        return "/admin/admin-department-management";
     }
 }

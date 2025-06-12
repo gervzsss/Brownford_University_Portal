@@ -37,24 +37,6 @@ public class StudentController {
         return "/student/student-grades";
     }
 
-    @GetMapping("/student-announcements")
-    public String announcements(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        return "/student/student-home";
-    }
-
-    @GetMapping("/student-events")
-    public String events(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        return "/student/student-events";
-    }
-
-    @GetMapping("/student-contact")
-    public String contact(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        return "/student/student-contact";
-    }
-
     @GetMapping("/student-schedule")
     public String schedule(Model model, Principal principal) {
         addStudentToModel(model, principal);
@@ -66,18 +48,6 @@ public class StudentController {
     public String enrollment(Model model, Principal principal) {
         addStudentToModel(model, principal);
         return "/student/student-enrollment";
-    }
-
-    @GetMapping("/student-faculty-evaluation")
-    public String facultyevaluation(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        return "/student/student-faculty-evaluation";
-    }
-
-    @GetMapping("/student-faculty-evaluation-form")
-    public String EvaluationForm(Model model, Principal principal) {
-        addStudentToModel(model, principal);
-        return "/student/student-faculty-evaluation-form";
     }
 
     @GetMapping("/logout")
