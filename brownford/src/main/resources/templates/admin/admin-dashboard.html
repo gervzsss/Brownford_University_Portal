@@ -244,7 +244,7 @@
                         </div>
                         <div class="welcome-text">
                             <h2>Welcome, Administrator</h2>
-                            <p th:if="${adminId != null}">Admin ID: <span th:text="${adminId}">A-2022-0001</span> |
+                            <p th:if="${adminId != null}">Admin ID: <span th:text="${adminId}"></span> |
                                 System
                                 Administrator | <span th:text="${academicYear}">Academic Year 2024-2025</span></p>
                             <p th:unless="${adminId != null}">System Administrator | <span
@@ -269,7 +269,7 @@
                                 </svg>
                             </div>
                             <div class="quick-link-text">
-                                <h4 th:text="${totalStudents ?: '0'}">0</h4>
+                                <h4 id="totalStudents">0</h4>
                                 <p>Total Students</p>
                             </div>
                         </div>
@@ -283,7 +283,7 @@
                                 </svg>
                             </div>
                             <div class="quick-link-text">
-                                <h4 th:text="${facultyMembers ?: '0'}">0</h4>
+                                <h4 id="facultyMembers">0</h4>
                                 <p>Faculty Members</p>
                             </div>
                         </div>
@@ -297,7 +297,7 @@
                                 </svg>
                             </div>
                             <div class="quick-link-text">
-                                <h4 th:text="${activeCourses ?: '0'}">0</h4>
+                                <h4 id="activeCourses">0</h4>
                                 <p>Active Courses</p>
                             </div>
                         </div>
@@ -313,7 +313,7 @@
                                 </svg>
                             </div>
                             <div class="quick-link-text">
-                                <h4 th:text="${classSchedules ?: '0'}">0</h4>
+                                <h4 id="classSchedules">0</h4>
                                 <p>Class Schedules</p>
                             </div>
                         </div>
@@ -538,6 +538,24 @@
 
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/api/admin/system-summary')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalStudents').textContent = data.totalStudents ?? '0';
+                    document.getElementById('facultyMembers').textContent = data.facultyMembers ?? '0';
+                    document.getElementById('activeCourses').textContent = data.activeCourses ?? '0';
+                    document.getElementById('classSchedules').textContent = data.classSchedules ?? '0';
+                })
+                .catch(() => {
+                    document.getElementById('totalStudents').textContent = '0';
+                    document.getElementById('facultyMembers').textContent = '0';
+                    document.getElementById('activeCourses').textContent = '0';
+                    document.getElementById('classSchedules').textContent = '0';
+                });
+        });
+    </script>
 </body>
 
 </html>

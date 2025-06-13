@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.13.251215]
+
+### Changes
+- Admin Dashboard System Summary Improvements
+
 ## [06.13.250208]
 
 ### ReCommit
