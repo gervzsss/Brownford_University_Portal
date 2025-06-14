@@ -42,8 +42,6 @@ public class SectionController {
             Section s = existing.get();
             s.setSectionCode(updated.getSectionCode());
             s.setProgram(updated.getProgram());
-            s.setYearLevel(updated.getYearLevel());
-            s.setSemester(updated.getSemester());
             s.setMaxStudents(updated.getMaxStudents());
             s.setStatus(updated.getStatus());
             return ResponseEntity.ok(sectionService.saveSection(s));

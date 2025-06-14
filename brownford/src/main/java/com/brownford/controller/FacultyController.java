@@ -52,4 +52,10 @@ public class FacultyController {
         addFacultyToModel(model, principal);
         return "/faculty/faculty-profile";
     }
+
+    @GetMapping("/faculty-grading-sheet")
+    public String facultyGradingSheet(Model model, Principal principal) {
+        addFacultyToModel(model, principal);
+        return "/faculty/faculty-grading-sheet";
+    }
 }

@@ -19,12 +19,6 @@ public class Section {
     private Program program;
 
     @Column(nullable = false)
-    private Integer yearLevel;
-
-    @Column(nullable = false)
-    private String semester;
-
-    @Column(nullable = false)
     private Integer maxStudents;
 
     @Column(nullable = false)
@@ -53,22 +47,6 @@ public class Section {
 
     public void setProgram(Program program) {
         this.program = program;
-    }
-
-    public Integer getYearLevel() {
-        return yearLevel;
-    }
-
-    public void setYearLevel(Integer yearLevel) {
-        this.yearLevel = yearLevel;
-    }
-
-    public String getSemester() {
-        return semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
     }
 
     public Integer getMaxStudents() {

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.14.251118]
+
+### Changes
+- Removed Year Level and Semester in the Section's Frontend and Backend
+
 ## [06.13.251215]
 
 ### Changes

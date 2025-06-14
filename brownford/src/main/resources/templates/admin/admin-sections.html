@@ -250,8 +250,6 @@
                   <tr>
                     <th>Section ID/Name</th>
                     <th>Program</th>
-                    <th>Year Level</th>
-                    <th>Semester</th>
                     <th>Enrolled Students</th>
                     <th>Section Slot/Capacity</th>
                     <th>Status</th>
@@ -287,27 +285,6 @@
                 <label for="sectionProgram">Program</label>
                 <select id="sectionProgram" name="sectionProgram" class="form-control" required>
                   <option value="">Loading programs...</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="sectionYearLevel">Year Level</label>
-                <select id="sectionYearLevel" name="sectionYearLevel" class="form-control" required>
-                  <option value="">Select Year Level</option>
-                  <option value="1">1st Year</option>
-                  <option value="2">2nd Year</option>
-                  <option value="3">3rd Year</option>
-                  <option value="4">4th Year</option>
-                  <option value="5">5th Year (Special Case)</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="sectionSemester">Semester</label>
-                <select id="sectionSemester" name="sectionSemester" class="form-control" required>
-                  <option value="">Select Semester</option>
-                  <option value="1st Semester">1st Semester</option>
-                  <option value="2nd Semester">2nd Semester</option>
                 </select>
               </div>
             </div>
@@ -508,15 +485,12 @@
             document.getElementById("sectionCourses")?.selectedOptions || []
           ).map((opt) => opt.value);
           const programId = document.getElementById("sectionProgram").value;
-          const yearLevelValue = document.getElementById("sectionYearLevel").value;
           const formData = {
             id: document.getElementById("sectionId").value,
             sectionCode: document.getElementById("sectionCode").value,
             courses: selectedCourses,
             program: programId ? { id: parseInt(programId) } : null,
             sectionName: document.getElementById("sectionName")?.value,
-            semester: document.getElementById("sectionSemester").value,
-            yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
             maxStudents: document.getElementById("sectionMaxStudents").value,
             status: document.getElementById("sectionStatus").value,
             faculty: document.getElementById("sectionInstructor")?.value,
@@ -668,13 +642,13 @@
     // Functions to load data from the server
     async function loadSections() {
       const tbody = document.getElementById("sectionsTableBody");
-      tbody.innerHTML = '<tr><td colspan="8">Loading sections...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6">Loading sections...</td></tr>';
       try {
         const response = await fetch("/api/sections");
         if (!response.ok) throw new Error("Failed to fetch sections");
         const sections = await response.json();
         if (!sections.length) {
-          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="8" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
+          tbody.innerHTML = `<tr class="empty-state-row"><td colspan="6" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
           return;
         }
         // Fetch enrolled count for each section
@@ -690,8 +664,6 @@
             <tr>
               <td><strong>${section.sectionCode}</strong></td>
               <td>${section.program ? (section.program.code + ' - ' + section.program.name) : '-'}</td>
-              <td>${section.yearLevel || '-'}</td>
-              <td>${section.semester || '-'}</td>
               <td>${enrolledCount}</td>
               <td>${section.maxStudents || '-'}</td>
               <td><span class="status-badge ${section.status ? section.status.toLowerCase() : ''}">${section.status || '-'}</span></td>
@@ -765,7 +737,7 @@
           });
         });
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="8">Error loading sections: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6">Error loading sections: ${err.message}</td></tr>`;
       }
     }
 
@@ -864,8 +836,6 @@
         document.getElementById("sectionId").value = section.id || "";
         document.getElementById("sectionCode").value = section.sectionCode || "";
         document.getElementById("sectionProgram").value = section.program ? section.program.id : "";
-        document.getElementById("sectionYearLevel").value = section.yearLevel || "";
-        document.getElementById("sectionSemester").value = section.semester || "";
         document.getElementById("sectionMaxStudents").value = section.maxStudents || "";
         document.getElementById("sectionStatus").value = section.status || "";
         sectionModal.style.display = "block";
