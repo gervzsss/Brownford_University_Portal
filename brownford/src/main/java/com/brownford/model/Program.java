@@ -27,9 +27,8 @@ public class Program {
     @Column(nullable = false)
     private String status; // e.g., Active, Inactive
 
-    @ManyToMany(mappedBy = "programs")
-    @JsonIgnoreProperties("programs")
-    private List<Course> courses;
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    private List<Curriculum> curriculums;
 
     // Getters and Setters
     public Long getId() {
@@ -80,11 +79,11 @@ public class Program {
         this.status = status;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Curriculum> getCurriculums() {
+        return curriculums;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCurriculums(List<Curriculum> curriculums) {
+        this.curriculums = curriculums;
     }
 }

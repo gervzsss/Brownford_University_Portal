@@ -15,9 +15,8 @@ public class Enrollment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "password", "email", "status", "role", "lastLogin",
-            "facultyId", "studentId" })
-    private User student;
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "user", "program" })
+    private Student student;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "enrollment_courses", joinColumns = @JoinColumn(name = "enrollment_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
@@ -26,7 +25,7 @@ public class Enrollment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Section section;
 
     @Column(nullable = false)
@@ -50,11 +49,11 @@ public class Enrollment {
         this.id = id;
     }
 
-    public User getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public void setStudent(User student) {
+    public void setStudent(Student student) {
         this.student = student;
     }
 

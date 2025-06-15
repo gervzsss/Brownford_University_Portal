@@ -3,7 +3,7 @@ package com.brownford.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(name = "sections")
 public class Section {
@@ -23,6 +23,9 @@ public class Section {
 
     @Column(nullable = false)
     private String status; // e.g., Active, Inactive
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private java.util.List<SectionCourse> sectionCourses;
 
     // Getters and Setters
     public Long getId() {
@@ -63,5 +66,13 @@ public class Section {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public java.util.List<SectionCourse> getSectionCourses() {
+        return sectionCourses;
+    }
+
+    public void setSectionCourses(java.util.List<SectionCourse> sectionCourses) {
+        this.sectionCourses = sectionCourses;
     }
 }

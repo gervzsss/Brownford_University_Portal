@@ -354,6 +354,8 @@
                 <label for="courseTitle">Course Name</label>
                 <input type="text" id="courseTitle" name="courseTitle" class="form-control" required />
               </div>
+            </div>
+            <div class="form-row">
               <div class="form-group">
                 <label for="courseYearLevel">Year Level</label>
                 <select id="courseYearLevel" name="courseYearLevel" class="form-control">
@@ -363,19 +365,6 @@
                   <option value="3">Third Year</option>
                   <option value="4">Fourth Year</option>
                 </select>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="courseProgram">Program</label>
-                <div class="dropdown-multiselect" id="programDropdownContainer">
-                  <button type="button" class="form-control" id="programDropdownBtn">Select Program(s)</button>
-                  <div class="dropdown-multiselect-list" id="programDropdownList"
-                    style="display:none; position:absolute; background:#fff; border:1px solid #d1bfa3; border-radius:6px; z-index:1000; max-height:220px; overflow-y:auto; min-width:220px;">
-                    <!-- Program checkboxes will be loaded here -->
-                  </div>
-                </div>
-                <input type="hidden" id="programIdsHidden" name="programIds" />
               </div>
               <div class="form-group">
                 <label for="courseUnits">Units</label>
@@ -387,12 +376,12 @@
               <div class="form-group">
                 <label for="coursePrerequisites">Prerequisites</label>
                 <input type="text" id="coursePrerequisites" name="coursePrerequisites" class="form-control"
-                  placeholder="Comma separated course codes or 'None'" />
+                  placeholder="'COR1,COR02' or 'None'" />
               </div>
               <div class="form-group">
                 <label for="courseCorequisites">Corequisites</label>
                 <input type="text" id="courseCorequisites" name="courseCorequisites" class="form-control"
-                  placeholder="Comma separated course codes or 'None'" />
+                  placeholder="'COR1,COR02' or 'None'" />
               </div>
               <div class="form-group">
                 <label for="courseStatus">Status</label>
@@ -709,15 +698,10 @@
         .getElementById("courseForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-
-          const selectedPrograms = document.getElementById('programIdsHidden').value
-            ? document.getElementById('programIdsHidden').value.split(',').filter(Boolean)
-            : [];
           let yearLevelValue = document.getElementById("courseYearLevel").value;
           const formData = {
             courseCode: document.getElementById("courseCode").value,
             courseTitle: document.getElementById("courseTitle").value,
-            programIds: selectedPrograms,
             units: document.getElementById("courseUnits").value,
             prerequisites: document.getElementById("coursePrerequisites").value,
             corequisites: document.getElementById("courseCorequisites").value,
@@ -885,43 +869,42 @@
       tbody.innerHTML = courses
         .map(
           (course) => {
-            const programIds = course.programs && course.programs.length > 0 ? course.programs.map(p => p.id).join(',') : '';
             return `
-      <tr data-program-ids="${programIds}" data-semester="${course.semester || ''}">
-        <td><strong>${course.courseCode}</strong></td>
-        <td>${course.courseTitle}</td>
-        <td><span class="program-badge">${course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned'}</span></td>
-        <td><span class="status-badge status-${course.status.toLowerCase()}">${course.status}</span></td>
-        <td>${course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A"}</td>
-        <td>${course.courseSemester || course.semester || "N/A"}</td>
-        <td class="action-buttons">
-          <button class="btn btn-sm btn-view" data-id="${course.id}" title="View Course">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12" y2="8"></line>
-            </svg>
-            View
-          </button>
-          <button class="btn btn-sm btn-edit" data-id="${course.id}" title="Edit Course">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-            </svg>
-            Edit
-          </button>
-          <button class="btn btn-sm btn-danger btn-delete" data-id="${course.id}" title="Delete Course">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              <line x1="10" y1="11" x2="10" y2="17"></line>
-              <line x1="14" y1="11" x2="14" y2="17"></line>
-            </svg>
-            Delete
-          </button>
-        </td>
-      </tr>
-    `;
+<tr>
+  <td><strong>${course.courseCode}</strong></td>
+  <td>${course.courseTitle}</td>
+  <td><span class="program-badge">Not Assigned</span></td>
+  <td><span class="status-badge status-${course.status.toLowerCase()}">${course.status}</span></td>
+  <td>${course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A"}</td>
+  <td>${course.courseSemester || course.semester || "N/A"}</td>
+  <td class="action-buttons">
+    <button class="btn btn-sm btn-view" data-id="${course.id}" title="View Course">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="8"></line>
+      </svg>
+      View
+    </button>
+    <button class="btn btn-sm btn-edit" data-id="${course.id}" title="Edit Course">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+      </svg>
+      Edit
+    </button>
+    <button class="btn btn-sm btn-danger btn-delete" data-id="${course.id}" title="Delete Course">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        <line x1="10" y1="11" x2="10" y2="17"></line>
+        <line x1="14" y1="11" x2="14" y2="17"></line>
+      </svg>
+      Delete
+    </button>
+  </td>
+</tr>
+`;
           }
         )
         .join("");

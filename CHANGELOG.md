@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.15.252243]
+
+### Major Changes
+- Improved all the MODEL Entities in the System
+-  Major FRONTEND & BACKEND Changes [ADMIN]
+-  Added New files 
+
 ## [06.14.251118]
 
 ### Changes

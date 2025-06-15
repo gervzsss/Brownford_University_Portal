@@ -2,8 +2,8 @@ package com.brownford.controller;
 
 import com.brownford.model.Enrollment;
 import com.brownford.model.Course;
-import com.brownford.model.User;
-import com.brownford.repository.UserRepository;
+import com.brownford.model.Student;
+import com.brownford.repository.StudentRepository;
 import com.brownford.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.*;
 public class StudentScheduleApiController {
 
     @Autowired
-    private UserRepository userRepository;
+    private StudentRepository studentRepository;
 
     @Autowired
     private EnrollmentService enrollmentService;
@@ -24,7 +24,7 @@ public class StudentScheduleApiController {
     public List<Map<String, Object>> getStudentSchedule(Principal principal) {
         if (principal == null) return Collections.emptyList();
         String username = principal.getName();
-        User student = userRepository.findByUsername(username).orElse(null);
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
         if (student == null) return Collections.emptyList();
 
         // Get latest APPROVED enrollment

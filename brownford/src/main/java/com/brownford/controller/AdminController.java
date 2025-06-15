@@ -37,10 +37,20 @@ public class AdminController {
     public String adminCourses() {
         return "/admin/admin-courses";
     }
+    
+    @GetMapping("/admin-enrollments")
+    public String adminEnrollments() {
+        return "/admin/admin-enrollments";
+    }
 
     @GetMapping("/admin-sections")
     public String adminSections() {
         return "/admin/admin-sections";
+    }
+    
+    @GetMapping("/admin-curriculum")
+    public String adminCurriculum() {
+        return "/admin/admin-curriculum";
     }
 
     @GetMapping("/admin-faculty-list")

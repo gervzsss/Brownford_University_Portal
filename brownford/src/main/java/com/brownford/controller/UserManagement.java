@@ -1,9 +1,15 @@
 package com.brownford.controller;
 
 import com.brownford.model.User;
+import com.brownford.model.Student;
+import com.brownford.model.Faculty;
 import com.brownford.repository.UserRepository;
+import com.brownford.repository.StudentRepository;
+import com.brownford.repository.FacultyRepository;
+import com.brownford.repository.ProgramRepository;
 import com.brownford.service.UserIdentifierService;
 import com.brownford.service.EnrollmentService;
+import com.brownford.dto.UserWithRoleIdDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +43,17 @@ public class UserManagement {
     @Autowired
     private EnrollmentService enrollmentService;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private FacultyRepository facultyRepository;
+
+    @Autowired
+    private ProgramRepository programRepository;
+
     @GetMapping
-    public List<User> getAllUsers(
+    public List<UserWithRoleIdDTO> getAllUsers(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String role,
             @RequestParam(required = false) String status) {
@@ -63,7 +78,21 @@ public class UserManagement {
             users = users.stream().filter(user -> user.getStatus().equalsIgnoreCase(status)).toList();
         }
 
-        return users;
+        // Map users to DTOs with studentId/facultyId
+        List<UserWithRoleIdDTO> dtos = new ArrayList<>();
+        for (User user : users) {
+            String studentId = null;
+            String facultyId = null;
+            if (user.getRole().equalsIgnoreCase("student")) {
+                Student student = studentRepository.findById(user.getId()).orElse(null);
+                if (student != null) studentId = student.getStudentId();
+            } else if (user.getRole().equalsIgnoreCase("faculty")) {
+                Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+                if (faculty != null) facultyId = faculty.getFacultyId();
+            }
+            dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId));
+        }
+        return dtos;
     }
 
     @GetMapping("/{id}")
@@ -83,44 +112,39 @@ public class UserManagement {
         user.setEmail(payload.get("email").toString());
         user.setRole(payload.get("role").toString());
         user.setStatus(payload.get("status").toString());
-        if (payload.containsKey("password")) {
-            user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
-        }
+        user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
+        User savedUser = userRepository.save(user);
+        // If student, create Student entity
         if (user.getRole().equalsIgnoreCase("student")) {
-            if (payload.containsKey("program")) {
-                Object programObj = payload.get("program");
-                if (programObj instanceof Map<?, ?> programMap && programMap.get("id") != null) {
-                    Long programId = Long.valueOf(programMap.get("id").toString());
-                    user.setProgram(new com.brownford.model.Program());
-                    user.getProgram().setId(programId);
+            Student student = new Student();
+            student.setUser(savedUser);
+            student.setYearLevel(payload.getOrDefault("yearLevel", "").toString());
+            // Set program if available
+            if (payload.containsKey("programId")) {
+                try {
+                    Long programId = Long.valueOf(payload.get("programId").toString());
+                    programRepository.findById(programId).ifPresent(student::setProgram);
+                } catch (Exception e) {
+                    // Ignore or log invalid programId
                 }
             }
-            if (payload.containsKey("yearLevel")) {
-                user.setYearLevel(payload.get("yearLevel").toString());
-            }
-        }
-        userIdentifierService.assignIdentifier(user);
-        User savedUser = userRepository.save(user);
-        // If student, create enrollment
-        if (user.getRole().equalsIgnoreCase("student") && payload.containsKey("courses")
-                && payload.containsKey("semester")) {
-            List<?> courseIdsRaw = (List<?>) payload.get("courses");
-            List<Long> courseIds = courseIdsRaw.stream().map(id -> Long.valueOf(id.toString())).toList();
-            String semester = payload.get("semester").toString();
-            String yearLevel = payload.get("yearLevel") != null ? payload.get("yearLevel").toString() : null;
-            Long sectionId = null;
-            if (payload.containsKey("sectionId") && payload.get("sectionId") != null) {
-                try {
-                    sectionId = Long.valueOf(payload.get("sectionId").toString());
-                } catch (Exception ignored) {}
-            }
-            enrollmentService.createEnrollment(savedUser.getId(), courseIds, semester, yearLevel, sectionId);
+            // Generate and set studentId BEFORE saving
+            String studentId = userIdentifierService.generateStudentId();
+            student.setStudentId(studentId);
+            studentRepository.save(student);
+        } else if (user.getRole().equalsIgnoreCase("faculty")) {
+            Faculty faculty = new Faculty();
+            faculty.setUser(savedUser);
+            // Generate and set facultyId BEFORE saving
+            String facultyId = userIdentifierService.generateFacultyId();
+            faculty.setFacultyId(facultyId);
+            facultyRepository.save(faculty);
         }
         return savedUser;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -128,53 +152,68 @@ public class UserManagement {
         User user = optionalUser.get();
 
         // Only assign new ID if role is changing
-        if (!user.getRole().equals(userDetails.getRole())) {
-            userIdentifierService.assignIdentifier(userDetails);
+        if (!user.getRole().equals(payload.get("role").toString())) {
+            userIdentifierService.assignIdentifier(user);
         }
 
-        user.setUsername(userDetails.getUsername());
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEmail(userDetails.getEmail());
-        user.setRole(userDetails.getRole());
-        user.setStatus(userDetails.getStatus());
-        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
-            // Hash the password if it's being updated
-            user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
+        user.setUsername(payload.get("username").toString());
+        user.setFirstName(payload.get("firstName").toString());
+        user.setLastName(payload.get("lastName").toString());
+        user.setEmail(payload.get("email").toString());
+        user.setRole(payload.get("role").toString());
+        user.setStatus(payload.get("status").toString());
+        if (payload.containsKey("password") && payload.get("password") != null && !payload.get("password").toString().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
         }
-        user.setLastLogin(userDetails.getLastLogin());
+        // user.setLastLogin ... (if needed)
 
-        if (userDetails.getRole().equalsIgnoreCase("student")) {
-            if (userDetails.getProgram() != null) {
-                user.setProgram(userDetails.getProgram());
-            } else {
-                user.setProgram(null);
+        // Update student program/yearLevel if student
+        if (user.getRole().equalsIgnoreCase("student")) {
+            Student student = studentRepository.findById(user.getId()).orElse(null);
+            if (student != null) {
+                if (payload.containsKey("programId")) {
+                    try {
+                        Long programId = Long.valueOf(payload.get("programId").toString());
+                        programRepository.findById(programId).ifPresent(student::setProgram);
+                    } catch (Exception e) {
+                        // Ignore or log invalid programId
+                    }
+                }
+                if (payload.containsKey("yearLevel")) {
+                    student.setYearLevel(payload.get("yearLevel").toString());
+                }
+                studentRepository.save(student);
             }
-            // --- FIX: Update yearLevel for students ---
-            if (userDetails.getYearLevel() != null && !userDetails.getYearLevel().isEmpty()) {
-                user.setYearLevel(userDetails.getYearLevel());
-            } else {
-                user.setYearLevel(null);
-            }
-        } else {
-            user.setProgram(null);
-            user.setYearLevel(null); // Always clear yearLevel for non-students
         }
 
         return ResponseEntity.ok(userRepository.save(user));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (!userRepository.existsById(id)) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            // Delete all enrollments for this user (student) before deleting the user
+            if (user.getRole().equalsIgnoreCase("student")) {
+                Student student = studentRepository.findById(user.getId()).orElse(null);
+                if (student != null) {
+                    enrollmentService.getEnrollmentsForStudent(student.getId()).forEach(enrollment -> {
+                        enrollmentService.deleteEnrollment(enrollment.getId());
+                    });
+                    studentRepository.delete(student);
+                }
+            } else if (user.getRole().equalsIgnoreCase("faculty")) {
+                Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+                if (faculty != null) {
+                    facultyRepository.delete(faculty);
+                }
+            }
+            userRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
             return ResponseEntity.notFound().build();
         }
-        // Delete all enrollments for this user (student) before deleting the user
-        enrollmentService.getEnrollmentsForStudent(id).forEach(enrollment -> {
-            enrollmentService.deleteEnrollment(enrollment.getId());
-        });
-        userRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/export")
@@ -186,42 +225,62 @@ public class UserManagement {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=users.csv");
 
-        // Reuse your filtering logic
-        List<User> users = getAllUsers(search, role, status);
+        // Fetch and filter users directly for export
+        List<User> users = userRepository.findAll();
+        if (search != null && !search.isEmpty()) {
+            String searchLower = search.toLowerCase();
+            users = users.stream().filter(user -> user.getUsername().toLowerCase().contains(searchLower) ||
+                    user.getFirstName().toLowerCase().contains(searchLower) ||
+                    user.getLastName().toLowerCase().contains(searchLower) ||
+                    user.getEmail().toLowerCase().contains(searchLower)).toList();
+        }
+        if (role != null && !role.equalsIgnoreCase("all") && !role.isEmpty()) {
+            users = users.stream().filter(user -> user.getRole().equalsIgnoreCase(role)).toList();
+        }
+        if (status != null && !status.equalsIgnoreCase("all") && !status.isEmpty()) {
+            users = users.stream().filter(user -> user.getStatus().equalsIgnoreCase(status)).toList();
+        }
 
         PrintWriter writer = response.getWriter();
-        writer.println("ID,Username,First Name,Last Name,Email,Role,Status");
+        writer.println("ID,Username,First Name,Last Name,Email,Role,Status,Student ID,Faculty ID");
         for (User user : users) {
-            writer.printf("%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n",
+            String studentId = null;
+            String facultyId = null;
+            if (user.getRole().equalsIgnoreCase("student")) {
+                Student student = studentRepository.findById(user.getId()).orElse(null);
+                if (student != null) studentId = student.getStudentId();
+            } else if (user.getRole().equalsIgnoreCase("faculty")) {
+                Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+                if (faculty != null) facultyId = faculty.getFacultyId();
+            }
+            writer.printf("%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n",
                     user.getId(),
                     user.getUsername().replace("\"", "\"\""),
                     user.getFirstName().replace("\"", "\"\""),
                     user.getLastName().replace("\"", "\"\""),
                     user.getEmail().replace("\"", "\"\""),
                     user.getRole().replace("\"", "\"\""),
-                    user.getStatus().replace("\"", "\"\""));
+                    user.getStatus().replace("\"", "\"\""),
+                    studentId != null ? studentId.replace("\"", "\"\"") : "",
+                    facultyId != null ? facultyId.replace("\"", "\"\"") : "");
         }
         writer.flush();
     }
 
     @GetMapping("/search-students")
     public List<Map<String, String>> searchStudents(@RequestParam String search) {
-        List<User> students = userRepository.findAll().stream()
-                .filter(u -> "student".equalsIgnoreCase(u.getRole()))
-                .filter(u -> {
-                    String s = search.toLowerCase();
-                    return (u.getStudentId() != null && u.getStudentId().toLowerCase().contains(s)) ||
-                            (u.getFirstName() != null && u.getFirstName().toLowerCase().contains(s)) ||
-                            (u.getLastName() != null && u.getLastName().toLowerCase().contains(s)) ||
-                            (u.getFullName() != null && u.getFullName().toLowerCase().contains(s));
-                })
-                .toList();
+        List<Student> students = studentRepository.findAll();
+        String s = search.toLowerCase();
         List<Map<String, String>> result = new ArrayList<>();
-        for (User u : students) {
-            if (u.getStudentId() != null) {
+        for (Student student : students) {
+            if (student.getStudentId() != null &&
+                (student.getStudentId().toLowerCase().contains(s) ||
+                 (student.getUser().getFirstName() != null && student.getUser().getFirstName().toLowerCase().contains(s)) ||
+                 (student.getUser().getLastName() != null && student.getUser().getLastName().toLowerCase().contains(s)) ||
+                 (student.getUser().getFullName() != null && student.getUser().getFullName().toLowerCase().contains(s)))) {
                 Map<String, String> map = new HashMap<>();
-                map.put("studentId", u.getStudentId());
-                map.put("fullName", u.getFullName());
+                map.put("studentId", student.getStudentId());
+                map.put("fullName", student.getUser().getFullName());
                 result.add(map);
             }
         }
@@ -230,8 +289,8 @@ public class UserManagement {
 
     // Get user by studentId (for autofill)
     @GetMapping("/by-student-id/{studentId}")
-    public ResponseEntity<User> getUserByStudentId(@PathVariable String studentId) {
-        Optional<User> user = userRepository.findByStudentId(studentId);
-        return user.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Student> getStudentByStudentId(@PathVariable String studentId) {
+        Optional<Student> student = studentRepository.findByStudentId(studentId);
+        return student.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

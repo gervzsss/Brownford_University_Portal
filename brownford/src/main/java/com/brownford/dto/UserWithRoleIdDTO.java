@@ -1,37 +1,29 @@
-package com.brownford.model;
+package com.brownford.dto;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.brownford.model.User;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserWithRoleIdDTO {
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String username;
-
-    @Column(nullable = false)
     private String firstName;
-
-    @Column(nullable = false)
     private String lastName;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String role; // "STUDENT", "FACULTY", "ADMIN"
-
-    @Column(nullable = false)
+    private String role;
     private String status;
+    private String studentId;
+    private String facultyId;
 
-    @Column(nullable = false)
-    private String password;
-
-    private LocalDateTime lastLogin;
+    public UserWithRoleIdDTO(User user, String studentId, String facultyId) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.role = user.getRole();
+        this.status = user.getStatus();
+        this.studentId = studentId;
+        this.facultyId = facultyId;
+    }
 
     // Getters and setters
     public Long getId() {
@@ -90,23 +82,19 @@ public class User {
         this.status = status;
     }
 
-    public String getPassword() {
-        return password;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
+    public String getFacultyId() {
+        return facultyId;
     }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
-        this.lastLogin = lastLogin;
-    }
-
-    public String getFullName() {
-        return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+    public void setFacultyId(String facultyId) {
+        this.facultyId = facultyId;
     }
 }

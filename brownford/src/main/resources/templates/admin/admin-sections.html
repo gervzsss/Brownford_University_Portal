@@ -480,20 +480,13 @@
         .getElementById("sectionForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-          // Declare and set url and method variables
-          const selectedCourses = Array.from(
-            document.getElementById("sectionCourses")?.selectedOptions || []
-          ).map((opt) => opt.value);
           const programId = document.getElementById("sectionProgram").value;
           const formData = {
             id: document.getElementById("sectionId").value,
             sectionCode: document.getElementById("sectionCode").value,
-            courses: selectedCourses,
             program: programId ? { id: parseInt(programId) } : null,
-            sectionName: document.getElementById("sectionName")?.value,
             maxStudents: document.getElementById("sectionMaxStudents").value,
             status: document.getElementById("sectionStatus").value,
-            faculty: document.getElementById("sectionInstructor")?.value,
           };
           // Determine if add or edit
           const isEdit = !!formData.id;
@@ -746,57 +739,6 @@
       loadSections();
     });
 
-    async function populateCourseDropdown() {
-      const courseSelect = document.getElementById("sectionCourses");
-      courseSelect.innerHTML = '<option value="">Loading courses...</option>';
-      try {
-        const response = await fetch("/api/courses");
-        if (!response.ok) throw new Error("Failed to fetch courses");
-        const courses = await response.json();
-        if (!courses.length) {
-          courseSelect.innerHTML =
-            '<option value="">No courses available</option>';
-          return;
-        }
-        courseSelect.innerHTML = courses
-          .map(
-            (c) =>
-              `<option value="${c.id}">${c.courseCode} - ${c.courseTitle}</option>`
-          )
-          .join("");
-      } catch (err) {
-        courseSelect.innerHTML =
-          '<option value="">Error loading courses</option>';
-      }
-    }
-
-    async function populateFacultyDropdown() {
-      const facultySelect = document.getElementById("sectionInstructor");
-      facultySelect.innerHTML =
-        '<option value="">Loading faculty...</option>';
-      try {
-        const response = await fetch("/api/admin/users?role=faculty");
-        if (!response.ok) throw new Error("Failed to fetch faculty");
-        const users = await response.json();
-        if (!users.length) {
-          facultySelect.innerHTML =
-            '<option value="">No faculty available</option>';
-          return;
-        }
-        facultySelect.innerHTML =
-          '<option value="">Select Faculty</option>' +
-          users
-            .map(
-              (u) =>
-                `<option value="${u.id}">${u.firstName} ${u.lastName} (${u.username})</option>`
-            )
-            .join("");
-      } catch (err) {
-        facultySelect.innerHTML =
-          '<option value="">Error loading faculty</option>';
-      }
-    }
-
     async function populateProgramDropdown() {
       const programSelect = document.getElementById("sectionProgram");
       programSelect.innerHTML = '<option value="">Loading programs...</option>';
@@ -818,8 +760,6 @@
     // When opening the modal, populate the dropdown
     addSectionBtn.addEventListener("click", function () {
       populateProgramDropdown();
-      populateCourseDropdown();
-      populateFacultyDropdown();
       // ...existing code for opening modal...
     });
 
@@ -827,7 +767,6 @@
     async function openEditSectionModal(sectionId) {
       try {
         await populateProgramDropdown();
-        // If you have course/faculty dropdowns, also repopulate them here
         // Fetch section details
         const response = await fetch(`/api/sections/${sectionId}`);
         if (!response.ok) throw new Error("Failed to fetch section details");

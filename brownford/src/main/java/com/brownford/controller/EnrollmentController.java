@@ -43,3 +43,4 @@ public class EnrollmentController {
         return enrollmentService.updateEnrollmentStatus(id, payload.get("status"));
     }
 }
+// No major changes needed, but ensure studentId refers to Student entity.

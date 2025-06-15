@@ -1,9 +1,7 @@
 package com.brownford.service;
 
 import com.brownford.model.Course;
-import com.brownford.model.Program;
 import com.brownford.repository.CourseRepository;
-import com.brownford.repository.ProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +12,6 @@ import java.util.Optional;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
-    @Autowired
-    private ProgramRepository programRepository;
 
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
@@ -25,17 +21,11 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
-    public Course createCourse(Course course, List<Long> programIds) {
-        if (programIds != null && !programIds.isEmpty()) {
-            List<Program> programs = programRepository.findAllById(programIds);
-            course.setPrograms(programs);
-        } else {
-            course.setPrograms(new java.util.ArrayList<>());
-        }
+    public Course createCourse(Course course) {
         return courseRepository.save(course);
     }
 
-    public Course updateCourse(Long id, Course updated, List<Long> programIds) {
+    public Course updateCourse(Long id, Course updated) {
         return courseRepository.findById(id).map(course -> {
             course.setCourseCode(updated.getCourseCode());
             course.setCourseTitle(updated.getCourseTitle());
@@ -45,12 +35,6 @@ public class CourseService {
             course.setCorequisites(updated.getCorequisites());
             course.setYearLevel(updated.getYearLevel());
             course.setSemester(updated.getSemester());
-            if (programIds != null && !programIds.isEmpty()) {
-                List<Program> programs = programRepository.findAllById(programIds);
-                course.setPrograms(programs);
-            } else {
-                course.setPrograms(new java.util.ArrayList<>());
-            }
             return courseRepository.save(course);
         }).orElse(null);
     }
@@ -61,17 +45,5 @@ public class CourseService {
             return true;
         }
         return false;
-    }
-
-    public List<Course> getCoursesByProgramAndYear(Long programId, Integer yearLevel) {
-        return courseRepository.findByProgramIdAndYearLevel(programId, yearLevel);
-    }
-
-    public List<Course> getCoursesByProgram(Long programId) {
-        return courseRepository.findByProgramId(programId);
-    }
-
-    public List<Course> findByProgramYearSemester(Long programId, Integer yearLevel, String semester) {
-        return courseRepository.findByProgramIdAndYearLevelAndSemester(programId, yearLevel, semester);
     }
 }

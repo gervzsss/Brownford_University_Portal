@@ -1,11 +1,11 @@
 package com.brownford.service;
 
 import com.brownford.model.Enrollment;
-import com.brownford.model.User;
+import com.brownford.model.Student;
 import com.brownford.model.Course;
 import com.brownford.model.Section;
 import com.brownford.repository.EnrollmentRepository;
-import com.brownford.repository.UserRepository;
+import com.brownford.repository.StudentRepository;
 import com.brownford.repository.CourseRepository;
 import com.brownford.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,14 @@ public class EnrollmentService {
     @Autowired
     private EnrollmentRepository enrollmentRepository;
     @Autowired
-    private UserRepository userRepository;
+    private StudentRepository studentRepository;
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
     private SectionRepository sectionRepository;
 
     public Enrollment createEnrollment(Long studentId, List<Long> courseIds, String semester, String yearLevel, Long sectionId) {
-        User student = userRepository.findById(studentId).orElseThrow();
+        Student student = studentRepository.findById(studentId).orElseThrow();
         List<Course> courses = courseRepository.findAllById(courseIds);
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
@@ -46,7 +46,8 @@ public class EnrollmentService {
     }
 
     public List<Enrollment> getEnrollmentsForStudent(Long studentId) {
-        return enrollmentRepository.findByStudentId(studentId);
+        Student student = studentRepository.findById(studentId).orElseThrow();
+        return enrollmentRepository.findByStudent(student);
     }
 
     public List<Enrollment> getPendingEnrollments() {
@@ -72,6 +73,7 @@ public class EnrollmentService {
     }
 
     public Enrollment getLatestEnrollmentForStudent(Long studentId) {
-        return enrollmentRepository.findTopByStudentIdOrderByCreatedAtDesc(studentId);
+        Student student = studentRepository.findById(studentId).orElseThrow();
+        return enrollmentRepository.findTopByStudentOrderByCreatedAtDesc(student);
     }
 }

@@ -17,10 +17,6 @@ public class Course {
     @Column(nullable = false)
     private String courseTitle;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "course_programs", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "program_id"))
-    private java.util.List<Program> programs = new java.util.ArrayList<>();
-
     @Column(nullable = false)
     private int units;
 
@@ -60,14 +56,6 @@ public class Course {
 
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
-    }
-
-    public java.util.List<Program> getPrograms() {
-        return programs;
-    }
-
-    public void setPrograms(java.util.List<Program> programs) {
-        this.programs = programs;
     }
 
     public int getUnits() {
