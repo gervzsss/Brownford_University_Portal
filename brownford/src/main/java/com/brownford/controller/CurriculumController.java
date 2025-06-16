@@ -6,6 +6,8 @@ import com.brownford.service.CurriculumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +48,8 @@ public class CurriculumController {
     @PostMapping("/{id}/courses")
     public CurriculumCourse addCourseToCurriculum(@PathVariable Long id, @RequestBody CurriculumCourse curriculumCourse) {
         // Set the curriculum reference
-        Curriculum curriculum = curriculumService.getCurriculumById(id).orElseThrow();
+        Curriculum curriculum = curriculumService.getCurriculumById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
         curriculumCourse.setCurriculum(curriculum);
         return curriculumService.saveCurriculumCourse(curriculumCourse);
     }

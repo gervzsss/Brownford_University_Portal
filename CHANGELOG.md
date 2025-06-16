@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.16.251505]
+
+### Changes
+- Schedule Assignment Page Changes [ADMIN]
+
 ## [06.16.251245]
 
 ### Changes

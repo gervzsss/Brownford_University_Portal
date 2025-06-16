@@ -8,6 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.brownford.repository.UserRepository;
 import com.brownford.model.User;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.List;
+import java.util.stream.Collectors;
+import com.brownford.model.Faculty;
+import com.brownford.repository.FacultyRepository;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class FacultyController {
@@ -57,5 +66,23 @@ public class FacultyController {
     public String facultyGradingSheet(Model model, Principal principal) {
         addFacultyToModel(model, principal);
         return "/faculty/faculty-grading-sheet";
+    }
+}
+
+@RestController
+@RequestMapping("/api/faculty")
+class FacultyRestController {
+    @Autowired
+    private FacultyRepository facultyRepository;
+
+    @GetMapping
+    public List<Map<String, Object>> getAllFaculty() {
+        return facultyRepository.findAll().stream().map(faculty -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", faculty.getId());
+            map.put("facultyId", faculty.getFacultyId());
+            map.put("name", faculty.getUser().getFullName());
+            return map;
+        }).collect(Collectors.toList());
     }
 }
