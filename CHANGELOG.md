@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.16.250904]
+
+### Changes
+- Enrollment Management Page UI Improvements
+
 ## [06.16.250830]
 
 ### Changes
