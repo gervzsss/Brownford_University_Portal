@@ -20,7 +20,8 @@ public class EnrollmentController {
         List<Long> courseIds = courseIdsRaw.stream().map(id -> Long.valueOf(id.toString())).toList();
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
-        return enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel);
+        Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
+        return enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel, sectionId);
     }
 
     @GetMapping("/student/{studentId}")
@@ -41,6 +42,11 @@ public class EnrollmentController {
     @PutMapping("/{id}/status")
     public Enrollment updateEnrollmentStatus(@PathVariable Long id, @RequestBody Map<String, String> payload) {
         return enrollmentService.updateEnrollmentStatus(id, payload.get("status"));
+    }
+
+    @GetMapping
+    public List<Enrollment> getAllEnrollments() {
+        return enrollmentService.getAllEnrollments();
     }
 }
 // No major changes needed, but ensure studentId refers to Student entity.

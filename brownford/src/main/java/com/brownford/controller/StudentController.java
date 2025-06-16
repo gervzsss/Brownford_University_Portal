@@ -16,6 +16,10 @@ import com.brownford.model.Enrollment;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -114,5 +118,22 @@ public class StudentController {
         profile.put("gender", "N/A");
         profile.put("mobileNumber", "N/A");
         return profile;
+    }
+}
+
+@RestController
+@RequestMapping("/api/students")
+class StudentApiController {
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @GetMapping
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable Long id) {
+        return studentRepository.findById(id).orElse(null);
     }
 }

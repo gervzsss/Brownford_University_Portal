@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.16.251020]
+
+### Changes
+- Enrollment Fixes [ADMIN]
+
 ## [06.16.250904]
 
 ### Changes

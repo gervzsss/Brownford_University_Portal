@@ -15,7 +15,7 @@ public class Enrollment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "user", "program" })
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Student student;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -111,5 +111,16 @@ public class Enrollment {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 }

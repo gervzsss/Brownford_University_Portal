@@ -563,12 +563,14 @@
 
             tbody.innerHTML = enrollments.map(enrollment => {
                 const student = enrollment.student || {};
-                const user = student.user || {};
+                const user = student.student || {};
                 const program = student.program || {};
                 const section = enrollment.section || {};
                 const courses = enrollment.courses || [];
 
-                const studentName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'N/A';
+                const studentIdDisplay = student.studentId || 'N/A';
+                const studentName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || '';
+                const studentDisplay = studentIdDisplay !== 'N/A' ? `${studentIdDisplay} - ${studentName}` : studentName;
                 const programInfo = program.code ? `${program.code} - ${program.name}` : 'N/A';
                 const coursesList = courses.length > 0
                     ? courses.map(c => `${c.courseCode} - ${c.courseTitle}`).join(', ')
@@ -613,7 +615,7 @@
                 return `
             <tr>
                 <td><input type="checkbox" class="enrollment-checkbox" value="${enrollment.id}"></td>
-                <td>${studentName}</td>
+                <td>${studentDisplay}</td>
                 <td>${programInfo}</td>
                 <td>${enrollment.yearLevel || 'N/A'}</td>
                 <td>${enrollment.semester || 'N/A'}</td>
@@ -879,19 +881,49 @@
             const select = document.getElementById('coursesSelect');
             select.innerHTML = '<option value="">Loading courses...</option>';
 
-            try {
-                const response = await fetch('/api/courses');
-                if (!response.ok) throw new Error('Failed to fetch courses');
+            // Get selected student, year, semester
+            const studentId = document.getElementById('studentSelect').value;
+            const yearLevel = document.getElementById('yearLevelSelect').value;
+            const semester = document.getElementById('semesterSelect').value;
 
-                const courses = await response.json();
-                select.innerHTML = courses.map(course =>
-                    `<option value="${course.id}">${course.courseCode} - ${course.courseTitle}</option>`
+            if (!studentId || !yearLevel || !semester) {
+                select.innerHTML = '<option value="">Select student, year, and semester first</option>';
+                return;
+            }
+
+            try {
+                // Fetch student to get programId
+                const studentRes = await fetch(`/api/students/${studentId}`);
+                if (!studentRes.ok) throw new Error('Failed to fetch student');
+                const student = await studentRes.json();
+                const programId = student.program && student.program.id;
+                if (!programId) throw new Error('Student has no program assigned');
+
+                // Fetch curriculum for program
+                const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
+                if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
+                const curriculum = await curriculumRes.json();
+                // Filter curriculumCourses by year and semester
+                const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
+                    cc.yearLevel == yearLevel && cc.semester == semester
+                );
+                if (filteredCourses.length === 0) {
+                    select.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
+                    return;
+                }
+                select.innerHTML = filteredCourses.map(cc =>
+                    `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
                 ).join('');
             } catch (error) {
-                console.error('Error loading courses:', error);
-                select.innerHTML = '<option value="">Failed to load courses</option>';
+                console.error('Error loading curriculum courses:', error);
+                select.innerHTML = `<option value="">${error.message}</option>`;
             }
         }
+
+        // Add event listeners to update courses when student, year, or semester changes
+        document.getElementById('studentSelect').addEventListener('change', populateCoursesDropdown);
+        document.getElementById('yearLevelSelect').addEventListener('change', populateCoursesDropdown);
+        document.getElementById('semesterSelect').addEventListener('change', populateCoursesDropdown);
 
         async function populateProgramFilter() {
             const select = document.getElementById('programFilter');
@@ -921,19 +953,19 @@
             const yearLevel = document.getElementById('yearLevelSelect').value;
             const sectionId = document.getElementById('sectionSelect').value;
             const programId = document.getElementById('programSelect').value;
+            console.log('sectionId:', sectionId); // Debug log
+            if (!studentId || courseIds.length === 0 || !semester || !yearLevel || !sectionId) {
+                alert('Please fill in all required fields, including section.');
+                return;
+            }
             const payload = {
                 studentId: parseInt(studentId),
                 courses: courseIds,
                 semester,
                 yearLevel,
-                sectionId: sectionId ? parseInt(sectionId) : null
+                sectionId: parseInt(sectionId)
             };
             if (programId) payload.programId = parseInt(programId);
-
-            if (!studentId || courseIds.length === 0 || !semester || !yearLevel) {
-                alert('Please fill in all required fields.');
-                return;
-            }
 
             try {
                 let url = '/api/enrollments';

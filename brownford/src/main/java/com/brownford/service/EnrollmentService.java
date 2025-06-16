@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import com.brownford.service.CurriculumService;
+import com.brownford.model.CurriculumCourse;
 
 @Service
 public class EnrollmentService {
@@ -23,10 +25,29 @@ public class EnrollmentService {
     private CourseRepository courseRepository;
     @Autowired
     private SectionRepository sectionRepository;
+    @Autowired
+    private CurriculumService curriculumService;
 
     public Enrollment createEnrollment(Long studentId, List<Long> courseIds, String semester, String yearLevel, Long sectionId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
         List<Course> courses = courseRepository.findAllById(courseIds);
+        // Curriculum compliance validation
+        if (student.getProgram() != null) {
+            Long programId = student.getProgram().getId();
+            Optional<com.brownford.model.Curriculum> curriculumOpt = curriculumService.getCurriculumByProgramId(programId);
+            if (curriculumOpt.isPresent()) {
+                List<CurriculumCourse> allowedCourses = curriculumOpt.get().getCurriculumCourses();
+                List<Long> allowedCourseIds = allowedCourses.stream()
+                    .filter(cc -> String.valueOf(cc.getYearLevel()).equals(yearLevel) && cc.getSemester().equals(semester))
+                    .map(cc -> cc.getCourse().getId())
+                    .toList();
+                for (Course course : courses) {
+                    if (!allowedCourseIds.contains(course.getId())) {
+                        throw new IllegalArgumentException("Course " + course.getCourseCode() + " is not allowed for this student's curriculum, year, or semester.");
+                    }
+                }
+            }
+        }
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
         enrollment.setCourses(courses);
@@ -75,5 +96,9 @@ public class EnrollmentService {
     public Enrollment getLatestEnrollmentForStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
         return enrollmentRepository.findTopByStudentOrderByCreatedAtDesc(student);
+    }
+
+    public List<Enrollment> getAllEnrollments() {
+        return enrollmentRepository.findAll();
     }
 }
