@@ -189,16 +189,16 @@
                 .then(response => response.json())
                 .then(data => {
                     function safe(val) { return val && val !== '' ? val : 'N/A'; }
-                    document.getElementById('profileName').textContent = safe(data.fullName);
+                    document.getElementById('profileName').textContent = safe((data.firstName ? data.firstName : '') + ' ' + (data.lastName ? data.lastName : ''));
                     document.getElementById('studentId').textContent = safe(data.studentId);
-                    document.getElementById('fullName').textContent = safe(data.fullName);
+                    document.getElementById('fullName').textContent = safe((data.firstName ? data.firstName : '') + ' ' + (data.lastName ? data.lastName : ''));
                     document.getElementById('email').textContent = safe(data.email);
                     document.getElementById('program').textContent = safe(data.program);
                     document.getElementById('yearLevel').textContent = safe(data.yearLevel);
                     document.getElementById('semester').textContent = safe(data.semester);
                     document.getElementById('section').textContent = safe(data.section);
                     document.getElementById('address').textContent = safe(data.address);
-                    document.getElementById('birthday').textContent = safe(data.birthday);
+                    document.getElementById('birthday').textContent = safe(data.dateOfBirth);
                     document.getElementById('gender').textContent = safe(data.gender);
                     document.getElementById('mobileNumber').textContent = safe(data.mobileNumber);
                 })

@@ -53,6 +53,11 @@ public class AdminController {
         return "/admin/admin-curriculum";
     }
 
+    @GetMapping("/admin-assign-schedule")
+    public String adminAsignSchedule() {
+        return "/admin/admin-assign-schedule";
+    }
+
     @GetMapping("/admin-faculty-list")
     public String adminFacultyList() {
         return "/admin/admin-faculty-list";

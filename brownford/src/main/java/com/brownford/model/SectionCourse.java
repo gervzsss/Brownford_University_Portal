@@ -27,6 +27,9 @@ public class SectionCourse {
     @Column(nullable = false)
     private int yearLevel;
 
+    @OneToMany(mappedBy = "sectionCourse", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Schedule> schedules;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -74,5 +77,13 @@ public class SectionCourse {
 
     public void setYearLevel(int yearLevel) {
         this.yearLevel = yearLevel;
+    }
+
+    public java.util.List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(java.util.List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

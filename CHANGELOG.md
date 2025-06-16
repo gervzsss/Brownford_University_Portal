@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.16.251245]
+
+### Changes
+- Student pages API fixes. [STUDENT]
+- Added Student Model, Entity, Repository.
+
 ## [06.16.251020]
 
 ### Changes
