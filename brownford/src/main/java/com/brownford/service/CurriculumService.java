@@ -50,4 +50,10 @@ public class CurriculumService {
     public void deleteCurriculumCourse(Long id) {
         curriculumCourseRepository.deleteById(id);
     }
+
+    public Optional<Curriculum> getCurriculumByProgramId(Long programId) {
+        return curriculumRepository.findAll().stream()
+            .filter(c -> c.getProgram().getId().equals(programId))
+            .findFirst();
+    }
 }

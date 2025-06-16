@@ -56,4 +56,10 @@ public class CurriculumController {
         curriculumService.deleteCurriculumCourse(courseId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/by-program/{programId}")
+    public ResponseEntity<Curriculum> getCurriculumByProgram(@PathVariable Long programId) {
+        Optional<Curriculum> curriculum = curriculumService.getCurriculumByProgramId(programId);
+        return curriculum.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

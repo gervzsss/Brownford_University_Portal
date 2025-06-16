@@ -1,9 +1,12 @@
 package com.brownford.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "curriculum_courses")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CurriculumCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,6 +14,7 @@ public class CurriculumCourse {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id", nullable = false)
+    @JsonBackReference
     private Curriculum curriculum;
 
     @ManyToOne(fetch = FetchType.LAZY)

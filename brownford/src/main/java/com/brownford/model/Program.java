@@ -2,6 +2,7 @@ package com.brownford.model;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,7 @@ public class Program {
     private String status; // e.g., Active, Inactive
 
     @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    @JsonIgnore // Prevent circular reference in JSON serialization
     private List<Curriculum> curriculums;
 
     // Getters and Setters

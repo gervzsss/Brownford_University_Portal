@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "curriculums")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Curriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,7 @@ public class Curriculum {
     private int yearEffective;
 
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonManagedReference
     private List<CurriculumCourse> curriculumCourses;
 
     // Getters and setters

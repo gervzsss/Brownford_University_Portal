@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.16.250830]
+
+### Changes
+- Working Curriculum Management Page [ADMIN]
+
 ## [06.15.252243]
 
 ### Major Changes
