@@ -60,9 +60,28 @@ public class CurriculumController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/by-program/{programId}")
-    public ResponseEntity<Curriculum> getCurriculumByProgram(@PathVariable Long programId) {
-        Optional<Curriculum> curriculum = curriculumService.getCurriculumByProgramId(programId);
-        return curriculum.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/by-program/{programId}/all")
+    public List<Curriculum> getCurriculumsByProgram(@PathVariable Long programId) {
+        return curriculumService.getCurriculumsByProgramId(programId);
+    }
+
+    @GetMapping("/by-program/{programId}/status/{status}")
+    public List<Curriculum> getCurriculumsByProgramAndStatus(@PathVariable Long programId, @PathVariable Curriculum.Status status) {
+        return curriculumService.getCurriculumsByProgramIdAndStatus(programId, status);
+    }
+
+    @GetMapping("/by-program/{programId}/year/{yearEffective}")
+    public Curriculum getCurriculumByProgramAndYear(@PathVariable Long programId, @PathVariable int yearEffective) {
+        return curriculumService.getCurriculumByProgramIdAndYear(programId, yearEffective);
+    }
+
+    @PutMapping("/{id}")
+    public Curriculum updateCurriculum(@PathVariable Long id, @RequestBody Curriculum updated) {
+        Curriculum curriculum = curriculumService.getCurriculumById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
+        curriculum.setYearEffective(updated.getYearEffective());
+        curriculum.setDescription(updated.getDescription());
+        curriculum.setStatus(updated.getStatus());
+        return curriculumService.saveCurriculum(curriculum);
     }
 }

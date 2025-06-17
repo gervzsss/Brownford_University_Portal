@@ -461,24 +461,24 @@
 
                         <!-- Curriculum Display -->
                         <div class="curriculum-main">
-                            <div class="panel-header"
-                                style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
                                 <h3 class="section-title" id="curriculumTitle">Select a Program</h3>
-                                <button class="btn btn-primary" id="addCurriculumBtn" style="display: none;">
+                                <button class="btn btn-primary" id="addCurriculumVersionBtn" style="display: none;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <line x1="12" y1="5" x2="12" y2="19"></line>
                                         <line x1="5" y1="12" x2="19" y2="12"></line>
                                     </svg>
-                                    Add Course
+                                    Add Curriculum
                                 </button>
                             </div>
                             <div class="panel-content">
+                                <div id="curriculumVersionList"></div>
+                                <div id="curriculumMeta"></div>
                                 <div id="curriculumContent">
                                     <div class="empty-curriculum">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                             <polyline points="14,2 14,8 20,8"></polyline>
@@ -486,7 +486,7 @@
                                             <line x1="16" y1="17" x2="8" y2="17"></line>
                                             <polyline points="10,9 9,9 8,9"></polyline>
                                         </svg>
-                                        <p>Select a program from the left to view its curriculum</p>
+                                        <p>Select a curriculum version to view its courses</p>
                                     </div>
                                 </div>
                             </div>
@@ -511,8 +511,8 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="yearLevelSelect">Year Level</label>
-                            <select id="yearLevelSelect" name="yearLevel" class="form-control" required>
+                            <label for="curriculumYearLevelSelect">Year Level</label>
+                            <select id="curriculumYearLevelSelect" name="yearLevel" class="form-control" required>
                                 <option value="">Select Year Level</option>
                                 <option value="1">First Year</option>
                                 <option value="2">Second Year</option>
@@ -521,8 +521,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="semesterSelect">Semester</label>
-                            <select id="semesterSelect" name="semester" class="form-control" required>
+                            <label for="curriculumSemesterSelect">Semester</label>
+                            <select id="curriculumSemesterSelect" name="semester" class="form-control" required>
                                 <option value="">Select Semester</option>
                                 <option value="1st Semester">1st Semester</option>
                                 <option value="2nd Semester">2nd Semester</option>
@@ -533,14 +533,14 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="courseSelect">Course</label>
-                            <select id="courseSelect" name="courseId" class="form-control" required>
+                            <label for="curriculumCourseSelect">Course</label>
+                            <select id="curriculumCourseSelect" name="courseId" class="form-control" required>
                                 <option value="">Select Course</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="requiredSelect">Type</label>
-                            <select id="requiredSelect" name="required" class="form-control" required>
+                            <label for="curriculumRequiredSelect">Type</label>
+                            <select id="curriculumRequiredSelect" name="required" class="form-control" required>
                                 <option value="">Select Type</option>
                                 <option value="true">Required</option>
                                 <option value="false">Elective</option>
@@ -560,6 +560,106 @@
         </div>
     </div>
 
+    <!-- Add/Edit Curriculum Version Modal -->
+    <div id="curriculumVersionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="curriculumVersionModalTitle">Add Curriculum</h3>
+                <span class="close-modal" id="closeCurriculumVersionModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="curriculumVersionForm">
+                    <input type="hidden" id="editingCurriculumVersionId" name="id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="yearEffectiveInput">Year Effective</label>
+                            <input type="number" id="yearEffectiveInput" name="yearEffective" class="form-control" min="2000" max="2100" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="statusInput">Status</label>
+                            <select id="statusInput" name="status" class="form-control" required>
+                                <option value="ACTIVE">Active</option>
+                                <option value="RETIRED">Retired</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="width:100%">
+                            <label for="descriptionInput">Description</label>
+                            <input type="text" id="descriptionInput" name="description" class="form-control" maxlength="255" />
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCurriculumVersionBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveCurriculumVersionBtn">
+                            <span class="btn-text">Save Curriculum</span>
+                            <span class="btn-loading" style="display: none;">Saving...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Course Modal -->
+    <div id="courseModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="courseModalTitle">Add Course to Curriculum</h3>
+                <span class="close-modal" id="closeCourseModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <input type="hidden" id="editingCourseId" name="id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseModalYearLevelSelect">Year Level</label>
+                            <select id="courseModalYearLevelSelect" name="yearLevel" class="form-control" required>
+                                <option value="">Select Year Level</option>
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
+                                <option value="4">Fourth Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseModalSemesterSelect">Semester</label>
+                            <select id="courseModalSemesterSelect" name="semester" class="form-control" required>
+                                <option value="">Select Semester</option>
+                                <option value="1st Semester">1st Semester</option>
+                                <option value="2nd Semester">2nd Semester</option>
+                                <option value="Summer">Summer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="courseModalCourseSelect">Course</label>
+                            <select id="courseModalCourseSelect" name="courseId" class="form-control" required>
+                                <option value="">Select Course</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseModalRequiredSelect">Type</label>
+                            <select id="courseModalRequiredSelect" name="required" class="form-control" required>
+                                <option value="">Select Type</option>
+                                <option value="true">Required</option>
+                                <option value="false">Elective</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCourseBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveCourseBtn">
+                            <span class="btn-text">Save Course</span>
+                            <span class="btn-loading" style="display: none;">Saving...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script th:src="@{/js/sidebar-nav.js}"></script>
     <script th:src="@{/js/notifications.js}"></script>
     <script>
@@ -567,34 +667,184 @@
             let programs = [];
             let courses = [];
             let curriculums = [];
+            let curriculumVersions = [];
             let selectedProgramId = null;
+            let selectedCurriculumId = null;
             let isEditing = false;
+            let curriculumVersionModalOpen = false;
 
             // DOM Elements
             const programList = document.getElementById('programList');
             const curriculumContent = document.getElementById('curriculumContent');
             const curriculumTitle = document.getElementById('curriculumTitle');
-            const addCurriculumBtn = document.getElementById('addCurriculumBtn');
+            const addCurriculumVersionBtn = document.getElementById('addCurriculumVersionBtn');
             const curriculumModal = document.getElementById('curriculumModal');
             const curriculumForm = document.getElementById('curriculumForm');
             const closeCurriculumModal = document.getElementById('closeCurriculumModal');
             const cancelCurriculumBtn = document.getElementById('cancelCurriculumBtn');
+
+            // Curriculum Version Modal Elements
+            const curriculumVersionModal = document.getElementById('curriculumVersionModal');
+            const curriculumVersionForm = document.getElementById('curriculumVersionForm');
+            const closeCurriculumVersionModal = document.getElementById('closeCurriculumVersionModal');
+            const cancelCurriculumVersionBtn = document.getElementById('cancelCurriculumVersionBtn');
+
+            // Course Modal Elements
+            const courseModal = document.getElementById('courseModal');
+            const courseForm = document.getElementById('courseForm');
+            const closeCourseModal = document.getElementById('closeCourseModal');
+            const cancelCourseBtn = document.getElementById('cancelCourseBtn');
+            // --- Add Course Button Logic ---
+            const addCourseBtn = document.createElement('button');
+            addCourseBtn.className = 'btn btn-primary';
+            addCourseBtn.id = 'addCourseBtn';
+            addCourseBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add Course';
+            addCourseBtn.style.margin = '1rem 0';
+
+            // Add Unselect Curriculum button logic
+            const unselectCurriculumBtn = document.createElement('button');
+            unselectCurriculumBtn.className = 'btn btn-secondary';
+            unselectCurriculumBtn.id = 'unselectCurriculumBtn';
+            unselectCurriculumBtn.textContent = 'Unselect Curriculum';
+            unselectCurriculumBtn.style.margin = '0 0 1rem 0';
+            unselectCurriculumBtn.onclick = function() {
+                selectedCurriculumId = null;
+                document.getElementById('curriculumMeta').innerHTML = '';
+                document.getElementById('curriculumContent').innerHTML = '<div class="empty-curriculum"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline></svg><p>Select a curriculum version to view its courses</p></div>';
+                renderCurriculumVersions();
+            };
 
             // Initialize
             loadPrograms();
             loadCourses();
 
             // Event Listeners
-            addCurriculumBtn.addEventListener('click', openAddModal);
+            addCurriculumVersionBtn.addEventListener('click', function() {
+                openCurriculumVersionModal();
+            });
             closeCurriculumModal.addEventListener('click', closeModal);
             cancelCurriculumBtn.addEventListener('click', closeModal);
             curriculumForm.addEventListener('submit', handleFormSubmit);
+
+            // Curriculum Version Modal Event Listeners
+            closeCurriculumVersionModal.addEventListener('click', closeCurriculumVersionModalFn);
+            cancelCurriculumVersionBtn.addEventListener('click', closeCurriculumVersionModalFn);
+            curriculumVersionForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                if (curriculumVersionModalOpen === false) return; // Prevent double submit
+                const formData = new FormData(curriculumVersionForm);
+                const data = {
+                    yearEffective: parseInt(formData.get('yearEffective')),
+                    status: formData.get('status'),
+                    description: formData.get('description'),
+                    program: { id: selectedProgramId }
+                };
+                const id = formData.get('id');
+                const saveBtn = document.getElementById('saveCurriculumVersionBtn');
+                const btnText = saveBtn.querySelector('.btn-text');
+                const btnLoading = saveBtn.querySelector('.btn-loading');
+                try {
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline';
+                    saveBtn.disabled = true;
+                    curriculumVersionModalOpen = false; // Prevent further opens until done
+                    let response;
+                    if (id) {
+                        response = await fetch(`/api/curriculums/${id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                    } else {
+                        response = await fetch('/api/curriculums', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                    if (response.ok) {
+                        alert(id ? 'Curriculum updated' : 'Curriculum added');
+                        closeCurriculumVersionModalFn();
+                        await loadCurriculumsForProgram(selectedProgramId);
+                    } else {
+                        throw new Error('Failed to save curriculum');
+                    }
+                } catch (error) {
+                    alert('Error saving curriculum');
+                    closeCurriculumVersionModalFn(); // Always close modal on error
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    saveBtn.disabled = false;
+                }
+            });
+
+            // Course Modal Event Listeners
+            closeCourseModal.addEventListener('click', closeCourseModalFn);
+            cancelCourseBtn.addEventListener('click', closeCourseModalFn);
+            courseForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                if (!selectedCurriculumId) return;
+                const formData = new FormData(courseForm);
+                const data = {
+                    curriculum: { id: selectedCurriculumId },
+                    course: { id: parseInt(formData.get('courseId')) },
+                    yearLevel: parseInt(formData.get('yearLevel')),
+                    semester: formData.get('semester'),
+                    required: formData.get('required') === 'true'
+                };
+                const id = formData.get('id');
+                const saveBtn = document.getElementById('saveCourseBtn');
+                const btnText = saveBtn.querySelector('.btn-text');
+                const btnLoading = saveBtn.querySelector('.btn-loading');
+                try {
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline';
+                    saveBtn.disabled = true;
+                    let response;
+                    if (id) {
+                        data.id = parseInt(id);
+                        response = await fetch(`/api/curriculums/courses/${id}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                    } else {
+                        response = await fetch(`/api/curriculums/${selectedCurriculumId}/courses`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                    }
+                    if (response.ok) {
+                        showNotification(id ? 'Course updated' : 'Course added', 'success');
+                        closeCourseModalFn();
+                        await loadCurriculumCourses(selectedCurriculumId);
+                    } else {
+                        throw new Error('Failed to save course');
+                    }
+                } catch (error) {
+                    showNotification('Error saving course', 'error');
+                } finally {
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    saveBtn.disabled = false;
+                }
+            });
 
             // Close modal when clicking outside
             curriculumModal.addEventListener('click', function (e) {
                 if (e.target === curriculumModal) {
                     closeModal();
                 }
+            });
+
+            curriculumVersionModal.addEventListener('click', function(e) {
+                if (e.target === curriculumVersionModal) closeCurriculumVersionModalFn();
+            });
+
+            courseModal.addEventListener('click', function(e) {
+                if (e.target === courseModal) closeCourseModalFn();
             });
 
             async function loadPrograms() {
@@ -622,31 +872,29 @@
                 try {
                     const response = await fetch('/api/courses');
                     courses = await response.json();
-                    populateCourseSelect();
+                    populateCourseSelect('curriculumCourseSelect');
+                    populateCourseSelect('courseModalCourseSelect');
                 } catch (error) {
                     console.error('Error loading courses:', error);
                 }
             }
 
+            async function loadCurriculumsForProgram(programId) {
+                const res = await fetch(`/api/curriculums/by-program/${programId}/all`);
+                curriculumVersions = res.ok ? await res.json() : [];
+                renderCurriculumVersions();
+            }
+
             async function loadCurriculumForProgram(programId) {
                 try {
-                    // Use the new endpoint to get curriculum by programId
-                    let response = await fetch(`/api/curriculums/by-program/${programId}`);
-                    if (!response.ok) {
-                        curriculums = [];
-                        renderCurriculum();
-                        return;
-                    }
-                    const curriculum = await response.json();
-                    // curriculumCourses is the array we want to display
-                    curriculums = (curriculum.curriculumCourses || []).map(cc => ({
-                        ...cc,
-                        program: curriculum.program // Attach program for consistency
-                    }));
-                    renderCurriculum();
+                    // Use the correct endpoint to get all curriculums for the program
+                    let response = await fetch(`/api/curriculums/by-program/${programId}/all`);
+                    curriculumVersions = response.ok ? await response.json() : [];
+                    renderCurriculumVersions();
                 } catch (error) {
-                    console.error('Error loading curriculum:', error);
-                    showNotification('Error loading curriculum', 'error');
+                    curriculumVersions = [];
+                    renderCurriculumVersions();
+                    showNotification('Error loading curriculums', 'error');
                 }
             }
 
@@ -682,10 +930,37 @@
                 document.querySelector(`[data-program-id="${programId}"]`).classList.add('active');
 
                 curriculumTitle.textContent = `${program.name} Curriculum`;
-                addCurriculumBtn.style.display = 'block';
+                addCurriculumVersionBtn.style.display = 'block';
                 document.getElementById('selectedProgramId').value = programId;
 
+                loadCurriculumsForProgram(programId);
                 loadCurriculumForProgram(programId);
+            }
+
+            function renderCurriculumVersions() {
+                const listDiv = document.getElementById('curriculumVersionList');
+                if (!curriculumVersions.length) {
+                    listDiv.innerHTML = '<div class="empty-curriculum"><p>No curriculums for this program. Add one!</p></div>';
+                    document.getElementById('curriculumMeta').innerHTML = '';
+                    document.getElementById('curriculumContent').innerHTML = '';
+                    return;
+                }
+                let html = '<table class="data-table"><thead><tr><th>Year</th><th>Status</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
+                curriculumVersions.forEach(c => {
+                    html += `<tr${selectedCurriculumId === c.id ? ' class="active"' : ''}>
+                        <td>${c.yearEffective}</td>
+                        <td>${c.status}</td>
+                        <td>${c.description || ''}</td>
+                        <td>
+                            <button class="btn-sm btn-primary" onclick="selectCurriculumVersion(${c.id})">Select</button>
+                            <button class="btn-sm btn-edit" onclick="openEditCurriculumModal(${c.id})">Edit</button>
+                            <button class="btn-sm btn-danger" onclick="retireCurriculum(${c.id})">Retire</button>
+                            <button class="btn-sm btn-danger" onclick="deleteCurriculum(${c.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                listDiv.innerHTML = html;
             }
 
             function renderCurriculum() {
@@ -764,8 +1039,9 @@
                 curriculumContent.innerHTML = html;
             }
 
-            function populateCourseSelect() {
-                const courseSelect = document.getElementById('courseSelect');
+            function populateCourseSelect(selectId) {
+                const courseSelect = document.getElementById(selectId);
+                if (!courseSelect) return;
                 courseSelect.innerHTML = '<option value="">Select Course</option>' +
                     courses.map(course => `<option value="${course.id}">${course.courseCode} - ${course.courseTitle}</option>`).join('');
             }
@@ -790,119 +1066,358 @@
                 isEditing = false;
             }
 
-            async function handleFormSubmit(e) {
-                e.preventDefault();
+            function openCurriculumVersionModal(curriculum) {
+                if (curriculumVersionModalOpen) return; // Prevent duplicate modals
+                document.getElementById('curriculumVersionModalTitle').textContent = curriculum ? 'Edit Curriculum' : 'Add Curriculum';
+                curriculumVersionForm.reset();
+                document.getElementById('editingCurriculumVersionId').value = curriculum ? curriculum.id : '';
+                document.getElementById('yearEffectiveInput').value = curriculum ? curriculum.yearEffective : '';
+                document.getElementById('statusInput').value = curriculum ? curriculum.status : 'ACTIVE';
+                document.getElementById('descriptionInput').value = curriculum ? curriculum.description || '' : '';
+                curriculumVersionModal.style.display = 'block';
+                curriculumVersionModalOpen = true;
+            }
 
-                const formData = new FormData(curriculumForm);
-                const data = {
-                    curriculum: {
-                        program: { id: parseInt(formData.get('programId')) },
-                        yearEffective: new Date().getFullYear()
-                    },
-                    course: { id: parseInt(formData.get('courseId')) },
-                    yearLevel: parseInt(formData.get('yearLevel')),
-                    semester: formData.get('semester'),
-                    required: formData.get('required') === 'true'
-                };
+            function closeCurriculumVersionModalFn() {
+                curriculumVersionModal.style.display = 'none';
+                curriculumVersionForm.reset();
+                curriculumVersionModalOpen = false;
+            }
 
-                const saveBtn = document.getElementById('saveCurriculumBtn');
-                const btnText = saveBtn.querySelector('.btn-text');
-                const btnLoading = saveBtn.querySelector('.btn-loading');
+            // --- Course Modal JS Logic ---
+            function openCourseModal(course) {
+                populateCourseSelect(); // Ensure course dropdown is always up-to-date
+                document.getElementById('courseModalTitle').textContent = course ? 'Edit Course in Curriculum' : 'Add Course to Curriculum';
+                courseForm.reset();
+                document.getElementById('editingCourseId').value = course ? course.id : '';
+                document.getElementById('courseModalYearLevelSelect').value = course ? course.yearLevel : '';
+                document.getElementById('courseModalSemesterSelect').value = course ? course.semester : '';
+                document.getElementById('courseModalCourseSelect').value = course ? course.course.id : '';
+                document.getElementById('courseModalRequiredSelect').value = course ? course.required.toString() : '';
+                courseModal.style.display = 'block';
+            }
+            function closeCourseModalFn() {
+                courseModal.style.display = 'none';
+                courseForm.reset();
+            }
+            closeCourseModal.addEventListener('click', closeCourseModalFn);
+            cancelCourseBtn.addEventListener('click', closeCourseModalFn);
+            courseModal.addEventListener('click', function(e) {
+                if (e.target === courseModal) closeCourseModalFn();
+            });
+            // --- End Course Modal JS Logic ---
 
+            async function loadCurriculumsForProgram(programId) {
+                const res = await fetch(`/api/curriculums/by-program/${programId}/all`);
+                curriculumVersions = res.ok ? await res.json() : [];
+                renderCurriculumVersions();
+            }
+
+            async function loadCurriculumForProgram(programId) {
                 try {
-                    btnText.style.display = 'none';
-                    btnLoading.style.display = 'inline';
-                    saveBtn.disabled = true;
-
-                    let response;
-                    if (isEditing) {
-                        data.id = parseInt(formData.get('id'));
-                        response = await fetch(`/api/curriculums/courses/${data.id}`, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-                    } else {
-                        // First, find or create curriculum for this program and year
-                        let curriculum = curriculums.find(c => c.program.id === data.curriculum.program.id);
-                        if (!curriculum) {
-                            const curriculumResponse = await fetch('/api/curriculums', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(data.curriculum)
-                            });
-                            curriculum = await curriculumResponse.json();
-                        }
-
-                        data.curriculum = curriculum;
-                        response = await fetch(`/api/curriculums/${curriculum.id}/courses`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-                    }
-
-                    if (response.ok) {
-                        showNotification(isEditing ? 'Course updated successfully' : 'Course added successfully', 'success');
-                        closeModal();
-                        loadCurriculumForProgram(selectedProgramId);
-                    } else {
-                        throw new Error('Failed to save curriculum');
-                    }
+                    // Use the correct endpoint to get all curriculums for the program
+                    let response = await fetch(`/api/curriculums/by-program/${programId}/all`);
+                    curriculumVersions = response.ok ? await response.json() : [];
+                    renderCurriculumVersions();
                 } catch (error) {
-                    console.error('Error saving curriculum:', error);
-                    showNotification('Error saving curriculum', 'error');
-                } finally {
-                    btnText.style.display = 'inline';
-                    btnLoading.style.display = 'none';
-                    saveBtn.disabled = false;
+                    curriculumVersions = [];
+                    renderCurriculumVersions();
+                    showNotification('Error loading curriculums', 'error');
                 }
             }
 
-            // Add this function for notifications if not present
+            function renderPrograms() {
+                if (programs.length === 0) {
+                    programList.innerHTML = '<li class="empty-state"><p>No programs available</p></li>';
+                    return;
+                }
+
+                programList.innerHTML = programs.map(program => `
+                    <li class="program-item" data-program-id="${program.id}">
+                        <div class="program-name">${program.name}</div>
+                        <div class="program-code" style="font-size: 0.85rem; color: #666; margin-top: 2px;">${program.code}</div>
+                    </li>
+                `).join('');
+
+                // Add click listeners
+                document.querySelectorAll('.program-item').forEach(item => {
+                    item.addEventListener('click', function () {
+                        selectProgram(parseInt(this.dataset.programId));
+                    });
+                });
+            }
+
+            function selectProgram(programId) {
+                selectedProgramId = programId;
+                const program = programs.find(p => p.id === programId);
+
+                // Update UI
+                document.querySelectorAll('.program-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[data-program-id="${programId}"]`).classList.add('active');
+
+                curriculumTitle.textContent = `${program.name} Curriculum`;
+                addCurriculumVersionBtn.style.display = 'block';
+                document.getElementById('selectedProgramId').value = programId;
+
+                loadCurriculumsForProgram(programId);
+                loadCurriculumForProgram(programId);
+            }
+
+            function renderCurriculumVersions() {
+                const listDiv = document.getElementById('curriculumVersionList');
+                if (!curriculumVersions.length) {
+                    listDiv.innerHTML = '<div class="empty-curriculum"><p>No curriculums for this program. Add one!</p></div>';
+                    document.getElementById('curriculumMeta').innerHTML = '';
+                    document.getElementById('curriculumContent').innerHTML = '';
+                    return;
+                }
+                let html = '<table class="data-table"><thead><tr><th>Year</th><th>Status</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
+                curriculumVersions.forEach(c => {
+                    html += `<tr${selectedCurriculumId === c.id ? ' class="active"' : ''}>
+                        <td>${c.yearEffective}</td>
+                        <td>${c.status}</td>
+                        <td>${c.description || ''}</td>
+                        <td>
+                            <button class="btn-sm btn-primary" onclick="selectCurriculumVersion(${c.id})">Select</button>
+                            <button class="btn-sm btn-edit" onclick="openEditCurriculumModal(${c.id})">Edit</button>
+                            <button class="btn-sm btn-danger" onclick="retireCurriculum(${c.id})">Retire</button>
+                            <button class="btn-sm btn-danger" onclick="deleteCurriculum(${c.id})">Delete</button>
+                        </td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                listDiv.innerHTML = html;
+            }
+
+            function renderCurriculum() {
+                if (curriculums.length === 0) {
+                    curriculumContent.innerHTML = `
+                        <div class="empty-curriculum">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10,9 9,9 8,9"></polyline>
+                            </svg>
+                            <p>No courses in curriculum yet. Click "Add Course" to get started.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Group by year level
+                const groupedCurriculum = curriculums.reduce((acc, curr) => {
+                    const yearKey = `Year ${curr.yearLevel}`;
+                    if (!acc[yearKey]) acc[yearKey] = {};
+                    if (!acc[yearKey][curr.semester]) acc[yearKey][curr.semester] = [];
+                    acc[yearKey][curr.semester].push(curr);
+                    return acc;
+                }, {});
+
+                let html = '';
+                Object.keys(groupedCurriculum).sort().forEach(year => {
+                    html += `<div class="year-section">
+                        <div class="year-header">${year}</div>`;
+
+                    Object.keys(groupedCurriculum[year]).forEach(semester => {
+                        html += `<div class="semester-section">
+                            <div class="semester-title">${semester}</div>
+                            <div class="course-list">`;
+
+                        groupedCurriculum[year][semester].forEach(curriculum => {
+                            const course = curriculum.course && curriculum.course.id
+                                ? courses.find(c => c.id === curriculum.course.id)
+                                : null;
+                            html += `
+                                <div class="course-item">
+                                    <div class="course-info">
+                                        <div class="course-code">${course ? course.courseCode : 'N/A'}</div>
+                                        <div class="course-title">${course ? course.courseTitle : 'Course not found'}</div>
+                                    </div>
+                                    <div class="course-type ${curriculum.required ? 'required' : 'elective'}">
+                                        ${curriculum.required ? 'Required' : 'Elective'}
+                                    </div>
+                                    <div class="course-actions">
+                                        <button class="btn-sm btn-edit" onclick="editCurriculum(${curriculum.id})">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="btn-sm btn-danger" onclick="deleteCurriculum(${curriculum.id})">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="3,6 5,6 21,6"></polyline>
+                                                <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        html += `</div></div>`;
+                    });
+
+                    html += `</div>`;
+                });
+
+                curriculumContent.innerHTML = html;
+            }
+
+            function showAddCourseBtn() {
+                const metaDiv = document.getElementById('curriculumMeta');
+                if (selectedCurriculumId) {
+                    if (!document.getElementById('addCourseBtn')) metaDiv.appendChild(addCourseBtn);
+                    addCourseBtn.style.display = 'inline-block';
+                    addCourseBtn.disabled = false;
+                } else {
+                    addCourseBtn.style.display = 'none';
+                    addCourseBtn.disabled = true;
+                }
+            }
+
+            addCourseBtn.onclick = async function() {
+                // Ensure courses are loaded before opening the modal
+                if (!courses || courses.length === 0) {
+                    await loadCourses();
+                }
+                openCourseModal();
+            };
+
+            function renderCurriculumMeta(curriculum) {
+                document.getElementById('curriculumMeta').innerHTML = `
+                    <div style="margin: 1rem 0;">
+                        <strong>Year Effective:</strong> ${curriculum.yearEffective} &nbsp;|
+                        <strong>Status:</strong> ${curriculum.status} &nbsp;|
+                        <strong>Description:</strong> ${curriculum.description || ''}
+                    </div>
+                `;
+                showAddCourseBtn();
+                // Add the unselect button if not already present
+                if (!document.getElementById('unselectCurriculumBtn')) document.getElementById('curriculumMeta').prepend(unselectCurriculumBtn);
+            }
+
+            async function loadCurriculumCourses(curriculumId) {
+                const res = await fetch(`/api/curriculums/${curriculumId}/courses`);
+                curriculums = res.ok ? await res.json() : [];
+                renderCurriculum();
+            }
+
+            // --- Edit/Delete Course Logic ---
+            window.editCurriculum = function(courseId) {
+                const course = curriculums.find(c => c.id === courseId);
+                openCourseModal(course);
+            };
+            window.deleteCurriculum = async function(courseId) {
+                if (!confirm('Are you sure you want to remove this course from the curriculum?')) return;
+                try {
+                    await fetch(`/api/curriculums/courses/${courseId}`, { method: 'DELETE' });
+                    showNotification('Course removed from curriculum', 'success');
+                    await loadCurriculumCourses(selectedCurriculumId);
+                } catch (e) {
+                    showNotification('Error removing course from curriculum', 'error');
+                }
+            };
+            // --- End Edit/Delete Course Logic ---
+
+            window.openEditCurriculumModal = function(id) {
+                const curriculum = curriculumVersions.find(c => c.id === id);
+                openCurriculumVersionModal(curriculum);
+            };
+
+            window.retireCurriculum = async function(id) {
+                if (!confirm('Retire this curriculum?')) return;
+                const curriculum = curriculumVersions.find(c => c.id === id);
+                if (!curriculum) return;
+                try {
+                    curriculum.status = 'RETIRED';
+                    await fetch(`/api/curriculums/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(curriculum)
+                    });
+                    showNotification('Curriculum retired', 'success');
+                    await loadCurriculumsForProgram(selectedProgramId);
+                } catch (e) {
+                    showNotification('Error retiring curriculum', 'error');
+                }
+            };
+
+            window.deleteCurriculum = async function(id) {
+                if (!confirm('Delete this curriculum? This cannot be undone.')) return;
+                try {
+                    await fetch(`/api/curriculums/${id}`, { method: 'DELETE' });
+                    showNotification('Curriculum deleted', 'success');
+                    await loadCurriculumsForProgram(selectedProgramId);
+                } catch (e) {
+                    showNotification('Error deleting curriculum', 'error');
+                }
+            };
+
+            window.selectCurriculumVersion = function(id) {
+                selectedCurriculumId = id;
+                const curriculum = curriculumVersions.find(c => c.id === id);
+                renderCurriculumMeta(curriculum);
+                loadCurriculumCourses(id);
+            };
+
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                const formData = new FormData(curriculumForm);
+                const data = {
+                    program: { id: parseInt(formData.get('programId')) },
+                    yearLevel: parseInt(formData.get('yearLevel')),
+                    semester: formData.get('semester'),
+                    course: { id: parseInt(formData.get('courseId')) },
+                    required: formData.get('required') === 'true'
+                };
+                const id = formData.get('id');
+                const saveBtn = document.getElementById('saveCurriculumBtn');
+                const btnText = saveBtn.querySelector('.btn-text');
+                const btnLoading = saveBtn.querySelector('.btn-loading');
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline';
+                saveBtn.disabled = true;
+                let url = '/api/curriculums/courses';
+                let method = 'POST';
+                if (id) {
+                    url += `/${id}`;
+                    method = 'PUT';
+                    data.id = parseInt(id);
+                }
+                fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        showNotification(id ? 'Course updated' : 'Course added', 'success');
+                        closeModal();
+                        loadCurriculumCourses(selectedCurriculumId);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        showNotification('Error saving curriculum', 'error');
+                    })
+                    .finally(() => {
+                        btnText.style.display = 'inline';
+                        btnLoading.style.display = 'none';
+                        saveBtn.disabled = false;
+                    });
+            }
+
+            // Add a simple showNotification function if not present
             function showNotification(message, type = 'success') {
                 // Simple notification using alert, replace with custom UI if needed
                 alert(message);
             }
-
-            // Global functions for inline event handlers
-            window.editCurriculum = function (curriculumId) {
-                const curriculum = curriculums.find(c => c.id === curriculumId);
-                if (!curriculum) return;
-
-                isEditing = true;
-                document.getElementById('curriculumModalTitle').textContent = 'Edit Curriculum Course';
-                document.getElementById('editingCurriculumId').value = curriculumId;
-                document.getElementById('selectedProgramId').value = selectedProgramId;
-                document.getElementById('yearLevelSelect').value = curriculum.yearLevel;
-                document.getElementById('semesterSelect').value = curriculum.semester;
-                document.getElementById('courseSelect').value = curriculum.course.id;
-                document.getElementById('requiredSelect').value = curriculum.required.toString();
-
-                curriculumModal.style.display = 'block';
-            };
-
-            window.deleteCurriculum = async function (curriculumId) {
-                if (!confirm('Are you sure you want to remove this course from the curriculum?')) {
-                    return;
-                }
-
-                try {
-                    const response = await fetch(`/api/curriculums/courses/${curriculumId}`, {
-                        method: 'DELETE'
-                    });
-
-                    if (response.ok) {
-                        showNotification('Course removed from curriculum', 'success');
-                        loadCurriculumForProgram(selectedProgramId);
-                    } else {
-                        throw new Error('Failed to delete curriculum course');
-                    }
-                } catch (error) {
-                    console.error('Error deleting curriculum:', error);
-                    showNotification('Error removing course from curriculum', 'error');
-                }
-            };
         });
     </script>
 </body>

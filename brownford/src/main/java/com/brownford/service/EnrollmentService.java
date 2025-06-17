@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-// import com.brownford.service.CurriculumService;
+import com.brownford.service.CurriculumService;
 import com.brownford.model.CurriculumCourse;
 
 @Service

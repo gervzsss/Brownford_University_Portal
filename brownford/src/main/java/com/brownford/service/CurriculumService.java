@@ -2,10 +2,10 @@ package com.brownford.service;
 
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
-// import com.brownford.model.Program;
+import com.brownford.model.Program;
+import com.brownford.model.Curriculum.Status;
 import com.brownford.repository.CurriculumRepository;
 import com.brownford.repository.CurriculumCourseRepository;
-// import com.brownford.repository.ProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,6 @@ public class CurriculumService {
     private CurriculumRepository curriculumRepository;
     @Autowired
     private CurriculumCourseRepository curriculumCourseRepository;
-    @Autowired
-    // private ProgramRepository programRepository;
 
     public List<Curriculum> getAllCurriculums() {
         return curriculumRepository.findAll();
@@ -51,9 +49,16 @@ public class CurriculumService {
         curriculumCourseRepository.deleteById(id);
     }
 
-    public Optional<Curriculum> getCurriculumByProgramId(Long programId) {
-        return curriculumRepository.findAll().stream()
-            .filter(c -> c.getProgram().getId().equals(programId))
-            .findFirst();
+    // New methods for versioning and management
+    public List<Curriculum> getCurriculumsByProgramId(Long programId) {
+        return curriculumRepository.findByProgramId(programId);
+    }
+
+    public List<Curriculum> getCurriculumsByProgramIdAndStatus(Long programId, Status status) {
+        return curriculumRepository.findByProgramIdAndStatus(programId, status);
+    }
+
+    public Curriculum getCurriculumByProgramIdAndYear(Long programId, int yearEffective) {
+        return curriculumRepository.findByProgramIdAndYearEffective(programId, yearEffective);
     }
 }

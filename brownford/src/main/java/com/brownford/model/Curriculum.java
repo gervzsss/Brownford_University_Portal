@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "curriculums")
+@Table(
+    name = "curriculums",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"program_id", "yearEffective"})}
+)
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Curriculum {
     @Id
@@ -18,9 +21,21 @@ public class Curriculum {
     @Column(nullable = false)
     private int yearEffective;
 
+    @Column(length = 255)
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Status status = Status.ACTIVE;
+
     @OneToMany(mappedBy = "curriculum", cascade = CascadeType.ALL)
     @com.fasterxml.jackson.annotation.JsonManagedReference
     private List<CurriculumCourse> curriculumCourses;
+
+    public enum Status {
+        ACTIVE,
+        RETIRED
+    }
 
     // Getters and setters
     public Long getId() {
@@ -45,6 +60,22 @@ public class Curriculum {
 
     public void setYearEffective(int yearEffective) {
         this.yearEffective = yearEffective;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public List<CurriculumCourse> getCurriculumCourses() {

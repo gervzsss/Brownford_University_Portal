@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.18.250201]
+
+### Fix
+- Fixed Curriculum Mangement BUGS.
+
+### Bugs
+- Some Bugs from version [06.17.251702] still exist.
+
 ## [06.17.251933]
 
 ### Fix
