@@ -120,7 +120,7 @@
                     </li>
 
                     <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link active">
+                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -334,12 +334,20 @@
                                         <option value="conflict">Schedule Conflict</option>
                                     </select>
 
-                                    <select class="filter-select" id="semesterFilter">
-                                        <option value="">All Semesters</option>
-                                        <option value="1">1st Semester</option>
-                                        <option value="2">2nd Semester</option>
-                                        <option value="summer">Summer</option>
-                                    </select>
+                                    <!-- Section & Semester Filters -->
+                                    <div class="filter-container">
+                                        <select class="filter-select" id="sectionFilter">
+                                            <option value="">Select Section</option>
+                                            <!-- Dynamically populated -->
+                                        </select>
+                                        <select class="filter-select" id="semesterFilter">
+                                            <option value="">Select Semester</option>
+                                            <option value="1">1st Semester</option>
+                                            <option value="2">2nd Semester</option>
+                                            <option value="summer">Summer</option>
+                                        </select>
+                                        <button id="loadCoursesBtn" class="btn btn-primary">Load Courses</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -603,6 +611,28 @@
             });
         });
 
+        // Section & Semester Dropdown Logic
+        async function populateSections() {
+            const res = await fetch('/api/sections');
+            const sections = await res.json();
+            const sectionFilter = document.getElementById('sectionFilter');
+            sectionFilter.innerHTML = '<option value="">Select Section</option>' +
+                sections.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        }
+
+        document.getElementById('loadCoursesBtn').addEventListener('click', async function () {
+            const sectionId = document.getElementById('sectionFilter').value;
+            const semester = document.getElementById('semesterFilter').value;
+            if (!sectionId || !semester) {
+                alert('Please select both section and semester.');
+                return;
+            }
+            const res = await fetch(`/api/section-courses?sectionId=${sectionId}&semester=${semester}`);
+            const data = await res.json();
+            sectionCoursesCache = data;
+            renderTable(data);
+        });
+
         // Schedule management functions
         let sectionCoursesCache = [];
         let facultyCache = [];
@@ -711,7 +741,10 @@
             const data = await fetchSectionCourses();
             renderTable(data);
         }
-        window.onload = loadTable;
+        window.onload = function () {
+            populateSections();
+            loadTable();
+        }
     </script>
 
     <style>

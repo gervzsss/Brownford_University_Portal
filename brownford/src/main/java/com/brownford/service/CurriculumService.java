@@ -2,10 +2,10 @@ package com.brownford.service;
 
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
-import com.brownford.model.Program;
+// import com.brownford.model.Program;
 import com.brownford.repository.CurriculumRepository;
 import com.brownford.repository.CurriculumCourseRepository;
-import com.brownford.repository.ProgramRepository;
+// import com.brownford.repository.ProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class CurriculumService {
     @Autowired
     private CurriculumCourseRepository curriculumCourseRepository;
     @Autowired
-    private ProgramRepository programRepository;
+    // private ProgramRepository programRepository;
 
     public List<Curriculum> getAllCurriculums() {
         return curriculumRepository.findAll();

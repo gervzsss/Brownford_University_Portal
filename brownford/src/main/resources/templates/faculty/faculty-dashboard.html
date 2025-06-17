@@ -171,11 +171,8 @@
                             </svg>
                         </div>
                         <div class="welcome-text">
-                            <h2>Welcome, Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty
-                                    Name</span>
-                            </h2>
-                            <p>Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span> | Academic Year
-                                2024-2025</p>
+                            <h2>Welcome, Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
+                            <p>Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span> | Academic Year <span th:text="${academicYear}">2024-2025</span></p>
                         </div>
                     </div>
                 </section>
@@ -186,94 +183,70 @@
                     <div class="quick-links-container">
                         <div class="quick-link-card">
                             <div class="quick-link-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                </svg>
+                                <!-- icon -->
                             </div>
                             <div class="quick-link-text">
-                                <h4>4</h4>
+                                <h4 th:text="${activeClasses}">0</h4>
                                 <p>Active Classes</p>
                             </div>
                         </div>
                         <div class="quick-link-card">
                             <div class="quick-link-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
+                                <!-- icon -->
                             </div>
                             <div class="quick-link-text">
-                                <h4>87</h4>
+                                <h4 th:text="${totalStudents}">0</h4>
                                 <p>Total Students</p>
                             </div>
                         </div>
                         <div class="quick-link-card">
                             <div class="quick-link-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
+                                <!-- icon -->
                             </div>
                             <div class="quick-link-text">
-                                <h4>16</h4>
+                                <h4 th:text="${teachingHours}">0</h4>
                                 <p>Teaching Hours/Week</p>
                             </div>
                         </div>
                         <div class="quick-link-card">
                             <div class="quick-link-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                </svg>
+                                <!-- icon -->
                             </div>
                             <div class="quick-link-text">
-                                <h4>2</h4>
+                                <h4 th:text="${pendingGrades}">0</h4>
                                 <p>Pending Grade Submissions</p>
                             </div>
                         </div>
                     </div>
+                    <!--
+                        Model attributes required:
+                        - activeClasses (int)
+                        - totalStudents (int)
+                        - teachingHours (int)
+                        - pendingGrades (int)
+                    -->
                 </section>
 
                 <!-- Today's Schedule Section -->
                 <section class="quick-links-section">
                     <h3 class="section-title">Today's Schedule <span id="currentDate" class="date-display"></span></h3>
                     <div class="schedule-container">
-                        <div class="schedule-item">
-                            <div class="schedule-time">9:00 AM - 12:00 PM</div>
+                        <div class="schedule-item" th:each="sched : ${todaysSchedule}">
+                            <div class="schedule-time" th:text="${sched.time}">9:00 AM - 12:00 PM</div>
                             <div class="schedule-details">
-                                <h4>Linear Regression (STAT104)</h4>
-                                <p>BSSTAT 1-1 | Room 410</p>
+                                <h4 th:text="${sched.courseTitle}">Course Title (CODE)</h4>
+                                <p th:text="${sched.sectionRoom}">Section | Room</p>
                             </div>
-                            <div class="schedule-status ongoing">Ongoing</div>
-                        </div>
-                        <div class="schedule-item">
-                            <div class="schedule-time">1:30 PM - 4:30 PM</div>
-                            <div class="schedule-details">
-                                <h4>Linear Regression (STAT104)</h4>
-                                <p>BSSTAT 1-1 | Room 410</p>
-                            </div>
-                            <div class="schedule-status upcoming">Upcoming</div>
+                            <div class="schedule-status" th:text="${sched.status}">Status</div>
                         </div>
                     </div>
                     <div class="view-all-container">
                         <a href="/faculty-schedule" class="view-all-link">View Full Schedule</a>
                     </div>
+                    <!--
+                        Model attribute required:
+                        - todaysSchedule (List of objects with fields: time, courseTitle, sectionRoom, status)
+                    -->
                 </section>
 
                 <!-- Quick Links Section -->
@@ -347,73 +320,41 @@
                 <section class="announcements-section">
                     <h3 class="section-title">Important Announcements</h3>
                     <div class="announcements-container">
-                        <div class="announcement-card priority">
+                        <div class="announcement-card" th:each="ann : ${announcements}" th:classappend="${ann.priority} ? ' priority'">
                             <div class="announcement-header">
                                 <div class="announcement-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path
-                                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
-                                        </path>
-                                        <line x1="12" y1="9" x2="12" y2="13"></line>
-                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                    </svg>
+                                    <!-- icon -->
                                 </div>
-                                <h4 class="announcement-title">Grade Submission Deadline</h4>
+                                <h4 class="announcement-title" th:text="${ann.title}">Announcement Title</h4>
                             </div>
                             <div class="announcement-content">
-                                <p>Final grades for the 2nd semester must be submitted by May 15, 2025. Please ensure
-                                    all
-                                    grades are finalized in the system.</p>
+                                <p th:text="${ann.content}">Announcement content goes here.</p>
                             </div>
                             <div class="announcement-footer">
-                                <span class="announcement-date">Posted: May 1, 2025</span>
-                                <a href="#" class="announcement-action">View Details</a>
-                            </div>
-                        </div>
-
-                        <div class="announcement-card">
-                            <div class="announcement-header">
-                                <div class="announcement-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                    </svg>
-                                </div>
-                                <h4 class="announcement-title">Faculty Meeting</h4>
-                            </div>
-                            <div class="announcement-content">
-                                <!-- <p>Department meeting scheduled for May 10, 2025 at 2:00 PM in the Faculty Lounge.</p> -->
-                            </div>
-                            <div class="announcement-footer">
-                                <span class="announcement-date">Posted: April 28, 2025</span>
-                                <a href="#" class="announcement-action">Add to Calendar</a>
+                                <span class="announcement-date" th:text="'Posted: ' + ${ann.date}">Posted: Date</span>
+                                <a href="#" class="announcement-action" th:text="${ann.action}">Action</a>
                             </div>
                         </div>
                     </div>
+                    <!--
+                        Model attribute required:
+                        - announcements (List of objects with fields: title, content, date, action, priority)
+                    -->
                 </section>
 
                 <!-- Upcoming Deadlines Section -->
                 <section class="calendar-section">
                     <h3 class="section-title">Upcoming Deadlines</h3>
                     <div class="calendar-container">
-                        <div class="calendar-item">
-                            <div class="calendar-date">May 15, 2025</div>
-                            <div class="calendar-event">Final Grades Submission Deadline</div>
-                        </div>
-                        <div class="calendar-item">
-                            <div class="calendar-date">May 20, 2025</div>
-                            <div class="calendar-event">Faculty Clearance Deadline</div>
-                        </div>
-                        <div class="calendar-item">
-                            <div class="calendar-date">June 5, 2025</div>
-                            <div class="calendar-event">Summer Class Registration Deadline</div>
+                        <div class="calendar-item" th:each="deadline : ${deadlines}">
+                            <div class="calendar-date" th:text="${deadline.date}">Date</div>
+                            <div class="calendar-event" th:text="${deadline.event}">Event</div>
                         </div>
                     </div>
+                    <!--
+                        Model attribute required:
+                        - deadlines (List of objects with fields: date, event)
+                    -->
                 </section>
             </main>
         </div>
@@ -461,4 +402,5 @@
     </script>
 </body>
 
+</html>
 </html>

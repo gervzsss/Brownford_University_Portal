@@ -3,7 +3,7 @@ package com.brownford.service;
 import com.brownford.model.User;
 import com.brownford.model.Student;
 import com.brownford.model.Faculty;
-import com.brownford.repository.UserRepository;
+// import com.brownford.repository.UserRepository;
 import com.brownford.repository.StudentRepository;
 import com.brownford.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,8 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class UserIdentifierService {
 
-    @Autowired
-    private UserRepository userRepository;
+    // @Autowired
+    // private UserRepository userRepository;
     @Autowired
     private StudentRepository studentRepository;
     @Autowired

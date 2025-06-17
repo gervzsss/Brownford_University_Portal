@@ -1,7 +1,7 @@
 package com.brownford.model;
 
 import jakarta.persistence.*;
-import java.time.DayOfWeek;
+// import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Entity
