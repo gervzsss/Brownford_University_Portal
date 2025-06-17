@@ -75,202 +75,190 @@
     </header>
 
     <!-- Sidebar Navigation -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">
-                    <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
-                    <span class="sidebar-title">Admin Portal</span>
-                </div>
-                <button class="sidebar-close" id="sidebarClose">&times;</button>
-            </div>
-            <div class="sidebar-content">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Dashboard</span>
-                        </a>
-                    </li>
-
-                    <div class="sidebar-section-title">Academic Management</div>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-programs}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Programs</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-courses}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Courses</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-enrollments}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Enrollment</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-sections}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Sections</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-curriculum}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Curriculum</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">Schedule</span>
-                        </a>
-                    </li>
-
-                    <div class="sidebar-section-title">User Management</div>
-
-                    <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-users}" class="sidebar-nav-link">
-                            <span class="sidebar-nav-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
-                            </span>
-                            <span class="sidebar-nav-text">User Management</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item sidebar-dropdown">
-                        <button class="sidebar-dropdown-toggle">
-                            <span class="sidebar-dropdown-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                </svg>
-                            </span>
-                            <span class="sidebar-dropdown-text">Faculty</span>
-                            <span class="sidebar-dropdown-arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </span>
-                        </button>
-                        <div class="sidebar-dropdown-menu">
-                            <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
-                            <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
-                                Management</a>
-                        </div>
-                    </li>
-
-                    <li class="sidebar-nav-item sidebar-dropdown">
-                        <button class="sidebar-dropdown-toggle">
-                            <span class="sidebar-dropdown-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                </svg>
-                            </span>
-                            <span class="sidebar-dropdown-text">Students</span>
-                            <span class="sidebar-dropdown-arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </span>
-                        </button>
-                        <div class="sidebar-dropdown-menu">
-                            <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
-                            <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="sidebar-footer">
-                <p>Brown Ford University &copy; 2025</p>
-                <p>Admin Portal v1.0</p>
-            </div>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
+          <span class="sidebar-title">Admin Portal</span>
         </div>
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+      </div>
+      <div class="sidebar-content">
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Dashboard</span>
+            </a>
+          </li>
 
-        <!-- Sidebar Overlay -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+          <div class="sidebar-section-title">Academic Management</div>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-programs}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Programs</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-courses}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Courses</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-enrollments}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Enrollment</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-sections}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Sections</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-curriculum}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Curriculum</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">Schedule</span>
+            </a>
+          </li>
+
+          <div class="sidebar-section-title">User Management</div>
+
+          <li class="sidebar-nav-item">
+            <a th:href="@{/admin-users}" class="sidebar-nav-link">
+              <span class="sidebar-nav-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <span class="sidebar-nav-text">User Management</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item sidebar-dropdown">
+            <button class="sidebar-dropdown-toggle">
+              <span class="sidebar-dropdown-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+                </svg>
+              </span>
+              <span class="sidebar-dropdown-text">Faculty</span>
+              <span class="sidebar-dropdown-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="sidebar-dropdown-menu">
+              <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
+              <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
+                Management</a>
+            </div>
+          </li>
+
+          <li class="sidebar-nav-item sidebar-dropdown">
+            <button class="sidebar-dropdown-toggle">
+              <span class="sidebar-dropdown-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <span class="sidebar-dropdown-text">Students</span>
+              <span class="sidebar-dropdown-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="sidebar-dropdown-menu">
+              <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
+              <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-footer">
+        <p>Brown Ford University &copy; 2025</p>
+        <p>Admin Portal v1.0</p>
+      </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="content-wrapper" id="contentWrapper">
       <main class="dashboard-content">
@@ -294,6 +282,12 @@
         <section class="content-panel" id="sectionsPanel">
           <div class="panel-header">
             <h2 class="section-title">Section Management</h2>
+            <div class="filter-row" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+              <label for="programFilter" style="font-weight: 500;">Filter by Program:</label>
+              <select id="programFilter" class="form-control" style="min-width: 220px;">
+                <option value="">All Programs</option>
+              </select>
+            </div>
             <button id="addSectionBtn" class="add-user-btn">Add New Section</button>
           </div>
           <div class="panel-content">
@@ -319,7 +313,6 @@
       </main>
     </div>
 
-    <!-- Section Modal (consistent with admin-courses.html) -->
     <div id="sectionModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -370,84 +363,6 @@
       </div>
     </div>
 
-    <!-- View Section Details Modal -->
-    <div id="viewSectionModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Section Details</h3>
-          <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="section-details">
-            <div class="section-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
-                stroke="#6B3A1D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-            </div>
-            <div class="section-info-grid">
-              <div class="info-item">
-                <span class="info-label">Section ID:</span>
-                <span class="info-value" id="viewSectionId"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Course:</span>
-                <span class="info-value" id="viewSectionCourse"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Instructor:</span>
-                <span class="info-value" id="viewSectionInstructor"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Schedule:</span>
-                <span class="info-value" id="viewSectionSchedule"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Room:</span>
-                <span class="info-value" id="viewSectionRoom"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Semester:</span>
-                <span class="info-value" id="viewSectionSemester"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Capacity:</span>
-                <span class="info-value" id="viewSectionCapacity"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Enrolled:</span>
-                <span class="info-value" id="viewSectionEnrolled"></span>
-              </div>
-            </div>
-            <div class="section-notes">
-              <h4>Notes</h4>
-              <p id="viewSectionNotes"></p>
-            </div>
-            <div class="section-roster">
-              <h4>Student Roster</h4>
-              <button class="btn btn-secondary" id="viewRosterBtn">
-                View Complete Roster
-              </button>
-            </div>
-          </div>
-          <div class="section-actions">
-            <button class="btn btn-secondary" id="closeViewSectionBtn">
-              Close
-            </button>
-            <button class="btn btn-primary" id="editFromViewSectionBtn">
-              Edit Section
-            </button>
-            <button class="btn btn-danger" id="cancelSectionBtn">
-              Cancel Section
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Delete Confirmation Modal -->
     <div id="deleteConfirmModal" class="modal">
       <div class="modal-content modal-sm">
@@ -473,37 +388,21 @@
     </div>
   </div>
 
-  <script th:src="@{/js/notifications.js}"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Modal elements
       const sectionModal = document.getElementById("sectionModal");
-      const viewSectionModal = document.getElementById("viewSectionModal");
-      const deleteConfirmModal =
-        document.getElementById("deleteConfirmModal");
+      const deleteConfirmModal = document.getElementById("deleteConfirmModal");
       const addSectionBtn = document.getElementById("addSectionBtn");
       const closeModalBtns = document.querySelectorAll(".close-modal");
       const cancelSectionBtn = document.getElementById("cancelSectionBtn");
-      const closeViewSectionBtn = document.getElementById(
-        "closeViewSectionBtn"
-      );
       const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
-      // Check for course parameter in URL (for when redirected from courses page)
-      const urlParams = new URLSearchParams(window.location.search);
-      const courseParam = urlParams.get("course");
-
-      // Open add modals
+      // Open add modal
       addSectionBtn.addEventListener("click", function () {
-        document.getElementById("sectionModalTitle").textContent =
-          "Add New Section";
+        document.getElementById("sectionModalTitle").textContent = "Add New Section";
         document.getElementById("sectionForm").reset();
-
-        // If redirected from courses page with a course parameter, pre-select that course
-        if (courseParam) {
-          document.getElementById("sectionCourse").value = courseParam;
-        }
-
         sectionModal.style.display = "block";
       });
 
@@ -511,7 +410,6 @@
       closeModalBtns.forEach((btn) => {
         btn.addEventListener("click", function () {
           sectionModal.style.display = "none";
-          viewSectionModal.style.display = "none";
           deleteConfirmModal.style.display = "none";
         });
       });
@@ -520,69 +418,45 @@
         sectionModal.style.display = "none";
       });
 
-      closeViewSectionBtn.addEventListener("click", function () {
-        viewSectionModal.style.display = "none";
-      });
-
       cancelDeleteBtn.addEventListener("click", function () {
         deleteConfirmModal.style.display = "none";
       });
 
       // Section form submission
-      document
-        .getElementById("sectionForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-          const programId = document.getElementById("sectionProgram").value;
-          const formData = {
-            id: document.getElementById("sectionId").value,
-            sectionCode: document.getElementById("sectionCode").value,
-            program: programId ? { id: parseInt(programId) } : null,
-            maxStudents: document.getElementById("sectionMaxStudents").value,
-            status: document.getElementById("sectionStatus").value,
-          };
-          // Determine if add or edit
-          const isEdit = !!formData.id;
-          let url = "/api/sections";
-          let method = "POST";
-          if (isEdit) {
-            url += "/" + formData.id;
-            method = "PUT";
-          }
-          try {
-            const response = await fetch(url, {
-              method: method,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(formData),
-            });
-            if (!response.ok) throw new Error("Failed to save section");
-            sectionModal.style.display = "none";
-            loadSections(); // Reload table after save
-          } catch (err) {
-            alert("Error saving section: " + err.message);
-          }
-        });
-
-      // View buttons
-      document.querySelectorAll(".btn-view").forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const sectionId = this.getAttribute("data-id");
-          console.log("Viewing section details for:", sectionId);
-          viewSectionModal.style.display = "block";
-        });
-      });
-
-      // Edit buttons
-      document.querySelectorAll(".btn-edit").forEach((btn) => {
-        btn.addEventListener("click", function () {
-          const sectionId = this.getAttribute("data-id");
-          openEditSectionModal(sectionId);
-        });
+      document.getElementById("sectionForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const programId = document.getElementById("sectionProgram").value;
+        const formData = {
+          id: document.getElementById("sectionId").value,
+          sectionCode: document.getElementById("sectionCode").value,
+          programId: programId ? parseInt(programId) : null,
+          maxStudents: document.getElementById("sectionMaxStudents").value,
+          status: document.getElementById("sectionStatus").value,
+        };
+        // Determine if add or edit
+        const isEdit = !!formData.id;
+        let url = "/api/sections";
+        let method = "POST";
+        if (isEdit) {
+          url += "/" + formData.id;
+          method = "PUT";
+        }
+        try {
+          const response = await fetch(url, {
+            method: method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
+          if (!response.ok) throw new Error("Failed to save section");
+          sectionModal.style.display = "none";
+          loadSections(); // Reload table after save
+        } catch (err) {
+          alert("Error saving section: " + err.message);
+        }
       });
 
       // Delete buttons
       let sectionIdToDelete = null;
-
       document.querySelectorAll(".btn-delete").forEach((btn) => {
         btn.addEventListener("click", function () {
           sectionIdToDelete = this.getAttribute("data-id");
@@ -615,90 +489,50 @@
         });
       }
 
-      // Edit from view modals
-      document
-        .getElementById("editFromViewSectionBtn")
-        .addEventListener("click", function () {
-          viewSectionModal.style.display = "none";
-          document.getElementById("sectionModalTitle").textContent =
-            "Edit Section";
-          sectionModal.style.display = "block";
-        });
+      // Populate program filter dropdown
+      async function populateProgramFilter() {
+        const filter = document.getElementById("programFilter");
+        if (!filter) return;
+        filter.innerHTML = '<option value="">All Programs</option>';
+        try {
+          const response = await fetch("/api/programs");
+          if (!response.ok) throw new Error("Failed to fetch programs");
+          const programs = await response.json();
+          filter.innerHTML += programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join("");
+        } catch (err) {
+          filter.innerHTML = '<option value="">Error loading programs</option>';
+        }
+      }
+      populateProgramFilter();
 
-      // View roster
-      document
-        .getElementById("viewRosterBtn")
-        .addEventListener("click", function () {
-          const sectionId =
-            document.getElementById("viewSectionId").textContent;
-          alert(`Viewing roster for section ${sectionId}`);
-        });
-
-      // Search
-      const sectionSearchInput = document.getElementById("sectionSearchInput");
-      if (sectionSearchInput) {
-        sectionSearchInput.addEventListener("keyup", function () {
-          const searchTerm = this.value.trim().toLowerCase();
-          if (searchTerm.length >= 2) {
-            console.log("Searching for sections with term:", searchTerm);
-            filterTableRows("sectionsTable", searchTerm);
-          }
-        });
+      // Filtering logic
+      let allSections = [];
+      async function loadSections() {
+        const tbody = document.getElementById("sectionsTableBody");
+        tbody.innerHTML = '<tr><td colspan="6">Loading sections...</td></tr>';
+        try {
+          const response = await fetch("/api/sections");
+          if (!response.ok) throw new Error("Failed to fetch sections");
+          const sections = await response.json();
+          allSections = sections;
+          renderSections();
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="6">Error loading sections: ${err.message}</td></tr>`;
+        }
       }
 
-      // Filters
-      document
-        .getElementById("courseFilter")
-        .addEventListener("change", applySectionsFilters);
-      document
-        .getElementById("semesterFilter")
-        .addEventListener("change", applySectionsFilters);
-
-      function applySectionsFilters() {
-        const course = document.getElementById("courseFilter").value;
-        const semester = document.getElementById("semesterFilter").value;
-        console.log(
-          "Filtering sections - Course:",
-          course,
-          "Semester:",
-          semester
-        );
-      }
-
-      // Dummy table filter (implement your own logic here)
-      function filterTableRows(tableId, term) {
-        const rows = document.querySelectorAll(`#${tableId} tbody tr`);
-        rows.forEach((row) => {
-          row.style.display = row.textContent.toLowerCase().includes(term)
-            ? ""
-            : "none";
-        });
-      }
-
-      // If there's a course parameter, also filter the table by that course
-      if (courseParam) {
-        document.getElementById("courseFilter").value = courseParam;
-        applySectionsFilters();
-      }
-
-      // At the end of DOMContentLoaded, load sections
-      loadSections();
-    });
-
-    // Functions to load data from the server
-    async function loadSections() {
-      const tbody = document.getElementById("sectionsTableBody");
-      tbody.innerHTML = '<tr><td colspan="6">Loading sections...</td></tr>';
-      try {
-        const response = await fetch("/api/sections");
-        if (!response.ok) throw new Error("Failed to fetch sections");
-        const sections = await response.json();
-        if (!sections.length) {
+      function renderSections() {
+        const tbody = document.getElementById("sectionsTableBody");
+        const programFilter = document.getElementById("programFilter");
+        let filtered = allSections;
+        if (programFilter && programFilter.value) {
+          filtered = allSections.filter(s => String(s.programId) === programFilter.value);
+        }
+        if (!filtered.length) {
           tbody.innerHTML = `<tr class="empty-state-row"><td colspan="6" class="empty-state-message"><div class="empty-state"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8B4513\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><p>No sections found. Add sections to see results.</p></div></td></tr>`;
           return;
         }
-        // Fetch enrolled count for each section
-        const sectionRows = await Promise.all(sections.map(async section => {
+        Promise.all(filtered.map(async section => {
           let enrolledCount = 0;
           try {
             const countRes = await fetch(`/api/sections/${section.id}/enrolled-count`);
@@ -709,19 +543,11 @@
           return `
             <tr>
               <td><strong>${section.sectionCode}</strong></td>
-              <td>${section.program ? (section.program.code + ' - ' + section.program.name) : '-'}</td>
+              <td>${section.programCode && section.programName ? (section.programCode + ' - ' + section.programName) : '-'}</td>
               <td>${enrolledCount}</td>
               <td>${section.maxStudents || '-'}</td>
               <td><span class="status-badge ${section.status ? section.status.toLowerCase() : ''}">${section.status || '-'}</span></td>
               <td class="action-buttons">
-                <button class="btn btn-sm btn-view" data-id="${section.id}" title="View Section">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12" y2="8"></line>
-                  </svg>
-                  View
-                </button>
                 <button class="btn btn-sm btn-edit" data-id="${section.id}" title="Edit Section">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
@@ -741,54 +567,49 @@
               </td>
             </tr>
           `;
-        }));
-        tbody.innerHTML = sectionRows.join("");
-        // Re-attach event listeners for new buttons
-        document.querySelectorAll(".btn-view").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            // Optionally fetch and display section details
-            viewSectionModal.style.display = "block";
+        })).then(rows => {
+          tbody.innerHTML = rows.join("");
+          document.querySelectorAll(".btn-edit").forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const sectionId = this.getAttribute("data-id");
+              openEditSectionModal(sectionId);
+            });
           });
-        });
-        document.querySelectorAll(".btn-edit").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            openEditSectionModal(sectionId);
-          });
-        });
-        document.querySelectorAll(".btn-delete").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const sectionId = this.getAttribute("data-id");
-            document.getElementById("deleteConfirmTitle").textContent = "Delete Section";
-            document.getElementById("deleteConfirmMessage").textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
-            document.getElementById("confirmDeleteBtn").onclick = async function () {
-              try {
-                const response = await fetch(`/api/sections/${sectionId}`, {
-                  method: "DELETE"
-                });
-                if (response.ok) {
-                  deleteConfirmModal.style.display = "none";
-                  loadSections();
-                } else if (response.status === 409) {
-                  alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
-                } else {
-                  alert("Failed to delete section. It may be in use or there was a server error.");
+          document.querySelectorAll(".btn-delete").forEach((btn) => {
+            btn.addEventListener("click", function () {
+              const sectionId = this.getAttribute("data-id");
+              document.getElementById("deleteConfirmTitle").textContent = "Delete Section";
+              document.getElementById("deleteConfirmMessage").textContent = `Are you sure you want to delete the section ${sectionId}? This action cannot be undone.`;
+              document.getElementById("confirmDeleteBtn").onclick = async function () {
+                try {
+                  const response = await fetch(`/api/sections/${sectionId}`, {
+                    method: "DELETE"
+                  });
+                  if (response.ok) {
+                    deleteConfirmModal.style.display = "none";
+                    loadSections();
+                  } else if (response.status === 409) {
+                    alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
+                  } else {
+                    alert("Failed to delete section. It may be in use or there was a server error.");
+                  }
+                } catch (err) {
+                  alert("Error deleting section: " + err.message);
                 }
-              } catch (err) {
-                alert("Error deleting section: " + err.message);
-              }
-            };
-            deleteConfirmModal.style.display = "block";
+              };
+              deleteConfirmModal.style.display = "block";
+            });
           });
         });
-      } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="6">Error loading sections: ${err.message}</td></tr>`;
       }
-    }
 
-    // Call loadSections on page load
-    document.addEventListener("DOMContentLoaded", function () {
+      // Listen for filter changes
+      const programFilter = document.getElementById("programFilter");
+      if (programFilter) {
+        programFilter.addEventListener("change", renderSections);
+      }
+
+      // At the end of DOMContentLoaded, load sections
       loadSections();
     });
 
@@ -811,9 +632,12 @@
     }
 
     // When opening the modal, populate the dropdown
-    addSectionBtn.addEventListener("click", function () {
+    document.getElementById("addSectionBtn").addEventListener("click", function () {
       populateProgramDropdown();
-      // ...existing code for opening modal...
+      document.getElementById("sectionProgram").disabled = false;
+      document.getElementById("sectionModalTitle").textContent = "Add New Section";
+      document.getElementById("sectionForm").reset();
+      sectionModal.style.display = "block";
     });
 
     // Helper to open and populate the edit section modal
@@ -827,7 +651,8 @@
         document.getElementById("sectionModalTitle").textContent = "Edit Section";
         document.getElementById("sectionId").value = section.id || "";
         document.getElementById("sectionCode").value = section.sectionCode || "";
-        document.getElementById("sectionProgram").value = section.program ? section.program.id : "";
+        document.getElementById("sectionProgram").value = section.programId || "";
+        document.getElementById("sectionProgram").disabled = true;
         document.getElementById("sectionMaxStudents").value = section.maxStudents || "";
         document.getElementById("sectionStatus").value = section.status || "";
         sectionModal.style.display = "block";
@@ -837,6 +662,7 @@
     }
   </script>
   <script th:src="@{/js/sidebar-nav.js}"></script>
+  <script th:src="@{/js/notifications.js}"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 package com.brownford.controller;
 
+import com.brownford.dto.ProgramDTO;
 import com.brownford.model.Program;
 import com.brownford.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,33 +17,38 @@ public class ProgramManagement {
     private ProgramService programService;
 
     @GetMapping
-    public List<Program> getAllPrograms() {
-        return programService.getAllPrograms();
+    public List<ProgramDTO> getAllPrograms() {
+        return programService.getAllPrograms().stream().map(this::toDTO).collect(java.util.stream.Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Program> getProgramById(@PathVariable Long id) {
+    public ResponseEntity<ProgramDTO> getProgramById(@PathVariable Long id) {
         Optional<Program> program = programService.getProgramById(id);
-        return program.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return program.map(p -> ResponseEntity.ok(toDTO(p))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Program createProgram(@RequestBody Program program) {
-        return programService.saveProgram(program);
+    public ResponseEntity<ProgramDTO> createProgram(@RequestBody ProgramDTO programDTO) {
+        Program program = fromDTO(programDTO);
+        Program saved = programService.saveProgram(program);
+        return ResponseEntity.ok(toDTO(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Program> updateProgram(@PathVariable Long id, @RequestBody Program updated) {
-        return programService.getProgramById(id)
-                .map(existing -> {
-                    existing.setCode(updated.getCode());
-                    existing.setName(updated.getName());
-                    existing.setYears(updated.getYears());
-                    existing.setTotalUnits(updated.getTotalUnits());
-                    existing.setStatus(updated.getStatus());
-                    return ResponseEntity.ok(programService.saveProgram(existing));
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ProgramDTO> updateProgram(@PathVariable Long id, @RequestBody ProgramDTO programDTO) {
+        Optional<Program> existing = programService.getProgramById(id);
+        if (existing.isPresent()) {
+            Program p = existing.get();
+            p.setCode(programDTO.getCode());
+            p.setName(programDTO.getName());
+            p.setYears(programDTO.getYears());
+            p.setTotalUnits(programDTO.getTotalUnits());
+            p.setStatus(programDTO.getStatus());
+            Program updated = programService.saveProgram(p);
+            return ResponseEntity.ok(toDTO(updated));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -52,5 +58,27 @@ public class ProgramManagement {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private ProgramDTO toDTO(Program program) {
+        ProgramDTO dto = new ProgramDTO();
+        dto.setId(program.getId());
+        dto.setCode(program.getCode());
+        dto.setName(program.getName());
+        dto.setYears(program.getYears());
+        dto.setTotalUnits(program.getTotalUnits());
+        dto.setStatus(program.getStatus());
+        return dto;
+    }
+
+    private Program fromDTO(ProgramDTO dto) {
+        Program program = new Program();
+        program.setId(dto.getId());
+        program.setCode(dto.getCode());
+        program.setName(dto.getName());
+        program.setYears(dto.getYears());
+        program.setTotalUnits(dto.getTotalUnits());
+        program.setStatus(dto.getStatus());
+        return program;
     }
 }

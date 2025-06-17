@@ -1,9 +1,29 @@
 # Changelog
 
+## [06.17.251933]
+
+### Fix
+- Fixed Section Management BUGS.
+
+### Bugs
+- Other Bugs from last version except Section Management still exist.
+
 ## [06.17.251702]
 
 ### Changes
 - Minor Changes
+
+### Bugs
+- Section Management Page
+  - Not displaying all the sections.
+- Enrollment Management Page
+  - Enrolling the Student is Working and Adds the informatio in the Database. 
+  - [PROBLEM] Can't display all the enrollment information of the students **PENDING/APPROVED/DECLINE.
+- Curriculum Management Page
+  - Adding a Curriculum is not Working.
+- Schedule Assignment Page
+  - The page is not Fully Functionable, but it supports loading of already assigned courses in the Database.
+
 
 ## [06.16.251505]
 
