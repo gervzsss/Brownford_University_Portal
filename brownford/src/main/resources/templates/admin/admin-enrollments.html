@@ -606,21 +606,17 @@
             }
 
             tbody.innerHTML = enrollments.map(enrollment => {
-                const student = enrollment.student || {};
-                const user = student.student || {};
-                const program = student.program || {};
-                const section = enrollment.section || {};
-                const courses = enrollment.courses || [];
-
-                const studentIdDisplay = student.studentId || 'N/A';
-                const studentName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || '';
-                const studentDisplay = studentIdDisplay !== 'N/A' ? `${studentIdDisplay} - ${studentName}` : studentName;
-                const programInfo = program.code ? `${program.code} - ${program.name}` : 'N/A';
-                const coursesList = courses.length > 0
-                    ? courses.map(c => `${c.courseCode} - ${c.courseTitle}`).join(', ')
-                    : 'No courses';
-
+                // Use flat DTO fields
+                const studentDisplay = enrollment.studentId ? `${enrollment.studentId} - ${enrollment.studentName || ''}` : (enrollment.studentName || 'N/A');
+                const programInfo = enrollment.programName ? enrollment.programName : 'N/A';
+                const sectionDisplay = enrollment.sectionName ? enrollment.sectionName : 'N/A';
+                const yearLevel = enrollment.yearLevel || 'N/A';
+                const semester = enrollment.semester || 'N/A';
                 const statusClass = `enrollment-status-${(enrollment.status || 'pending').toLowerCase()}`;
+                // Render courses
+                const coursesList = (enrollment.courses && enrollment.courses.length > 0)
+                    ? enrollment.courses.map(c => `${c.courseCode} - ${c.courseTitle}`).join(', ')
+                    : 'N/A';
 
                 let actionButtons = `
             <div class="action-buttons">
@@ -633,7 +629,8 @@
                 <button class="btn-sm btn-danger" onclick="deleteEnrollment(${enrollment.id})" title="Delete">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="3,6 5,6 21,6"></polyline>
-                        <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                        <path d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2">
+                        </path>
                     </svg>
                 </button>
         `;
@@ -661,9 +658,9 @@
                 <td><input type="checkbox" class="enrollment-checkbox" value="${enrollment.id}"></td>
                 <td>${studentDisplay}</td>
                 <td>${programInfo}</td>
-                <td>${enrollment.yearLevel || 'N/A'}</td>
-                <td>${enrollment.semester || 'N/A'}</td>
-                <td>${section.sectionCode || 'N/A'}</td>
+                <td>${yearLevel}</td>
+                <td>${semester}</td>
+                <td>${sectionDisplay}</td>
                 <td><div class="courses-list" title="${coursesList}">${coursesList}</div></td>
                 <td><span class="status-badge ${statusClass}">${enrollment.status || 'Pending'}</span></td>
                 <td>${actionButtons}</td>
@@ -798,6 +795,33 @@
             populateSectionDropdown();
             populateCoursesDropdown();
 
+            // Set program based on selected student and disable the dropdown
+            const studentSelect = document.getElementById('studentSelect');
+            const programSelect = document.getElementById('programSelect');
+            programSelect.disabled = true;
+            studentSelect.addEventListener('change', async function handleStudentChange() {
+                // Fetch student info
+                const studentId = studentSelect.value;
+                if (!studentId) {
+                    programSelect.value = '';
+                    return;
+                }
+                try {
+                    const res = await fetch(`/api/students/${studentId}`);
+                    if (!res.ok) throw new Error('Failed to fetch student');
+                    const student = await res.json();
+                    if (student.program && student.program.id) {
+                        programSelect.value = student.program.id;
+                    } else {
+                        programSelect.value = '';
+                    }
+                } catch (e) {
+                    programSelect.value = '';
+                }
+            });
+            // Trigger once on open
+            studentSelect.dispatchEvent(new Event('change'));
+
             showEnrollmentModal();
         }
 
@@ -821,26 +845,53 @@
 
                 const enrollment = await response.json();
 
-                // Populate form fields
-                if (enrollment.student) {
-                    document.getElementById('studentSelect').value = enrollment.student.id;
-                }
-                if (enrollment.student && enrollment.student.program) {
-                    document.getElementById('programSelect').value = enrollment.student.program.id;
-                }
-                document.getElementById('yearLevelSelect').value = enrollment.yearLevel || '';
-                document.getElementById('semesterSelect').value = enrollment.semester || '';
-                if (enrollment.section) {
-                    document.getElementById('sectionSelect').value = enrollment.section.id;
+                // Populate form fields using EnrollmentDTO fields
+                // For student, match by value (studentId) or by text if needed
+                const studentSelect = document.getElementById('studentSelect');
+                let foundStudent = false;
+                Array.from(studentSelect.options).forEach(option => {
+                    if (option.value === enrollment.studentId) {
+                        option.selected = true;
+                        foundStudent = true;
+                    }
+                });
+                // Fallback: try to match by student name if not found by ID
+                if (!foundStudent && enrollment.studentName) {
+                    Array.from(studentSelect.options).forEach(option => {
+                        if (option.textContent.includes(enrollment.studentName)) {
+                            option.selected = true;
+                        }
+                    });
                 }
 
-                // Select courses
-                const coursesSelect = document.getElementById('coursesSelect');
+                // Populate program dropdown if programName or programId is available
+                if (enrollment.programId) {
+                    document.getElementById('programSelect').value = enrollment.programId;
+                } else if (enrollment.programName) {
+                    // Try to select by program name if programId is not available
+                    const programSelect = document.getElementById('programSelect');
+                    Array.from(programSelect.options).forEach(option => {
+                        if (option.textContent.includes(enrollment.programName)) {
+                            option.selected = true;
+                        }
+                    });
+                }
+
+                document.getElementById('yearLevelSelect').value = enrollment.yearLevel || '';
+                document.getElementById('semesterSelect').value = enrollment.semester || '';
+                document.getElementById('sectionSelect').value = enrollment.sectionId || '';
+                // If you have programId in DTO, you can set it here as well
+                if (enrollment.programId) {
+                    document.getElementById('programSelect').value = enrollment.programId;
+                }
+
+                // Re-populate courses dropdown based on selected student/year/semester
+                await populateCoursesDropdown();
+                // Select courses (if you add courses array to DTO in the future)
                 if (enrollment.courses && enrollment.courses.length > 0) {
+                    const coursesSelect = document.getElementById('coursesSelect');
                     Array.from(coursesSelect.options).forEach(option => {
-                        option.selected = enrollment.courses.some(course =>
-                            String(course.id) === option.value
-                        );
+                        option.selected = enrollment.courses.some(courseId => String(courseId) === option.value);
                     });
                 }
 

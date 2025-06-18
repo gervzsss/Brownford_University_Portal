@@ -2,7 +2,6 @@ package com.brownford.service;
 
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
-import com.brownford.model.Program;
 import com.brownford.model.Curriculum.Status;
 import com.brownford.repository.CurriculumRepository;
 import com.brownford.repository.CurriculumCourseRepository;
@@ -60,5 +59,15 @@ public class CurriculumService {
 
     public Curriculum getCurriculumByProgramIdAndYear(Long programId, int yearEffective) {
         return curriculumRepository.findByProgramIdAndYearEffective(programId, yearEffective);
+    }
+
+    public Optional<Curriculum> getActiveCurriculumByProgramId(Long programId) {
+        // Prefer ACTIVE, fallback to latest by yearEffective if none is ACTIVE
+        List<Curriculum> curriculums = curriculumRepository.findByProgramId(programId);
+        if (curriculums == null || curriculums.isEmpty()) return Optional.empty();
+        return curriculums.stream()
+            .filter(c -> c.getStatus() != null && c.getStatus().toString().equalsIgnoreCase("ACTIVE"))
+            .findFirst()
+            .or(() -> curriculums.stream().max((a, b) -> Integer.compare(a.getYearEffective(), b.getYearEffective())));
     }
 }

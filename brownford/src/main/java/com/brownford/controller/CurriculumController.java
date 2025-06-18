@@ -84,4 +84,10 @@ public class CurriculumController {
         curriculum.setStatus(updated.getStatus());
         return curriculumService.saveCurriculum(curriculum);
     }
+
+    @GetMapping("/by-program/{programId}")
+    public Curriculum getActiveCurriculumByProgram(@PathVariable Long programId) {
+        return curriculumService.getActiveCurriculumByProgramId(programId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No active curriculum found for this program"));
+    }
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.18.251444]
+
+### Fix
+- Fixed Enrollment Management BUGS.
+
+### Bugs
+- - Some Bugs from version [06.17.251702] still exist.
+
 ## [06.18.250201]
 
 ### Fix
