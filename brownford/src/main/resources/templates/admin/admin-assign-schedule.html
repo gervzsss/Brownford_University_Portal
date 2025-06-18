@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brown Ford University - Schedule Assignment</title>
     <!-- Link to the external CSS files -->
-    <link rel="stylesheet" th:href="@{/css/home.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
@@ -17,6 +17,62 @@
 <body>
     <div class="background-container">
         <div class="background-image"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo" />
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
 
         <!-- Sidebar Navigation -->
         <div class="sidebar" id="sidebar">
@@ -120,7 +176,7 @@
                     </li>
 
                     <li class="sidebar-nav-item">
-                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
+                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link active">
                             <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -216,66 +272,9 @@
         <!-- Sidebar Overlay -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <!-- Header -->
-        <header class="header">
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
-            <div class="logo-container">
-                <div class="logo">
-                    <div class="logo-inner">
-                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
-                    </div>
-                </div>
-                <h1 class="university-name">Brown Ford University</h1>
-            </div>
-            <div class="header-icons">
-                <!-- Notification Icon -->
-                <div class="notification-icon">
-                    <a href="#" class="notification-link" id="notificationToggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                    </a>
-                    <!-- Notification Dropdown -->
-                    <div class="notification-dropdown" id="notificationDropdown">
-                        <div class="notification-header">
-                            <h3>Notifications</h3>
-                            <a href="#" class="mark-all-read">Mark all as read</a>
-                        </div>
-                        <div class="notification-list">
-                            <p>No notifications available.</p>
-                        </div>
-                        <div class="notification-footer">
-                            <a href="#" class="view-all">View All Notifications</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Logout Icon as an anchor tag -->
-                <div class="logout-icon">
-                    <a th:href="@{/logout}" class="logout-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
         <div class="content-wrapper" id="contentWrapper">
             <main class="dashboard-content">
-                <!-- Page Header -->
+                <!-- Header Section (Welcome) -->
                 <section class="welcome-section">
                     <div class="welcome-header">
                         <div class="welcome-icon">
@@ -290,253 +289,291 @@
                         </div>
                         <div class="welcome-text">
                             <h2>Schedule Assignment</h2>
-                            <p>Assign class schedules to courses and faculty members</p>
+                            <p>Assign faculty and schedules to course sections</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Schedule Management Section -->
-                <section class="content-panel">
+                <!-- Schedule Assignment Content -->
+                <section class="content-panel" id="schedulePanel">
                     <div class="panel-header">
-                        <h3 class="section-title">Course Schedule Management</h3>
+                        <h2 class="section-title">Course Schedule Assignment</h2>
+                        <button class="btn btn-primary" id="addCurriculumCoursesBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                            Add Curriculum Courses
+                        </button>
                     </div>
                     <div class="panel-content">
-                        <!-- Controls Section -->
-                        <div class="user-controls">
-                            <div class="search-filter-container">
-                                <!-- Search -->
-                                <div class="search-container">
-                                    <input type="text" id="searchInput" placeholder="Search courses..." />
-                                    <button class="search-button" type="button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <path d="m21 21-4.35-4.35"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-
-                                <!-- Filters -->
-                                <div class="filter-container">
-                                    <select class="filter-select" id="programFilter">
-                                        <option value="">All Programs</option>
-                                        <option value="BSIT">BS Information Technology</option>
-                                        <option value="BSCS">BS Computer Science</option>
-                                        <option value="BSBA">BS Business Administration</option>
-                                        <option value="BSED">BS Education</option>
+                        <!-- Filter Controls -->
+                        <div class="filter-section">
+                            <div class="filter-row">
+                                <div class="filter-group">
+                                    <label for="semesterFilter">Semester</label>
+                                    <select id="semesterFilter" class="filter-select">
+                                        <option value="">All Semesters</option>
+                                        <option value="1st Semester">1st Semester</option>
+                                        <option value="2nd Semester">2nd Semester</option>
+                                        <option value="Summer">Summer</option>
                                     </select>
-
-                                    <select class="filter-select" id="statusFilter">
+                                </div>
+                                <div class="filter-group">
+                                    <label for="yearLevelFilter">Year Level</label>
+                                    <select id="yearLevelFilter" class="filter-select">
+                                        <option value="">All Years</option>
+                                        <option value="1">First Year</option>
+                                        <option value="2">Second Year</option>
+                                        <option value="3">Third Year</option>
+                                        <option value="4">Fourth Year</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label for="statusFilter">Assignment Status</label>
+                                    <select id="statusFilter" class="filter-select">
                                         <option value="">All Status</option>
+                                        <option value="assigned">Fully Assigned</option>
+                                        <option value="partial">Partially Assigned</option>
                                         <option value="unassigned">Unassigned</option>
-                                        <option value="assigned">Assigned</option>
-                                        <option value="conflict">Schedule Conflict</option>
                                     </select>
-
-                                    <!-- Section & Semester Filters -->
-                                    <div class="filter-container">
-                                        <select class="filter-select" id="sectionFilter">
-                                            <option value="">Select Section</option>
-                                            <!-- Dynamically populated -->
-                                        </select>
-                                        <select class="filter-select" id="semesterFilter">
-                                            <option value="">Select Semester</option>
-                                            <option value="1">1st Semester</option>
-                                            <option value="2">2nd Semester</option>
-                                            <option value="summer">Summer</option>
-                                        </select>
-                                        <button id="loadCoursesBtn" class="btn btn-primary">Load Courses</button>
-                                    </div>
                                 </div>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="filter-container">
-                                <button class="add-user-btn" id="bulkAssignBtn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Bulk Assign
-                                </button>
-                                <button class="export-btn" id="exportScheduleBtn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                    Export Schedule
-                                </button>
                             </div>
                         </div>
 
-                        <!-- Schedule Table -->
+                        <!-- Schedule Assignment Table -->
                         <div class="table-container">
                             <table class="data-table" id="scheduleTable">
-                                <<thead>
+                                <thead>
                                     <tr>
-                                        <th><input type="checkbox" id="selectAll"></th>
                                         <th>Course Code</th>
                                         <th>Course Title</th>
                                         <th>Section</th>
+                                        <th>Semester</th>
+                                        <th>Year Level</th>
                                         <th>Faculty</th>
-                                        <th>Day/Time</th>
+                                        <th>Schedule</th>
                                         <th>Room</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
-                                    </thead>
-                                    <tbody id="scheduleTableBody">
-                                        <!-- Populated by JS -->
-                                    </tbody>
+                                </thead>
+                                <tbody id="scheduleTableBody">
+                                    <!-- Schedule data will be loaded dynamically -->
+                                </tbody>
                             </table>
                         </div>
 
                         <!-- Pagination -->
-                        <div class="pagination" id="pagination">
-                            <button class="pagination-btn" id="prevBtn" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                            </button>
-                            <button class="pagination-btn active">1</button>
-                            <button class="pagination-btn">2</button>
-                            <button class="pagination-btn">3</button>
-                            <span class="pagination-ellipsis">...</span>
-                            <button class="pagination-btn">10</button>
-                            <button class="pagination-btn" id="nextBtn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="9 6 15 12 9 18"></polyline>
-                                </svg>
-                            </button>
+                        <div class="pagination" id="schedulePaginationContainer">
+                            <div class="empty-pagination-message">
+                                <p>
+                                    Pagination will appear when there are enough records to
+                                    display multiple pages.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
             </main>
         </div>
-    </div>
 
-    <!-- Schedule Assignment Modal -->
-    <div class="modal" id="scheduleModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Assign Schedule</h3>
-                <span class="close-modal" id="closeModal">&times;</span>
+        <!-- Schedule Assignment Modal -->
+        <div id="scheduleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="scheduleModalTitle">Assign Schedule & Faculty</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="scheduleForm">
+                        <input type="hidden" id="sectionCourseId" name="sectionCourseId" />
+
+                        <!-- Course Information (Read-only) -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Course</label>
+                                <input type="text" id="courseInfo" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label>Section</label>
+                                <input type="text" id="sectionInfo" class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <!-- Faculty Assignment -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="facultySelect">Assign Faculty</label>
+                                <select id="facultySelect" name="facultyId" class="form-control">
+                                    <option value="">Select Faculty Member</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Schedule Assignment -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="daySelect">Day</label>
+                                <select id="daySelect" name="day" class="form-control">
+                                    <option value="">Select Day</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="roomInput">Room</label>
+                                <input type="text" id="roomInput" name="room" class="form-control"
+                                    placeholder="e.g., Room 101, Lab A" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="startTimeInput">Start Time</label>
+                                <input type="time" id="startTimeInput" name="startTime" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="endTimeInput">End Time</label>
+                                <input type="time" id="endTimeInput" name="endTime" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelScheduleBtn">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="saveScheduleBtn">
+                                Save Assignment
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="scheduleForm">
-                    <input type="hidden" id="courseId" name="courseId">
+        </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="courseCode">Course Code</label>
-                            <input type="text" id="courseCode" name="courseCode" class="form-control" readonly>
+        <!-- View Schedule Details Modal -->
+        <div id="viewScheduleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Schedule Details</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="schedule-details">
+                        <div class="schedule-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
                         </div>
-                        <div class="form-group">
-                            <label for="courseTitle">Course Title</label>
-                            <input type="text" id="courseTitle" name="courseTitle" class="form-control" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="sectionCode">Section</label>
-                            <input type="text" id="sectionCode" name="sectionCode" class="form-control" readonly>
+                        <div class="schedule-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Course:</span>
+                                <span class="info-value" id="viewCourseDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Section:</span>
+                                <span class="info-value" id="viewSectionDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Faculty:</span>
+                                <span class="info-value" id="viewFacultyDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Schedule:</span>
+                                <span class="info-value" id="viewScheduleDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Room:</span>
+                                <span class="info-value" id="viewRoomDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Semester:</span>
+                                <span class="info-value" id="viewSemesterDetails"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Year Level:</span>
+                                <span class="info-value" id="viewYearLevelDetails"></span>
+                            </div>
                         </div>
                     </div>
+                    <div class="schedule-actions">
+                        <button class="btn btn-secondary" id="closeViewScheduleBtn">
+                            Close
+                        </button>
+                        <button class="btn btn-primary" id="editFromViewScheduleBtn">
+                            Edit Assignment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="sectionCode">Section</label>
-                            <input type="text" id="sectionCode" name="sectionCode" class="form-control" readonly>
+        <!-- Add Curriculum Courses Modal -->
+        <div id="curriculumModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Courses from Curriculum</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="curriculumForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sectionSelect">Select Section</label>
+                                <select id="sectionSelect" name="sectionId" class="form-control" required>
+                                    <option value="">Choose a section...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="curriculumSemesterSelect">Semester</label>
+                                <select id="curriculumSemesterSelect" name="semester" class="form-control" required>
+                                    <option value="">Choose semester...</option>
+                                    <option value="1st Semester">1st Semester</option>
+                                    <option value="2nd Semester">2nd Semester</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="previewCoursesBtn">
+                                Preview Courses
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="cancelCurriculumBtn">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Course Preview Section -->
+                    <div id="coursePreviewSection" style="display: none;">
+                        <hr style="margin: 20px 0;">
+                        <h4>Courses to be Added</h4>
+                        <div class="course-preview-container">
+                            <div id="coursePreviewList"></div>
+                        </div>
+                        <div class="form-actions" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-secondary" id="backToSelectionBtn">
+                                Back to Selection
+                            </button>
+                            <button type="button" class="btn btn-primary" id="confirmAddCoursesBtn">
+                                Add Selected Courses
+                            </button>
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="facultySelect">Assign Faculty</label>
-                            <select id="facultySelect" name="facultyId" class="form-control" required>
-                                <option value="">Select Faculty Member</option>
-                                <option value="1">Dr. Sarah Johnson</option>
-                                <option value="2">Prof. Michael Chen</option>
-                                <option value="3">Dr. Emily Rodriguez</option>
-                                <option value="4">Prof. David Kim</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="roomSelect">Room Assignment</label>
-                            <select id="roomSelect" name="roomId" class="form-control" required>
-                                <option value="">Select Room</option>
-                                <option value="101">Room 101</option>
-                                <option value="102">Room 102</option>
-                                <option value="201">Room 201</option>
-                                <option value="202">Room 202</option>
-                                <option value="lab1">Computer Lab 1</option>
-                                <option value="lab2">Computer Lab 2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="daySelect">Day(s)</label>
-                            <select id="daySelect" name="days" class="form-control" required>
-                                <option value="">Select Days</option>
-                                <option value="MWF">Monday, Wednesday, Friday</option>
-                                <option value="TTH">Tuesday, Thursday</option>
-                                <option value="MW">Monday, Wednesday</option>
-                                <option value="TH">Tuesday, Thursday</option>
-                                <option value="F">Friday</option>
-                                <option value="S">Saturday</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="timeSlot">Time Slot</label>
-                            <select id="timeSlot" name="timeSlot" class="form-control" required>
-                                <option value="">Select Time</option>
-                                <option value="07:00-08:00">7:00 AM - 8:00 AM</option>
-                                <option value="08:00-09:00">8:00 AM - 9:00 AM</option>
-                                <option value="09:00-10:00">9:00 AM - 10:00 AM</option>
-                                <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
-                                <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
-                                <option value="13:00-14:00">1:00 PM - 2:00 PM</option>
-                                <option value="14:00-15:00">2:00 PM - 3:00 PM</option>
-                                <option value="15:00-16:00">3:00 PM - 4:00 PM</option>
-                                <option value="16:00-17:00">4:00 PM - 5:00 PM</option>
-                                <option value="17:00-18:00">5:00 PM - 6:00 PM</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="semester">Semester</label>
-                        <select id="semester" name="semester" class="form-control" required>
-                            <option value="">Select Semester</option>
-                            <option value="1">1st Semester</option>
-                            <option value="2">2nd Semester</option>
-                            <option value="summer">Summer</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">Notes (Optional)</label>
-                        <textarea id="notes" name="notes" class="form-control" rows="3"
-                            placeholder="Add any special notes or requirements..."></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Schedule</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -544,354 +581,554 @@
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
     <script>
-        // Schedule Assignment JavaScript
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('scheduleModal');
-            const closeModal = document.getElementById('closeModal');
-            const cancelBtn = document.getElementById('cancelBtn');
-            const scheduleForm = document.getElementById('scheduleForm');
-            const selectAllCheckbox = document.getElementById('selectAll');
-            const rowCheckboxes = document.querySelectorAll('.row-select');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Modal elements
+            const scheduleModal = document.getElementById("scheduleModal");
+            const viewScheduleModal = document.getElementById("viewScheduleModal");
+            const closeModalBtns = document.querySelectorAll(".close-modal");
+            const cancelScheduleBtn = document.getElementById("cancelScheduleBtn");
+            const closeViewScheduleBtn = document.getElementById("closeViewScheduleBtn");
 
-            // Modal controls
-            closeModal.addEventListener('click', () => {
-                modal.style.display = 'none';
+            // Add curriculum modal elements
+            const curriculumModal = document.getElementById("curriculumModal");
+            const addCurriculumCoursesBtn = document.getElementById("addCurriculumCoursesBtn");
+            const cancelCurriculumBtn = document.getElementById("cancelCurriculumBtn");
+            const previewCoursesBtn = document.getElementById("previewCoursesBtn");
+            const confirmAddCoursesBtn = document.getElementById("confirmAddCoursesBtn");
+            const backToSelectionBtn = document.getElementById("backToSelectionBtn");
+
+            let sectionsList = [];
+            let curriculumCoursesToAdd = [];
+
+            // Add curriculum courses button click
+            addCurriculumCoursesBtn.addEventListener("click", function () {
+                loadSections();
+                curriculumModal.style.display = "block";
             });
 
-            cancelBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
+            cancelCurriculumBtn.addEventListener("click", function () {
+                curriculumModal.style.display = "none";
+                resetCurriculumModal();
             });
 
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
+            // Load sections for dropdown
+            async function loadSections() {
+                try {
+                    const response = await fetch("/api/sections");
+                    if (!response.ok) throw new Error("Failed to fetch sections");
+                    sectionsList = await response.json();
+                    populateSectionDropdown();
+                } catch (error) {
+                    console.error("Error loading sections:", error);
+                    sectionsList = [];
+                }
+            }
+
+            function populateSectionDropdown() {
+                const sectionSelect = document.getElementById("sectionSelect");
+                sectionSelect.innerHTML = '<option value="">Choose a section...</option>';
+                sectionsList.forEach(section => {
+                    const option = document.createElement("option");
+                    option.value = section.id;
+                    option.textContent = `${section.sectionCode} - ${section.program.programName} (Year ${section.yearLevel})`;
+                    sectionSelect.appendChild(option);
+                });
+            }
+
+            // Preview courses button click
+            previewCoursesBtn.addEventListener("click", async function () {
+                const sectionId = document.getElementById("sectionSelect").value;
+                const semester = document.getElementById("curriculumSemesterSelect").value;
+
+                if (!sectionId || !semester) {
+                    alert("Please select both section and semester");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/section-courses/curriculum-driven?sectionId=${sectionId}&semester=${semester}`);
+                    if (!response.ok) throw new Error("Failed to fetch curriculum courses");
+
+                    const curriculumCourses = await response.json();
+
+                    // Filter out courses that already have section courses assigned
+                    curriculumCoursesToAdd = curriculumCourses.filter(course => !course.sectionCourseId);
+
+                    if (curriculumCoursesToAdd.length === 0) {
+                        alert("All curriculum courses for this section and semester are already added.");
+                        return;
+                    }
+
+                    displayCoursePreview();
+
+                } catch (error) {
+                    console.error("Error fetching curriculum courses:", error);
+                    alert("Error loading curriculum courses: " + error.message);
                 }
             });
 
-            // Select all functionality
-            selectAllCheckbox.addEventListener('change', function () {
-                rowCheckboxes.forEach(checkbox => {
-                    checkbox.checked = this.checked;
-                });
-            });
+            function displayCoursePreview() {
+                const previewList = document.getElementById("coursePreviewList");
+                const selectedSection = sectionsList.find(s => s.id == document.getElementById("sectionSelect").value);
 
-            // Form submission
-            scheduleForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                const sectionCourseId = document.getElementById('courseId').value;
-                const facultyId = document.getElementById('facultySelect').value;
-                const room = document.getElementById('roomSelect').value;
-                const day = document.getElementById('daySelect').value;
-                const timeSlot = document.getElementById('timeSlot').value;
-                let [startTime, endTime] = timeSlot.split('-').map(s => s.trim());
-
-                await fetch('/api/schedules/assign', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sectionCourseId, facultyId, room, day, startTime, endTime })
-                });
-                document.getElementById('scheduleModal').style.display = 'none';
-                await loadTable();
-            });
-
-            // Search functionality
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function () {
-                // Add search logic here
-                console.log('Searching for:', this.value);
-            });
-
-            // Filter functionality
-            const filters = document.querySelectorAll('.filter-select');
-            filters.forEach(filter => {
-                filter.addEventListener('change', function () {
-                    // Add filter logic here
-                    console.log('Filter changed:', this.id, this.value);
-                });
-            });
-        });
-
-        // Section & Semester Dropdown Logic
-        async function populateSections() {
-            const res = await fetch('/api/sections');
-            const sections = await res.json();
-            const sectionFilter = document.getElementById('sectionFilter');
-            sectionFilter.innerHTML = '<option value="">Select Section</option>' +
-                sections.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-        }
-
-        document.getElementById('loadCoursesBtn').addEventListener('click', async function () {
-            const sectionId = document.getElementById('sectionFilter').value;
-            const semester = document.getElementById('semesterFilter').value;
-            if (!sectionId || !semester) {
-                alert('Please select both section and semester.');
-                return;
-            }
-            const res = await fetch(`/api/section-courses?sectionId=${sectionId}&semester=${semester}`);
-            const data = await res.json();
-            sectionCoursesCache = data;
-            renderTable(data);
-        });
-
-        // Schedule management functions
-        let sectionCoursesCache = [];
-        let facultyCache = [];
-
-        async function openAssignModal(sectionCourseId) {
-            if (!sectionCoursesCache.length) sectionCoursesCache = await fetchSectionCourses();
-            if (!facultyCache.length) facultyCache = await fetchFaculty();
-
-            const sc = sectionCoursesCache.find(sc => sc.id === sectionCourseId);
-            document.getElementById('courseId').value = sc.id;
-            document.getElementById('courseCode').value = sc.courseCode;
-            document.getElementById('courseTitle').value = sc.courseTitle;
-            if (document.getElementById('sectionCode')) {
-                document.getElementById('sectionCode').value = sc.section;
-            }
-            // Populate faculty dropdown
-            const facultySelect = document.getElementById('facultySelect');
-            facultySelect.innerHTML = '<option value="">Select Faculty Member</option>' +
-                facultyCache.map(f => `<option value="${f.id}" ${sc.facultyId == f.id ? 'selected' : ''}>${f.name}</option>`).join('');
-            document.getElementById('roomSelect').value = sc.room || '';
-            document.getElementById('daySelect').value = sc.day || '';
-            document.getElementById('timeSlot').value = sc.startTime && sc.endTime ? `${sc.startTime}-${sc.endTime}` : '';
-            document.getElementById('scheduleModal').style.display = 'block';
-        }
-
-        function editSchedule(courseId) {
-            document.getElementById('modalTitle').textContent = 'Edit Schedule';
-            document.getElementById('courseId').value = courseId;
-
-            // Populate existing schedule data (replace with actual data)
-            document.getElementById('courseCode').value = 'IT102';
-            document.getElementById('courseTitle').value = 'Database Management Systems';
-            document.getElementById('facultySelect').value = '1';
-            document.getElementById('roomSelect').value = '201';
-            document.getElementById('daySelect').value = 'MWF';
-            document.getElementById('timeSlot').value = '10:00-11:00';
-            document.getElementById('semester').value = '1';
-
-            document.getElementById('scheduleModal').style.display = 'block';
-        }
-
-        function viewSchedule(courseId) {
-            // Implement view schedule details
-            console.log('Viewing schedule for course:', courseId);
-        }
-
-        function resolveConflict(courseId) {
-            // Implement conflict resolution
-            console.log('Resolving conflict for course:', courseId);
-            alert('Opening conflict resolution dialog...');
-        }
-
-        // Bulk operations
-        document.getElementById('bulkAssignBtn').addEventListener('click', function () {
-            const selectedCourses = document.querySelectorAll('.row-select:checked');
-            if (selectedCourses.length === 0) {
-                alert('Please select courses to assign schedules.');
-                return;
-            }
-            console.log('Bulk assigning schedules for', selectedCourses.length, 'courses');
-        });
-
-        document.getElementById('exportScheduleBtn').addEventListener('click', function () {
-            console.log('Exporting schedule data...');
-            // Implement export functionality
-        });
-
-        async function fetchSectionCourses() {
-            const res = await fetch('/api/section-courses');
-            return res.json();
-        }
-        async function fetchFaculty() {
-            const res = await fetch('/api/faculty');
-            return res.json();
-        }
-
-        function renderTable(data) {
-            const tbody = document.getElementById('scheduleTableBody');
-            tbody.innerHTML = '';
-            data.forEach(row => {
-                tbody.innerHTML += `
-            <tr>
-                <td><input type="checkbox" class="row-select" value="${row.id}"></td>
-                <td><strong>${row.courseCode}</strong></td>
-                <td>${row.courseTitle}</td>
-                <td>${row.section}</td>
-                <td>${row.faculty ? row.faculty : '<span class="status-badge unassigned">Unassigned</span>'}</td>
-                <td>${row.day && row.startTime && row.endTime ? `${row.day} ${row.startTime}-${row.endTime}` : '<span class="status-badge unassigned">Not Scheduled</span>'}</td>
-                <td>${row.room ? row.room : '-'}</td>
-                <td>
-                    <span class="status-badge ${row.faculty ? (row.day ? 'assigned' : 'unassigned') : 'unassigned'}">
-                        ${row.faculty ? (row.day ? 'Assigned' : 'Unassigned') : 'Unassigned'}
-                    </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn-sm btn-edit" onclick="openAssignModal(${row.id})">${row.faculty && row.day ? 'Edit' : 'Assign'}</button>
+                previewList.innerHTML = `
+        <div class="preview-header">
+            <p><strong>Section:</strong> ${selectedSection.sectionCode} - ${selectedSection.program.programName}</p>
+            <p><strong>Semester:</strong> ${document.getElementById("curriculumSemesterSelect").value}</p>
+            <p><strong>Courses to add:</strong> ${curriculumCoursesToAdd.length}</p>
+        </div>
+        <div class="course-list">
+            ${curriculumCoursesToAdd.map(course => `
+                <div class="course-item">
+                    <div class="course-info">
+                        <strong>${course.courseCode}</strong> - ${course.courseTitle}
+                        <span class="course-meta">Year ${course.yearLevel} | ${course.semester}</span>
                     </div>
-                </td>
-            </tr>
-        `;
-            });
-        }
+                    <div class="course-status">
+                        <span class="status-badge status-inactive">Not Assigned</span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
 
-        async function loadTable() {
-            const data = await fetchSectionCourses();
-            renderTable(data);
-        }
-        window.onload = function () {
-            populateSections();
-            loadTable();
-        }
+                document.getElementById("coursePreviewSection").style.display = "block";
+            }
+
+            // Back to selection button
+            backToSelectionBtn.addEventListener("click", function () {
+                document.getElementById("coursePreviewSection").style.display = "none";
+            });
+
+            // Confirm add courses button
+            confirmAddCoursesBtn.addEventListener("click", async function () {
+                const sectionId = document.getElementById("sectionSelect").value;
+                const semester = document.getElementById("curriculumSemesterSelect").value;
+
+                try {
+                    // Create section courses for each curriculum course
+                    const promises = curriculumCoursesToAdd.map(course => {
+                        const sectionCourseData = {
+                            section: { id: parseInt(sectionId) },
+                            course: { id: course.courseId },
+                            semester: semester,
+                            yearLevel: course.yearLevel
+                        };
+
+                        return fetch("/api/section-courses", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(sectionCourseData)
+                        });
+                    });
+
+                    await Promise.all(promises);
+
+                    curriculumModal.style.display = "none";
+                    resetCurriculumModal();
+                    loadSectionCourses(); // Reload the main table
+
+                    alert(`Successfully added ${curriculumCoursesToAdd.length} courses from curriculum!`);
+
+                } catch (error) {
+                    console.error("Error adding curriculum courses:", error);
+                    alert("Error adding courses: " + error.message);
+                }
+            });
+
+            function resetCurriculumModal() {
+                document.getElementById("curriculumForm").reset();
+                document.getElementById("coursePreviewSection").style.display = "none";
+                curriculumCoursesToAdd = [];
+            }
+
+            // Close all modals
+            closeModalBtns.forEach((btn) => {
+                btn.addEventListener("click", function () {
+                    scheduleModal.style.display = "none";
+                    viewScheduleModal.style.display = "none";
+                    curriculumModal.style.display = "none";
+                    resetCurriculumModal();
+                });
+            });
+
+            cancelScheduleBtn.addEventListener("click", function () {
+                scheduleModal.style.display = "none";
+            });
+
+            closeViewScheduleBtn.addEventListener("click", function () {
+                viewScheduleModal.style.display = "none";
+            });
+
+            // Load faculty list
+            async function loadFacultyList() {
+                try {
+                    const response = await fetch("/api/faculty");
+                    if (!response.ok) throw new Error("Failed to fetch faculty");
+                    facultyList = await response.json();
+                    populateFacultyDropdown();
+                } catch (error) {
+                    console.error("Error loading faculty:", error);
+                    facultyList = [];
+                }
+            }
+
+            function populateFacultyDropdown() {
+                const facultySelect = document.getElementById("facultySelect");
+                facultySelect.innerHTML = '<option value="">Select Faculty Member</option>';
+                facultyList.forEach(faculty => {
+                    const option = document.createElement("option");
+                    option.value = faculty.id;
+                    option.textContent = `${faculty.user.fullName} - ${faculty.department || 'N/A'}`;
+                    facultySelect.appendChild(option);
+                });
+            }
+
+            // Load section courses
+            async function loadSectionCourses() {
+                try {
+                    const response = await fetch("/api/schedules");
+                    if (!response.ok) throw new Error("Failed to fetch section courses");
+                    allSectionCourses = await response.json();
+                    renderSectionCourses();
+                } catch (error) {
+                    console.error("Error loading section courses:", error);
+                    const tbody = document.getElementById("scheduleTableBody");
+                    tbody.innerHTML = `<tr><td colspan='10' class='empty-state-message'>Failed to load course schedules.</td></tr>`;
+                }
+            }
+
+            function getAssignmentStatus(sectionCourse) {
+                const hasFaculty = sectionCourse.faculty !== null;
+                const hasSchedule = sectionCourse.day !== null && sectionCourse.startTime !== null;
+
+                if (hasFaculty && hasSchedule) return 'assigned';
+                if (hasFaculty || hasSchedule) return 'partial';
+                return 'unassigned';
+            }
+
+            function getStatusBadge(status) {
+                const statusMap = {
+                    'assigned': { class: 'status-active', text: 'Fully Assigned' },
+                    'partial': { class: 'status-badge', text: 'Partially Assigned', style: 'background-color: #fff3cd; color: #856404;' },
+                    'unassigned': { class: 'status-inactive', text: 'Unassigned' }
+                };
+                const statusInfo = statusMap[status] || statusMap['unassigned'];
+                const style = statusInfo.style ? `style="${statusInfo.style}"` : '';
+                return `<span class="status-badge ${statusInfo.class}" ${style}>${statusInfo.text}</span>`;
+            }
+
+            function renderSectionCourses() {
+                const tbody = document.getElementById("scheduleTableBody");
+                let filteredCourses = [...allSectionCourses];
+
+                // Apply filters
+                const semesterFilter = document.getElementById("semesterFilter").value;
+                const yearLevelFilter = document.getElementById("yearLevelFilter").value;
+                const statusFilter = document.getElementById("statusFilter").value;
+
+                if (semesterFilter) {
+                    filteredCourses = filteredCourses.filter(sc => sc.semester === semesterFilter);
+                }
+                if (yearLevelFilter) {
+                    filteredCourses = filteredCourses.filter(sc => sc.yearLevel === parseInt(yearLevelFilter));
+                }
+                if (statusFilter) {
+                    filteredCourses = filteredCourses.filter(sc => getAssignmentStatus(sc) === statusFilter);
+                }
+
+                if (!filteredCourses || filteredCourses.length === 0) {
+                    tbody.innerHTML = `<tr class='empty-state-row'><td colspan='10' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2' ry='2'></rect><line x1='16' y1='2' x2='16' y2='6'></line><line x1='8' y1='2' x2='8' y2='6'></line><line x1='3' y1='10' x2='21' y2='10'></line></svg><p>No course sections found. Adjust your filters to see results.</p></div></td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = filteredCourses.map(sectionCourse => {
+                    const status = getAssignmentStatus(sectionCourse);
+                    const scheduleText = sectionCourse.day && sectionCourse.startTime && sectionCourse.endTime
+                        ? `${sectionCourse.day} ${sectionCourse.startTime}-${sectionCourse.endTime}`
+                        : 'Not Assigned';
+                    const yearLevelText = sectionCourse.yearLevel
+                        ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][sectionCourse.yearLevel - 1]
+                        : 'N/A';
+
+                    return `
+                        <tr>
+                            <td><strong>${sectionCourse.courseCode}</strong></td>
+                            <td>${sectionCourse.courseTitle}</td>
+                            <td>${sectionCourse.section}</td>
+                            <td>${sectionCourse.semester || 'N/A'}</td>
+                            <td>${yearLevelText}</td>
+                            <td>${sectionCourse.faculty || 'Not Assigned'}</td>
+                            <td>${scheduleText}</td>
+                            <td>${sectionCourse.room || 'Not Assigned'}</td>
+                            <td>${getStatusBadge(status)}</td>
+                            <td class="action-buttons">
+                                <button class="btn btn-sm btn-view" data-id="${sectionCourse.id}" title="View Details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                                        <line x1="12" y1="8" x2="12" y2="8"></line>
+                                    </svg>
+                                    View
+                                </button>
+                                <button class="btn btn-sm btn-edit" data-id="${sectionCourse.id}" title="Assign/Edit Schedule">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    Assign
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join("");
+
+                // Add event listeners to action buttons
+                addActionButtonListeners();
+            }
+
+            function addActionButtonListeners() {
+                // View buttons
+                document.querySelectorAll(".btn-view").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const sectionCourseId = this.getAttribute("data-id");
+                        openViewModal(sectionCourseId);
+                    });
+                });
+
+                // Edit/Assign buttons
+                document.querySelectorAll(".btn-edit").forEach(btn => {
+                    btn.addEventListener("click", function () {
+                        const sectionCourseId = this.getAttribute("data-id");
+                        openAssignModal(sectionCourseId);
+                    });
+                });
+            }
+
+            function openViewModal(sectionCourseId) {
+                const sectionCourse = allSectionCourses.find(sc => sc.id == sectionCourseId);
+                if (!sectionCourse) return;
+
+                document.getElementById("viewCourseDetails").textContent = `${sectionCourse.courseCode} - ${sectionCourse.courseTitle}`;
+                document.getElementById("viewSectionDetails").textContent = sectionCourse.section;
+                document.getElementById("viewFacultyDetails").textContent = sectionCourse.faculty || 'Not Assigned';
+
+                const scheduleText = sectionCourse.day && sectionCourse.startTime && sectionCourse.endTime
+                    ? `${sectionCourse.day} ${sectionCourse.startTime}-${sectionCourse.endTime}`
+                    : 'Not Assigned';
+                document.getElementById("viewScheduleDetails").textContent = scheduleText;
+                document.getElementById("viewRoomDetails").textContent = sectionCourse.room || 'Not Assigned';
+                document.getElementById("viewSemesterDetails").textContent = sectionCourse.semester || 'N/A';
+
+                const yearLevelText = sectionCourse.yearLevel
+                    ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][sectionCourse.yearLevel - 1]
+                    : 'N/A';
+                document.getElementById("viewYearLevelDetails").textContent = yearLevelText;
+
+                // Set up edit button
+                document.getElementById("editFromViewScheduleBtn").onclick = function () {
+                    viewScheduleModal.style.display = "none";
+                    openAssignModal(sectionCourseId);
+                };
+
+                viewScheduleModal.style.display = "block";
+            }
+
+            function openAssignModal(sectionCourseId) {
+                const sectionCourse = allSectionCourses.find(sc => sc.id == sectionCourseId);
+                if (!sectionCourse) return;
+
+                document.getElementById("sectionCourseId").value = sectionCourseId;
+                document.getElementById("courseInfo").value = `${sectionCourse.courseCode} - ${sectionCourse.courseTitle}`;
+                document.getElementById("sectionInfo").value = sectionCourse.section;
+
+                // Set current values if they exist
+                document.getElementById("facultySelect").value = sectionCourse.facultyId || "";
+                document.getElementById("daySelect").value = sectionCourse.day || "";
+                document.getElementById("startTimeInput").value = sectionCourse.startTime || "";
+                document.getElementById("endTimeInput").value = sectionCourse.endTime || "";
+                document.getElementById("roomInput").value = sectionCourse.room || "";
+
+                scheduleModal.style.display = "block";
+            }
+
+            // Schedule form submission
+            document.getElementById("scheduleForm").addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const formData = {
+                    sectionCourseId: parseInt(document.getElementById("sectionCourseId").value),
+                    facultyId: document.getElementById("facultySelect").value ? parseInt(document.getElementById("facultySelect").value) : null,
+                    day: document.getElementById("daySelect").value,
+                    startTime: document.getElementById("startTimeInput").value,
+                    endTime: document.getElementById("endTimeInput").value,
+                    room: document.getElementById("roomInput").value
+                };
+
+                try {
+                    const response = await fetch("/api/schedules/assign", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) throw new Error("Failed to assign schedule");
+
+                    scheduleModal.style.display = "none";
+                    loadSectionCourses(); // Reload data
+                } catch (error) {
+                    alert("Error assigning schedule: " + error.message);
+                }
+            });
+
+            // Filter event listeners
+            document.getElementById("semesterFilter").addEventListener("change", renderSectionCourses);
+            document.getElementById("yearLevelFilter").addEventListener("change", renderSectionCourses);
+            document.getElementById("statusFilter").addEventListener("change", renderSectionCourses);
+
+            // Initialize
+            loadFacultyList();
+            loadSectionCourses();
+        });
     </script>
 
     <style>
-        /* Additional styles for schedule assignment */
-        .status-badge.unassigned {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-badge.assigned {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-badge.conflict {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 50px auto;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 800px;
-            animation: modalFadeIn 0.3s;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #6b3a1d;
-            color: white;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            font-size: 20px;
-        }
-
-        .close-modal {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close-modal:hover {
-            color: #f0e6dd;
-        }
-
-        .modal-body {
+        .schedule-details {
+            text-align: center;
             padding: 20px;
         }
 
-        .form-row {
+        .schedule-icon {
+            margin-bottom: 20px;
+        }
+
+        .schedule-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .info-item {
             display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            flex: 1;
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .form-control {
-            width: 100%;
+            flex-direction: column;
             padding: 10px;
-            border: 1px solid #ddd;
+            background-color: #f8f9fa;
             border-radius: 4px;
-            font-size: 14px;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #6b3a1d;
-            box-shadow: 0 0 0 2px rgba(107, 58, 29, 0.2);
+        .info-label {
+            font-weight: 600;
+            color: #6b3a1d;
+            font-family: "Cinzel", serif;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
         }
 
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 14px;
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: #6b3a1d;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #f0f0f0;
+        .info-value {
             color: #333;
-            border: 1px solid #ddd;
+            font-family: "Alice", serif;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
         }
 
         @media (max-width: 768px) {
-            .form-row {
+            .schedule-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .course-preview-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+
+        .preview-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .preview-header p {
+            margin: 5px 0;
+            color: #6b3a1d;
+            font-family: "Alice", serif;
+        }
+
+        .course-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .course-item:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-info strong {
+            color: #6b3a1d;
+            font-family: "Cinzel", serif;
+        }
+
+        .course-meta {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 4px;
+            font-family: "Alice", serif;
+        }
+
+        .course-status {
+            flex-shrink: 0;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .panel-header .btn {
+            margin-left: auto;
+        }
+
+        @media (max-width: 768px) {
+            .panel-header {
                 flex-direction: column;
-                gap: 0;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .panel-header .btn {
+                margin-left: 0;
+                width: 100%;
             }
         }
     </style>

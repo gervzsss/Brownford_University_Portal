@@ -2,916 +2,934 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brown Ford University - Course Management</title>
-  <!-- Link to the external CSS files -->
-  <link rel="stylesheet" th:href="@{/css/home.css}" />
-  <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
-  <link rel="stylesheet" th:href="@{/css/common.css}" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
-    rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brown Ford University - Course Management</title>
+    <!-- Link to the external CSS files -->
+    <link rel="stylesheet" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
-  <div class="background-container">
-    <div class="background-image"></div>
+    <div class="background-container">
+        <div class="background-image"></div>
 
-    <!-- Header -->
-    <header class="header">
-      <button class="sidebar-toggle" id="sidebarToggle">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8B4513"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-      <div class="logo-container">
-        <div class="logo">
-          <div class="logo-inner">
-            <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo" />
-          </div>
-        </div>
-        <h1 class="university-name">Brown Ford University</h1>
-      </div>
-      <div class="header-icons">
-        <!-- Notification Icon -->
-        <div class="notification-icon">
-          <a href="#" class="notification-link" id="notificationToggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-          </a>
-          <!-- Notification Dropdown -->
-          <div class="notification-dropdown" id="notificationDropdown">
-            <div class="notification-header">
-              <h3>Notifications</h3>
-              <a href="#" class="mark-all-read">Mark all as read</a>
-            </div>
-            <div class="notification-list">
-              <p>No notifications available.</p>
-            </div>
-            <div class="notification-footer">
-              <a href="#" class="view-all">View All Notifications</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Interactive Logout Icon as an anchor tag -->
-        <div class="logout-icon">
-          <a th:href="@{/logout}" class="logout-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <!-- Sidebar Navigation -->
-    <!-- Sidebar Navigation -->
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo">
-          <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
-          <span class="sidebar-title">Admin Portal</span>
-        </div>
-        <button class="sidebar-close" id="sidebarClose">&times;</button>
-      </div>
-      <div class="sidebar-content">
-        <ul class="sidebar-nav">
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        <!-- Header -->
+        <header class="header">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
-              </span>
-              <span class="sidebar-nav-text">Dashboard</span>
-            </a>
-          </li>
-
-          <div class="sidebar-section-title">Academic Management</div>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-programs}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Programs</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-courses}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Courses</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-enrollments}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Enrollment</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-sections}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Sections</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-curriculum}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Curriculum</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">Schedule</span>
-            </a>
-          </li>
-
-          <div class="sidebar-section-title">User Management</div>
-
-          <li class="sidebar-nav-item">
-            <a th:href="@{/admin-users}" class="sidebar-nav-link">
-              <span class="sidebar-nav-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </span>
-              <span class="sidebar-nav-text">User Management</span>
-            </a>
-          </li>
-
-          <li class="sidebar-nav-item sidebar-dropdown">
-            <button class="sidebar-dropdown-toggle">
-              <span class="sidebar-dropdown-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="8.5" cy="7" r="4"></circle>
-                  <line x1="20" y1="8" x2="20" y2="14"></line>
-                  <line x1="23" y1="11" x2="17" y2="11"></line>
-                </svg>
-              </span>
-              <span class="sidebar-dropdown-text">Faculty</span>
-              <span class="sidebar-dropdown-arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </span>
             </button>
-            <div class="sidebar-dropdown-menu">
-              <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
-              <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
-                Management</a>
-            </div>
-          </li>
-
-          <li class="sidebar-nav-item sidebar-dropdown">
-            <button class="sidebar-dropdown-toggle">
-              <span class="sidebar-dropdown-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                </svg>
-              </span>
-              <span class="sidebar-dropdown-text">Students</span>
-              <span class="sidebar-dropdown-arrow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </span>
-            </button>
-            <div class="sidebar-dropdown-menu">
-              <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
-              <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="sidebar-footer">
-        <p>Brown Ford University &copy; 2025</p>
-        <p>Admin Portal v1.0</p>
-      </div>
-    </div>
-
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <div class="content-wrapper" id="contentWrapper">
-      <main class="dashboard-content">
-        <!-- Header Section (Welcome) -->
-        <section class="welcome-section">
-          <div class="welcome-header">
-            <div class="welcome-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </div>
-            <div class="welcome-text">
-              <h2>Course Management</h2>
-              <p>Manage courses for the academic program</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Courses Content -->
-        <section class="content-panel" id="coursesPanel">
-          <div class="panel-header">
-            <h2 class="section-title">Course Management</h2>
-          </div>
-          <div class="panel-content">
-            <!-- Search and Filter Controls -->
-            <div class="user-controls">
-              <div class="search-filter-container">
-                <div class="search-container">
-                  <input type="text" placeholder="Search courses..." id="courseSearchInput" />
-                  <button class="search-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="11" cy="11" r="8"></circle>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                  </button>
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo" />
+                    </div>
                 </div>
-              </div>
-              <div class="action-buttons">
-                <button id="addCourseBtn" class="add-user-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                    <line x1="12" y1="11" x2="12" y2="17"></line>
-                    <line x1="9" y1="14" x2="15" y2="14"></line>
-                  </svg>
-                  Add New Course
-                </button>
-                <button id="exportCoursesBtn" class="export-btn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  Export
-                </button>
-              </div>
+                <h1 class="university-name">Brown Ford University</h1>
             </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Filter by Year Level, Program, and Semester -->
-            <div class="filter-controls" style="margin-bottom: 12px; display: flex; gap: 16px; align-items: center;">
-              <label for="yearLevelFilter" style="margin-right: 8px;">Year Level:</label>
-              <select id="yearLevelFilter" class="form-control" style="width: 140px;">
-                <option value="">All Years</option>
-                <option value="1">First Year</option>
-                <option value="2">Second Year</option>
-                <option value="3">Third Year</option>
-                <option value="4">Fourth Year</option>
-              </select>
-              <label for="programFilter" style="margin-left: 12px; margin-right: 8px;">Program:</label>
-              <select id="programFilter" class="form-control" style="width: 180px;"></select>
-              <label for="semesterFilter" style="margin-left: 12px; margin-right: 8px;">Semester:</label>
-              <select id="semesterFilter" class="form-control" style="width: 150px;">
-                <option value="">All Semesters</option>
-                <option value="1st Semester">1st Semester</option>
-                <option value="2nd Semester">2nd Semester</option>
-                <option value="Summer">Summer</option>
-              </select>
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a th:href="@{/logout}" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
             </div>
+        </header>
 
-            <!-- Courses Table -->
-            <div class="table-container">
-              <table class="data-table" id="coursesTable">
-                <thead>
-                  <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Program</th>
-                    <th>Status</th>
-                    <th>Year Level</th>
-                    <th>Semester</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="coursesTableBody">
-                  <!-- Course data will be loaded dynamically from the database -->
-                </tbody>
-              </table>
+        <!-- Sidebar Navigation -->
+        <!-- Sidebar Navigation -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo">
+                    <span class="sidebar-title">Admin Portal</span>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">&times;</button>
             </div>
+            <div class="sidebar-content">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-dashboard}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Dashboard</span>
+                        </a>
+                    </li>
 
-            <!-- Pagination -->
-            <div class="pagination" id="coursesPaginationContainer">
-              <div class="empty-pagination-message">
-                <p>
-                  Pagination will appear when there are enough records to
-                  display multiple pages.
-                </p>
-              </div>
+                    <div class="sidebar-section-title">Academic Management</div>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-programs}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Programs</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-courses}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Courses</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-enrollments}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Enrollment</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-sections}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Sections</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-curriculum}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Curriculum</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-assign-schedule}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">Schedule</span>
+                        </a>
+                    </li>
+
+                    <div class="sidebar-section-title">User Management</div>
+
+                    <li class="sidebar-nav-item">
+                        <a th:href="@{/admin-users}" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="sidebar-nav-text">User Management</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item sidebar-dropdown">
+                        <button class="sidebar-dropdown-toggle">
+                            <span class="sidebar-dropdown-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                            </span>
+                            <span class="sidebar-dropdown-text">Faculty</span>
+                            <span class="sidebar-dropdown-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="sidebar-dropdown-menu">
+                            <a th:href="@{/admin-faculty-list}" class="sidebar-dropdown-item">Faculty List</a>
+                            <a th:href="@{/admin-faculty-workload}" class="sidebar-dropdown-item">Workload
+                                Management</a>
+                        </div>
+                    </li>
+
+                    <li class="sidebar-nav-item sidebar-dropdown">
+                        <button class="sidebar-dropdown-toggle">
+                            <span class="sidebar-dropdown-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                </svg>
+                            </span>
+                            <span class="sidebar-dropdown-text">Students</span>
+                            <span class="sidebar-dropdown-arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </span>
+                        </button>
+                        <div class="sidebar-dropdown-menu">
+                            <a th:href="@{/admin-student-list}" class="sidebar-dropdown-item">Student List</a>
+                            <a th:href="@{/admin-student-records}" class="sidebar-dropdown-item">Academic Records</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </div>
-        </section>
-      </main>
+            <div class="sidebar-footer">
+                <p>Brown Ford University &copy; 2025</p>
+                <p>Admin Portal v1.0</p>
+            </div>
+        </div>
+
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <div class="content-wrapper" id="contentWrapper">
+            <main class="dashboard-content">
+                <!-- Header Section (Welcome) -->
+                <section class="welcome-section">
+                    <div class="welcome-header">
+                        <div class="welcome-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div class="welcome-text">
+                            <h2>Course Management</h2>
+                            <p>Manage courses for the academic program</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Courses Content -->
+                <section class="content-panel" id="coursesPanel">
+                    <div class="panel-header">
+                        <h2 class="section-title">Course Management</h2>
+                    </div>
+                    <div class="panel-content">
+                        <!-- Search and Filter Controls -->
+                        <div class="user-controls">
+                            <div class="search-filter-container">
+                                <div class="search-container">
+                                    <input type="text" placeholder="Search courses..." id="courseSearchInput" />
+                                    <button class="search-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button id="addCourseBtn" class="add-user-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                        <line x1="12" y1="11" x2="12" y2="17"></line>
+                                        <line x1="9" y1="14" x2="15" y2="14"></line>
+                                    </svg>
+                                    Add New Course
+                                </button>
+                                <button id="exportCoursesBtn" class="export-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Filter by Year Level, Program, and Semester -->
+                        <div class="filter-controls"
+                            style="margin-bottom: 12px; display: flex; gap: 16px; align-items: center;">
+                            <label for="yearLevelFilter" style="margin-right: 8px;">Year Level:</label>
+                            <select id="yearLevelFilter" class="form-control" style="width: 140px;">
+                                <option value="">All Years</option>
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
+                                <option value="4">Fourth Year</option>
+                            </select>
+                            <label for="programFilter" style="margin-left: 12px; margin-right: 8px;">Program:</label>
+                            <select id="programFilter" class="form-control" style="width: 180px;"></select>
+                            <label for="semesterFilter" style="margin-left: 12px; margin-right: 8px;">Semester:</label>
+                            <select id="semesterFilter" class="form-control" style="width: 150px;">
+                                <option value="">All Semesters</option>
+                                <option value="1st Semester">1st Semester</option>
+                                <option value="2nd Semester">2nd Semester</option>
+                                <option value="Summer">Summer</option>
+                            </select>
+                        </div>
+
+                        <!-- Courses Table -->
+                        <div class="table-container">
+                            <table class="data-table" id="coursesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Program</th>
+                                        <th>Status</th>
+                                        <th>Year Level</th>
+                                        <th>Semester</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="coursesTableBody">
+                                    <!-- Course data will be loaded dynamically from the database -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination" id="coursesPaginationContainer">
+                            <div class="empty-pagination-message">
+                                <p>
+                                    Pagination will appear when there are enough records to
+                                    display multiple pages.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Course Modal -->
+        <div id="courseModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="courseModalTitle">Add New Course</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="courseForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="courseCode">Course Code</label>
+                                <input type="text" id="courseCode" name="courseCode" class="form-control" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="courseTitle">Course Name</label>
+                                <input type="text" id="courseTitle" name="courseTitle" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="courseYearLevel">Year Level</label>
+                                <select id="courseYearLevel" name="courseYearLevel" class="form-control">
+                                    <option value="">Select Year Level</option>
+                                    <option value="1">First Year</option>
+                                    <option value="2">Second Year</option>
+                                    <option value="3">Third Year</option>
+                                    <option value="4">Fourth Year</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="courseUnits">Units</label>
+                                <input type="number" id="courseUnits" name="courseUnits" class="form-control" min="1"
+                                    max="6" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="coursePrerequisites">Prerequisites</label>
+                                <input type="text" id="coursePrerequisites" name="coursePrerequisites"
+                                    class="form-control" placeholder="'COR1,COR02' or 'None'" />
+                            </div>
+                            <div class="form-group">
+                                <label for="courseCorequisites">Corequisites</label>
+                                <input type="text" id="courseCorequisites" name="courseCorequisites"
+                                    class="form-control" placeholder="'COR1,COR02' or 'None'" />
+                            </div>
+                            <div class="form-group">
+                                <label for="courseStatus">Status</label>
+                                <select id="courseStatus" name="courseStatus" class="form-control" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseSemester">Semester</label>
+                            <select id="courseSemester" name="courseSemester" class="form-control">
+                                <option value="">Select Semester</option>
+                                <option value="1st Semester">1st Semester</option>
+                                <option value="2nd Semester">2nd Semester</option>
+                                <option value="Summer">Summer</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelCourseBtn">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="saveCourseBtn">
+                                Save Course
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Course Details Modal -->
+        <div id="viewCourseModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Course Details</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="course-details">
+                        <div class="course-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div class="course-info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Course Code:</span>
+                                <span class="info-value" id="viewCourseCode"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Course Title:</span>
+                                <span class="info-value" id="viewCourseTitle"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Units:</span>
+                                <span class="info-value" id="viewCourseCredits"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Prerequisites:</span>
+                                <span class="info-value" id="viewCoursePrerequisites"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Corequisites:</span>
+                                <span class="info-value" id="viewCourseCorequisites"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="info-value" id="viewCourseStatus"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Programs:</span>
+                                <span class="info-value" id="viewCoursePrograms"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Year Level:</span>
+                                <span class="info-value" id="viewCourseYearLevel"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Semester:</span>
+                                <span class="info-value" id="viewCourseSemester"></span>
+                            </div>
+                        </div>
+                        <div class="course-sections">
+                            <h4>Active Sections</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Section ID</th>
+                                        <th>Instructor</th>
+                                        <th>Schedule</th>
+                                        <th>Room</th>
+                                        <th>Enrollment</th>
+                                        <th>Semester</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="viewCourseSections">
+                                    <tr>
+                                        <td colspan="6" class="empty-state-message">
+                                            No sections available for this course.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-secondary" id="closeViewCourseBtn">
+                            Close
+                        </button>
+                        <button class="btn btn-primary" id="editFromViewCourseBtn">
+                            Edit Course
+                        </button>
+                        <button class="btn btn-success" id="addSectionFromCourseBtn">
+                            Add Section
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteConfirmModal" class="modal">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <h3 id="deleteConfirmTitle">Confirm Deletion</h3>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p id="deleteConfirmMessage">
+                        Are you sure you want to delete this item? This action cannot be
+                        undone.
+                    </p>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">
+                            Cancel
+                        </button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Course Modal -->
-    <div id="courseModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="courseModalTitle">Add New Course</h3>
-          <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-          <form id="courseForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="courseCode">Course Code</label>
-                <input type="text" id="courseCode" name="courseCode" class="form-control" required />
-              </div>
-              <div class="form-group">
-                <label for="courseTitle">Course Name</label>
-                <input type="text" id="courseTitle" name="courseTitle" class="form-control" required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="courseYearLevel">Year Level</label>
-                <select id="courseYearLevel" name="courseYearLevel" class="form-control">
-                  <option value="">Select Year Level</option>
-                  <option value="1">First Year</option>
-                  <option value="2">Second Year</option>
-                  <option value="3">Third Year</option>
-                  <option value="4">Fourth Year</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="courseUnits">Units</label>
-                <input type="number" id="courseUnits" name="courseUnits" class="form-control" min="1" max="6"
-                  required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="coursePrerequisites">Prerequisites</label>
-                <input type="text" id="coursePrerequisites" name="coursePrerequisites" class="form-control"
-                  placeholder="'COR1,COR02' or 'None'" />
-              </div>
-              <div class="form-group">
-                <label for="courseCorequisites">Corequisites</label>
-                <input type="text" id="courseCorequisites" name="courseCorequisites" class="form-control"
-                  placeholder="'COR1,COR02' or 'None'" />
-              </div>
-              <div class="form-group">
-                <label for="courseStatus">Status</label>
-                <select id="courseStatus" name="courseStatus" class="form-control" required>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="courseSemester">Semester</label>
-              <select id="courseSemester" name="courseSemester" class="form-control">
-                <option value="">Select Semester</option>
-                <option value="1st Semester">1st Semester</option>
-                <option value="2nd Semester">2nd Semester</option>
-                <option value="Summer">Summer</option>
-              </select>
-            </div>
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" id="cancelCourseBtn">
-                Cancel
-              </button>
-              <button type="submit" class="btn btn-primary" id="saveCourseBtn">
-                Save Course
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- View Course Details Modal -->
-    <div id="viewCourseModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Course Details</h3>
-          <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-          <div class="course-details">
-            <div class="course-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
-                stroke="#6B3A1D" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-            </div>
-            <div class="course-info-grid">
-              <div class="info-item">
-                <span class="info-label">Course Code:</span>
-                <span class="info-value" id="viewCourseCode"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Course Title:</span>
-                <span class="info-value" id="viewCourseTitle"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Units:</span>
-                <span class="info-value" id="viewCourseCredits"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Prerequisites:</span>
-                <span class="info-value" id="viewCoursePrerequisites"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Corequisites:</span>
-                <span class="info-value" id="viewCourseCorequisites"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Status:</span>
-                <span class="info-value" id="viewCourseStatus"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Programs:</span>
-                <span class="info-value" id="viewCoursePrograms"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Year Level:</span>
-                <span class="info-value" id="viewCourseYearLevel"></span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">Semester:</span>
-                <span class="info-value" id="viewCourseSemester"></span>
-              </div>
-            </div>
-            <div class="course-sections">
-              <h4>Active Sections</h4>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Section ID</th>
-                    <th>Instructor</th>
-                    <th>Schedule</th>
-                    <th>Room</th>
-                    <th>Enrollment</th>
-                    <th>Semester</th>
-                  </tr>
-                </thead>
-                <tbody id="viewCourseSections">
-                  <tr>
-                    <td colspan="6" class="empty-state-message">
-                      No sections available for this course.
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="course-actions">
-            <button class="btn btn-secondary" id="closeViewCourseBtn">
-              Close
-            </button>
-            <button class="btn btn-primary" id="editFromViewCourseBtn">
-              Edit Course
-            </button>
-            <button class="btn btn-success" id="addSectionFromCourseBtn">
-              Add Section
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteConfirmModal" class="modal">
-      <div class="modal-content modal-sm">
-        <div class="modal-header">
-          <h3 id="deleteConfirmTitle">Confirm Deletion</h3>
-          <span class="close-modal">&times;</span>
-        </div>
-        <div class="modal-body">
-          <p id="deleteConfirmMessage">
-            Are you sure you want to delete this item? This action cannot be
-            undone.
-          </p>
-          <div class="form-actions">
-            <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">
-              Cancel
-            </button>
-            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script th:src="@{/js/notifications.js}"></script>
-  <script>
-    // --- Move these functions to global scope ---
-    // Populate Program Filter dropdown
-    async function populateProgramFilter() {
-      const programFilter = document.getElementById('programFilter');
-      if (!programFilter) return;
-      programFilter.innerHTML = '<option value="">All Programs</option>';
-      try {
-        const response = await fetch('/api/programs');
-        const programs = await response.json();
-        programFilter.innerHTML += programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
-      } catch (err) {
-        programFilter.innerHTML = '<option value="">All Programs</option>';
-      }
-    }
-    // Add this to global scope so it is available everywhere
-    async function populateProgramDropdown(selectedIds) {
-      try {
-        const response = await fetch('/api/programs');
-        const programs = await response.json();
-        setupProgramDropdown(programs, selectedIds);
-      } catch (err) {
-        const list = document.getElementById('programDropdownList');
-        if (list) list.innerHTML = '<span style="color:red">Failed to load programs</span>';
-      }
-    }
-    // Unified filter logic for Year Level, Program, and Semester
-    function filterCoursesTable() {
-      const yearLevel = document.getElementById('yearLevelFilter').value;
-      const programId = document.getElementById('programFilter').value;
-      const semester = document.getElementById('semesterFilter').value;
-      const rows = document.querySelectorAll('#coursesTableBody tr');
-      rows.forEach(row => {
-        let show = true;
-        // Year Level
-        if (yearLevel) {
-          const yearCell = row.querySelector('td:nth-child(5)');
-          const yearText = yearCell ? yearCell.textContent.trim() : '';
-          const yearMap = { '1': 'First Year', '2': 'Second Year', '3': 'Third Year', '4': 'Fourth Year' };
-          if (yearText !== yearMap[yearLevel]) show = false;
-        }
-        // Program
-        if (programId) {
-          const programIds = row.getAttribute('data-program-ids');
-          if (!programIds || !programIds.split(',').includes(programId)) show = false;
-        }
-        // Semester
-        if (semester) {
-          const semesterCell = row.getAttribute('data-semester');
-          if (semesterCell !== semester) show = false;
-        }
-        row.style.display = show ? '' : 'none';
-      });
-    }
-    document.addEventListener("DOMContentLoaded", function () {
-      // Modal elements
-      const courseModal = document.getElementById("courseModal");
-      const viewCourseModal = document.getElementById("viewCourseModal");
-      const deleteConfirmModal =
-        document.getElementById("deleteConfirmModal");
-      const addCourseBtn = document.getElementById("addCourseBtn");
-      const closeModalBtns = document.querySelectorAll(".close-modal");
-      const cancelCourseBtn = document.getElementById("cancelCourseBtn");
-      const closeViewCourseBtn =
-        document.getElementById("closeViewCourseBtn");
-      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-
-      // 1. Fetch programs and populate the dropdown in the course modal
-      async function populateProgramCheckboxes(selectedIds) {
-        const container = document.getElementById('programCheckboxes');
-        container.innerHTML = 'Loading...';
-        try {
-          const response = await fetch('/api/programs');
-          const programs = await response.json();
-          container.innerHTML = programs.map(p =>
-            `<label><input type='checkbox' name='programIds' value='${p.id}' ${selectedIds && selectedIds.includes(p.id) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
-          ).join('');
-        } catch (err) {
-          container.innerHTML = '<span style="color:red">Failed to load programs</span>';
-        }
-      }
-
-      // Dropdown multiselect for programs
-      function setupProgramDropdown(programs, selectedIds) {
-        const btn = document.getElementById('programDropdownBtn');
-        const list = document.getElementById('programDropdownList');
-        let selected = selectedIds ? [...selectedIds.map(String)] : [];
-        // Render checkboxes
-        list.innerHTML = programs.map(p =>
-          `<label style='display:block; padding:4px 10px;'><input type='checkbox' value='${p.id}' ${selected.includes(String(p.id)) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
-        ).join('');
-        // Update button text
-        function updateBtnText() {
-          if (!selected.length) btn.textContent = 'Select Program(s)';
-          else btn.textContent = programs.filter(p => selected.includes(String(p.id))).map(p => p.code).join(', ');
-          document.getElementById('programIdsHidden').value = selected.join(',');
-        }
-        updateBtnText();
-        // Remove any previous event listeners by cloning
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        // Toggle dropdown
-        newBtn.onclick = function (e) {
-          e.stopPropagation();
-          list.style.display = list.style.display === 'block' ? 'none' : 'block';
-        };
-        // Prevent closing when clicking inside the dropdown
-        list.onmousedown = function (e) { e.stopPropagation(); };
-        // Handle checkbox change
-        list.querySelectorAll('input[type=checkbox]').forEach(cb => {
-          cb.onchange = function () {
-            if (cb.checked && !selected.includes(cb.value)) selected.push(cb.value);
-            else selected = selected.filter(id => id !== cb.value);
-            updateBtnText();
-          };
-        });
-        // Only one document click listener at a time
-        if (window._programDropdownDocListener) {
-          document.removeEventListener('click', window._programDropdownDocListener);
-        }
-        window._programDropdownDocListener = function (e) {
-          if (!list.contains(e.target) && e.target !== newBtn) {
-            list.style.display = 'none';
-          }
-        };
-        document.addEventListener('click', window._programDropdownDocListener);
-      }
-
-      // Open add modals
-      addCourseBtn.addEventListener("click", function () {
-        document.getElementById("courseModalTitle").textContent =
-          "Add New Course";
-        document.getElementById("courseForm").reset();
-        courseForm.removeAttribute("data-edit-id");
-        // Always fetch and populate dropdown
-        fetch('/api/programs').then(r => r.json()).then(programs => {
-          setupProgramDropdown(programs, []);
-        });
-        courseModal.style.display = "block";
-      });
-
-      // Close all modals
-      closeModalBtns.forEach((btn) => {
-        btn.addEventListener("click", function () {
-          courseModal.style.display = "none";
-          viewCourseModal.style.display = "none";
-          deleteConfirmModal.style.display = "none";
-        });
-      });
-
-      cancelCourseBtn.addEventListener("click", function () {
-        courseModal.style.display = "none";
-      });
-
-      closeViewCourseBtn.addEventListener("click", function () {
-        viewCourseModal.style.display = "none";
-      });
-
-      cancelDeleteBtn.addEventListener("click", function () {
-        deleteConfirmModal.style.display = "none";
-      });
-
-      // Course form submission (Add or Edit)
-      document
-        .getElementById("courseForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-          let yearLevelValue = document.getElementById("courseYearLevel").value;
-          const formData = {
-            courseCode: document.getElementById("courseCode").value,
-            courseTitle: document.getElementById("courseTitle").value,
-            units: document.getElementById("courseUnits").value,
-            prerequisites: document.getElementById("coursePrerequisites").value,
-            corequisites: document.getElementById("courseCorequisites").value,
-            status: document.getElementById("courseStatus").value,
-            yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
-            courseSemester: document.getElementById("courseSemester").value,
-          };
-          const isEdit = courseForm.getAttribute("data-edit-id");
-          try {
-            let response;
-            if (isEdit) {
-              // Edit course
-              response = await fetch(`/api/courses/${isEdit}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-              });
-            } else {
-              // Add course
-              response = await fetch("/api/courses", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-              });
-            }
-            if (!response.ok) throw new Error("Failed to save course");
-            courseModal.style.display = "none";
-            courseForm.removeAttribute("data-edit-id");
-            loadCourses();
-          } catch (err) {
-            alert("Error saving course: " + err.message);
-          }
-        });
-
-      // Edit buttons (delegated)
-      document
-        .getElementById("coursesTableBody")
-        .addEventListener("click", async function (e) {
-          if (e.target.classList.contains("btn-edit")) {
-            const courseId = e.target.getAttribute("data-id");
+    <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        // --- Move these functions to global scope ---
+        // Populate Program Filter dropdown
+        async function populateProgramFilter() {
+            const programFilter = document.getElementById('programFilter');
+            if (!programFilter) return;
+            programFilter.innerHTML = '<option value="">All Programs</option>';
             try {
-              const response = await fetch(`/api/courses/${courseId}`);
-              if (!response.ok) throw new Error("Failed to fetch course");
-              const course = await response.json();
-              document.getElementById("courseModalTitle").textContent =
-                "Edit Course";
-              document.getElementById("courseCode").value = course.courseCode;
-              document.getElementById("courseTitle").value = course.courseTitle;
-              fetch('/api/programs').then(r => r.json()).then(programs => {
-                setupProgramDropdown(programs, course.programs ? course.programs.map(p => String(p.id)) : []);
-              });
-              document.getElementById("courseUnits").value = course.units || course.credits || "";
-              document.getElementById("coursePrerequisites").value = course.prerequisites || "";
-              document.getElementById("courseCorequisites").value = course.corequisites || "";
-              document.getElementById("courseStatus").value = course.status;
-              document.getElementById("courseYearLevel").value = course.yearLevel ? String(course.yearLevel) : "";
-              document.getElementById("courseSemester").value = course.semester || "";
-              courseForm.setAttribute("data-edit-id", courseId);
-              courseModal.style.display = "block";
+                const response = await fetch('/api/programs');
+                const programs = await response.json();
+                programFilter.innerHTML += programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
             } catch (err) {
-              alert("Error loading course: " + err.message);
+                programFilter.innerHTML = '<option value="">All Programs</option>';
             }
-          }
-
-          // View buttons (delegated)
-          document.getElementById("coursesTableBody").addEventListener("click", async function (e) {
-            if (e.target.classList.contains("btn-view")) {
-              const courseId = e.target.getAttribute("data-id");
-              try {
-                const response = await fetch(`/api/courses/${courseId}`);
-                if (!response.ok) throw new Error("Failed to fetch course");
-                const course = await response.json();
-                document.getElementById("viewCourseCode").textContent = course.courseCode;
-                document.getElementById("viewCourseTitle").textContent = course.courseTitle;
-                document.getElementById("viewCourseCredits").textContent = course.units;
-                document.getElementById("viewCoursePrerequisites").textContent = course.prerequisites || "None";
-                document.getElementById("viewCourseCorequisites").textContent = course.corequisites || "None";
-                document.getElementById("viewCourseStatus").textContent = course.status;
-                document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
-                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A";
-                document.getElementById("viewCourseSemester").textContent = course.semester || "N/A";
-                // Show the modal
-                viewCourseModal.style.display = "block";
-              } catch (err) {
-                alert("Error loading course: " + err.message);
-              }
+        }
+        // Add this to global scope so it is available everywhere
+        async function populateProgramDropdown(selectedIds) {
+            try {
+                const response = await fetch('/api/programs');
+                const programs = await response.json();
+                setupProgramDropdown(programs, selectedIds);
+            } catch (err) {
+                const list = document.getElementById('programDropdownList');
+                if (list) list.innerHTML = '<span style="color:red">Failed to load programs</span>';
             }
-          });
-        });
-
-      // Delete buttons (delegated)
-      let courseIdToDelete = null;
-      document
-        .getElementById("coursesTableBody")
-        .addEventListener("click", function (e) {
-          if (e.target.classList.contains("btn-delete")) {
-            courseIdToDelete = e.target.getAttribute("data-id");
-            document.getElementById("deleteConfirmTitle").textContent =
-              "Delete Course";
-            document.getElementById(
-              "deleteConfirmMessage"
-            ).textContent = `Are you sure you want to delete the course ${courseIdToDelete}? This action cannot be undone.`;
-            deleteConfirmModal.style.display = "block";
-          }
-        });
-      document.getElementById("confirmDeleteBtn").onclick =
-        async function () {
-          if (!courseIdToDelete) return;
-          try {
-            const response = await fetch(`/api/courses/${courseIdToDelete}`, {
-              method: "DELETE",
+        }
+        // Unified filter logic for Year Level, Program, and Semester
+        function filterCoursesTable() {
+            const yearLevel = document.getElementById('yearLevelFilter').value;
+            const programId = document.getElementById('programFilter').value;
+            const semester = document.getElementById('semesterFilter').value;
+            const rows = document.querySelectorAll('#coursesTableBody tr');
+            rows.forEach(row => {
+                let show = true;
+                // Year Level
+                if (yearLevel) {
+                    const yearCell = row.querySelector('td:nth-child(5)');
+                    const yearText = yearCell ? yearCell.textContent.trim() : '';
+                    const yearMap = { '1': 'First Year', '2': 'Second Year', '3': 'Third Year', '4': 'Fourth Year' };
+                    if (yearText !== yearMap[yearLevel]) show = false;
+                }
+                // Program
+                if (programId) {
+                    const programIds = row.getAttribute('data-program-ids');
+                    if (!programIds || !programIds.split(',').includes(programId)) show = false;
+                }
+                // Semester
+                if (semester) {
+                    const semesterCell = row.getAttribute('data-semester');
+                    if (semesterCell !== semester) show = false;
+                }
+                row.style.display = show ? '' : 'none';
             });
-            if (!response.ok) throw new Error("Failed to delete course");
-            deleteConfirmModal.style.display = "none";
-            courseIdToDelete = null;
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            // Modal elements
+            const courseModal = document.getElementById("courseModal");
+            const viewCourseModal = document.getElementById("viewCourseModal");
+            const deleteConfirmModal =
+                document.getElementById("deleteConfirmModal");
+            const addCourseBtn = document.getElementById("addCourseBtn");
+            const closeModalBtns = document.querySelectorAll(".close-modal");
+            const cancelCourseBtn = document.getElementById("cancelCourseBtn");
+            const closeViewCourseBtn =
+                document.getElementById("closeViewCourseBtn");
+            const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+
+            // 1. Fetch programs and populate the dropdown in the course modal
+            async function populateProgramCheckboxes(selectedIds) {
+                const container = document.getElementById('programCheckboxes');
+                container.innerHTML = 'Loading...';
+                try {
+                    const response = await fetch('/api/programs');
+                    const programs = await response.json();
+                    container.innerHTML = programs.map(p =>
+                        `<label><input type='checkbox' name='programIds' value='${p.id}' ${selectedIds && selectedIds.includes(p.id) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
+                    ).join('');
+                } catch (err) {
+                    container.innerHTML = '<span style="color:red">Failed to load programs</span>';
+                }
+            }
+
+            // Dropdown multiselect for programs
+            function setupProgramDropdown(programs, selectedIds) {
+                const btn = document.getElementById('programDropdownBtn');
+                const list = document.getElementById('programDropdownList');
+                let selected = selectedIds ? [...selectedIds.map(String)] : [];
+                // Render checkboxes
+                list.innerHTML = programs.map(p =>
+                    `<label style='display:block; padding:4px 10px;'><input type='checkbox' value='${p.id}' ${selected.includes(String(p.id)) ? 'checked' : ''}> ${p.code} - ${p.name}</label>`
+                ).join('');
+                // Update button text
+                function updateBtnText() {
+                    if (!selected.length) btn.textContent = 'Select Program(s)';
+                    else btn.textContent = programs.filter(p => selected.includes(String(p.id))).map(p => p.code).join(', ');
+                    document.getElementById('programIdsHidden').value = selected.join(',');
+                }
+                updateBtnText();
+                // Remove any previous event listeners by cloning
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+                // Toggle dropdown
+                newBtn.onclick = function (e) {
+                    e.stopPropagation();
+                    list.style.display = list.style.display === 'block' ? 'none' : 'block';
+                };
+                // Prevent closing when clicking inside the dropdown
+                list.onmousedown = function (e) { e.stopPropagation(); };
+                // Handle checkbox change
+                list.querySelectorAll('input[type=checkbox]').forEach(cb => {
+                    cb.onchange = function () {
+                        if (cb.checked && !selected.includes(cb.value)) selected.push(cb.value);
+                        else selected = selected.filter(id => id !== cb.value);
+                        updateBtnText();
+                    };
+                });
+                // Only one document click listener at a time
+                if (window._programDropdownDocListener) {
+                    document.removeEventListener('click', window._programDropdownDocListener);
+                }
+                window._programDropdownDocListener = function (e) {
+                    if (!list.contains(e.target) && e.target !== newBtn) {
+                        list.style.display = 'none';
+                    }
+                };
+                document.addEventListener('click', window._programDropdownDocListener);
+            }
+
+            // Open add modals
+            addCourseBtn.addEventListener("click", function () {
+                document.getElementById("courseModalTitle").textContent =
+                    "Add New Course";
+                document.getElementById("courseForm").reset();
+                courseForm.removeAttribute("data-edit-id");
+                // Always fetch and populate dropdown
+                fetch('/api/programs').then(r => r.json()).then(programs => {
+                    setupProgramDropdown(programs, []);
+                });
+                courseModal.style.display = "block";
+            });
+
+            // Close all modals
+            closeModalBtns.forEach((btn) => {
+                btn.addEventListener("click", function () {
+                    courseModal.style.display = "none";
+                    viewCourseModal.style.display = "none";
+                    deleteConfirmModal.style.display = "none";
+                });
+            });
+
+            cancelCourseBtn.addEventListener("click", function () {
+                courseModal.style.display = "none";
+            });
+
+            closeViewCourseBtn.addEventListener("click", function () {
+                viewCourseModal.style.display = "none";
+            });
+
+            cancelDeleteBtn.addEventListener("click", function () {
+                deleteConfirmModal.style.display = "none";
+            });
+
+            // Course form submission (Add or Edit)
+            document
+                .getElementById("courseForm")
+                .addEventListener("submit", async function (e) {
+                    e.preventDefault();
+                    let yearLevelValue = document.getElementById("courseYearLevel").value;
+                    const formData = {
+                        courseCode: document.getElementById("courseCode").value,
+                        courseTitle: document.getElementById("courseTitle").value,
+                        units: document.getElementById("courseUnits").value,
+                        prerequisites: document.getElementById("coursePrerequisites").value,
+                        corequisites: document.getElementById("courseCorequisites").value,
+                        status: document.getElementById("courseStatus").value,
+                        yearLevel: yearLevelValue ? parseInt(yearLevelValue, 10) : null,
+                        courseSemester: document.getElementById("courseSemester").value,
+                    };
+                    const isEdit = courseForm.getAttribute("data-edit-id");
+                    try {
+                        let response;
+                        if (isEdit) {
+                            // Edit course
+                            response = await fetch(`/api/courses/${isEdit}`, {
+                                method: "PUT",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(formData),
+                            });
+                        } else {
+                            // Add course
+                            response = await fetch("/api/courses", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(formData),
+                            });
+                        }
+                        if (!response.ok) throw new Error("Failed to save course");
+                        courseModal.style.display = "none";
+                        courseForm.removeAttribute("data-edit-id");
+                        loadCourses();
+                    } catch (err) {
+                        alert("Error saving course: " + err.message);
+                    }
+                });
+
+            // Edit buttons (delegated)
+            document
+                .getElementById("coursesTableBody")
+                .addEventListener("click", async function (e) {
+                    if (e.target.classList.contains("btn-edit")) {
+                        const courseId = e.target.getAttribute("data-id");
+                        try {
+                            const response = await fetch(`/api/courses/${courseId}`);
+                            if (!response.ok) throw new Error("Failed to fetch course");
+                            const course = await response.json();
+                            document.getElementById("courseModalTitle").textContent =
+                                "Edit Course";
+                            document.getElementById("courseCode").value = course.courseCode;
+                            document.getElementById("courseTitle").value = course.courseTitle;
+                            fetch('/api/programs').then(r => r.json()).then(programs => {
+                                setupProgramDropdown(programs, course.programs ? course.programs.map(p => String(p.id)) : []);
+                            });
+                            document.getElementById("courseUnits").value = course.units || course.credits || "";
+                            document.getElementById("coursePrerequisites").value = course.prerequisites || "";
+                            document.getElementById("courseCorequisites").value = course.corequisites || "";
+                            document.getElementById("courseStatus").value = course.status;
+                            document.getElementById("courseYearLevel").value = course.yearLevel ? String(course.yearLevel) : "";
+                            document.getElementById("courseSemester").value = course.semester || "";
+                            courseForm.setAttribute("data-edit-id", courseId);
+                            courseModal.style.display = "block";
+                        } catch (err) {
+                            alert("Error loading course: " + err.message);
+                        }
+                    }
+
+                    // View buttons (delegated)
+                    document.getElementById("coursesTableBody").addEventListener("click", async function (e) {
+                        if (e.target.classList.contains("btn-view")) {
+                            const courseId = e.target.getAttribute("data-id");
+                            try {
+                                const response = await fetch(`/api/courses/${courseId}`);
+                                if (!response.ok) throw new Error("Failed to fetch course");
+                                const course = await response.json();
+                                document.getElementById("viewCourseCode").textContent = course.courseCode;
+                                document.getElementById("viewCourseTitle").textContent = course.courseTitle;
+                                document.getElementById("viewCourseCredits").textContent = course.units;
+                                document.getElementById("viewCoursePrerequisites").textContent = course.prerequisites || "None";
+                                document.getElementById("viewCourseCorequisites").textContent = course.corequisites || "None";
+                                document.getElementById("viewCourseStatus").textContent = course.status;
+                                document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
+                                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A";
+                                document.getElementById("viewCourseSemester").textContent = course.semester || "N/A";
+                                // Show the modal
+                                viewCourseModal.style.display = "block";
+                            } catch (err) {
+                                alert("Error loading course: " + err.message);
+                            }
+                        }
+                    });
+                });
+
+            // Delete buttons (delegated)
+            let courseIdToDelete = null;
+            document
+                .getElementById("coursesTableBody")
+                .addEventListener("click", function (e) {
+                    if (e.target.classList.contains("btn-delete")) {
+                        courseIdToDelete = e.target.getAttribute("data-id");
+                        document.getElementById("deleteConfirmTitle").textContent =
+                            "Delete Course";
+                        document.getElementById(
+                            "deleteConfirmMessage"
+                        ).textContent = `Are you sure you want to delete the course ${courseIdToDelete}? This action cannot be undone.`;
+                        deleteConfirmModal.style.display = "block";
+                    }
+                });
+            document.getElementById("confirmDeleteBtn").onclick =
+                async function () {
+                    if (!courseIdToDelete) return;
+                    try {
+                        const response = await fetch(`/api/courses/${courseIdToDelete}`, {
+                            method: "DELETE",
+                        });
+                        if (!response.ok) throw new Error("Failed to delete course");
+                        deleteConfirmModal.style.display = "none";
+                        courseIdToDelete = null;
+                        loadCourses();
+                    } catch (err) {
+                        alert("Error deleting course: " + err.message);
+                    }
+                };
+            // Search
+            document
+                .getElementById("courseSearchInput")
+                .addEventListener("keyup", function () {
+                    const searchTerm = this.value.trim().toLowerCase();
+                    if (searchTerm.length >= 2) {
+                        console.log("Searching for courses with term:", searchTerm);
+                        filterTableRows("coursesTable", searchTerm);
+                    }
+                });
+
+            // Populate Program Filter dropdown
+            populateProgramFilter();
+
+            // Attach filter event listeners
+            document.getElementById('yearLevelFilter').addEventListener('change', filterCoursesTable);
+            document.getElementById('programFilter').addEventListener('change', filterCoursesTable);
+            document.getElementById('semesterFilter').addEventListener('change', filterCoursesTable);
+
+            // Load courses from backend and populate table
             loadCourses();
-          } catch (err) {
-            alert("Error deleting course: " + err.message);
-          }
-        };
-      // Search
-      document
-        .getElementById("courseSearchInput")
-        .addEventListener("keyup", function () {
-          const searchTerm = this.value.trim().toLowerCase();
-          if (searchTerm.length >= 2) {
-            console.log("Searching for courses with term:", searchTerm);
-            filterTableRows("coursesTable", searchTerm);
-          }
         });
 
-      // Populate Program Filter dropdown
-      populateProgramFilter();
+        // Functions to load data from the server
+        async function loadCourses() {
+            try {
+                const response = await fetch("/api/courses"); // Adjust endpoint if needed
+                if (!response.ok) throw new Error("Failed to fetch courses");
+                const courses = await response.json();
+                populateCoursesTable(courses);
+            } catch (error) {
+                console.error("Error loading courses:", error);
+                const tbody = document.getElementById("coursesTableBody");
+                tbody.innerHTML = `<tr><td colspan='7' class='empty-state-message'>Failed to load courses.</td></tr>`;
+            }
+        }
 
-      // Attach filter event listeners
-      document.getElementById('yearLevelFilter').addEventListener('change', filterCoursesTable);
-      document.getElementById('programFilter').addEventListener('change', filterCoursesTable);
-      document.getElementById('semesterFilter').addEventListener('change', filterCoursesTable);
-
-      // Load courses from backend and populate table
-      loadCourses();
-    });
-
-    // Functions to load data from the server
-    async function loadCourses() {
-      try {
-        const response = await fetch("/api/courses"); // Adjust endpoint if needed
-        if (!response.ok) throw new Error("Failed to fetch courses");
-        const courses = await response.json();
-        populateCoursesTable(courses);
-      } catch (error) {
-        console.error("Error loading courses:", error);
-        const tbody = document.getElementById("coursesTableBody");
-        tbody.innerHTML = `<tr><td colspan='7' class='empty-state-message'>Failed to load courses.</td></tr>`;
-      }
-    }
-
-    // Update populateCoursesTable to call filterCoursesTable after rendering
-    function populateCoursesTable(courses) {
-      const tbody = document.getElementById("coursesTableBody");
-      if (!courses || courses.length === 0) {
-        tbody.innerHTML = `<tr class='empty-state-row'><td colspan='7' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'></path><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'></path></svg><p>No courses found. Add courses or adjust your search filters to see results.</p></div></td></tr>`;
-        return;
-      }
-      tbody.innerHTML = courses
-        .map(
-          (course) => {
-            return `
+        // Update populateCoursesTable to call filterCoursesTable after rendering
+        function populateCoursesTable(courses) {
+            const tbody = document.getElementById("coursesTableBody");
+            if (!courses || courses.length === 0) {
+                tbody.innerHTML = `<tr class='empty-state-row'><td colspan='7' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'></path><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'></path></svg><p>No courses found. Add courses or adjust your search filters to see results.</p></div></td></tr>`;
+                return;
+            }
+            tbody.innerHTML = courses
+                .map(
+                    (course) => {
+                        return `
 <tr>
   <td><strong>${course.courseCode}</strong></td>
   <td>${course.courseTitle}</td>
@@ -947,81 +965,81 @@
   </td>
 </tr>
 `;
-          }
-        )
-        .join("");
-      filterCoursesTable(); // Apply filters after populating
-    }
-  </script>
-  <script th:src="@{/js/sidebar-nav.js}"></script>
+                    }
+                )
+                .join("");
+            filterCoursesTable(); // Apply filters after populating
+        }
+    </script>
+    <script th:src="@{/js/sidebar-nav.js}"></script>
 
-  <style>
-    .program-checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      border: 1px solid #d1bfa3;
-      border-radius: 6px;
-      padding: 12px 10px 6px 10px;
-      background: #f9f6f2;
-      margin-bottom: 8px;
-      min-height: 48px;
-    }
+    <style>
+        .program-checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            border: 1px solid #d1bfa3;
+            border-radius: 6px;
+            padding: 12px 10px 6px 10px;
+            background: #f9f6f2;
+            margin-bottom: 8px;
+            min-height: 48px;
+        }
 
-    .program-checkbox-group label {
-      display: flex;
-      align-items: center;
-      background: #fff;
-      border-radius: 4px;
-      padding: 4px 10px 4px 6px;
-      box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
-      cursor: pointer;
-      transition: background 0.2s;
-      font-size: 1rem;
-      border: 1px solid #e5d6c2;
-    }
+        .program-checkbox-group label {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border-radius: 4px;
+            padding: 4px 10px 4px 6px;
+            box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1rem;
+            border: 1px solid #e5d6c2;
+        }
 
-    .program-checkbox-group label:hover {
-      background: #f3e9d7;
-      border-color: #c7a97a;
-    }
+        .program-checkbox-group label:hover {
+            background: #f3e9d7;
+            border-color: #c7a97a;
+        }
 
-    .program-checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #8b4513;
-      margin-right: 8px;
-      cursor: pointer;
-    }
+        .program-checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #8b4513;
+            margin-right: 8px;
+            cursor: pointer;
+        }
 
-    .dropdown-multiselect {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
+        .dropdown-multiselect {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
 
-    .dropdown-multiselect-list {
-      display: none;
-      position: absolute;
-      background: #fff;
-      border: 1px solid #d1bfa3;
-      border-radius: 6px;
-      z-index: 1000;
-      max-height: 220px;
-      overflow-y: auto;
-      min-width: 220px;
-    }
+        .dropdown-multiselect-list {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #d1bfa3;
+            border-radius: 6px;
+            z-index: 1000;
+            max-height: 220px;
+            overflow-y: auto;
+            min-width: 220px;
+        }
 
-    .dropdown-multiselect-list label {
-      display: block;
-      padding: 4px 10px;
-      cursor: pointer;
-    }
+        .dropdown-multiselect-list label {
+            display: block;
+            padding: 4px 10px;
+            cursor: pointer;
+        }
 
-    .dropdown-multiselect-list label:hover {
-      background: #f3e9d7;
-    }
-  </style>
+        .dropdown-multiselect-list label:hover {
+            background: #f3e9d7;
+        }
+    </style>
 </body>
 
 </html>

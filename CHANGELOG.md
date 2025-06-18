@@ -1,5 +1,15 @@
 # Changelog
 
+
+### [06.18.252036]
+
+### Minor Fix
+- Formatted lines admin-section file
+- Formatted lines admin-courses file
+
+### Bug
+- Schedule Management Bug
+
 ## [06.18.251444]
 
 ### Fix
