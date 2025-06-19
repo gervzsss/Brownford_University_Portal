@@ -1,5 +1,18 @@
 # Changelog
 
+
+## [06.20.250229]
+
+### Changes
+- Admin Assignment Schedule Page now has a School Year option.
+
+### Fix
+- Faculty Dashboard Page.
+- Faculty Workload Page.
+
+### Bugs
+- Faculty Workload Page Filter for School Year and Semester is not working.
+
 ## [06.19.252215]
 
 ### Fix

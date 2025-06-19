@@ -78,6 +78,7 @@ public class FacultyAssignmentController {
                     dto.setRoom(sched.getRoom());
                 }
             }
+            dto.setSchoolYear(fa.getSchoolYear());
             return dto;
         }).toList();
     }

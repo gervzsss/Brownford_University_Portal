@@ -171,7 +171,7 @@
                             </svg>
                         </div>
                         <div class="welcome-text">
-                            <h2>Welcome, Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></h2>
+                            <h2>Welcome, Prof. <span th:text="${faculty.user.firstName + ' ' + faculty.user.lastName}">Faculty Name</span></h2>
                             <p>Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span> | Academic Year <span th:text="${academicYear}">2024-2025</span></p>
                         </div>
                     </div>
@@ -181,15 +181,6 @@
                 <section class="quick-links-section">
                     <h3 class="section-title">Teaching Summary</h3>
                     <div class="quick-links-container">
-                        <div class="quick-link-card">
-                            <div class="quick-link-icon">
-                                <!-- icon -->
-                            </div>
-                            <div class="quick-link-text">
-                                <h4 th:text="${activeClasses}">0</h4>
-                                <p>Active Classes</p>
-                            </div>
-                        </div>
                         <div class="quick-link-card">
                             <div class="quick-link-icon">
                                 <!-- icon -->
@@ -218,13 +209,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--
-                        Model attributes required:
-                        - activeClasses (int)
-                        - totalStudents (int)
-                        - teachingHours (int)
-                        - pendingGrades (int)
-                    -->
                 </section>
 
                 <!-- Today's Schedule Section -->
@@ -243,10 +227,6 @@
                     <div class="view-all-container">
                         <a href="/faculty-schedule" class="view-all-link">View Full Schedule</a>
                     </div>
-                    <!--
-                        Model attribute required:
-                        - todaysSchedule (List of objects with fields: time, courseTitle, sectionRoom, status)
-                    -->
                 </section>
 
                 <!-- Quick Links Section -->
@@ -315,47 +295,6 @@
                         </a>
                     </div>
                 </section>
-
-                <!-- Announcements Section -->
-                <section class="announcements-section">
-                    <h3 class="section-title">Important Announcements</h3>
-                    <div class="announcements-container">
-                        <div class="announcement-card" th:each="ann : ${announcements}" th:classappend="${ann.priority} ? ' priority'">
-                            <div class="announcement-header">
-                                <div class="announcement-icon">
-                                    <!-- icon -->
-                                </div>
-                                <h4 class="announcement-title" th:text="${ann.title}">Announcement Title</h4>
-                            </div>
-                            <div class="announcement-content">
-                                <p th:text="${ann.content}">Announcement content goes here.</p>
-                            </div>
-                            <div class="announcement-footer">
-                                <span class="announcement-date" th:text="'Posted: ' + ${ann.date}">Posted: Date</span>
-                                <a href="#" class="announcement-action" th:text="${ann.action}">Action</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--
-                        Model attribute required:
-                        - announcements (List of objects with fields: title, content, date, action, priority)
-                    -->
-                </section>
-
-                <!-- Upcoming Deadlines Section -->
-                <section class="calendar-section">
-                    <h3 class="section-title">Upcoming Deadlines</h3>
-                    <div class="calendar-container">
-                        <div class="calendar-item" th:each="deadline : ${deadlines}">
-                            <div class="calendar-date" th:text="${deadline.date}">Date</div>
-                            <div class="calendar-event" th:text="${deadline.event}">Event</div>
-                        </div>
-                    </div>
-                    <!--
-                        Model attribute required:
-                        - deadlines (List of objects with fields: date, event)
-                    -->
-                </section>
             </main>
         </div>
     </div>
@@ -402,5 +341,4 @@
     </script>
 </body>
 
-</html>
 </html>

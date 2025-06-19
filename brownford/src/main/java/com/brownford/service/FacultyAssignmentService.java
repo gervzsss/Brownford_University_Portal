@@ -75,6 +75,7 @@ public class FacultyAssignmentService {
         assignment.setFaculty(faculty);
         assignment.setSemester(dto.getSemester());
         assignment.setYearLevel(dto.getYearLevel() != null ? dto.getYearLevel() : 0);
+        assignment.setSchoolYear(dto.getSchoolYear());
         FacultyAssignment savedAssignment = facultyAssignmentRepository.save(assignment);
         // Save or update schedule
         Schedule schedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst()

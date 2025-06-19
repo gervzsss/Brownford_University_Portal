@@ -8,6 +8,7 @@ public class FacultyAssignmentWithScheduleDTO {
     private Long sectionId;
     private String semester;
     private Integer yearLevel;
+    private String schoolYear;
     // Schedule fields
     private String day;
     private String startTime;
@@ -61,6 +62,14 @@ public class FacultyAssignmentWithScheduleDTO {
 
     public void setYearLevel(Integer yearLevel) {
         this.yearLevel = yearLevel;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
     }
 
     public String getDay() {

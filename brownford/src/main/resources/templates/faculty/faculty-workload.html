@@ -199,7 +199,7 @@
                     </div>
                     <div class="student-info">
                         <p class="student-name">Prof. <span
-                                th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></p>
+                                th:text="${faculty.user.firstName + ' ' + faculty.user.lastName}">Faculty Name</span></p>
                         <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span></p>
                     </div>
                 </div>
@@ -250,73 +250,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>BSSTAT 1-1</td>
-                                <td>STAT104</td>
-                                <td>Linear Regression</td>
-                                <td>M/M 9:00AM-12:00PM/1:30PM-4:30PM</td>
-                                <td>Room 410</td>
-                                <td>3</td>
+                            <tr th:each="row : ${workloadList}">
+                                <td th:text="${row.no}">1</td>
+                                <td th:text="${row.section}">Section</td>
+                                <td th:text="${row.subjectCode}">Subject Code</td>
+                                <td th:text="${row.description}">Description</td>
+                                <td th:text="${row.schedule}">Schedule</td>
+                                <td th:text="${row.room}">Room</td>
+                                <td th:text="${row.units}">Units</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT1-1&subject=STAT104"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=STAT104"
-                                            class="grading-button-small">Grading</a>
+                                        <a th:href="@{'/faculty-class-list?section=' + ${row.sectionParam} + '&subject=' + ${row.subjectParam}}" class="view-button-small">Class List</a>
+                                        <a th:href="@{'/faculty-grading-sheet?section=' + ${row.sectionParam} + '&subject=' + ${row.subjectParam}}" class="grading-button-small">Grading</a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>BSSTAT 2-1</td>
-                                <td>STAT104</td>
-                                <td>Linear Regression</td>
-                                <td>T/T 8:00AM-11:00PM/1:00PM-4:00PM</td>
-                                <td>Room 412</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT2-1&subject=STAT104"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT2-1&subject=STAT104"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>BSSTAT 1-1</td>
-                                <td>NSTP102</td>
-                                <td>National Service Training Program 2</td>
-                                <td>W/TH 7:00AM-10:00AM/7:00AM-10:00AM</td>
-                                <td>Room 305</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT1-1&subject=NSTP102"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT1-1&subject=NSTP102"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>BSSTAT 2-2</td>
-                                <td>NSTP102</td>
-                                <td>National Service Training Program 2</td>
-                                <td>W/TH 1:00PM-4:00PM/1:00PM-4:00PM</td>
-                                <td>Room 305</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <a href="/faculty-class-list?section=BSSTAT2-2&subject=NSTP102"
-                                            class="view-button-small">Class List</a>
-                                        <a href="/faculty-grading-sheet?section=BSSTAT2-2&subject=NSTP102"
-                                            class="grading-button-small">Grading</a>
-                                    </div>
-                                </td>
+                            <tr th:if="${workloadList.size()} == 0">
+                                <td colspan="8" style="text-align: center;">No workload assigned.</td>
                             </tr>
                         </tbody>
                     </table>

@@ -506,6 +506,16 @@
                             </div>
                         </div>
 
+                        <!-- School Year Input -->
+                        <div class="form-section">
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="modalSchoolYear">School Year <span style="color: rgb(201, 40, 40); font-size: 0.9em;">(Format: YYYY-YYYY, e.g., 2025-2026)</span></label>
+                                    <input type="text" id="modalSchoolYear" maxlength="9" placeholder="e.g., 2025-2026" required />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-actions">
                             <button type="button" class="btn btn-secondary" id="cancelAssignmentBtn">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="saveAssignmentBtn">Save
@@ -818,6 +828,7 @@
                     document.getElementById('modalRoom').value = assignment.room || '';
                     document.getElementById('modalStartTime').value = assignment.startTime || '';
                     document.getElementById('modalEndTime').value = assignment.endTime || '';
+                    document.getElementById('modalSchoolYear').value = assignment.schoolYear || '';
                     document.getElementById('assignmentModalTitle').textContent = 'Edit Faculty & Schedule Assignment';
                 } else {
                     // Clear form for new assignment
@@ -825,6 +836,7 @@
                     document.getElementById('modalRoom').value = '';
                     document.getElementById('modalStartTime').value = '';
                     document.getElementById('modalEndTime').value = '';
+                    document.getElementById('modalSchoolYear').value = '';
                     document.getElementById('assignmentModalTitle').textContent = 'Assign Faculty & Schedule';
                 }
 
@@ -851,6 +863,7 @@
 
                 const facultyValue = document.getElementById('modalFacultySelect').value;
                 const roomValue = document.getElementById('modalRoom').value;
+                const schoolYearValue = document.getElementById('modalSchoolYear').value;
                 const assignmentData = {
                     id: document.getElementById('modalFacultyAssignmentId').value || null,
                     curriculumCourseId: parseInt(document.getElementById('modalCurriculumCourseId').value),
@@ -858,6 +871,7 @@
                     facultyId: facultyValue ? parseInt(facultyValue) : null,
                     semester: document.getElementById('modalSemester').value,
                     yearLevel: getCurrentYearLevel(),
+                    schoolYear: schoolYearValue,
                     day: document.getElementById('modalDay').value,
                     startTime: document.getElementById('modalStartTime').value,
                     endTime: document.getElementById('modalEndTime').value,

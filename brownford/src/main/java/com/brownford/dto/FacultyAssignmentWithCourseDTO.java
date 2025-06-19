@@ -22,6 +22,7 @@ public class FacultyAssignmentWithCourseDTO {
 
     // For frontend compatibility
     private String faculty;
+    private String schoolYear;
 
     // Getters and setters
     public Long getAssignmentId() {
@@ -150,5 +151,13 @@ public class FacultyAssignmentWithCourseDTO {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
     }
 }

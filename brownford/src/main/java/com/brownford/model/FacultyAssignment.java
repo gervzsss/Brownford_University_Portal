@@ -28,6 +28,9 @@ public class FacultyAssignment {
     @Column(nullable = false)
     private int yearLevel;
 
+    @Column(name = "school_year", nullable = false)
+    private String schoolYear;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -75,5 +78,13 @@ public class FacultyAssignment {
 
     public void setYearLevel(int yearLevel) {
         this.yearLevel = yearLevel;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
     }
 }
