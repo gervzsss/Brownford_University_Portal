@@ -2,9 +2,7 @@ package com.brownford.controller;
 
 import com.brownford.dto.FacultyAssignmentWithScheduleDTO;
 import com.brownford.model.FacultyAssignment;
-import com.brownford.model.Schedule;
 import com.brownford.service.FacultyAssignmentService;
-import com.brownford.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +15,6 @@ import java.util.Optional;
 public class FacultyAssignmentController {
     @Autowired
     private FacultyAssignmentService facultyAssignmentService;
-
-    @Autowired
-    private ScheduleService scheduleService;
 
     @GetMapping
     public List<FacultyAssignment> getAllFacultyAssignments(

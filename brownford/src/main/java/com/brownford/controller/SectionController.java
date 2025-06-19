@@ -6,6 +6,8 @@ import com.brownford.model.Section;
 import com.brownford.service.EnrollmentService;
 import com.brownford.service.ProgramService;
 import com.brownford.service.SectionService;
+import com.brownford.service.CurriculumService;
+import com.brownford.model.Curriculum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class SectionController {
 
     @Autowired
     private ProgramService programService;
+
+    @Autowired
+    private CurriculumService curriculumService;
 
     @GetMapping
     public List<SectionDTO> getAllSections() {
@@ -49,6 +54,10 @@ public class SectionController {
         }
         Section section = fromDTO(sectionDTO);
         section.setProgram(programOpt.get());
+        if (sectionDTO.getCurriculumId() != null) {
+            Optional<Curriculum> curriculumOpt = curriculumService.getCurriculumById(sectionDTO.getCurriculumId());
+            curriculumOpt.ifPresent(section::setCurriculum);
+        }
         Section saved = sectionService.saveSection(section);
         return ResponseEntity.ok(toDTO(saved));
     }
@@ -67,6 +76,12 @@ public class SectionController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
             s.setProgram(programOpt.get());
+            if (sectionDTO.getCurriculumId() != null) {
+                Optional<Curriculum> curriculumOpt = curriculumService.getCurriculumById(sectionDTO.getCurriculumId());
+                curriculumOpt.ifPresent(s::setCurriculum);
+            } else {
+                s.setCurriculum(null);
+            }
             s.setMaxStudents(sectionDTO.getMaxStudents());
             s.setStatus(sectionDTO.getStatus());
             Section updated = sectionService.saveSection(s);
@@ -103,6 +118,10 @@ public class SectionController {
             dto.setProgramCode(program.getCode());
             dto.setProgramName(program.getName());
         }
+        Curriculum curriculum = section.getCurriculum();
+        if (curriculum != null) {
+            dto.setCurriculumId(curriculum.getId());
+        }
         dto.setMaxStudents(section.getMaxStudents());
         dto.setStatus(section.getStatus());
         return dto;
@@ -113,6 +132,10 @@ public class SectionController {
         section.setId(dto.getId());
         section.setSectionCode(dto.getSectionCode());
         // program is set in the controller after validation
+        if (dto.getCurriculumId() != null) {
+            Optional<Curriculum> curriculumOpt = curriculumService.getCurriculumById(dto.getCurriculumId());
+            curriculumOpt.ifPresent(section::setCurriculum);
+        }
         section.setMaxStudents(dto.getMaxStudents());
         section.setStatus(dto.getStatus());
         return section;

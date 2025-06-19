@@ -350,6 +350,14 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="sectionCurriculum">Curriculum</label>
+                                <select id="sectionCurriculum" name="sectionCurriculum" class="form-control">
+                                    <option value="">Select Curriculum</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="sectionMaxStudents">Section Slot/Capacity</label>
                                 <input type="number" id="sectionMaxStudents" name="sectionMaxStudents"
                                     class="form-control" min="1" required />
@@ -436,73 +444,6 @@
                 deleteConfirmModal.style.display = "none";
             });
 
-            // Section form submission
-            document.getElementById("sectionForm").addEventListener("submit", async function (e) {
-                e.preventDefault();
-                const programId = document.getElementById("sectionProgram").value;
-                const formData = {
-                    id: document.getElementById("sectionId").value,
-                    sectionCode: document.getElementById("sectionCode").value,
-                    programId: programId ? parseInt(programId) : null,
-                    maxStudents: document.getElementById("sectionMaxStudents").value,
-                    status: document.getElementById("sectionStatus").value,
-                };
-                // Determine if add or edit
-                const isEdit = !!formData.id;
-                let url = "/api/sections";
-                let method = "POST";
-                if (isEdit) {
-                    url += "/" + formData.id;
-                    method = "PUT";
-                }
-                try {
-                    const response = await fetch(url, {
-                        method: method,
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(formData),
-                    });
-                    if (!response.ok) throw new Error("Failed to save section");
-                    sectionModal.style.display = "none";
-                    loadSections(); // Reload table after save
-                } catch (err) {
-                    alert("Error saving section: " + err.message);
-                }
-            });
-
-            // Delete buttons
-            let sectionIdToDelete = null;
-            document.querySelectorAll(".btn-delete").forEach((btn) => {
-                btn.addEventListener("click", function () {
-                    sectionIdToDelete = this.getAttribute("data-id");
-                    deleteConfirmModal.style.display = "block";
-                });
-            });
-
-            // Confirm delete button logic
-            const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-            if (confirmDeleteBtn) {
-                confirmDeleteBtn.addEventListener("click", async function () {
-                    if (!sectionIdToDelete) return;
-                    try {
-                        const response = await fetch(`/api/sections/${sectionIdToDelete}`, {
-                            method: "DELETE",
-                            headers: { "Content-Type": "application/json" },
-                        });
-                        if (response.ok) {
-                            deleteConfirmModal.style.display = "none";
-                            sectionIdToDelete = null;
-                            loadSections(); // Refresh table
-                        } else if (response.status === 409) {
-                            alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
-                        } else {
-                            alert("Failed to delete section. It may be in use or there was a server error.");
-                        }
-                    } catch (err) {
-                        alert("Error deleting section: " + err.message);
-                    }
-                });
-            }
-
             // Populate program filter dropdown
             async function populateProgramFilter() {
                 const filter = document.getElementById("programFilter");
@@ -521,6 +462,7 @@
 
             // Filtering logic
             let allSections = [];
+            window.loadSections = loadSections;
             async function loadSections() {
                 const tbody = document.getElementById("sectionsTableBody");
                 tbody.innerHTML = '<tr><td colspan="6">Loading sections...</td></tr>';
@@ -645,9 +587,107 @@
             }
         }
 
-        // When opening the modal, populate the dropdown
+        // Populate curriculum dropdown based on selected program
+        async function populateCurriculumDropdown(programId, selectedCurriculumId = null) {
+            const curriculumSelect = document.getElementById("sectionCurriculum");
+            curriculumSelect.innerHTML = '<option value="">Loading curriculums...</option>';
+            if (!programId) {
+                curriculumSelect.innerHTML = '<option value="">Select a program first</option>';
+                return;
+            }
+            try {
+                const response = await fetch(`/api/curriculums/by-program/${programId}/all`);
+                if (!response.ok) throw new Error("Failed to fetch curriculums");
+                const curriculums = await response.json();
+                if (!curriculums.length) {
+                    curriculumSelect.innerHTML = '<option value="">No curriculums available</option>';
+                    return;
+                }
+                curriculumSelect.innerHTML = '<option value="">Select Curriculum</option>' +
+                    curriculums.map(c => `<option value="${c.id}" ${selectedCurriculumId && c.id === selectedCurriculumId ? 'selected' : ''}>${c.description || (c.yearEffective ? 'Year ' + c.yearEffective : 'Curriculum ' + c.id)}</option>`).join("");
+            } catch (err) {
+                curriculumSelect.innerHTML = '<option value="">Error loading curriculums</option>';
+            }
+        }
+
+        // When program changes, update curriculum dropdown
+        document.getElementById("sectionProgram").addEventListener("change", function () {
+            populateCurriculumDropdown(this.value);
+        });
+
+        // Section form submission
+        document.getElementById("sectionForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const programId = document.getElementById("sectionProgram").value;
+            const curriculumId = document.getElementById("sectionCurriculum").value;
+            const formData = {
+                id: document.getElementById("sectionId").value,
+                sectionCode: document.getElementById("sectionCode").value,
+                programId: programId ? parseInt(programId) : null,
+                curriculumId: curriculumId ? parseInt(curriculumId) : null,
+                maxStudents: document.getElementById("sectionMaxStudents").value,
+                status: document.getElementById("sectionStatus").value,
+            };
+            // Determine if add or edit
+            const isEdit = !!formData.id;
+            let url = "/api/sections";
+            let method = "POST";
+            if (isEdit) {
+                url += "/" + formData.id;
+                method = "PUT";
+            }
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
+                });
+                if (!response.ok) throw new Error("Failed to save section");
+                sectionModal.style.display = "none";
+                loadSections(); // Reload table after save
+            } catch (err) {
+                alert("Error saving section: " + err.message);
+            }
+        });
+
+        // Delete buttons
+        let sectionIdToDelete = null;
+        document.querySelectorAll(".btn-delete").forEach((btn) => {
+            btn.addEventListener("click", function () {
+                sectionIdToDelete = this.getAttribute("data-id");
+                deleteConfirmModal.style.display = "block";
+            });
+        });
+
+        // Confirm delete button logic
+        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+        if (confirmDeleteBtn) {
+            confirmDeleteBtn.addEventListener("click", async function () {
+                if (!sectionIdToDelete) return;
+                try {
+                    const response = await fetch(`/api/sections/${sectionIdToDelete}`, {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                    });
+                    if (response.ok) {
+                        deleteConfirmModal.style.display = "none";
+                        sectionIdToDelete = null;
+                        loadSections(); // Refresh table
+                    } else if (response.status === 409) {
+                        alert("Cannot delete section: It is in use by other records (e.g., students, schedules). Please remove related records first.");
+                    } else {
+                        alert("Failed to delete section. It may be in use or there was a server error.");
+                    }
+                } catch (err) {
+                    alert("Error deleting section: " + err.message);
+                }
+            });
+        }
+
+        // When opening the modal, populate the dropdowns
         document.getElementById("addSectionBtn").addEventListener("click", function () {
             populateProgramDropdown();
+            document.getElementById("sectionCurriculum").innerHTML = '<option value="">Select a program first</option>';
             document.getElementById("sectionProgram").disabled = false;
             document.getElementById("sectionModalTitle").textContent = "Add New Section";
             document.getElementById("sectionForm").reset();
@@ -669,6 +709,7 @@
                 document.getElementById("sectionProgram").disabled = true;
                 document.getElementById("sectionMaxStudents").value = section.maxStudents || "";
                 document.getElementById("sectionStatus").value = section.status || "";
+                await populateCurriculumDropdown(section.programId, section.curriculumId);
                 sectionModal.style.display = "block";
             } catch (err) {
                 alert("Error loading section details: " + err.message);

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.19.251657]
+
+### Changes
+- Added Curriculum Selection in the Section Management Page.
+
 ## [06.19.251619]
 
 ### Added

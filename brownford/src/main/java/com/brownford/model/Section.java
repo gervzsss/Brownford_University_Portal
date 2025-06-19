@@ -24,6 +24,10 @@ public class Section {
     @Column(nullable = false)
     private String status; // e.g., Active, Inactive
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "curriculum_id")
+    private Curriculum curriculum;
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -63,5 +67,13 @@ public class Section {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Curriculum getCurriculum() {
+        return curriculum;
+    }
+
+    public void setCurriculum(Curriculum curriculum) {
+        this.curriculum = curriculum;
     }
 }

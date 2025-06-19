@@ -8,6 +8,7 @@ public class SectionDTO {
     private String programName;
     private Integer maxStudents;
     private String status;
+    private Long curriculumId;
 
     // Getters and SettersI
     public Long getId() {
@@ -64,5 +65,13 @@ public class SectionDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getCurriculumId() {
+        return curriculumId;
+    }
+
+    public void setCurriculumId(Long curriculumId) {
+        this.curriculumId = curriculumId;
     }
 }
