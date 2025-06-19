@@ -26,6 +26,7 @@ public class Section {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curriculum_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Curriculum curriculum;
 
     // Getters and Setters

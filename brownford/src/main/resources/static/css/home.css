@@ -14,18 +14,18 @@ body {
 }
 
 /* Scrollbar Prevention*/
-body::-webkit-scrollbar {
+/* Chrome, Safari, Brave */
+/* body::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari, Brave */
-}
+
+} */
 
 /* Sidebar Scrollbar Prevention*/
-.sidebar {
+/* .sidebar {
   overflow: auto;
   max-height: 100vh;
-  /* or whatever height you want */
   overscroll-behavior: contain;
-}
+} */
 
 
 .background-container {

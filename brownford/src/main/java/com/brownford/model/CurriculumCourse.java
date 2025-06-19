@@ -31,6 +31,7 @@ public class CurriculumCourse {
     private boolean required;
 
     @OneToMany(mappedBy = "curriculumCourse")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private java.util.List<Schedule> schedules;
 
     // Getters and setters

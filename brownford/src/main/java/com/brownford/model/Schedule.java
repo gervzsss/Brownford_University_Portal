@@ -28,7 +28,7 @@ public class Schedule {
     @Column(nullable = false)
     private LocalTime endTime;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String room;
 
     // Getters and setters

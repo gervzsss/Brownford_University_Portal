@@ -274,7 +274,7 @@
 
         <div class="content-wrapper" id="contentWrapper">
             <main class="dashboard-content">
-                <!-- Header Section (Welcome) -->
+                <!-- Header Section -->
                 <section class="welcome-section">
                     <div class="welcome-header">
                         <div class="welcome-icon">
@@ -289,639 +289,991 @@
                         </div>
                         <div class="welcome-text">
                             <h2>Schedule Assignment</h2>
-                            <p>Assign faculty and schedules to course sections</p>
+                            <p>Assign faculty and schedules to section courses</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Schedule Assignment Content -->
-                <section class="content-panel" id="schedulePanel">
+                <!-- Step 1: Section Selection -->
+                <section class="content-panel" id="sectionSelectionPanel">
                     <div class="panel-header">
-                        <h2 class="section-title">Course Schedule Assignment</h2>
+                        <h2 class="section-title">Step 1: Select Section</h2>
                     </div>
                     <div class="panel-content">
-                        <!-- Filter Controls -->
-                        <div class="filter-section">
-                            <div class="filter-row">
-                                <div class="filter-group">
-                                    <label for="semesterFilter">Semester</label>
-                                    <select id="semesterFilter" class="filter-select">
-                                        <option value="">All Semesters</option>
-                                        <option value="1st Semester">1st Semester</option>
-                                        <option value="2nd Semester">2nd Semester</option>
-                                        <option value="Summer">Summer</option>
+                        <div class="section-selector-container">
+                            <div class="selector-group">
+                                <label for="sectionSelect" class="selector-label">Choose a section to manage course
+                                    assignments:</label>
+                                <div class="selector-wrapper">
+                                    <select id="sectionSelect" class="section-select">
+                                        <option value="">-- Select a Section --</option>
                                     </select>
+                                    <div class="selector-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
                                 </div>
-                                <div class="filter-group">
-                                    <label for="yearLevelFilter">Year Level</label>
-                                    <select id="yearLevelFilter" class="filter-select">
-                                        <option value="">All Years</option>
-                                        <option value="1">First Year</option>
-                                        <option value="2">Second Year</option>
-                                        <option value="3">Third Year</option>
-                                        <option value="4">Fourth Year</option>
-                                    </select>
+                            </div>
+                            <div class="section-info" id="sectionInfo" style="display: none;">
+                                <div class="info-card">
+                                    <div class="info-header">
+                                        <h3>Section Details</h3>
+                                    </div>
+                                    <div class="info-content">
+                                        <div class="info-item">
+                                            <span class="info-label">Section Code:</span>
+                                            <span class="info-value" id="selectedSectionCode">-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Program:</span>
+                                            <span class="info-value" id="selectedSectionProgram">-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Max Students:</span>
+                                            <span class="info-value" id="selectedSectionMaxStudents">-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span class="info-label">Status:</span>
+                                            <span class="info-value" id="selectedSectionStatus">-</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="filter-group">
-                                    <label for="statusFilter">Assignment Status</label>
-                                    <select id="statusFilter" class="filter-select">
-                                        <option value="">All Status</option>
-                                        <option value="assigned">Fully Assigned</option>
-                                        <option value="partial">Partially Assigned</option>
-                                        <option value="unassigned">Unassigned</option>
-                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Course Assignment Table -->
+                <section class="content-panel" id="courseAssignmentPanel" style="display: none;">
+                    <div class="panel-header">
+                        <h2 class="section-title">Step 2: Assign Faculty & Schedule</h2>
+                        <div class="panel-actions">
+                            <button class="btn btn-secondary" id="saveAllBtn" style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17,21 17,13 7,13 7,21"></polyline>
+                                    <polyline points="7,3 7,8 15,8"></polyline>
+                                </svg>
+                                Save All Changes
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="assignment-summary" id="assignmentSummary">
+                            <div class="summary-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number" id="totalCourses">0</span>
+                                    <span class="stat-label">Total Courses</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number" id="assignedCourses">0</span>
+                                    <span class="stat-label">Fully Assigned</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number" id="partialCourses">0</span>
+                                    <span class="stat-label">Partially Assigned</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number" id="unassignedCourses">0</span>
+                                    <span class="stat-label">Unassigned</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Schedule Assignment Table -->
-                        <div class="table-container">
-                            <table class="data-table" id="scheduleTable">
+                        <div class="assignment-table-container">
+                            <table class="assignment-table" id="courseAssignmentTable">
                                 <thead>
                                     <tr>
-                                        <th>Course Code</th>
-                                        <th>Course Title</th>
-                                        <th>Curriculum</th>
-                                        <th>Semester</th>
+                                        <th>Course</th>
                                         <th>Year Level</th>
-                                        <th>Faculty</th>
+                                        <th>Semester</th>
+                                        <th>Faculty Assignment</th>
                                         <th>Schedule</th>
                                         <th>Room</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="scheduleTableBody">
-                                    <!-- Populated by JS -->
+                                <tbody id="courseAssignmentTableBody">
+                                    <!-- Populated by JavaScript -->
                                 </tbody>
                             </table>
                         </div>
 
-                        <!-- Pagination -->
-                        <div class="pagination" id="schedulePaginationContainer">
-                            <div class="empty-pagination-message">
-                                <p>
-                                    Pagination will appear when there are enough records to
-                                    display multiple pages.
-                                </p>
+                        <div class="empty-state" id="emptyCourseState" style="display: none;">
+                            <div class="empty-state-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
+                                    fill="none" stroke="#8B4513" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
                             </div>
+                            <h3>No Courses Found</h3>
+                            <p>This section doesn't have any curriculum courses assigned yet.</p>
                         </div>
                     </div>
                 </section>
             </main>
         </div>
 
-        <!-- Schedule Assignment Modal -->
-        <div id="scheduleModal" class="modal">
+        <!-- Assignment Modal -->
+        <div id="assignmentModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 id="scheduleModalTitle">Assign Schedule & Faculty</h3>
+                    <h3 id="assignmentModalTitle">Assign Faculty & Schedule</h3>
                     <span class="close-modal">&times;</span>
                 </div>
                 <div class="modal-body">
-                    <form id="scheduleForm">
-                        <input type="hidden" id="facultyAssignmentId" name="facultyAssignmentId" />
+                    <form id="assignmentForm">
+                        <input type="hidden" id="modalCurriculumCourseId" />
+                        <input type="hidden" id="modalSectionId" />
+                        <input type="hidden" id="modalFacultyAssignmentId" />
+
                         <!-- Course Information (Read-only) -->
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="courseInfo">Course</label>
-                                <input type="text" id="courseInfo" name="courseInfo" readonly />
+                        <div class="form-section">
+                            <h4>Course Information</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="modalCourseCode">Course Code</label>
+                                    <input type="text" id="modalCourseCode" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="modalCourseTitle">Course Title</label>
+                                    <input type="text" id="modalCourseTitle" readonly />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="sectionSelect">Section</label>
-                                <select id="sectionSelect" name="sectionSelect"></select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="facultySelect">Faculty</label>
-                                <select id="facultySelect" name="facultySelect"></select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="daySelect">Day</label>
-                                <select id="daySelect" name="daySelect">
-                                    <option value="">Select Day</option>
-                                    <option value="Monday">Monday</option>
-                                    <option value="Tuesday">Tuesday</option>
-                                    <option value="Wednesday">Wednesday</option>
-                                    <option value="Thursday">Thursday</option>
-                                    <option value="Friday">Friday</option>
-                                    <option value="Saturday">Saturday</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="roomInput">Room</label>
-                                <input type="text" id="roomInput" name="roomInput" />
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="modalYearLevel">Year Level</label>
+                                    <input type="text" id="modalYearLevel" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="modalSemester">Semester</label>
+                                    <input type="text" id="modalSemester" readonly />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="startTimeInput">Start Time</label>
-                                <input type="time" id="startTimeInput" name="startTimeInput" />
-                            </div>
-                            <div class="form-group">
-                                <label for="endTimeInput">End Time</label>
-                                <input type="time" id="endTimeInput" name="endTimeInput" />
+
+                        <!-- Faculty Assignment -->
+                        <div class="form-section">
+                            <h4>Faculty Assignment</h4>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="modalFacultySelect">Select Faculty Member</label>
+                                    <select id="modalFacultySelect">
+                                        <option value="">-- Choose Faculty --</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Schedule Details -->
+                        <div class="form-section">
+                            <h4>Schedule Details</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="modalDay">Day</label>
+                                    <select id="modalDay" required>
+                                        <option value="">-- Select Day --</option>
+                                        <option value="Monday">Monday</option>
+                                        <option value="Tuesday">Tuesday</option>
+                                        <option value="Wednesday">Wednesday</option>
+                                        <option value="Thursday">Thursday</option>
+                                        <option value="Friday">Friday</option>
+                                        <option value="Saturday">Saturday</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="modalRoom">Room</label>
+                                    <input type="text" id="modalRoom" placeholder="e.g., Room 101" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="modalStartTime">Start Time</label>
+                                    <input type="time" id="modalStartTime" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="modalEndTime">End Time</label>
+                                    <input type="time" id="modalEndTime" required />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="cancelScheduleBtn">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="saveScheduleBtn">Save</button>
+                            <button type="button" class="btn btn-secondary" id="cancelAssignmentBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveAssignmentBtn">Save
+                                Assignment</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- View Schedule Details Modal -->
-        <div id="viewScheduleModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Schedule Details</h3>
-                    <span class="close-modal">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="schedule-details">
-                        <div class="schedule-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"></svg>
-                        </div>
-                        <div class="schedule-info-grid">
-                            <div class="info-item"><span class="info-label">Course</span><span class="info-value" id="viewCourseDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Section</span><span class="info-value" id="viewSectionDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Faculty</span><span class="info-value" id="viewFacultyDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Schedule</span><span class="info-value" id="viewScheduleDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Room</span><span class="info-value" id="viewRoomDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Semester</span><span class="info-value" id="viewSemesterDetails"></span></div>
-                            <div class="info-item"><span class="info-label">Year Level</span><span class="info-value" id="viewYearLevelDetails"></span></div>
-                        </div>
-                    </div>
-                    <div class="schedule-actions">
-                        <button class="btn btn-secondary" id="closeViewScheduleBtn">Close</button>
-                        <button class="btn btn-primary" id="editFromViewScheduleBtn">Edit Assignment</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <script th:src="@{/js/notifications.js}"></script>
+        <script th:src="@{/js/sidebar-nav.js}"></script>
+        <script>
+            // Global variables
+            let sectionList = [];
+            let facultyList = [];
+            let currentSectionId = null;
+            let currentCurriculumCourses = [];
+            let currentFacultyAssignments = [];
 
-    <script th:src="@{/js/notifications.js}"></script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
-    <script>
-        let facultyList = [];
-        let sectionList = [];
-        // Ensure these are at the very top and global
-        function populateFacultyDropdown(selectedId) {
-            const facultySelect = document.getElementById("facultySelect");
-            facultySelect.innerHTML = '<option value="">Select Faculty Member</option>';
-            facultyList.forEach(faculty => {
-                const option = document.createElement("option");
-                option.value = faculty.id;
-                option.textContent = faculty.name || 'Unknown';
-                if (selectedId && faculty.id == selectedId) option.selected = true;
-                facultySelect.appendChild(option);
+            // DOM elements
+            const sectionSelect = document.getElementById('sectionSelect');
+            const sectionInfo = document.getElementById('sectionInfo');
+            const courseAssignmentPanel = document.getElementById('courseAssignmentPanel');
+            const assignmentModal = document.getElementById('assignmentModal');
+            const assignmentForm = document.getElementById('assignmentForm');
+            const emptyCourseState = document.getElementById('emptyCourseState');
+
+            document.addEventListener('DOMContentLoaded', function () {
+                initializeEventListeners();
+                loadInitialData();
             });
-        }
 
-        function populateSectionDropdown(selectedSection) {
-            const sectionSelect = document.getElementById("sectionSelect");
-            sectionSelect.innerHTML = '<option value="">Select Section</option>';
-            sectionList.forEach(section => {
-                const option = document.createElement("option");
-                option.value = section.sectionCode;
-                option.textContent = section.sectionCode;
-                if (selectedSection && section.sectionCode === selectedSection) option.selected = true;
-                sectionSelect.appendChild(option);
-            });
-        }
+            function initializeEventListeners() {
+                // Section selection
+                sectionSelect.addEventListener('change', handleSectionChange);
 
-        // Ensure getStatusBadge is defined before any function that uses it
-        function getStatusBadge(status) {
-            const statusMap = {
-                'assigned': { class: 'status-active', text: 'Fully Assigned' },
-                'partial': { class: 'status-badge', text: 'Partially Assigned', style: 'background-color: #fff3cd; color: #856404;' },
-                'unassigned': { class: 'status-inactive', text: 'Unassigned' }
-            };
-            const statusInfo = statusMap[status] || statusMap['unassigned'];
-            const style = statusInfo.style ? `style="${statusInfo.style}"` : '';
-            return `<span class="status-badge ${statusInfo.class}" ${style}>${statusInfo.text}</span>`;
-        }
+                // Modal controls
+                document.querySelectorAll('.close-modal').forEach(btn => {
+                    btn.addEventListener('click', closeModal);
+                });
+                document.getElementById('cancelAssignmentBtn').addEventListener('click', closeModal);
 
-        // Add getAssignmentStatus function
-        function getAssignmentStatus(fa) {
-            // Consider an assignment 'assigned' if it has faculty, day, startTime, endTime, and room
-            if (fa && fa.facultyId && fa.day && fa.startTime && fa.endTime && fa.room) {
-                return 'assigned';
-            } else if (fa && (fa.facultyId || fa.day || fa.startTime || fa.endTime || fa.room)) {
-                return 'partial';
-            } else {
-                return 'unassigned';
-            }
-        }
+                // Form submission
+                assignmentForm.addEventListener('submit', handleAssignmentSubmit);
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Modal elements
-            const scheduleModal = document.getElementById("scheduleModal");
-            const viewScheduleModal = document.getElementById("viewScheduleModal");
-            const closeModalBtns = document.querySelectorAll(".close-modal");
-            const cancelScheduleBtn = document.getElementById("cancelScheduleBtn");
-            const closeViewScheduleBtn = document.getElementById("closeViewScheduleBtn");
+                // Save all button
+                document.getElementById('saveAllBtn').addEventListener('click', saveAllAssignments);
 
-            // Modal open/close logic
-            function closeModal(modal) {
-                if (modal) modal.style.display = "none";
-            }
-            function openModal(modal) {
-                if (modal) modal.style.display = "block";
-            }
-            // Close modals on close button click
-            closeModalBtns.forEach(btn => {
-                btn.onclick = function () {
-                    const modal = btn.closest('.modal');
-                    closeModal(modal);
-                };
-            });
-            // Cancel button closes assign modal
-            if (cancelScheduleBtn) {
-                cancelScheduleBtn.onclick = function () {
-                    closeModal(scheduleModal);
-                };
-            }
-            // Close button for view modal
-            if (closeViewScheduleBtn) {
-                closeViewScheduleBtn.onclick = function () {
-                    closeModal(viewScheduleModal);
-                };
-            }
-            // Close modals when clicking outside modal content
-            window.onclick = function (event) {
-                if (event.target === scheduleModal) closeModal(scheduleModal);
-                if (event.target === viewScheduleModal) closeModal(viewScheduleModal);
+                // Close modal on outside click
+                window.addEventListener('click', function (event) {
+                    if (event.target === assignmentModal) {
+                        closeModal();
+                    }
+                });
             }
 
-            let sectionsList = [];
-            let curriculumCoursesToAdd = [];
-
-            // 1. Fetch all curriculum courses on page load
-            let allCurriculumCourses = [];
-            let allFacultyAssignments = [];
-
-            async function loadCurriculumCourses() {
+            async function loadInitialData() {
                 try {
-                    const response = await fetch('/api/curriculums/courses/all'); // New endpoint to be created if not present
-                    if (!response.ok) throw new Error('Failed to fetch curriculum courses');
-                    allCurriculumCourses = await response.json();
-                    await loadFacultyAssignments();
-                    renderCurriculumAssignments();
+                    await Promise.all([
+                        loadSections(),
+                        loadFaculty()
+                    ]);
                 } catch (error) {
-                    console.error('Error loading curriculum courses:', error);
-                    const tbody = document.getElementById('scheduleTableBody');
-                    tbody.innerHTML = `<tr><td colspan='10' class='empty-state-message'>Failed to load curriculum courses.</td></tr>`;
+                    console.error('Error loading initial data:', error);
+                    showNotification('Failed to load initial data', 'error');
                 }
             }
 
-            // 2. Fetch all faculty assignments
-            async function loadFacultyAssignments() {
+            async function loadSections() {
                 try {
-                    const response = await fetch('/api/faculty-assignments');
-                    if (!response.ok) throw new Error('Failed to fetch faculty assignments');
-                    allFacultyAssignments = await response.json();
+                    const response = await fetch('/api/sections');
+                    if (!response.ok) throw new Error('Failed to fetch sections');
+                    sectionList = await response.json();
+                    populateSectionDropdown();
                 } catch (error) {
-                    console.error('Error loading faculty assignments:', error);
-                    allFacultyAssignments = [];
+                    console.error('Error loading sections:', error);
+                    throw error;
                 }
             }
 
-            // 3. Render table: join curriculum courses with faculty assignments
-            function renderCurriculumAssignments() {
-                const tbody = document.getElementById('scheduleTableBody');
-                if (!allCurriculumCourses || allCurriculumCourses.length === 0) {
-                    tbody.innerHTML = `<tr class='empty-state-row'><td colspan='10' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2' ry='2'></rect><line x1='16' y1='2' x2='16' y2='6'></line><line x1='8' y1='2' x2='8' y2='6'></line><line x1='3' y1='10' x2='21' y2='10'></line></svg><p>No curriculum courses found.</p></div></td></tr>`;
-                    return;
-                }
-                tbody.innerHTML = allCurriculumCourses.map(cc => {
-                    const fa = allFacultyAssignments.find(fa => fa.curriculumCourseId === cc.id);
-                    const status = fa ? getAssignmentStatus(fa) : 'unassigned';
-                    const scheduleText = fa && fa.day && fa.startTime && fa.endTime
-                        ? `${fa.day} ${fa.startTime}-${fa.endTime}`
-                        : 'Not Assigned';
-                    const yearLevelText = cc.yearLevel
-                        ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][cc.yearLevel - 1]
-                        : 'N/A';
-                    return `
-            <tr>
-                <td><strong>${cc.course ? cc.course.courseCode : ''}</strong></td>
-                <td>${cc.course ? cc.course.courseTitle : ''}</td>
-                <td>${cc.curriculum ? cc.curriculum.description : ''}</td>
-                <td>${cc.semester || 'N/A'}</td>
-                <td>${yearLevelText}</td>
-                <td>${fa && fa.faculty ? fa.faculty : 'Not Assigned'}</td>
-                <td>${scheduleText}</td>
-                <td>${fa && fa.room ? fa.room : 'Not Assigned'}</td>
-                <td>${getStatusBadge(status)}</td>
-                <td class="action-buttons">
-                    <button class="btn btn-sm btn-view" data-id="${fa ? fa.id : ''}" title="View Details" ${fa ? '' : 'disabled'}>View</button>
-                    <button class="btn btn-sm btn-edit" data-ccid="${cc.id}" title="Assign/Edit Schedule">Assign</button>
-                </td>
-            </tr>
-        `;
-                }).join("");
-                addActionButtonListeners();
-            }
-
-            // Load faculty list
-            async function loadFacultyList() {
+            async function loadFaculty() {
                 try {
-                    const response = await fetch("/api/faculty");
-                    if (!response.ok) throw new Error("Failed to fetch faculty");
+                    const response = await fetch('/api/faculty');
+                    if (!response.ok) throw new Error('Failed to fetch faculty');
                     facultyList = await response.json();
                 } catch (error) {
-                    console.error("Error loading faculty:", error);
-                    facultyList = [];
+                    console.error('Error loading faculty:', error);
+                    throw error;
                 }
             }
 
-            // Load section list
-            async function loadSectionList() {
+            function populateSectionDropdown() {
+                sectionSelect.innerHTML = '<option value="">-- Select a Section --</option>';
+                sectionList.forEach(section => {
+                    const option = document.createElement('option');
+                    option.value = section.id;
+                    option.textContent = `${section.sectionCode} - ${section.programName || section.programCode || 'Unknown Program'}`;
+                    sectionSelect.appendChild(option);
+                });
+            }
+
+            async function handleSectionChange() {
+                const sectionId = sectionSelect.value;
+
+                if (!sectionId) {
+                    hideSectionInfo();
+                    hideCourseAssignmentPanel();
+                    return;
+                }
+
+                currentSectionId = sectionId;
+                const selectedSection = sectionList.find(s => s.id == sectionId);
+
+                if (selectedSection) {
+                    showSectionInfo(selectedSection);
+                    await loadSectionCourses(sectionId);
+                }
+            }
+
+            function showSectionInfo(section) {
+                document.getElementById('selectedSectionCode').textContent = section.sectionCode;
+                document.getElementById('selectedSectionProgram').textContent = section.programName || section.programCode || 'Unknown';
+                document.getElementById('selectedSectionMaxStudents').textContent = section.maxStudents || 'N/A';
+                document.getElementById('selectedSectionStatus').textContent = section.status || 'N/A';
+                sectionInfo.style.display = 'block';
+            }
+
+            function hideSectionInfo() {
+                sectionInfo.style.display = 'none';
+            }
+
+            async function loadSectionCourses(sectionId) {
                 try {
-                    const response = await fetch("/api/sections");
-                    if (!response.ok) throw new Error("Failed to fetch sections");
-                    sectionList = await response.json();
+                    // Load curriculum courses for the section
+                    const coursesResponse = await fetch(`/api/sections/${sectionId}/curriculum-courses`);
+                    if (!coursesResponse.ok) throw new Error('Failed to fetch curriculum courses');
+                    currentCurriculumCourses = await coursesResponse.json();
+
+                    // Load existing faculty assignments for this section
+                    const assignmentsResponse = await fetch(`/api/faculty-assignments?sectionId=${sectionId}`);
+                    if (!assignmentsResponse.ok) throw new Error('Failed to fetch faculty assignments');
+                    currentFacultyAssignments = await assignmentsResponse.json();
+
+                    renderCourseAssignmentTable();
+                    showCourseAssignmentPanel();
                 } catch (error) {
-                    console.error("Error loading sections:", error);
-                    sectionList = [];
+                    console.error('Error loading section courses:', error);
+                    showNotification('Failed to load section courses', 'error');
                 }
             }
 
-            // Filter event listeners
-            document.getElementById("semesterFilter").addEventListener("change", renderCurriculumAssignments);
-            document.getElementById("yearLevelFilter").addEventListener("change", renderCurriculumAssignments);
-            document.getElementById("statusFilter").addEventListener("change", renderCurriculumAssignments);
+            function renderCourseAssignmentTable() {
+                const tbody = document.getElementById('courseAssignmentTableBody');
 
-            // Initialize
-            loadFacultyList();
-            loadSectionList();
-            loadCurriculumCourses();
-        });
+                if (!currentCurriculumCourses.length) {
+                    tbody.innerHTML = '';
+                    emptyCourseState.style.display = 'block';
+                    document.querySelector('.assignment-table-container').style.display = 'none';
+                    updateAssignmentSummary();
+                    return;
+                }
 
-        function addActionButtonListeners() {
-            // View button: show details modal if assignment exists
-            document.querySelectorAll(".btn-view").forEach(btn => {
-                btn.addEventListener("click", function () {
-                    const facultyAssignmentId = this.getAttribute("data-id");
-                    if (!facultyAssignmentId) return;
-                    const fa = allFacultyAssignments.find(fa => fa.id == facultyAssignmentId);
-                    if (!fa) return;
-                    document.getElementById("viewCourseDetails").textContent = fa.courseCode ? fa.courseCode + ' - ' + fa.courseTitle : '';
-                    document.getElementById("viewSectionDetails").textContent = fa.section || '';
-                    document.getElementById("viewFacultyDetails").textContent = fa.facultyName || fa.faculty || 'Not Assigned';
-                    const scheduleText = fa.day && fa.startTime && fa.endTime ? `${fa.day} ${fa.startTime}-${fa.endTime}` : 'Not Assigned';
-                    document.getElementById("viewScheduleDetails").textContent = scheduleText;
-                    document.getElementById("viewRoomDetails").textContent = fa.room || 'Not Assigned';
-                    document.getElementById("viewSemesterDetails").textContent = fa.semester || 'N/A';
-                    const yearLevelText = fa.yearLevel ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][fa.yearLevel - 1] : 'N/A';
-                    document.getElementById("viewYearLevelDetails").textContent = yearLevelText;
-                    document.getElementById("editFromViewScheduleBtn").onclick = function () {
-                        viewScheduleModal.style.display = "none";
-                        openAssignModal(fa.curriculumCourseId);
-                    };
-                    viewScheduleModal.style.display = "block";
-                });
-            });
-            // Assign button: open modal for assignment (new or edit)
-            document.querySelectorAll(".btn-edit").forEach(btn => {
-                btn.addEventListener("click", function () {
-                    const curriculumCourseId = this.getAttribute("data-ccid");
-                    openAssignModal(curriculumCourseId);
-                });
-            });
-        }
+                emptyCourseState.style.display = 'none';
+                document.querySelector('.assignment-table-container').style.display = 'block';
 
-        let allCurriculumCourses = [];
-        let allFacultyAssignments = [];
+                tbody.innerHTML = currentCurriculumCourses.map(course => {
+                    const assignment = currentFacultyAssignments.find(fa => fa.curriculumCourseId === course.id);
+                    const status = getAssignmentStatus(assignment);
+                    const yearLevelText = getYearLevelText(course.yearLevel);
 
-        function openAssignModal(curriculumCourseId) {
-            document.getElementById("scheduleForm").reset();
-            // Fetch only the selected curriculum course from backend
-            fetch(`/api/curriculums/courses/${curriculumCourseId}`)
-                .then(response => response.json())
-                .then(cc => {
-                    if (cc && cc.course) {
-                        document.getElementById("courseInfo").value = cc.course.courseCode + ' - ' + cc.course.courseTitle;
-                    } else {
-                        document.getElementById("courseInfo").value = 'Course not found';
+                    return `
+                    <tr data-course-id="${course.id}">
+                        <td>
+                            <div class="course-info">
+                                <strong>${course.course?.courseCode || 'N/A'}</strong>
+                                <div class="course-title">${course.course?.courseTitle || 'N/A'}</div>
+                            </div>
+                        </td>
+                        <td>${yearLevelText}</td>
+                        <td>${course.semester || 'N/A'}</td>
+                        <td>
+                            <div class="faculty-assignment">
+                                ${assignment?.faculty || '<span class="text-muted">Not assigned</span>'}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="schedule-info">
+                                ${assignment?.day && assignment?.startTime && assignment?.endTime
+                            ? `${assignment.day}<br><small>${assignment.startTime} - ${assignment.endTime}</small>`
+                            : '<span class="text-muted">Not scheduled</span>'
+                        }
+                            </div>
+                        </td>
+                        <td>
+                            <div class="room-info">
+                                ${assignment?.room || '<span class="text-muted">Not assigned</span>'}
+                            </div>
+                        </td>
+                        <td>${getStatusBadge(status)}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="openAssignmentModal(${course.id})" title="Assign/Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2 2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    ${assignment ? 'Edit' : 'Assign'}
+                                </button>
+                                ${assignment ? `
+                                    <button class="btn btn-sm btn-danger" onclick="removeAssignment(${assignment.id})" title="Remove Assignment">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3,6 5,6 21,6"></polyline>
+                                            <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6m3,0V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"></path>
+                                        </svg>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                }).join('');
+
+                updateAssignmentSummary();
+            }
+
+            function updateAssignmentSummary() {
+                const total = currentCurriculumCourses.length;
+                let assigned = 0;
+                let partial = 0;
+                let unassigned = 0;
+
+                currentCurriculumCourses.forEach(course => {
+                    const assignment = currentFacultyAssignments.find(fa => fa.curriculumCourseId === course.id);
+                    const status = getAssignmentStatus(assignment);
+
+                    switch (status) {
+                        case 'assigned': assigned++; break;
+                        case 'partial': partial++; break;
+                        case 'unassigned': unassigned++; break;
                     }
-                    // Find existing assignment for this course if any
-                    const fa = allFacultyAssignments.find(fa => String(fa.curriculumCourseId) === String(curriculumCourseId));
-                    document.getElementById("facultyAssignmentId").value = fa ? fa.id : '';
-                    populateSectionDropdown(fa && fa.section ? fa.section : '');
-                    populateFacultyDropdown(fa && fa.facultyId ? fa.facultyId : '');
-                    document.getElementById("daySelect").value = fa && fa.day ? fa.day : '';
-                    document.getElementById("startTimeInput").value = fa && fa.startTime ? fa.startTime : '';
-                    document.getElementById("endTimeInput").value = fa && fa.endTime ? fa.endTime : '';
-                    document.getElementById("roomInput").value = fa && fa.room ? fa.room : '';
-                    scheduleModal.style.display = "block";
-                })
-                .catch(() => {
-                    document.getElementById("courseInfo").value = 'Course not found';
-                    scheduleModal.style.display = "block";
                 });
-        }
 
-        document.getElementById("scheduleForm").onsubmit = async function (e) {
-            e.preventDefault();
-            // Validation
-            const facultyId = document.getElementById("facultySelect").value;
-            const sectionId = document.getElementById("sectionSelect").value;
-            const day = document.getElementById("daySelect").value;
-            const startTime = document.getElementById("startTimeInput").value;
-            const endTime = document.getElementById("endTimeInput").value;
-            const room = document.getElementById("roomInput").value;
-            let errorMsg = "";
-            if (!facultyId) errorMsg += "Faculty is required.\n";
-            if (!sectionId) errorMsg += "Section is required.\n";
-            if (!day) errorMsg += "Day is required.\n";
-            if (!startTime) errorMsg += "Start time is required.\n";
-            if (!endTime) errorMsg += "End time is required.\n";
-            if (!room) errorMsg += "Room is required.\n";
-            if (startTime && endTime && startTime >= endTime) errorMsg += "End time must be after start time.\n";
-            if (errorMsg) {
-                alert(errorMsg);
-                return false;
+                document.getElementById('totalCourses').textContent = total;
+                document.getElementById('assignedCourses').textContent = assigned;
+                document.getElementById('partialCourses').textContent = partial;
+                document.getElementById('unassignedCourses').textContent = unassigned;
+
+                // Show save all button if there are changes
+                const hasAssignments = assigned > 0 || partial > 0;
+                document.getElementById('saveAllBtn').style.display = hasAssignments ? 'block' : 'none';
             }
-            // Prepare data for DTO
-            const ccId = allCurriculumCourses.find(c => c.course && (c.course.courseCode + ' - ' + c.course.courseTitle) === document.getElementById("courseInfo").value)?.id;
-            const data = {
-                id: document.getElementById("facultyAssignmentId").value || null,
-                curriculumCourseId: ccId,
-                facultyId,
-                sectionId,
-                semester: ccId ? (allCurriculumCourses.find(c => c.id === ccId)?.semester || null) : null,
-                yearLevel: ccId ? (allCurriculumCourses.find(c => c.id === ccId)?.yearLevel || null) : null,
-                day,
-                startTime,
-                endTime,
-                room
-            };
-            try {
-                const isUpdate = !!data.id;
-                const url = isUpdate ? `/api/faculty-assignments/with-schedule/${data.id}` : '/api/faculty-assignments/with-schedule';
-                const method = isUpdate ? 'PUT' : 'POST';
-                const response = await fetch(url, {
-                    method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+
+            function getAssignmentStatus(assignment) {
+                if (!assignment) return 'unassigned';
+
+                const hasAllRequired = assignment.facultyId && assignment.day &&
+                    assignment.startTime && assignment.endTime && assignment.room;
+
+                if (hasAllRequired) return 'assigned';
+
+                const hasSomeRequired = assignment.facultyId || assignment.day ||
+                    assignment.startTime || assignment.endTime || assignment.room;
+
+                return hasSomeRequired ? 'partial' : 'unassigned';
+            }
+
+            function getStatusBadge(status) {
+                const statusConfig = {
+                    'assigned': { class: 'status-assigned', text: 'Fully Assigned' },
+                    'partial': { class: 'status-partial', text: 'Partially Assigned' },
+                    'unassigned': { class: 'status-unassigned', text: 'Unassigned' }
+                };
+
+                const config = statusConfig[status] || statusConfig['unassigned'];
+                return `<span class="status-badge ${config.class}">${config.text}</span>`;
+            }
+
+            function getYearLevelText(yearLevel) {
+                const yearLevels = {
+                    1: 'First Year',
+                    2: 'Second Year',
+                    3: 'Third Year',
+                    4: 'Fourth Year'
+                };
+                return yearLevels[yearLevel] || 'N/A';
+            }
+
+            function showCourseAssignmentPanel() {
+                courseAssignmentPanel.style.display = 'block';
+            }
+
+            function hideCourseAssignmentPanel() {
+                courseAssignmentPanel.style.display = 'none';
+            }
+
+            function openAssignmentModal(curriculumCourseId) {
+                const course = currentCurriculumCourses.find(c => c.id === curriculumCourseId);
+                const assignment = currentFacultyAssignments.find(fa => fa.curriculumCourseId === curriculumCourseId);
+
+                if (!course) return;
+
+                // Populate course information
+                document.getElementById('modalCurriculumCourseId').value = curriculumCourseId;
+                document.getElementById('modalSectionId').value = currentSectionId;
+                document.getElementById('modalFacultyAssignmentId').value = assignment?.id || '';
+                document.getElementById('modalCourseCode').value = course.course?.courseCode || '';
+                document.getElementById('modalCourseTitle').value = course.course?.courseTitle || '';
+                document.getElementById('modalYearLevel').value = getYearLevelText(course.yearLevel);
+                document.getElementById('modalSemester').value = course.semester || '';
+
+                // Populate faculty dropdown
+                populateFacultyDropdown(assignment?.facultyId);
+
+                // Populate assignment data if exists
+                if (assignment) {
+                    document.getElementById('modalDay').value = assignment.day || '';
+                    document.getElementById('modalRoom').value = assignment.room || '';
+                    document.getElementById('modalStartTime').value = assignment.startTime || '';
+                    document.getElementById('modalEndTime').value = assignment.endTime || '';
+                    document.getElementById('assignmentModalTitle').textContent = 'Edit Faculty & Schedule Assignment';
+                } else {
+                    // Clear form for new assignment
+                    document.getElementById('modalDay').value = '';
+                    document.getElementById('modalRoom').value = '';
+                    document.getElementById('modalStartTime').value = '';
+                    document.getElementById('modalEndTime').value = '';
+                    document.getElementById('assignmentModalTitle').textContent = 'Assign Faculty & Schedule';
+                }
+
+                assignmentModal.style.display = 'block';
+            }
+
+            function populateFacultyDropdown(selectedFacultyId) {
+                const facultySelect = document.getElementById('modalFacultySelect');
+                facultySelect.innerHTML = '<option value="">-- Choose Faculty --</option>';
+
+                facultyList.forEach(faculty => {
+                    const option = document.createElement('option');
+                    option.value = faculty.id;
+                    option.textContent = faculty.name || `${faculty.firstName} ${faculty.lastName}` || 'Unknown Faculty';
+                    if (selectedFacultyId && faculty.id == selectedFacultyId) {
+                        option.selected = true;
+                    }
+                    facultySelect.appendChild(option);
                 });
-                if (!response.ok) throw new Error('Failed to save assignment');
-                closeModal(scheduleModal);
-                await loadFacultyAssignments();
-                renderCurriculumAssignments();
-            } catch (err) {
-                alert('Error saving assignment: ' + err.message);
             }
-            return false;
-        };
-    </script>
 
-    <style>
-        .schedule-details {
-            text-align: center;
-            padding: 20px;
-        }
+            async function handleAssignmentSubmit(event) {
+                event.preventDefault();
 
-        .schedule-icon {
-            margin-bottom: 20px;
-        }
+                const facultyValue = document.getElementById('modalFacultySelect').value;
+                const roomValue = document.getElementById('modalRoom').value;
+                const assignmentData = {
+                    id: document.getElementById('modalFacultyAssignmentId').value || null,
+                    curriculumCourseId: parseInt(document.getElementById('modalCurriculumCourseId').value),
+                    sectionId: parseInt(document.getElementById('modalSectionId').value),
+                    facultyId: facultyValue ? parseInt(facultyValue) : null,
+                    semester: document.getElementById('modalSemester').value,
+                    yearLevel: getCurrentYearLevel(),
+                    day: document.getElementById('modalDay').value,
+                    startTime: document.getElementById('modalStartTime').value,
+                    endTime: document.getElementById('modalEndTime').value,
+                    room: roomValue ? roomValue : null
+                };
 
-        .schedule-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
+                // Validation
+                if (!assignmentData.day || !assignmentData.startTime || !assignmentData.endTime) {
+                    showNotification('Please fill in all schedule details (day, start time, end time)', 'error');
+                    return;
+                }
 
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-        }
+                if (assignmentData.startTime >= assignmentData.endTime) {
+                    showNotification('End time must be after start time', 'error');
+                    return;
+                }
 
-        .info-label {
-            font-weight: 600;
-            color: #6b3a1d;
-            font-family: "Cinzel", serif;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
+                try {
+                    const isUpdate = !!assignmentData.id;
+                    const url = isUpdate
+                        ? `/api/faculty-assignments/with-schedule/${assignmentData.id}`
+                        : '/api/faculty-assignments/with-schedule';
+                    const method = isUpdate ? 'PUT' : 'POST';
 
-        .info-value {
-            color: #333;
-            font-family: "Alice", serif;
-        }
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(assignmentData)
+                    });
 
-        .schedule-actions {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
+                    if (!response.ok) {
+                        throw new Error('Failed to save assignment');
+                    }
 
-        @media (max-width: 768px) {
-            .schedule-info-grid {
-                grid-template-columns: 1fr;
+                    closeModal();
+                    showNotification('Assignment saved successfully', 'success');
+
+                    // Reload the section courses to reflect changes
+                    await loadSectionCourses(currentSectionId);
+
+                } catch (error) {
+                    console.error('Error saving assignment:', error);
+                    showNotification('Failed to save assignment', 'error');
+                }
             }
-        }
 
-        .course-preview-container {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 15px;
-            background-color: #f8f9fa;
-        }
+            function getCurrentYearLevel() {
+                const course = currentCurriculumCourses.find(c =>
+                    c.id === parseInt(document.getElementById('modalCurriculumCourseId').value)
+                );
+                return course?.yearLevel || 1;
+            }
 
-        .preview-header {
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
+            async function removeAssignment(assignmentId) {
+                if (!confirm('Are you sure you want to remove this assignment?')) {
+                    return;
+                }
 
-        .preview-header p {
-            margin: 5px 0;
-            color: #6b3a1d;
-            font-family: "Alice", serif;
-        }
+                try {
+                    const response = await fetch(`/api/faculty-assignments/${assignmentId}`, {
+                        method: 'DELETE'
+                    });
 
-        .course-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+                    if (!response.ok) {
+                        throw new Error('Failed to remove assignment');
+                    }
 
-        .course-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            transition: box-shadow 0.2s ease;
-        }
+                    showNotification('Assignment removed successfully', 'success');
+                    await loadSectionCourses(currentSectionId);
 
-        .course-item:hover {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+                } catch (error) {
+                    console.error('Error removing assignment:', error);
+                    showNotification('Failed to remove assignment', 'error');
+                }
+            }
 
-        .course-info {
-            flex: 1;
-        }
+            function closeModal() {
+                assignmentModal.style.display = 'none';
+                assignmentForm.reset();
+            }
 
-        .course-info strong {
-            color: #6b3a1d;
-            font-family: "Cinzel", serif;
-        }
+            function showNotification(message, type = 'info') {
+                // Simple notification system - you can enhance this
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.textContent = message;
+                notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 4px;
+                color: white;
+                font-family: 'Alice', serif;
+                z-index: 10000;
+                ${type === 'success' ? 'background-color: #28a745;' : ''}
+                ${type === 'error' ? 'background-color: #dc3545;' : ''}
+                ${type === 'info' ? 'background-color: #17a2b8;' : ''}
+            `;
 
-        .course-meta {
-            display: block;
-            font-size: 0.85rem;
-            color: #666;
-            margin-top: 4px;
-            font-family: "Alice", serif;
-        }
+                document.body.appendChild(notification);
 
-        .course-status {
-            flex-shrink: 0;
-        }
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+            async function saveAllAssignments() {
+                // This could be implemented to save all pending changes at once
+                showNotification('All assignments are already saved individually', 'info');
+            }
+        </script>
 
-        .panel-header .btn {
-            margin-left: auto;
-        }
+        <style>
+            /* Section Selection Styles */
+            .section-selector-container {
+                padding: 20px;
+            }
 
-        @media (max-width: 768px) {
-            .panel-header {
-                flex-direction: column;
-                align-items: flex-start;
+            .selector-group {
+                margin-bottom: 30px;
+            }
+
+            .selector-label {
+                display: block;
+                font-family: "Cinzel", serif;
+                font-weight: 600;
+                color: #6B3A1D;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+
+            .selector-wrapper {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .section-select {
+                width: 100%;
+                padding: 12px 40px 12px 16px;
+                border: 2px solid #D4B896;
+                border-radius: 8px;
+                font-family: "Alice", serif;
+                font-size: 1rem;
+                background-color: white;
+                color: #333;
+                appearance: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .section-select:focus {
+                outline: none;
+                border-color: #8B4513;
+                box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+            }
+
+            .selector-icon {
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+
+            .info-card {
+                background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC0 100%);
+                border: 1px solid #D4B896;
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            .info-header h3 {
+                font-family: "Cinzel", serif;
+                color: #6B3A1D;
+                margin: 0 0 15px 0;
+                font-size: 1.2rem;
+            }
+
+            .info-content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 15px;
             }
 
-            .panel-header .btn {
-                margin-left: 0;
-                width: 100%;
+            .info-item {
+                display: flex;
+                flex-direction: column;
             }
-        }
-    </style>
+
+            .info-label {
+                font-family: "Cinzel", serif;
+                font-weight: 600;
+                color: #8B4513;
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+            }
+
+            .info-value {
+                font-family: "Alice", serif;
+                color: #333;
+                font-size: 1rem;
+            }
+
+            /* Assignment Summary Styles */
+            .assignment-summary {
+                background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC0 100%);
+                border: 1px solid #D4B896;
+                border-radius: 12px;
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+
+            .summary-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+
+            .stat-item {
+                text-align: center;
+                padding: 15px;
+                background: rgba(255, 255, 255, 0.7);
+                border-radius: 8px;
+                border: 1px solid rgba(139, 69, 19, 0.1);
+            }
+
+            .stat-number {
+                display: block;
+                font-family: "Cinzel", serif;
+                font-size: 2rem;
+                font-weight: bold;
+                color: #6B3A1D;
+                margin-bottom: 5px;
+            }
+
+            .stat-label {
+                font-family: "Alice", serif;
+                color: #8B4513;
+                font-size: 0.9rem;
+            }
+
+            /* Assignment Table Styles */
+            .assignment-table-container {
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border: 1px solid #D4B896;
+            }
+
+            .assignment-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .assignment-table th {
+                background: linear-gradient(135deg, #8B4513 0%, #6B3A1D 100%);
+                color: white;
+                padding: 15px 12px;
+                text-align: left;
+                font-family: "Cinzel", serif;
+                font-weight: 600;
+                font-size: 0.9rem;
+            }
+
+            .assignment-table td {
+                padding: 15px 12px;
+                border-bottom: 1px solid #E8DCC0;
+                font-family: "Alice", serif;
+                vertical-align: top;
+            }
+
+            .assignment-table tr:hover {
+                background-color: #F9F7F4;
+            }
+
+            .course-info strong {
+                color: #6B3A1D;
+                font-family: "Cinzel", serif;
+                font-size: 1rem;
+            }
+
+            .course-title {
+                color: #666;
+                font-size: 0.9rem;
+                margin-top: 4px;
+            }
+
+            .faculty-assignment,
+            .schedule-info,
+            .room-info {
+                font-size: 0.9rem;
+            }
+
+            .text-muted {
+                color: #999;
+                font-style: italic;
+            }
+
+            /* Status Badge Styles */
+            .status-badge {
+                display: inline-block;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                font-family: "Alice", serif;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .status-assigned {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .status-partial {
+                background-color: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeaa7;
+            }
+
+            .status-unassigned {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            /* Modal Styles */
+            .form-section {
+                margin-bottom: 25px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #E8DCC0;
+            }
+
+            .form-section:last-of-type {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+
+            .form-section h4 {
+                font-family: "Cinzel", serif;
+                color: #6B3A1D;
+                margin: 0 0 15px 0;
+                font-size: 1.1rem;
+            }
+
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
+
+            /* Empty State */
+            .empty-state {
+                text-align: center;
+                padding: 60px 20px;
+                color: #8B4513;
+            }
+
+            .empty-state-icon {
+                margin-bottom: 20px;
+            }
+
+            .empty-state h3 {
+                font-family: "Cinzel", serif;
+                margin: 0 0 10px 0;
+                font-size: 1.5rem;
+            }
+
+            .empty-state p {
+                font-family: "Alice", serif;
+                margin: 0;
+                font-size: 1rem;
+                opacity: 0.8;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .summary-stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .info-content {
+                    grid-template-columns: 1fr;
+                }
+
+                .assignment-table {
+                    font-size: 0.8rem;
+                }
+
+                .assignment-table th,
+                .assignment-table td {
+                    padding: 10px 8px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .summary-stats {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
 </body>
 
 </html>

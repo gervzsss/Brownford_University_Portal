@@ -18,7 +18,8 @@ public class FacultyAssignment {
     private Section section;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "faculty_id", nullable = false)
+    @JoinColumn(name = "faculty_id", nullable = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Faculty faculty;
 
     @Column(nullable = false)

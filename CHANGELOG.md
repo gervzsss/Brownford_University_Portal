@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.19.252032]
+
+### Fix
+- Schedule Management Page is now working.
+
+### Bug
+- The remove assignment button is not working.
+
 ## [06.19.251657]
 
 ### Changes

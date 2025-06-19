@@ -49,15 +49,27 @@ public class FacultyAssignmentService {
 
     @Transactional
     public FacultyAssignment saveFacultyAssignmentWithSchedule(FacultyAssignmentWithScheduleDTO dto) {
-        FacultyAssignment assignment;
-        if (dto.getId() != null) {
-            assignment = facultyAssignmentRepository.findById(dto.getId()).orElse(new FacultyAssignment());
-        } else {
-            assignment = new FacultyAssignment();
-        }
+        FacultyAssignment assignment = null;
         CurriculumCourse cc = curriculumCourseRepository.findById(dto.getCurriculumCourseId()).orElseThrow();
         Section section = sectionRepository.findById(dto.getSectionId()).orElseThrow();
-        Faculty faculty = facultyRepository.findById(dto.getFacultyId()).orElseThrow();
+        Faculty faculty = null;
+        if (dto.getFacultyId() != null) {
+            faculty = facultyRepository.findById(dto.getFacultyId()).orElse(null);
+        }
+        boolean isUpdate = (dto.getId() != null);
+        if (isUpdate) {
+            assignment = facultyAssignmentRepository.findById(dto.getId()).orElse(null);
+        }
+        if (assignment == null) {
+            // Check for existing assignment for this course/section/semester/yearLevel
+            assignment = facultyAssignmentRepository
+                .findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
+                    cc, section, dto.getSemester(), dto.getYearLevel() != null ? dto.getYearLevel() : 0)
+                .orElse(null);
+        }
+        if (assignment == null) {
+            assignment = new FacultyAssignment();
+        }
         assignment.setCurriculumCourse(cc);
         assignment.setSection(section);
         assignment.setFaculty(faculty);

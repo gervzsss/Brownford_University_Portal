@@ -8,6 +8,7 @@ import com.brownford.service.ProgramService;
 import com.brownford.service.SectionService;
 import com.brownford.service.CurriculumService;
 import com.brownford.model.Curriculum;
+import com.brownford.model.CurriculumCourse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -106,6 +107,21 @@ public class SectionController {
     public ResponseEntity<Long> getEnrolledCount(@PathVariable Long id) {
         long count = enrollmentService.countEnrolledStudentsInSection(id);
         return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/{id}/curriculum-courses")
+    public ResponseEntity<List<CurriculumCourse>> getCurriculumCoursesForSection(@PathVariable Long id) {
+        Optional<Section> sectionOpt = sectionService.getSectionById(id);
+        if (sectionOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Section section = sectionOpt.get();
+        Curriculum curriculum = section.getCurriculum();
+        if (curriculum == null) {
+            return ResponseEntity.ok(List.of());
+        }
+        List<CurriculumCourse> courses = curriculum.getCurriculumCourses();
+        return ResponseEntity.ok(courses);
     }
 
     private SectionDTO toDTO(Section section) {
