@@ -30,6 +30,9 @@ public class CurriculumCourse {
     @Column(nullable = false)
     private boolean required;
 
+    @OneToMany(mappedBy = "curriculumCourse")
+    private java.util.List<Schedule> schedules;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -77,5 +80,13 @@ public class CurriculumCourse {
 
     public void setRequired(boolean required) {
         this.required = required;
+    }
+
+    public java.util.List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(java.util.List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }

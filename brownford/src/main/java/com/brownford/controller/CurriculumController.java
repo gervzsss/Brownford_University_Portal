@@ -90,4 +90,15 @@ public class CurriculumController {
         return curriculumService.getActiveCurriculumByProgramId(programId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No active curriculum found for this program"));
     }
+
+    @GetMapping("/courses/all")
+    public List<CurriculumCourse> getAllCurriculumCourses() {
+        return curriculumService.getAllCurriculumCourses();
+    }
+    
+    @GetMapping("/courses/{id}")
+    public ResponseEntity<CurriculumCourse> getCurriculumCourseById(@PathVariable Long id) {
+        Optional<CurriculumCourse> course = curriculumService.getCurriculumCourseById(id);
+        return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

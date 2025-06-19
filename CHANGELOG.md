@@ -1,7 +1,18 @@
 # Changelog
 
+## [06.19.251619]
 
-### [06.18.252036]
+### Added
+- FacultyAssignment backend files.
+- Added new DTO files.
+
+### Removed
+- SectionCourse backend files.
+
+### Bug
+- Schedule Management Page Bug
+
+## [06.18.252036]
 
 ### Minor Fix
 - Formatted lines admin-section file

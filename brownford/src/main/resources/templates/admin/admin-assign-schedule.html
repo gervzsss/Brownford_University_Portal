@@ -298,15 +298,6 @@
                 <section class="content-panel" id="schedulePanel">
                     <div class="panel-header">
                         <h2 class="section-title">Course Schedule Assignment</h2>
-                        <button class="btn btn-primary" id="addCurriculumCoursesBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                            Add Curriculum Courses
-                        </button>
                     </div>
                     <div class="panel-content">
                         <!-- Filter Controls -->
@@ -350,7 +341,7 @@
                                     <tr>
                                         <th>Course Code</th>
                                         <th>Course Title</th>
-                                        <th>Section</th>
+                                        <th>Curriculum</th>
                                         <th>Semester</th>
                                         <th>Year Level</th>
                                         <th>Faculty</th>
@@ -361,7 +352,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="scheduleTableBody">
-                                    <!-- Schedule data will be loaded dynamically -->
+                                    <!-- Populated by JS -->
                                 </tbody>
                             </table>
                         </div>
@@ -389,35 +380,28 @@
                 </div>
                 <div class="modal-body">
                     <form id="scheduleForm">
-                        <input type="hidden" id="sectionCourseId" name="sectionCourseId" />
-
+                        <input type="hidden" id="facultyAssignmentId" name="facultyAssignmentId" />
                         <!-- Course Information (Read-only) -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label>Course</label>
-                                <input type="text" id="courseInfo" class="form-control" readonly />
+                                <label for="courseInfo">Course</label>
+                                <input type="text" id="courseInfo" name="courseInfo" readonly />
                             </div>
                             <div class="form-group">
-                                <label>Section</label>
-                                <input type="text" id="sectionInfo" class="form-control" readonly />
+                                <label for="sectionSelect">Section</label>
+                                <select id="sectionSelect" name="sectionSelect"></select>
                             </div>
                         </div>
-
-                        <!-- Faculty Assignment -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="facultySelect">Assign Faculty</label>
-                                <select id="facultySelect" name="facultyId" class="form-control">
-                                    <option value="">Select Faculty Member</option>
-                                </select>
+                                <label for="facultySelect">Faculty</label>
+                                <select id="facultySelect" name="facultySelect"></select>
                             </div>
                         </div>
-
-                        <!-- Schedule Assignment -->
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="daySelect">Day</label>
-                                <select id="daySelect" name="day" class="form-control">
+                                <select id="daySelect" name="daySelect">
                                     <option value="">Select Day</option>
                                     <option value="Monday">Monday</option>
                                     <option value="Tuesday">Tuesday</option>
@@ -429,29 +413,22 @@
                             </div>
                             <div class="form-group">
                                 <label for="roomInput">Room</label>
-                                <input type="text" id="roomInput" name="room" class="form-control"
-                                    placeholder="e.g., Room 101, Lab A" />
+                                <input type="text" id="roomInput" name="roomInput" />
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="startTimeInput">Start Time</label>
-                                <input type="time" id="startTimeInput" name="startTime" class="form-control" />
+                                <input type="time" id="startTimeInput" name="startTimeInput" />
                             </div>
                             <div class="form-group">
                                 <label for="endTimeInput">End Time</label>
-                                <input type="time" id="endTimeInput" name="endTime" class="form-control" />
+                                <input type="time" id="endTimeInput" name="endTimeInput" />
                             </div>
                         </div>
-
                         <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="cancelScheduleBtn">
-                                Cancel
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="saveScheduleBtn">
-                                Save Assignment
-                            </button>
+                            <button type="button" class="btn btn-secondary" id="cancelScheduleBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveScheduleBtn">Save</button>
                         </div>
                     </form>
                 </div>
@@ -468,110 +445,21 @@
                 <div class="modal-body">
                     <div class="schedule-details">
                         <div class="schedule-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"></svg>
                         </div>
                         <div class="schedule-info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Course:</span>
-                                <span class="info-value" id="viewCourseDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Section:</span>
-                                <span class="info-value" id="viewSectionDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Faculty:</span>
-                                <span class="info-value" id="viewFacultyDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Schedule:</span>
-                                <span class="info-value" id="viewScheduleDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Room:</span>
-                                <span class="info-value" id="viewRoomDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Semester:</span>
-                                <span class="info-value" id="viewSemesterDetails"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Year Level:</span>
-                                <span class="info-value" id="viewYearLevelDetails"></span>
-                            </div>
+                            <div class="info-item"><span class="info-label">Course</span><span class="info-value" id="viewCourseDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Section</span><span class="info-value" id="viewSectionDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Faculty</span><span class="info-value" id="viewFacultyDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Schedule</span><span class="info-value" id="viewScheduleDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Room</span><span class="info-value" id="viewRoomDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Semester</span><span class="info-value" id="viewSemesterDetails"></span></div>
+                            <div class="info-item"><span class="info-label">Year Level</span><span class="info-value" id="viewYearLevelDetails"></span></div>
                         </div>
                     </div>
                     <div class="schedule-actions">
-                        <button class="btn btn-secondary" id="closeViewScheduleBtn">
-                            Close
-                        </button>
-                        <button class="btn btn-primary" id="editFromViewScheduleBtn">
-                            Edit Assignment
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Curriculum Courses Modal -->
-        <div id="curriculumModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Add Courses from Curriculum</h3>
-                    <span class="close-modal">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <form id="curriculumForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="sectionSelect">Select Section</label>
-                                <select id="sectionSelect" name="sectionId" class="form-control" required>
-                                    <option value="">Choose a section...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="curriculumSemesterSelect">Semester</label>
-                                <select id="curriculumSemesterSelect" name="semester" class="form-control" required>
-                                    <option value="">Choose semester...</option>
-                                    <option value="1st Semester">1st Semester</option>
-                                    <option value="2nd Semester">2nd Semester</option>
-                                    <option value="Summer">Summer</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="previewCoursesBtn">
-                                Preview Courses
-                            </button>
-                            <button type="button" class="btn btn-secondary" id="cancelCurriculumBtn">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-
-                    <!-- Course Preview Section -->
-                    <div id="coursePreviewSection" style="display: none;">
-                        <hr style="margin: 20px 0;">
-                        <h4>Courses to be Added</h4>
-                        <div class="course-preview-container">
-                            <div id="coursePreviewList"></div>
-                        </div>
-                        <div class="form-actions" style="margin-top: 20px;">
-                            <button type="button" class="btn btn-secondary" id="backToSelectionBtn">
-                                Back to Selection
-                            </button>
-                            <button type="button" class="btn btn-primary" id="confirmAddCoursesBtn">
-                                Add Selected Courses
-                            </button>
-                        </div>
+                        <button class="btn btn-secondary" id="closeViewScheduleBtn">Close</button>
+                        <button class="btn btn-primary" id="editFromViewScheduleBtn">Edit Assignment</button>
                     </div>
                 </div>
             </div>
@@ -581,6 +469,57 @@
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
     <script>
+        let facultyList = [];
+        let sectionList = [];
+        // Ensure these are at the very top and global
+        function populateFacultyDropdown(selectedId) {
+            const facultySelect = document.getElementById("facultySelect");
+            facultySelect.innerHTML = '<option value="">Select Faculty Member</option>';
+            facultyList.forEach(faculty => {
+                const option = document.createElement("option");
+                option.value = faculty.id;
+                option.textContent = faculty.name || 'Unknown';
+                if (selectedId && faculty.id == selectedId) option.selected = true;
+                facultySelect.appendChild(option);
+            });
+        }
+
+        function populateSectionDropdown(selectedSection) {
+            const sectionSelect = document.getElementById("sectionSelect");
+            sectionSelect.innerHTML = '<option value="">Select Section</option>';
+            sectionList.forEach(section => {
+                const option = document.createElement("option");
+                option.value = section.sectionCode;
+                option.textContent = section.sectionCode;
+                if (selectedSection && section.sectionCode === selectedSection) option.selected = true;
+                sectionSelect.appendChild(option);
+            });
+        }
+
+        // Ensure getStatusBadge is defined before any function that uses it
+        function getStatusBadge(status) {
+            const statusMap = {
+                'assigned': { class: 'status-active', text: 'Fully Assigned' },
+                'partial': { class: 'status-badge', text: 'Partially Assigned', style: 'background-color: #fff3cd; color: #856404;' },
+                'unassigned': { class: 'status-inactive', text: 'Unassigned' }
+            };
+            const statusInfo = statusMap[status] || statusMap['unassigned'];
+            const style = statusInfo.style ? `style="${statusInfo.style}"` : '';
+            return `<span class="status-badge ${statusInfo.class}" ${style}>${statusInfo.text}</span>`;
+        }
+
+        // Add getAssignmentStatus function
+        function getAssignmentStatus(fa) {
+            // Consider an assignment 'assigned' if it has faculty, day, startTime, endTime, and room
+            if (fa && fa.facultyId && fa.day && fa.startTime && fa.endTime && fa.room) {
+                return 'assigned';
+            } else if (fa && (fa.facultyId || fa.day || fa.startTime || fa.endTime || fa.room)) {
+                return 'partial';
+            } else {
+                return 'unassigned';
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             // Modal elements
             const scheduleModal = document.getElementById("scheduleModal");
@@ -589,176 +528,107 @@
             const cancelScheduleBtn = document.getElementById("cancelScheduleBtn");
             const closeViewScheduleBtn = document.getElementById("closeViewScheduleBtn");
 
-            // Add curriculum modal elements
-            const curriculumModal = document.getElementById("curriculumModal");
-            const addCurriculumCoursesBtn = document.getElementById("addCurriculumCoursesBtn");
-            const cancelCurriculumBtn = document.getElementById("cancelCurriculumBtn");
-            const previewCoursesBtn = document.getElementById("previewCoursesBtn");
-            const confirmAddCoursesBtn = document.getElementById("confirmAddCoursesBtn");
-            const backToSelectionBtn = document.getElementById("backToSelectionBtn");
+            // Modal open/close logic
+            function closeModal(modal) {
+                if (modal) modal.style.display = "none";
+            }
+            function openModal(modal) {
+                if (modal) modal.style.display = "block";
+            }
+            // Close modals on close button click
+            closeModalBtns.forEach(btn => {
+                btn.onclick = function () {
+                    const modal = btn.closest('.modal');
+                    closeModal(modal);
+                };
+            });
+            // Cancel button closes assign modal
+            if (cancelScheduleBtn) {
+                cancelScheduleBtn.onclick = function () {
+                    closeModal(scheduleModal);
+                };
+            }
+            // Close button for view modal
+            if (closeViewScheduleBtn) {
+                closeViewScheduleBtn.onclick = function () {
+                    closeModal(viewScheduleModal);
+                };
+            }
+            // Close modals when clicking outside modal content
+            window.onclick = function (event) {
+                if (event.target === scheduleModal) closeModal(scheduleModal);
+                if (event.target === viewScheduleModal) closeModal(viewScheduleModal);
+            }
 
             let sectionsList = [];
             let curriculumCoursesToAdd = [];
 
-            // Add curriculum courses button click
-            addCurriculumCoursesBtn.addEventListener("click", function () {
-                loadSections();
-                curriculumModal.style.display = "block";
-            });
+            // 1. Fetch all curriculum courses on page load
+            let allCurriculumCourses = [];
+            let allFacultyAssignments = [];
 
-            cancelCurriculumBtn.addEventListener("click", function () {
-                curriculumModal.style.display = "none";
-                resetCurriculumModal();
-            });
-
-            // Load sections for dropdown
-            async function loadSections() {
+            async function loadCurriculumCourses() {
                 try {
-                    const response = await fetch("/api/sections");
-                    if (!response.ok) throw new Error("Failed to fetch sections");
-                    sectionsList = await response.json();
-                    populateSectionDropdown();
+                    const response = await fetch('/api/curriculums/courses/all'); // New endpoint to be created if not present
+                    if (!response.ok) throw new Error('Failed to fetch curriculum courses');
+                    allCurriculumCourses = await response.json();
+                    await loadFacultyAssignments();
+                    renderCurriculumAssignments();
                 } catch (error) {
-                    console.error("Error loading sections:", error);
-                    sectionsList = [];
+                    console.error('Error loading curriculum courses:', error);
+                    const tbody = document.getElementById('scheduleTableBody');
+                    tbody.innerHTML = `<tr><td colspan='10' class='empty-state-message'>Failed to load curriculum courses.</td></tr>`;
                 }
             }
 
-            function populateSectionDropdown() {
-                const sectionSelect = document.getElementById("sectionSelect");
-                sectionSelect.innerHTML = '<option value="">Choose a section...</option>';
-                sectionsList.forEach(section => {
-                    const option = document.createElement("option");
-                    option.value = section.id;
-                    option.textContent = `${section.sectionCode} - ${section.program.programName} (Year ${section.yearLevel})`;
-                    sectionSelect.appendChild(option);
-                });
+            // 2. Fetch all faculty assignments
+            async function loadFacultyAssignments() {
+                try {
+                    const response = await fetch('/api/faculty-assignments');
+                    if (!response.ok) throw new Error('Failed to fetch faculty assignments');
+                    allFacultyAssignments = await response.json();
+                } catch (error) {
+                    console.error('Error loading faculty assignments:', error);
+                    allFacultyAssignments = [];
+                }
             }
 
-            // Preview courses button click
-            previewCoursesBtn.addEventListener("click", async function () {
-                const sectionId = document.getElementById("sectionSelect").value;
-                const semester = document.getElementById("curriculumSemesterSelect").value;
-
-                if (!sectionId || !semester) {
-                    alert("Please select both section and semester");
+            // 3. Render table: join curriculum courses with faculty assignments
+            function renderCurriculumAssignments() {
+                const tbody = document.getElementById('scheduleTableBody');
+                if (!allCurriculumCourses || allCurriculumCourses.length === 0) {
+                    tbody.innerHTML = `<tr class='empty-state-row'><td colspan='10' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2' ry='2'></rect><line x1='16' y1='2' x2='16' y2='6'></line><line x1='8' y1='2' x2='8' y2='6'></line><line x1='3' y1='10' x2='21' y2='10'></line></svg><p>No curriculum courses found.</p></div></td></tr>`;
                     return;
                 }
-
-                try {
-                    const response = await fetch(`/api/section-courses/curriculum-driven?sectionId=${sectionId}&semester=${semester}`);
-                    if (!response.ok) throw new Error("Failed to fetch curriculum courses");
-
-                    const curriculumCourses = await response.json();
-
-                    // Filter out courses that already have section courses assigned
-                    curriculumCoursesToAdd = curriculumCourses.filter(course => !course.sectionCourseId);
-
-                    if (curriculumCoursesToAdd.length === 0) {
-                        alert("All curriculum courses for this section and semester are already added.");
-                        return;
-                    }
-
-                    displayCoursePreview();
-
-                } catch (error) {
-                    console.error("Error fetching curriculum courses:", error);
-                    alert("Error loading curriculum courses: " + error.message);
-                }
-            });
-
-            function displayCoursePreview() {
-                const previewList = document.getElementById("coursePreviewList");
-                const selectedSection = sectionsList.find(s => s.id == document.getElementById("sectionSelect").value);
-
-                previewList.innerHTML = `
-        <div class="preview-header">
-            <p><strong>Section:</strong> ${selectedSection.sectionCode} - ${selectedSection.program.programName}</p>
-            <p><strong>Semester:</strong> ${document.getElementById("curriculumSemesterSelect").value}</p>
-            <p><strong>Courses to add:</strong> ${curriculumCoursesToAdd.length}</p>
-        </div>
-        <div class="course-list">
-            ${curriculumCoursesToAdd.map(course => `
-                <div class="course-item">
-                    <div class="course-info">
-                        <strong>${course.courseCode}</strong> - ${course.courseTitle}
-                        <span class="course-meta">Year ${course.yearLevel} | ${course.semester}</span>
-                    </div>
-                    <div class="course-status">
-                        <span class="status-badge status-inactive">Not Assigned</span>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-    `;
-
-                document.getElementById("coursePreviewSection").style.display = "block";
+                tbody.innerHTML = allCurriculumCourses.map(cc => {
+                    const fa = allFacultyAssignments.find(fa => fa.curriculumCourseId === cc.id);
+                    const status = fa ? getAssignmentStatus(fa) : 'unassigned';
+                    const scheduleText = fa && fa.day && fa.startTime && fa.endTime
+                        ? `${fa.day} ${fa.startTime}-${fa.endTime}`
+                        : 'Not Assigned';
+                    const yearLevelText = cc.yearLevel
+                        ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][cc.yearLevel - 1]
+                        : 'N/A';
+                    return `
+            <tr>
+                <td><strong>${cc.course ? cc.course.courseCode : ''}</strong></td>
+                <td>${cc.course ? cc.course.courseTitle : ''}</td>
+                <td>${cc.curriculum ? cc.curriculum.description : ''}</td>
+                <td>${cc.semester || 'N/A'}</td>
+                <td>${yearLevelText}</td>
+                <td>${fa && fa.faculty ? fa.faculty : 'Not Assigned'}</td>
+                <td>${scheduleText}</td>
+                <td>${fa && fa.room ? fa.room : 'Not Assigned'}</td>
+                <td>${getStatusBadge(status)}</td>
+                <td class="action-buttons">
+                    <button class="btn btn-sm btn-view" data-id="${fa ? fa.id : ''}" title="View Details" ${fa ? '' : 'disabled'}>View</button>
+                    <button class="btn btn-sm btn-edit" data-ccid="${cc.id}" title="Assign/Edit Schedule">Assign</button>
+                </td>
+            </tr>
+        `;
+                }).join("");
+                addActionButtonListeners();
             }
-
-            // Back to selection button
-            backToSelectionBtn.addEventListener("click", function () {
-                document.getElementById("coursePreviewSection").style.display = "none";
-            });
-
-            // Confirm add courses button
-            confirmAddCoursesBtn.addEventListener("click", async function () {
-                const sectionId = document.getElementById("sectionSelect").value;
-                const semester = document.getElementById("curriculumSemesterSelect").value;
-
-                try {
-                    // Create section courses for each curriculum course
-                    const promises = curriculumCoursesToAdd.map(course => {
-                        const sectionCourseData = {
-                            section: { id: parseInt(sectionId) },
-                            course: { id: course.courseId },
-                            semester: semester,
-                            yearLevel: course.yearLevel
-                        };
-
-                        return fetch("/api/section-courses", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(sectionCourseData)
-                        });
-                    });
-
-                    await Promise.all(promises);
-
-                    curriculumModal.style.display = "none";
-                    resetCurriculumModal();
-                    loadSectionCourses(); // Reload the main table
-
-                    alert(`Successfully added ${curriculumCoursesToAdd.length} courses from curriculum!`);
-
-                } catch (error) {
-                    console.error("Error adding curriculum courses:", error);
-                    alert("Error adding courses: " + error.message);
-                }
-            });
-
-            function resetCurriculumModal() {
-                document.getElementById("curriculumForm").reset();
-                document.getElementById("coursePreviewSection").style.display = "none";
-                curriculumCoursesToAdd = [];
-            }
-
-            // Close all modals
-            closeModalBtns.forEach((btn) => {
-                btn.addEventListener("click", function () {
-                    scheduleModal.style.display = "none";
-                    viewScheduleModal.style.display = "none";
-                    curriculumModal.style.display = "none";
-                    resetCurriculumModal();
-                });
-            });
-
-            cancelScheduleBtn.addEventListener("click", function () {
-                scheduleModal.style.display = "none";
-            });
-
-            closeViewScheduleBtn.addEventListener("click", function () {
-                viewScheduleModal.style.display = "none";
-            });
 
             // Load faculty list
             async function loadFacultyList() {
@@ -766,232 +636,152 @@
                     const response = await fetch("/api/faculty");
                     if (!response.ok) throw new Error("Failed to fetch faculty");
                     facultyList = await response.json();
-                    populateFacultyDropdown();
                 } catch (error) {
                     console.error("Error loading faculty:", error);
                     facultyList = [];
                 }
             }
 
-            function populateFacultyDropdown() {
-                const facultySelect = document.getElementById("facultySelect");
-                facultySelect.innerHTML = '<option value="">Select Faculty Member</option>';
-                facultyList.forEach(faculty => {
-                    const option = document.createElement("option");
-                    option.value = faculty.id;
-                    option.textContent = `${faculty.user.fullName} - ${faculty.department || 'N/A'}`;
-                    facultySelect.appendChild(option);
-                });
-            }
-
-            // Load section courses
-            async function loadSectionCourses() {
+            // Load section list
+            async function loadSectionList() {
                 try {
-                    const response = await fetch("/api/schedules");
-                    if (!response.ok) throw new Error("Failed to fetch section courses");
-                    allSectionCourses = await response.json();
-                    renderSectionCourses();
+                    const response = await fetch("/api/sections");
+                    if (!response.ok) throw new Error("Failed to fetch sections");
+                    sectionList = await response.json();
                 } catch (error) {
-                    console.error("Error loading section courses:", error);
-                    const tbody = document.getElementById("scheduleTableBody");
-                    tbody.innerHTML = `<tr><td colspan='10' class='empty-state-message'>Failed to load course schedules.</td></tr>`;
+                    console.error("Error loading sections:", error);
+                    sectionList = [];
                 }
             }
-
-            function getAssignmentStatus(sectionCourse) {
-                const hasFaculty = sectionCourse.faculty !== null;
-                const hasSchedule = sectionCourse.day !== null && sectionCourse.startTime !== null;
-
-                if (hasFaculty && hasSchedule) return 'assigned';
-                if (hasFaculty || hasSchedule) return 'partial';
-                return 'unassigned';
-            }
-
-            function getStatusBadge(status) {
-                const statusMap = {
-                    'assigned': { class: 'status-active', text: 'Fully Assigned' },
-                    'partial': { class: 'status-badge', text: 'Partially Assigned', style: 'background-color: #fff3cd; color: #856404;' },
-                    'unassigned': { class: 'status-inactive', text: 'Unassigned' }
-                };
-                const statusInfo = statusMap[status] || statusMap['unassigned'];
-                const style = statusInfo.style ? `style="${statusInfo.style}"` : '';
-                return `<span class="status-badge ${statusInfo.class}" ${style}>${statusInfo.text}</span>`;
-            }
-
-            function renderSectionCourses() {
-                const tbody = document.getElementById("scheduleTableBody");
-                let filteredCourses = [...allSectionCourses];
-
-                // Apply filters
-                const semesterFilter = document.getElementById("semesterFilter").value;
-                const yearLevelFilter = document.getElementById("yearLevelFilter").value;
-                const statusFilter = document.getElementById("statusFilter").value;
-
-                if (semesterFilter) {
-                    filteredCourses = filteredCourses.filter(sc => sc.semester === semesterFilter);
-                }
-                if (yearLevelFilter) {
-                    filteredCourses = filteredCourses.filter(sc => sc.yearLevel === parseInt(yearLevelFilter));
-                }
-                if (statusFilter) {
-                    filteredCourses = filteredCourses.filter(sc => getAssignmentStatus(sc) === statusFilter);
-                }
-
-                if (!filteredCourses || filteredCourses.length === 0) {
-                    tbody.innerHTML = `<tr class='empty-state-row'><td colspan='10' class='empty-state-message'><div class='empty-state'><svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='#8B4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='18' rx='2' ry='2'></rect><line x1='16' y1='2' x2='16' y2='6'></line><line x1='8' y1='2' x2='8' y2='6'></line><line x1='3' y1='10' x2='21' y2='10'></line></svg><p>No course sections found. Adjust your filters to see results.</p></div></td></tr>`;
-                    return;
-                }
-
-                tbody.innerHTML = filteredCourses.map(sectionCourse => {
-                    const status = getAssignmentStatus(sectionCourse);
-                    const scheduleText = sectionCourse.day && sectionCourse.startTime && sectionCourse.endTime
-                        ? `${sectionCourse.day} ${sectionCourse.startTime}-${sectionCourse.endTime}`
-                        : 'Not Assigned';
-                    const yearLevelText = sectionCourse.yearLevel
-                        ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][sectionCourse.yearLevel - 1]
-                        : 'N/A';
-
-                    return `
-                        <tr>
-                            <td><strong>${sectionCourse.courseCode}</strong></td>
-                            <td>${sectionCourse.courseTitle}</td>
-                            <td>${sectionCourse.section}</td>
-                            <td>${sectionCourse.semester || 'N/A'}</td>
-                            <td>${yearLevelText}</td>
-                            <td>${sectionCourse.faculty || 'Not Assigned'}</td>
-                            <td>${scheduleText}</td>
-                            <td>${sectionCourse.room || 'Not Assigned'}</td>
-                            <td>${getStatusBadge(status)}</td>
-                            <td class="action-buttons">
-                                <button class="btn btn-sm btn-view" data-id="${sectionCourse.id}" title="View Details">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                                        <line x1="12" y1="8" x2="12" y2="8"></line>
-                                    </svg>
-                                    View
-                                </button>
-                                <button class="btn btn-sm btn-edit" data-id="${sectionCourse.id}" title="Assign/Edit Schedule">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    Assign
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                }).join("");
-
-                // Add event listeners to action buttons
-                addActionButtonListeners();
-            }
-
-            function addActionButtonListeners() {
-                // View buttons
-                document.querySelectorAll(".btn-view").forEach(btn => {
-                    btn.addEventListener("click", function () {
-                        const sectionCourseId = this.getAttribute("data-id");
-                        openViewModal(sectionCourseId);
-                    });
-                });
-
-                // Edit/Assign buttons
-                document.querySelectorAll(".btn-edit").forEach(btn => {
-                    btn.addEventListener("click", function () {
-                        const sectionCourseId = this.getAttribute("data-id");
-                        openAssignModal(sectionCourseId);
-                    });
-                });
-            }
-
-            function openViewModal(sectionCourseId) {
-                const sectionCourse = allSectionCourses.find(sc => sc.id == sectionCourseId);
-                if (!sectionCourse) return;
-
-                document.getElementById("viewCourseDetails").textContent = `${sectionCourse.courseCode} - ${sectionCourse.courseTitle}`;
-                document.getElementById("viewSectionDetails").textContent = sectionCourse.section;
-                document.getElementById("viewFacultyDetails").textContent = sectionCourse.faculty || 'Not Assigned';
-
-                const scheduleText = sectionCourse.day && sectionCourse.startTime && sectionCourse.endTime
-                    ? `${sectionCourse.day} ${sectionCourse.startTime}-${sectionCourse.endTime}`
-                    : 'Not Assigned';
-                document.getElementById("viewScheduleDetails").textContent = scheduleText;
-                document.getElementById("viewRoomDetails").textContent = sectionCourse.room || 'Not Assigned';
-                document.getElementById("viewSemesterDetails").textContent = sectionCourse.semester || 'N/A';
-
-                const yearLevelText = sectionCourse.yearLevel
-                    ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][sectionCourse.yearLevel - 1]
-                    : 'N/A';
-                document.getElementById("viewYearLevelDetails").textContent = yearLevelText;
-
-                // Set up edit button
-                document.getElementById("editFromViewScheduleBtn").onclick = function () {
-                    viewScheduleModal.style.display = "none";
-                    openAssignModal(sectionCourseId);
-                };
-
-                viewScheduleModal.style.display = "block";
-            }
-
-            function openAssignModal(sectionCourseId) {
-                const sectionCourse = allSectionCourses.find(sc => sc.id == sectionCourseId);
-                if (!sectionCourse) return;
-
-                document.getElementById("sectionCourseId").value = sectionCourseId;
-                document.getElementById("courseInfo").value = `${sectionCourse.courseCode} - ${sectionCourse.courseTitle}`;
-                document.getElementById("sectionInfo").value = sectionCourse.section;
-
-                // Set current values if they exist
-                document.getElementById("facultySelect").value = sectionCourse.facultyId || "";
-                document.getElementById("daySelect").value = sectionCourse.day || "";
-                document.getElementById("startTimeInput").value = sectionCourse.startTime || "";
-                document.getElementById("endTimeInput").value = sectionCourse.endTime || "";
-                document.getElementById("roomInput").value = sectionCourse.room || "";
-
-                scheduleModal.style.display = "block";
-            }
-
-            // Schedule form submission
-            document.getElementById("scheduleForm").addEventListener("submit", async function (e) {
-                e.preventDefault();
-
-                const formData = {
-                    sectionCourseId: parseInt(document.getElementById("sectionCourseId").value),
-                    facultyId: document.getElementById("facultySelect").value ? parseInt(document.getElementById("facultySelect").value) : null,
-                    day: document.getElementById("daySelect").value,
-                    startTime: document.getElementById("startTimeInput").value,
-                    endTime: document.getElementById("endTimeInput").value,
-                    room: document.getElementById("roomInput").value
-                };
-
-                try {
-                    const response = await fetch("/api/schedules/assign", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (!response.ok) throw new Error("Failed to assign schedule");
-
-                    scheduleModal.style.display = "none";
-                    loadSectionCourses(); // Reload data
-                } catch (error) {
-                    alert("Error assigning schedule: " + error.message);
-                }
-            });
 
             // Filter event listeners
-            document.getElementById("semesterFilter").addEventListener("change", renderSectionCourses);
-            document.getElementById("yearLevelFilter").addEventListener("change", renderSectionCourses);
-            document.getElementById("statusFilter").addEventListener("change", renderSectionCourses);
+            document.getElementById("semesterFilter").addEventListener("change", renderCurriculumAssignments);
+            document.getElementById("yearLevelFilter").addEventListener("change", renderCurriculumAssignments);
+            document.getElementById("statusFilter").addEventListener("change", renderCurriculumAssignments);
 
             // Initialize
             loadFacultyList();
-            loadSectionCourses();
+            loadSectionList();
+            loadCurriculumCourses();
         });
+
+        function addActionButtonListeners() {
+            // View button: show details modal if assignment exists
+            document.querySelectorAll(".btn-view").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const facultyAssignmentId = this.getAttribute("data-id");
+                    if (!facultyAssignmentId) return;
+                    const fa = allFacultyAssignments.find(fa => fa.id == facultyAssignmentId);
+                    if (!fa) return;
+                    document.getElementById("viewCourseDetails").textContent = fa.courseCode ? fa.courseCode + ' - ' + fa.courseTitle : '';
+                    document.getElementById("viewSectionDetails").textContent = fa.section || '';
+                    document.getElementById("viewFacultyDetails").textContent = fa.facultyName || fa.faculty || 'Not Assigned';
+                    const scheduleText = fa.day && fa.startTime && fa.endTime ? `${fa.day} ${fa.startTime}-${fa.endTime}` : 'Not Assigned';
+                    document.getElementById("viewScheduleDetails").textContent = scheduleText;
+                    document.getElementById("viewRoomDetails").textContent = fa.room || 'Not Assigned';
+                    document.getElementById("viewSemesterDetails").textContent = fa.semester || 'N/A';
+                    const yearLevelText = fa.yearLevel ? ['First Year', 'Second Year', 'Third Year', 'Fourth Year'][fa.yearLevel - 1] : 'N/A';
+                    document.getElementById("viewYearLevelDetails").textContent = yearLevelText;
+                    document.getElementById("editFromViewScheduleBtn").onclick = function () {
+                        viewScheduleModal.style.display = "none";
+                        openAssignModal(fa.curriculumCourseId);
+                    };
+                    viewScheduleModal.style.display = "block";
+                });
+            });
+            // Assign button: open modal for assignment (new or edit)
+            document.querySelectorAll(".btn-edit").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    const curriculumCourseId = this.getAttribute("data-ccid");
+                    openAssignModal(curriculumCourseId);
+                });
+            });
+        }
+
+        let allCurriculumCourses = [];
+        let allFacultyAssignments = [];
+
+        function openAssignModal(curriculumCourseId) {
+            document.getElementById("scheduleForm").reset();
+            // Fetch only the selected curriculum course from backend
+            fetch(`/api/curriculums/courses/${curriculumCourseId}`)
+                .then(response => response.json())
+                .then(cc => {
+                    if (cc && cc.course) {
+                        document.getElementById("courseInfo").value = cc.course.courseCode + ' - ' + cc.course.courseTitle;
+                    } else {
+                        document.getElementById("courseInfo").value = 'Course not found';
+                    }
+                    // Find existing assignment for this course if any
+                    const fa = allFacultyAssignments.find(fa => String(fa.curriculumCourseId) === String(curriculumCourseId));
+                    document.getElementById("facultyAssignmentId").value = fa ? fa.id : '';
+                    populateSectionDropdown(fa && fa.section ? fa.section : '');
+                    populateFacultyDropdown(fa && fa.facultyId ? fa.facultyId : '');
+                    document.getElementById("daySelect").value = fa && fa.day ? fa.day : '';
+                    document.getElementById("startTimeInput").value = fa && fa.startTime ? fa.startTime : '';
+                    document.getElementById("endTimeInput").value = fa && fa.endTime ? fa.endTime : '';
+                    document.getElementById("roomInput").value = fa && fa.room ? fa.room : '';
+                    scheduleModal.style.display = "block";
+                })
+                .catch(() => {
+                    document.getElementById("courseInfo").value = 'Course not found';
+                    scheduleModal.style.display = "block";
+                });
+        }
+
+        document.getElementById("scheduleForm").onsubmit = async function (e) {
+            e.preventDefault();
+            // Validation
+            const facultyId = document.getElementById("facultySelect").value;
+            const sectionId = document.getElementById("sectionSelect").value;
+            const day = document.getElementById("daySelect").value;
+            const startTime = document.getElementById("startTimeInput").value;
+            const endTime = document.getElementById("endTimeInput").value;
+            const room = document.getElementById("roomInput").value;
+            let errorMsg = "";
+            if (!facultyId) errorMsg += "Faculty is required.\n";
+            if (!sectionId) errorMsg += "Section is required.\n";
+            if (!day) errorMsg += "Day is required.\n";
+            if (!startTime) errorMsg += "Start time is required.\n";
+            if (!endTime) errorMsg += "End time is required.\n";
+            if (!room) errorMsg += "Room is required.\n";
+            if (startTime && endTime && startTime >= endTime) errorMsg += "End time must be after start time.\n";
+            if (errorMsg) {
+                alert(errorMsg);
+                return false;
+            }
+            // Prepare data for DTO
+            const ccId = allCurriculumCourses.find(c => c.course && (c.course.courseCode + ' - ' + c.course.courseTitle) === document.getElementById("courseInfo").value)?.id;
+            const data = {
+                id: document.getElementById("facultyAssignmentId").value || null,
+                curriculumCourseId: ccId,
+                facultyId,
+                sectionId,
+                semester: ccId ? (allCurriculumCourses.find(c => c.id === ccId)?.semester || null) : null,
+                yearLevel: ccId ? (allCurriculumCourses.find(c => c.id === ccId)?.yearLevel || null) : null,
+                day,
+                startTime,
+                endTime,
+                room
+            };
+            try {
+                const isUpdate = !!data.id;
+                const url = isUpdate ? `/api/faculty-assignments/with-schedule/${data.id}` : '/api/faculty-assignments/with-schedule';
+                const method = isUpdate ? 'PUT' : 'POST';
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!response.ok) throw new Error('Failed to save assignment');
+                closeModal(scheduleModal);
+                await loadFacultyAssignments();
+                renderCurriculumAssignments();
+            } catch (err) {
+                alert('Error saving assignment: ' + err.message);
+            }
+            return false;
+        };
     </script>
 
     <style>

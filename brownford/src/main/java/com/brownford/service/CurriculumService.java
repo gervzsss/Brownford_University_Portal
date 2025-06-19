@@ -70,4 +70,12 @@ public class CurriculumService {
             .findFirst()
             .or(() -> curriculums.stream().max((a, b) -> Integer.compare(a.getYearEffective(), b.getYearEffective())));
     }
+
+    public List<CurriculumCourse> getAllCurriculumCourses() {
+        return curriculumCourseRepository.findAll();
+    }
+
+    public Optional<CurriculumCourse> getCurriculumCourseById(Long id) {
+        return curriculumCourseRepository.findById(id);
+    }
 }
