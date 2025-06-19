@@ -167,12 +167,16 @@
                         tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No schedule available for this semester</td></tr>';
                     } else {
                         data.forEach(schedule => {
+                            const classSchedule = (schedule.classDays ? schedule.classDays : '') +
+                                (schedule.classTime ? ' ' + schedule.classTime : '') +
+                                (schedule.room ? ' (' + schedule.room + ')' : '');
+                            const professor = schedule.professors || '';
                             const row = document.createElement('tr');
                             row.innerHTML = `
                         <td>${schedule.courseCode || ''}</td>
                         <td>${schedule.courseTitle || ''}</td>
-                        <td>${schedule.classDays || ''} ${schedule.classTime || ''} (${schedule.room || ''})</td>
-                        <td>${schedule.professors || ''}</td>
+                        <td>${classSchedule.trim() || '-'}</td>
+                        <td>${professor || '-'}</td>
                     `;
                             tbody.appendChild(row);
                         });

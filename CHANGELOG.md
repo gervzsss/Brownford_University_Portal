@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.19.252215]
+
+### Fix
+- Student Schedule Page now displays all the 
+
 ## [06.19.252137]
 
 ### Changes
