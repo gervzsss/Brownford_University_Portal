@@ -9,6 +9,7 @@ import com.brownford.service.SectionService;
 import com.brownford.service.CurriculumService;
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

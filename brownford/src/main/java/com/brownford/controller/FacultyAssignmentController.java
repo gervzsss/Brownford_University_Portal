@@ -9,6 +9,7 @@ import com.brownford.model.FacultyAssignment;
 import com.brownford.service.FacultyAssignmentService;
 import com.brownford.repository.ScheduleRepository;
 import com.brownford.model.Schedule;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,9 +94,11 @@ public class FacultyAssignmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FacultyAssignment> updateFacultyAssignment(@PathVariable Long id, @RequestBody FacultyAssignment updated) {
+    public ResponseEntity<FacultyAssignment> updateFacultyAssignment(@PathVariable Long id,
+            @RequestBody FacultyAssignment updated) {
         Optional<FacultyAssignment> assignmentOpt = facultyAssignmentService.getFacultyAssignmentById(id);
-        if (assignmentOpt.isEmpty()) return ResponseEntity.notFound().build();
+        if (assignmentOpt.isEmpty())
+            return ResponseEntity.notFound().build();
         FacultyAssignment assignment = assignmentOpt.get();
         assignment.setCurriculumCourse(updated.getCurriculumCourse());
         assignment.setSection(updated.getSection());
@@ -112,12 +115,14 @@ public class FacultyAssignmentController {
     }
 
     @PostMapping("/with-schedule")
-    public ResponseEntity<FacultyAssignment> createFacultyAssignmentWithSchedule(@RequestBody FacultyAssignmentWithScheduleDTO dto) {
+    public ResponseEntity<FacultyAssignment> createFacultyAssignmentWithSchedule(
+            @RequestBody FacultyAssignmentWithScheduleDTO dto) {
         return ResponseEntity.ok(facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto));
     }
 
     @PutMapping("/with-schedule/{id}")
-    public ResponseEntity<FacultyAssignment> updateFacultyAssignmentWithSchedule(@PathVariable Long id, @RequestBody FacultyAssignmentWithScheduleDTO dto) {
+    public ResponseEntity<FacultyAssignment> updateFacultyAssignmentWithSchedule(@PathVariable Long id,
+            @RequestBody FacultyAssignmentWithScheduleDTO dto) {
         dto.setId(id);
         return ResponseEntity.ok(facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto));
     }

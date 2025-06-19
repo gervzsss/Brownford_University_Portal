@@ -36,8 +36,8 @@ public class CurriculumService {
 
     public List<CurriculumCourse> getCoursesForCurriculum(Long curriculumId) {
         return curriculumCourseRepository.findAll().stream()
-            .filter(cc -> cc.getCurriculum().getId().equals(curriculumId))
-            .toList();
+                .filter(cc -> cc.getCurriculum().getId().equals(curriculumId))
+                .toList();
     }
 
     public CurriculumCourse saveCurriculumCourse(CurriculumCourse curriculumCourse) {
@@ -64,11 +64,13 @@ public class CurriculumService {
     public Optional<Curriculum> getActiveCurriculumByProgramId(Long programId) {
         // Prefer ACTIVE, fallback to latest by yearEffective if none is ACTIVE
         List<Curriculum> curriculums = curriculumRepository.findByProgramId(programId);
-        if (curriculums == null || curriculums.isEmpty()) return Optional.empty();
+        if (curriculums == null || curriculums.isEmpty())
+            return Optional.empty();
         return curriculums.stream()
-            .filter(c -> c.getStatus() != null && c.getStatus().toString().equalsIgnoreCase("ACTIVE"))
-            .findFirst()
-            .or(() -> curriculums.stream().max((a, b) -> Integer.compare(a.getYearEffective(), b.getYearEffective())));
+                .filter(c -> c.getStatus() != null && c.getStatus().toString().equalsIgnoreCase("ACTIVE"))
+                .findFirst()
+                .or(() -> curriculums.stream()
+                        .max((a, b) -> Integer.compare(a.getYearEffective(), b.getYearEffective())));
     }
 
     public List<CurriculumCourse> getAllCurriculumCourses() {

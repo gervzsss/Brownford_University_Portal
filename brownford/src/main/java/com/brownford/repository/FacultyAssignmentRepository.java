@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface FacultyAssignmentRepository extends JpaRepository<FacultyAssignment, Long> {
-    // Add custom queries if needed
     Optional<FacultyAssignment> findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
-        CurriculumCourse curriculumCourse, Section section, String semester, int yearLevel);
+            CurriculumCourse curriculumCourse, Section section, String semester, int yearLevel);
 }

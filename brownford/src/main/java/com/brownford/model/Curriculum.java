@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(
-    name = "curriculums",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"program_id", "yearEffective"})}
-)
-@com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "curriculums", uniqueConstraints = { @UniqueConstraint(columnNames = { "program_id", "yearEffective" }) })
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Curriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

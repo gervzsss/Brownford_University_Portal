@@ -20,7 +20,8 @@ public class ScheduleController {
 
     @PostMapping
     public Schedule createSchedule(@RequestBody Schedule schedule) {
-        // No direct faculty assignment here; use FacultyAssignment endpoints for that logic
+        // No direct faculty assignment here; use FacultyAssignment endpoints for that
+        // logic
         return scheduleService.saveSchedule(schedule);
     }
 

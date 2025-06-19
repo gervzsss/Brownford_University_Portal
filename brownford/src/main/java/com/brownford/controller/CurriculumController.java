@@ -3,6 +3,7 @@ package com.brownford.controller;
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
 import com.brownford.service.CurriculumService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +47,11 @@ public class CurriculumController {
     }
 
     @PostMapping("/{id}/courses")
-    public CurriculumCourse addCourseToCurriculum(@PathVariable Long id, @RequestBody CurriculumCourse curriculumCourse) {
+    public CurriculumCourse addCourseToCurriculum(@PathVariable Long id,
+            @RequestBody CurriculumCourse curriculumCourse) {
         // Set the curriculum reference
         Curriculum curriculum = curriculumService.getCurriculumById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
         curriculumCourse.setCurriculum(curriculum);
         return curriculumService.saveCurriculumCourse(curriculumCourse);
     }
@@ -66,7 +68,8 @@ public class CurriculumController {
     }
 
     @GetMapping("/by-program/{programId}/status/{status}")
-    public List<Curriculum> getCurriculumsByProgramAndStatus(@PathVariable Long programId, @PathVariable Curriculum.Status status) {
+    public List<Curriculum> getCurriculumsByProgramAndStatus(@PathVariable Long programId,
+            @PathVariable Curriculum.Status status) {
         return curriculumService.getCurriculumsByProgramIdAndStatus(programId, status);
     }
 
@@ -78,7 +81,7 @@ public class CurriculumController {
     @PutMapping("/{id}")
     public Curriculum updateCurriculum(@PathVariable Long id, @RequestBody Curriculum updated) {
         Curriculum curriculum = curriculumService.getCurriculumById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum not found"));
         curriculum.setYearEffective(updated.getYearEffective());
         curriculum.setDescription(updated.getDescription());
         curriculum.setStatus(updated.getStatus());
@@ -88,14 +91,15 @@ public class CurriculumController {
     @GetMapping("/by-program/{programId}")
     public Curriculum getActiveCurriculumByProgram(@PathVariable Long programId) {
         return curriculumService.getActiveCurriculumByProgramId(programId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No active curriculum found for this program"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "No active curriculum found for this program"));
     }
 
     @GetMapping("/courses/all")
     public List<CurriculumCourse> getAllCurriculumCourses() {
         return curriculumService.getAllCurriculumCourses();
     }
-    
+
     @GetMapping("/courses/{id}")
     public ResponseEntity<CurriculumCourse> getCurriculumCourseById(@PathVariable Long id) {
         Optional<CurriculumCourse> course = curriculumService.getCurriculumCourseById(id);

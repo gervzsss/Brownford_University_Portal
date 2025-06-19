@@ -85,10 +85,12 @@ public class UserManagement {
             String facultyId = null;
             if (user.getRole().equalsIgnoreCase("student")) {
                 Student student = studentRepository.findById(user.getId()).orElse(null);
-                if (student != null) studentId = student.getStudentId();
+                if (student != null)
+                    studentId = student.getStudentId();
             } else if (user.getRole().equalsIgnoreCase("faculty")) {
                 Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
-                if (faculty != null) facultyId = faculty.getFacultyId();
+                if (faculty != null)
+                    facultyId = faculty.getFacultyId();
             }
             dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId));
         }
@@ -162,7 +164,8 @@ public class UserManagement {
         user.setEmail(payload.get("email").toString());
         user.setRole(payload.get("role").toString());
         user.setStatus(payload.get("status").toString());
-        if (payload.containsKey("password") && payload.get("password") != null && !payload.get("password").toString().isEmpty()) {
+        if (payload.containsKey("password") && payload.get("password") != null
+                && !payload.get("password").toString().isEmpty()) {
             user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
         }
         // user.setLastLogin ... (if needed)
@@ -248,10 +251,12 @@ public class UserManagement {
             String facultyId = null;
             if (user.getRole().equalsIgnoreCase("student")) {
                 Student student = studentRepository.findById(user.getId()).orElse(null);
-                if (student != null) studentId = student.getStudentId();
+                if (student != null)
+                    studentId = student.getStudentId();
             } else if (user.getRole().equalsIgnoreCase("faculty")) {
                 Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
-                if (faculty != null) facultyId = faculty.getFacultyId();
+                if (faculty != null)
+                    facultyId = faculty.getFacultyId();
             }
             writer.printf("%d,\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"%n",
                     user.getId(),
@@ -274,10 +279,15 @@ public class UserManagement {
         List<Map<String, String>> result = new ArrayList<>();
         for (Student student : students) {
             if (student.getStudentId() != null &&
-                (student.getStudentId().toLowerCase().contains(s) ||
-                 (student.getUser().getFirstName() != null && student.getUser().getFirstName().toLowerCase().contains(s)) ||
-                 (student.getUser().getLastName() != null && student.getUser().getLastName().toLowerCase().contains(s)) ||
-                 (student.getUser().getFullName() != null && student.getUser().getFullName().toLowerCase().contains(s)))) {
+                    (student.getStudentId().toLowerCase().contains(s) ||
+                            (student.getUser().getFirstName() != null
+                                    && student.getUser().getFirstName().toLowerCase().contains(s))
+                            ||
+                            (student.getUser().getLastName() != null
+                                    && student.getUser().getLastName().toLowerCase().contains(s))
+                            ||
+                            (student.getUser().getFullName() != null
+                                    && student.getUser().getFullName().toLowerCase().contains(s)))) {
                 Map<String, String> map = new HashMap<>();
                 map.put("studentId", student.getStudentId());
                 map.put("fullName", student.getUser().getFullName());

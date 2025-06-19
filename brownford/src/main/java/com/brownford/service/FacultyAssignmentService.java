@@ -63,9 +63,9 @@ public class FacultyAssignmentService {
         if (assignment == null) {
             // Check for existing assignment for this course/section/semester/yearLevel
             assignment = facultyAssignmentRepository
-                .findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
-                    cc, section, dto.getSemester(), dto.getYearLevel() != null ? dto.getYearLevel() : 0)
-                .orElse(null);
+                    .findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
+                            cc, section, dto.getSemester(), dto.getYearLevel() != null ? dto.getYearLevel() : 0)
+                    .orElse(null);
         }
         if (assignment == null) {
             assignment = new FacultyAssignment();
@@ -77,7 +77,8 @@ public class FacultyAssignmentService {
         assignment.setYearLevel(dto.getYearLevel() != null ? dto.getYearLevel() : 0);
         FacultyAssignment savedAssignment = facultyAssignmentRepository.save(assignment);
         // Save or update schedule
-        Schedule schedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst().orElse(new Schedule());
+        Schedule schedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst()
+                .orElse(new Schedule());
         schedule.setCurriculumCourse(cc);
         schedule.setSection(section);
         schedule.setDay(dto.getDay());

@@ -4,8 +4,10 @@ import com.brownford.dto.CourseInfo;
 import com.brownford.dto.EnrollmentDTO;
 import com.brownford.model.Enrollment;
 import com.brownford.service.EnrollmentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,8 @@ public class EnrollmentController {
         if (enrollment.getStudent() != null) {
             dto.setStudentId(enrollment.getStudent().getStudentId()); // Use real student number
             if (enrollment.getStudent().getUser() != null) {
-                dto.setStudentName(enrollment.getStudent().getUser().getFirstName() + " " + enrollment.getStudent().getUser().getLastName());
+                dto.setStudentName(enrollment.getStudent().getUser().getFirstName() + " "
+                        + enrollment.getStudent().getUser().getLastName());
             }
             if (enrollment.getStudent().getProgram() != null) {
                 dto.setProgramName(enrollment.getStudent().getProgram().getName());
@@ -37,7 +40,8 @@ public class EnrollmentController {
         }
         // Map courses
         if (enrollment.getCourses() != null) {
-            dto.setCourses(enrollment.getCourses().stream().map(c -> new CourseInfo(c.getId(), c.getCourseCode(), c.getCourseTitle())).toList());
+            dto.setCourses(enrollment.getCourses().stream()
+                    .map(c -> new CourseInfo(c.getId(), c.getCourseCode(), c.getCourseTitle())).toList());
         }
         return dto;
     }
@@ -50,7 +54,8 @@ public class EnrollmentController {
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel, sectionId);
+        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel,
+                sectionId);
         return toDTO(enrollment);
     }
 
@@ -80,9 +85,9 @@ public class EnrollmentController {
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "programId", required = false) Long programId,
-            @RequestParam(value = "semester", required = false) String semester
-    ) {
-        return enrollmentService.getFilteredEnrollments(search, status, programId, semester).stream().map(this::toDTO).toList();
+            @RequestParam(value = "semester", required = false) String semester) {
+        return enrollmentService.getFilteredEnrollments(search, status, programId, semester).stream().map(this::toDTO)
+                .toList();
     }
 
     // New endpoint for fetching a single enrollment by ID
@@ -99,7 +104,8 @@ public class EnrollmentController {
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel, sectionId);
+        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel,
+                sectionId);
         return toDTO(updated);
     }
 

@@ -5,8 +5,10 @@ import com.brownford.model.Course;
 import com.brownford.model.Student;
 import com.brownford.repository.StudentRepository;
 import com.brownford.service.EnrollmentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 import java.util.*;
 
@@ -22,10 +24,13 @@ public class StudentScheduleApiController {
 
     @GetMapping("/schedule")
     public List<Map<String, Object>> getStudentSchedule(Principal principal) {
-        if (principal == null) return Collections.emptyList();
+        if (principal == null)
+            return Collections.emptyList();
         String username = principal.getName();
-        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
-        if (student == null) return Collections.emptyList();
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null)
+            return Collections.emptyList();
 
         // Get latest APPROVED enrollment
         Enrollment latestEnrollment = enrollmentService.getLatestEnrollmentForStudent(student.getId());

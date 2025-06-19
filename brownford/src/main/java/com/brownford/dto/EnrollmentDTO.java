@@ -13,36 +13,85 @@ public class EnrollmentDTO {
     private String sectionName;
     private String programName;
     private List<CourseInfo> courses;
-    // Add other fields as needed (e.g., course info)
 
     // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getStudentId() { return studentId; }
-    public void setStudentId(String studentId) { this.studentId = studentId; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getStudentName() { return studentName; }
-    public void setStudentName(String studentName) { this.studentName = studentName; }
+    public String getStudentId() {
+        return studentId;
+    }
 
-    public String getYearLevel() { return yearLevel; }
-    public void setYearLevel(String yearLevel) { this.yearLevel = yearLevel; }
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 
-    public String getSemester() { return semester; }
-    public void setSemester(String semester) { this.semester = semester; }
+    public String getStudentName() {
+        return studentName;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 
-    public Long getSectionId() { return sectionId; }
-    public void setSectionId(Long sectionId) { this.sectionId = sectionId; }
+    public String getYearLevel() {
+        return yearLevel;
+    }
 
-    public String getSectionName() { return sectionName; }
-    public void setSectionName(String sectionName) { this.sectionName = sectionName; }
+    public void setYearLevel(String yearLevel) {
+        this.yearLevel = yearLevel;
+    }
 
-    public String getProgramName() { return programName; }
-    public void setProgramName(String programName) { this.programName = programName; }
+    public String getSemester() {
+        return semester;
+    }
 
-    public List<CourseInfo> getCourses() { return courses; }
-    public void setCourses(List<CourseInfo> courses) { this.courses = courses; }
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
+    }
+
+    public String getProgramName() {
+        return programName;
+    }
+
+    public void setProgramName(String programName) {
+        this.programName = programName;
+    }
+
+    public List<CourseInfo> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<CourseInfo> courses) {
+        this.courses = courses;
+    }
 }

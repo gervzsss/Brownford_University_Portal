@@ -5,6 +5,7 @@ import com.brownford.model.Course;
 import com.brownford.model.Student;
 import com.brownford.repository.EnrollmentRepository;
 import com.brownford.repository.StudentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +24,22 @@ public class StudentGradesApiController {
     private StudentRepository studentRepository;
 
     @GetMapping("/grades")
-    public Map<String, Object> getStudentGrades(@RequestParam String yearLevel, @RequestParam String semester, Principal principal) {
+    public Map<String, Object> getStudentGrades(@RequestParam String yearLevel, @RequestParam String semester,
+            Principal principal) {
         Map<String, Object> response = new HashMap<>();
-        if (principal == null) return response;
+        if (principal == null)
+            return response;
         String username = principal.getName();
-        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
-        if (student == null) return response;
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null)
+            return response;
 
         // Find enrollment for the given yearLevel and semester
         List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
         Enrollment enrollment = enrollments.stream()
-            .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester()))
-            .findFirst().orElse(null);
+                .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester()))
+                .findFirst().orElse(null);
 
         List<Map<String, Object>> coursesList = new ArrayList<>();
         if (enrollment != null) {
@@ -54,28 +59,31 @@ public class StudentGradesApiController {
         response.put("courses", coursesList);
         response.put("semesterGPA", "N/A");
         response.put("cumulativeInfo", Map.of(
-            "gpa", "N/A",
-            "gradePoint", "N/A",
-            "standing", "N/A",
-            "totalUnits", "N/A"
-        ));
+                "gpa", "N/A",
+                "gradePoint", "N/A",
+                "standing", "N/A",
+                "totalUnits", "N/A"));
         return response;
     }
 
     // Renamed to avoid duplicate method signature
     @GetMapping("/grades-map")
-    public Map<String, Object> getStudentGradesMap(@RequestParam String yearLevel, @RequestParam String semester, Principal principal) {
+    public Map<String, Object> getStudentGradesMap(@RequestParam String yearLevel, @RequestParam String semester,
+            Principal principal) {
         Map<String, Object> response = new HashMap<>();
-        if (principal == null) return response;
+        if (principal == null)
+            return response;
         String username = principal.getName();
-        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
-        if (student == null) return response;
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null)
+            return response;
 
         // Find enrollment for the given yearLevel and semester
         List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
         Enrollment enrollment = enrollments.stream()
-            .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester()))
-            .findFirst().orElse(null);
+                .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester()))
+                .findFirst().orElse(null);
 
         List<Map<String, Object>> coursesList = new ArrayList<>();
         if (enrollment != null) {
@@ -95,21 +103,23 @@ public class StudentGradesApiController {
         response.put("courses", coursesList);
         response.put("semesterGPA", "N/A");
         response.put("cumulativeInfo", Map.of(
-            "gpa", "N/A",
-            "gradePoint", "N/A",
-            "standing", "N/A",
-            "totalUnits", "N/A"
-        ));
+                "gpa", "N/A",
+                "gradePoint", "N/A",
+                "standing", "N/A",
+                "totalUnits", "N/A"));
         return response;
     }
 
     @GetMapping("/grade-filters")
     public Map<String, List<String>> getGradeFilters(Principal principal) {
         Map<String, List<String>> filters = new HashMap<>();
-        if (principal == null) return filters;
+        if (principal == null)
+            return filters;
         String username = principal.getName();
-        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
-        if (student == null) return filters;
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null)
+            return filters;
         List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
         Set<String> yearLevels = new LinkedHashSet<>();
         Set<String> semesters = new LinkedHashSet<>();

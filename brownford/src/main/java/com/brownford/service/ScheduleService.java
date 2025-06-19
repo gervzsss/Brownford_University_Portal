@@ -32,11 +32,13 @@ public class ScheduleService {
         cc.setId(curriculumCourseId);
         return scheduleRepository.findByCurriculumCourse(cc);
     }
+
     public List<Schedule> findBySectionId(Long sectionId) {
         Section section = new Section();
         section.setId(sectionId);
         return scheduleRepository.findBySection(section);
     }
+
     public List<Schedule> findByCurriculumCourseIdAndSectionId(Long curriculumCourseId, Long sectionId) {
         CurriculumCourse cc = new CurriculumCourse();
         cc.setId(curriculumCourseId);
@@ -44,6 +46,7 @@ public class ScheduleService {
         section.setId(sectionId);
         return scheduleRepository.findByCurriculumCourseAndSection(cc, section);
     }
+
     public List<Schedule> getAllSchedules() {
         return scheduleRepository.findAll();
     }

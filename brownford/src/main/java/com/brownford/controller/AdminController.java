@@ -37,7 +37,7 @@ public class AdminController {
     public String adminCourses() {
         return "/admin/admin-courses";
     }
-    
+
     @GetMapping("/admin-enrollments")
     public String adminEnrollments() {
         return "/admin/admin-enrollments";
@@ -47,7 +47,7 @@ public class AdminController {
     public String adminSections() {
         return "/admin/admin-sections";
     }
-    
+
     @GetMapping("/admin-curriculum")
     public String adminCurriculum() {
         return "/admin/admin-curriculum";
@@ -82,9 +82,12 @@ public class AdminController {
     @ResponseBody
     public Map<String, Object> getSystemSummary() {
         Map<String, Object> summary = new HashMap<>();
-        long totalStudents = userRepository.findAll().stream().filter(u -> "student".equalsIgnoreCase(u.getRole())).count();
-        long facultyMembers = userRepository.findAll().stream().filter(u -> "faculty".equalsIgnoreCase(u.getRole())).count();
-        long activeCourses = courseRepository.findAll().stream().filter(c -> "Active".equalsIgnoreCase(c.getStatus())).count();
+        long totalStudents = userRepository.findAll().stream().filter(u -> "student".equalsIgnoreCase(u.getRole()))
+                .count();
+        long facultyMembers = userRepository.findAll().stream().filter(u -> "faculty".equalsIgnoreCase(u.getRole()))
+                .count();
+        long activeCourses = courseRepository.findAll().stream().filter(c -> "Active".equalsIgnoreCase(c.getStatus()))
+                .count();
         summary.put("totalStudents", totalStudents);
         summary.put("facultyMembers", facultyMembers);
         summary.put("activeCourses", activeCourses);

@@ -27,22 +27,26 @@ public class EnrollmentService {
     @Autowired
     private CurriculumService curriculumService;
 
-    public Enrollment createEnrollment(Long studentId, List<Long> courseIds, String semester, String yearLevel, Long sectionId) {
+    public Enrollment createEnrollment(Long studentId, List<Long> courseIds, String semester, String yearLevel,
+            Long sectionId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
         List<Course> courses = courseRepository.findAllById(courseIds);
         // Curriculum compliance validation
         if (student.getProgram() != null) {
             Long programId = student.getProgram().getId();
-            Optional<com.brownford.model.Curriculum> curriculumOpt = curriculumService.getActiveCurriculumByProgramId(programId);
+            Optional<com.brownford.model.Curriculum> curriculumOpt = curriculumService
+                    .getActiveCurriculumByProgramId(programId);
             if (curriculumOpt.isPresent()) {
                 List<CurriculumCourse> allowedCourses = curriculumOpt.get().getCurriculumCourses();
                 List<Long> allowedCourseIds = allowedCourses.stream()
-                    .filter(cc -> String.valueOf(cc.getYearLevel()).equals(yearLevel) && cc.getSemester().equals(semester))
-                    .map(cc -> cc.getCourse().getId())
-                    .toList();
+                        .filter(cc -> String.valueOf(cc.getYearLevel()).equals(yearLevel)
+                                && cc.getSemester().equals(semester))
+                        .map(cc -> cc.getCourse().getId())
+                        .toList();
                 for (Course course : courses) {
                     if (!allowedCourseIds.contains(course.getId())) {
-                        throw new IllegalArgumentException("Course " + course.getCourseCode() + " is not allowed for this student's curriculum, year, or semester.");
+                        throw new IllegalArgumentException("Course " + course.getCourseCode()
+                                + " is not allowed for this student's curriculum, year, or semester.");
                     }
                 }
             }
@@ -101,7 +105,8 @@ public class EnrollmentService {
         return enrollmentRepository.findAll();
     }
 
-    public Enrollment updateEnrollment(Long id, Long studentId, List<Long> courseIds, String semester, String yearLevel, Long sectionId) {
+    public Enrollment updateEnrollment(Long id, Long studentId, List<Long> courseIds, String semester, String yearLevel,
+            Long sectionId) {
         Enrollment enrollment = enrollmentRepository.findById(id).orElseThrow();
         Student student = studentRepository.findById(studentId).orElseThrow();
         List<Course> courses = courseRepository.findAllById(courseIds);
@@ -123,18 +128,21 @@ public class EnrollmentService {
     public List<Enrollment> getFilteredEnrollments(String search, String status, Long programId, String semester) {
         List<Enrollment> enrollments = enrollmentRepository.findAll();
         return enrollments.stream()
-            .filter(e -> (search == null ||
-                (e.getStudent() != null && (
-                    (e.getStudent().getStudentId() != null && e.getStudent().getStudentId().toLowerCase().contains(search.toLowerCase())) ||
-                    (e.getStudent().getUser() != null && (
-                        (e.getStudent().getUser().getFirstName() != null && e.getStudent().getUser().getFirstName().toLowerCase().contains(search.toLowerCase())) ||
-                        (e.getStudent().getUser().getLastName() != null && e.getStudent().getUser().getLastName().toLowerCase().contains(search.toLowerCase()))
-                    ))
-                ))
-            ))
-            .filter(e -> (status == null || status.isEmpty() || (e.getStatus() != null && e.getStatus().equalsIgnoreCase(status))))
-            .filter(e -> (programId == null || (e.getStudent() != null && e.getStudent().getProgram() != null && e.getStudent().getProgram().getId().equals(programId))))
-            .filter(e -> (semester == null || semester.isEmpty() || (e.getSemester() != null && e.getSemester().equalsIgnoreCase(semester))))
-            .toList();
+                .filter(e -> (search == null ||
+                        (e.getStudent() != null && ((e.getStudent().getStudentId() != null
+                                && e.getStudent().getStudentId().toLowerCase().contains(search.toLowerCase())) ||
+                                (e.getStudent().getUser() != null && ((e.getStudent().getUser().getFirstName() != null
+                                        && e.getStudent().getUser().getFirstName().toLowerCase()
+                                                .contains(search.toLowerCase()))
+                                        ||
+                                        (e.getStudent().getUser().getLastName() != null && e.getStudent().getUser()
+                                                .getLastName().toLowerCase().contains(search.toLowerCase()))))))))
+                .filter(e -> (status == null || status.isEmpty()
+                        || (e.getStatus() != null && e.getStatus().equalsIgnoreCase(status))))
+                .filter(e -> (programId == null || (e.getStudent() != null && e.getStudent().getProgram() != null
+                        && e.getStudent().getProgram().getId().equals(programId))))
+                .filter(e -> (semester == null || semester.isEmpty()
+                        || (e.getSemester() != null && e.getSemester().equalsIgnoreCase(semester))))
+                .toList();
     }
 }

@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface CurriculumRepository extends JpaRepository<Curriculum, Long> {
     List<Curriculum> findByProgram(Program program);
+
     List<Curriculum> findByProgramId(Long programId);
+
     List<Curriculum> findByProgramIdAndStatus(Long programId, Status status);
+
     Curriculum findByProgramIdAndYearEffective(Long programId, int yearEffective);
 }

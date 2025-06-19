@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.19.252137]
+
+### Changes
+- Schedule Management Page now fully Functional.
+- Formatted lines of some Files.
+
 ## [06.19.252032]
 
 ### Fix

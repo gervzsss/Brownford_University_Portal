@@ -3,22 +3,21 @@ package com.brownford.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-// import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.ui.Model;
-import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.brownford.repository.StudentRepository;
 import com.brownford.model.Student;
 import com.brownford.service.EnrollmentService;
 import com.brownford.model.Enrollment;
+
+import java.security.Principal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Controller
@@ -33,7 +32,8 @@ public class StudentController {
     private void addStudentToModel(Model model, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
-            Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
+            Student student = studentRepository.findAll().stream()
+                    .filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
             model.addAttribute("student", student);
 
             // Add currentSemester for all student pages
@@ -92,10 +92,13 @@ public class StudentController {
     @ResponseBody
     public Map<String, Object> getStudentProfileInfo(Principal principal) {
         Map<String, Object> profile = new HashMap<>();
-        if (principal == null) return profile;
+        if (principal == null)
+            return profile;
         String username = principal.getName();
-        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
-        if (student == null) return profile;
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null)
+            return profile;
         profile.put("studentId", student.getStudentId());
         profile.put("firstName", student.getUser().getFirstName());
         profile.put("lastName", student.getUser().getLastName());

@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findByCurriculumCourse(CurriculumCourse curriculumCourse);
+
     List<Schedule> findBySection(Section section);
+
     List<Schedule> findByCurriculumCourseAndSection(CurriculumCourse curriculumCourse, Section section);
 }
