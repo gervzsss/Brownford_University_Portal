@@ -218,6 +218,10 @@
             const academicStanding = document.getElementById('academicStanding');
             const totalUnits = document.getElementById('totalUnits');
 
+            // Restore filters from localStorage if available
+            const savedYearLevel = localStorage.getItem('studentGradesYearLevel');
+            const savedSemester = localStorage.getItem('studentGradesSemester');
+
             // Populate yearLevel and semester filters from backend
             fetch('/api/student/grade-filters')
                 .then(response => response.json())
@@ -230,6 +234,10 @@
                             option.textContent = level;
                             yearLevelSelect.appendChild(option);
                         });
+                        // Restore yearLevel if saved
+                        if (savedYearLevel && data.yearLevels.includes(savedYearLevel)) {
+                            yearLevelSelect.value = savedYearLevel;
+                        }
                     }
                     if (data.semesters) {
                         semesterSelect.innerHTML = '';
@@ -239,10 +247,73 @@
                             option.textContent = sem;
                             semesterSelect.appendChild(option);
                         });
+                        // Restore semester if saved
+                        if (savedSemester && data.semesters.includes(savedSemester)) {
+                            semesterSelect.value = savedSemester;
+                        }
                     }
                     // Optionally trigger initial table load after filters are populated
                     updateGradesTable();
                 });
+
+            // Save filter changes to localStorage
+            yearLevelSelect.addEventListener('change', function() {
+                localStorage.setItem('studentGradesYearLevel', yearLevelSelect.value);
+            });
+            semesterSelect.addEventListener('change', function() {
+                localStorage.setItem('studentGradesSemester', semesterSelect.value);
+            });
+
+            // Function to compute GPA and related stats
+            function computeCumulativeStats(courses) {
+                let totalUnits = 0;
+                let totalWeightedGrade = 0;
+                let totalCourses = 0;
+                let gradePoint = null;
+                let standing = 'N/A';
+                let gpa = null;
+                let validGrades = 0;
+                let sumGPA = 0;
+                // Map of grade to grade point (example, adjust as needed)
+                const gradeToPoint = {
+                    '1.00': 1.0, '1.25': 1.25, '1.50': 1.5, '1.75': 1.75, '2.00': 2.0, '2.25': 2.25, '2.50': 2.5, '2.75': 2.75, '3.00': 3.0, '5.00': 5.0
+                };
+                courses.forEach(course => {
+                    const units = parseFloat(course.units) || 0;
+                    const finalGrade = course.finalGrade;
+                    // Only count units for numeric passing grades (1.00–3.00, including computed grades)
+                    const numericGrade = parseFloat(finalGrade);
+                    if (!isNaN(numericGrade) && numericGrade >= 1.00 && numericGrade <= 3.00) {
+                        totalUnits += units;
+                    }
+                    // GPA calculation (all grades with a numeric value in gradeToPoint)
+                    if (finalGrade && gradeToPoint[finalGrade]) {
+                        totalWeightedGrade += gradeToPoint[finalGrade] * units;
+                        sumGPA += gradeToPoint[finalGrade];
+                        validGrades++;
+                        totalCourses++;
+                    }
+                });
+                if (totalUnits > 0) {
+                    gpa = (totalWeightedGrade / totalUnits).toFixed(2);
+                }
+                if (validGrades > 0) {
+                    gradePoint = (sumGPA / validGrades).toFixed(2);
+                }
+                // Example standing logic
+                if (gpa !== null) {
+                    if (gpa <= 1.5) standing = "President's Lister";
+                    else if (gpa <= 1.75) standing = "Dean's Lister";
+                    else if (gpa <= 3.0) standing = "Good Standing";
+                    else standing = "Probation";
+                }
+                return {
+                    gpa: gpa || 'N/A',
+                    gradePoint: gradePoint || 'N/A',
+                    standing: standing,
+                    totalUnits: totalUnits.toFixed(1)
+                };
+            }
 
             // Function to update the grades table
             function updateGradesTable() {
@@ -274,24 +345,34 @@
                                 gradesTableBody.appendChild(row);
                             });
                             semesterGPA.innerHTML = `<strong>${data.semesterGPA ?? 'N/A'}</strong>`;
-                            if (data.cumulativeInfo) {
-                                cumulativeGPA.textContent = data.cumulativeInfo.gpa ?? 'N/A';
-                                gradePoint.textContent = data.cumulativeInfo.gradePoint ?? 'N/A';
-                                academicStanding.textContent = data.cumulativeInfo.standing ?? 'N/A';
-                                academicStanding.className = data.cumulativeInfo.standing && (data.cumulativeInfo.standing.includes('Dean') || data.cumulativeInfo.standing.includes('President')) ? 'cumulative-value status-good' : 'cumulative-value';
-                                totalUnits.textContent = data.cumulativeInfo.totalUnits ?? 'N/A';
-                            }
+                            // Compute and update cumulative stats in real time
+                            const stats = computeCumulativeStats(data.courses);
+                            cumulativeGPA.textContent = stats.gpa;
+                            gradePoint.textContent = stats.gradePoint;
+                            academicStanding.textContent = stats.standing;
+                            academicStanding.className = stats.standing && (stats.standing.includes('Dean') || stats.standing.includes('President')) ? 'cumulative-value status-good' : 'cumulative-value';
+                            totalUnits.textContent = stats.totalUnits;
+                            // Update semester GPA in table footer
+                            semesterGPA.innerHTML = `<strong>${stats.gpa}</strong>`;
                         } else {
                             const row = document.createElement('tr');
                             row.innerHTML = `<td colspan="7" style="text-align: center;">No grades available for this semester</td>`;
                             gradesTableBody.appendChild(row);
                             semesterGPA.innerHTML = '<strong>N/A</strong>';
+                            cumulativeGPA.textContent = 'N/A';
+                            gradePoint.textContent = 'N/A';
+                            academicStanding.textContent = 'N/A';
+                            totalUnits.textContent = 'N/A';
                         }
                     })
                     .catch(error => {
                         console.error('Error fetching grades:', error);
                         gradesTableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Error loading grades. Please try again later.</td></tr>';
                         semesterGPA.innerHTML = '<strong>Error</strong>';
+                        cumulativeGPA.textContent = 'N/A';
+                        gradePoint.textContent = 'N/A';
+                        academicStanding.textContent = 'N/A';
+                        totalUnits.textContent = 'N/A';
                     });
             }
 

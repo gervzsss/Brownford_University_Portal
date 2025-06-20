@@ -3,8 +3,10 @@ package com.brownford.controller;
 import com.brownford.model.Enrollment;
 import com.brownford.model.Course;
 import com.brownford.model.Student;
+import com.brownford.model.Grade;
 import com.brownford.repository.EnrollmentRepository;
 import com.brownford.repository.StudentRepository;
+import com.brownford.repository.GradeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ public class StudentGradesApiController {
     private EnrollmentRepository enrollmentRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private GradeRepository gradeRepository;
 
     @GetMapping("/grades")
     public Map<String, Object> getStudentGrades(@RequestParam String yearLevel, @RequestParam String semester,
@@ -48,11 +52,30 @@ public class StudentGradesApiController {
                 courseMap.put("code", course.getCourseCode());
                 courseMap.put("title", course.getCourseTitle());
                 courseMap.put("units", course.getUnits());
-                // Placeholder grades
-                courseMap.put("midterm", null);
-                courseMap.put("finals", null);
-                courseMap.put("finalGrade", null);
-                courseMap.put("remarks", null);
+                // Fetch actual grade for this student/course/semester, get the latest schoolYear if multiple
+                List<Grade> grades = gradeRepository.findAll();
+                Optional<Grade> gradeOpt = grades.stream()
+                        .filter(g -> g.getStudent().getStudentId().equals(student.getStudentId())
+                                && g.getCourse().getId().equals(course.getId())
+                                && g.getSemester().equalsIgnoreCase(semester))
+                        .max(Comparator.comparing(Grade::getSchoolYear, Comparator.nullsLast(String::compareTo)));
+                if (gradeOpt.isPresent()) {
+                    Grade grade = gradeOpt.get();
+                    // Ensure remarks is always set if finalGrade is present
+                    String remarks = grade.getRemarks();
+                    if ((remarks == null || remarks.isEmpty()) && grade.getFinalGrade() != null) {
+                        remarks = new com.brownford.service.GradeService().getRemarksForGrade(grade.getFinalGrade());
+                    }
+                    courseMap.put("midterm", grade.getMidtermGrade());
+                    courseMap.put("finals", grade.getFinalsGrade());
+                    courseMap.put("finalGrade", grade.getFinalGrade());
+                    courseMap.put("remarks", remarks);
+                } else {
+                    courseMap.put("midterm", null);
+                    courseMap.put("finals", null);
+                    courseMap.put("finalGrade", null);
+                    courseMap.put("remarks", null);
+                }
                 coursesList.add(courseMap);
             }
         }

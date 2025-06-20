@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 import com.brownford.repository.FacultyRepository;
@@ -15,21 +16,23 @@ import com.brownford.repository.FacultyAssignmentRepository;
 import com.brownford.repository.EnrollmentRepository;
 import com.brownford.model.FacultyAssignment;
 import com.brownford.model.Enrollment;
-import com.brownford.model.Faculty;
 import com.brownford.model.Section;
 import com.brownford.model.Student;
+import com.brownford.repository.ScheduleRepository;
+import com.brownford.model.Schedule;
+import com.brownford.repository.CourseRepository;
+import com.brownford.repository.SectionRepository;
+import com.brownford.model.Course;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.Map;
-import com.brownford.repository.ScheduleRepository;
-import com.brownford.model.Schedule;
-import java.time.Duration;
+import java.util.Locale;
+
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.Locale;
 
 @Controller
 public class FacultyController {
@@ -44,6 +47,10 @@ public class FacultyController {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private FacultyRepository facultyRepository;
+    @Autowired
+    private SectionRepository sectionRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     private void addFacultyToModel(Model model, Principal principal) {
         if (principal != null) {
@@ -202,8 +209,40 @@ public class FacultyController {
     }
 
     @GetMapping("/faculty-grading-sheet")
-    public String facultyGradingSheet(Model model, Principal principal) {
+    public String facultyGradingSheet(
+        @RequestParam("section") String sectionCode,
+        @RequestParam("course") String courseCode,
+        Model model,
+        Principal principal
+    ) {
         addFacultyToModel(model, principal);
+        Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
+        Course course = courseRepository.findByCourseCode(courseCode).orElse(null);
+        List<Student> students = new java.util.ArrayList<>();
+        if (section != null && course != null) {
+            List<Enrollment> enrollments = enrollmentRepository.findAll().stream()
+                .filter(e -> "APPROVED".equalsIgnoreCase(e.getStatus())
+                    && e.getSection() != null && e.getSection().getId().equals(section.getId())
+                    && e.getCourses() != null && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId())))
+                .collect(Collectors.toList());
+            for (Enrollment enrollment : enrollments) {
+                if (enrollment.getStudent() != null) {
+                    students.add(enrollment.getStudent());
+                }
+            }
+        }
+        // Find the FacultyAssignment for this section and course
+        FacultyAssignment assignment = facultyAssignmentRepository.findAll().stream()
+            .filter(a -> a.getSection() != null && a.getSection().getSectionCode().equals(sectionCode)
+                && a.getCurriculumCourse() != null && a.getCurriculumCourse().getCourse().getCourseCode().equals(courseCode))
+            .findFirst().orElse(null);
+        String semester = assignment != null ? assignment.getSemester() : "";
+        String schoolYear = assignment != null ? assignment.getSchoolYear() : "";
+        model.addAttribute("students", students);
+        model.addAttribute("section", section);
+        model.addAttribute("course", course);
+        model.addAttribute("semester", semester);
+        model.addAttribute("schoolYear", schoolYear);
         return "/faculty/faculty-grading-sheet";
     }
 }

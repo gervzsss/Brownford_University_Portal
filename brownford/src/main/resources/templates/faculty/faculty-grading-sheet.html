@@ -167,8 +167,8 @@
                             <th>No</th>
                             <th>Student No</th>
                             <th>Student Name</th>
-                            <th>1<sup>st</sup> Grading</th>
-                            <th>2<sup>nd</sup> Grading</th>
+                            <th>Midterm</th>
+                            <th>Finals</th>
                             <th>Computed Rating</th>
                             <th>Final Rating</th>
                             <th>Remark</th>
@@ -176,56 +176,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>411-172-BF-1</td>
-                            <td>DELA CRUZ, JUAN MANALO C.</td>
-                            <td>
-                                <input type="text" class="grade-input" value="1.50">
-                            </td>
-                            <td>
-                                <input type="text" class="grade-input" value="1.50">
-                            </td>
-                            <td>1.500</td>
-                            <td>1.50</td>
-                            <td>PASSED</td>
-                            <td>
-                                <input type="text" class="remark-input">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>411-173-BF-1</td>
-                            <td>JAVIER, MA. REGINE M.</td>
-                            <td>
-                                <input type="text" class="grade-input" value="1.75">
-                            </td>
-                            <td>
-                                <input type="text" class="grade-input" value="1.75">
-                            </td>
-                            <td>1.750</td>
-                            <td>1.75</td>
-                            <td>PASSED</td>
-                            <td>
-                                <input type="text" class="remark-input">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>411-174-BF-1</td>
-                            <td>TORRES, CJ LOYD B.</td>
-                            <td>
-                                <input type="text" class="grade-input" value="1.50">
-                            </td>
-                            <td>
-                                <input type="text" class="grade-input" value="-">
-                            </td>
+                        <tr th:each="student, iterStat : ${students}">
+                            <td th:text="${iterStat.count}"></td>
+                            <td th:text="${student.studentId}"></td>
+                            <td th:text="${student.user.lastName + ', ' + student.user.firstName}"></td>
+                            <td><input type="text" class="grade-input" th:name="'midtermGrade_' + ${student.studentId}" th:id="'midtermGrade_' + ${student.studentId}" /></td>
+                            <td><input type="text" class="grade-input" th:name="'finalsGrade_' + ${student.studentId}" th:id="'finalsGrade_' + ${student.studentId}" /></td>
                             <td>-</td>
                             <td>-</td>
                             <td></td>
-                            <td>
-                                <input type="text" class="remark-input" value="INCOMPLETE">
-                            </td>
+                            <td><input type="text" class="remark-input" th:name="'remark_' + ${student.studentId}" th:id="'remark_' + ${student.studentId}" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -238,58 +198,127 @@
         </main>
     </div>
 
-    <script th:src="@{/js/notifications.js}"></script>
+    <!-- Hidden fields for dynamic values -->
+    <input type="hidden" id="courseId" th:value="${course != null ? course.id : ''}" />
+    <input type="hidden" id="facultyId" th:value="${faculty != null ? faculty.id : ''}" />
+    <input type="hidden" id="semester" th:value="${semester}" />
+    <input type="hidden" id="schoolYear" th:value="${schoolYear}" />
+
+    <script src="/js/notifications.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Calculate computed rating when grades change
-            const gradeInputs = document.querySelectorAll('.grade-input');
+            // Get dynamic values from Thymeleaf-rendered hidden fields or JS variables
+            const courseId = document.getElementById('courseId')?.value;
+            const facultyId = document.getElementById('facultyId')?.value;
+            const semester = document.getElementById('semester')?.value;
+            const schoolYear = document.getElementById('schoolYear')?.value;
 
-            gradeInputs.forEach(input => {
-                input.addEventListener('change', function () {
-                    const row = this.closest('tr');
-                    const firstGrade = row.querySelector('td:nth-child(4) input').value;
-                    const secondGrade = row.querySelector('td:nth-child(5) input').value;
+            // Fetch and populate existing grades for each student
+            fetch(`/api/grades?courseId=${courseId}&semester=${semester}&schoolYear=${schoolYear}`)
+                .then(response => response.json())
+                .then(grades => {
+                    grades.forEach(grade => {
+                        const midtermInput = document.getElementById('midtermGrade_' + grade.studentId);
+                        const finalsInput = document.getElementById('finalsGrade_' + grade.studentId);
+                        const remarkInput = document.getElementById('remark_' + grade.studentId);
+                        if (midtermInput) midtermInput.value = grade.midtermGrade || '';
+                        if (finalsInput) finalsInput.value = grade.finalsGrade || '';
+                        if (remarkInput) remarkInput.value = grade.remarks || '';
+                    });
+                });
 
-                    // Only calculate if both grades are numbers
-                    if (!isNaN(firstGrade) && !isNaN(secondGrade) && firstGrade !== '-' && secondGrade !== '-') {
-                        const computed = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(3);
-                        const final = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(2);
-
-                        row.querySelector('td:nth-child(6)').textContent = computed;
-                        row.querySelector('td:nth-child(7)').textContent = final;
-
-                        // Set remark based on final grade
-                        if (parseFloat(final) <= 3.0) {
-                            row.querySelector('td:nth-child(8)').textContent = 'PASSED';
-                        } else {
-                            row.querySelector('td:nth-child(8)').textContent = 'FAILED';
-                        }
-                    } else {
-                        row.querySelector('td:nth-child(6)').textContent = '-';
-                        row.querySelector('td:nth-child(7)').textContent = '-';
-                        row.querySelector('td:nth-child(8)').textContent = '';
+            // Save only the changed student's grade when Save is clicked
+            document.querySelector('.save-button').addEventListener('click', function () {
+                const rows = document.querySelectorAll('.grades-table tbody tr');
+                let allSuccess = true;
+                rows.forEach(row => {
+                    // Only send if at least one grade field is filled
+                    const studentNo = row.children[1].textContent.trim();
+                    const midtermGrade = row.querySelector('input[name^="midtermGrade_"]').value.trim() || null;
+                    const finalsGrade = row.querySelector('input[name^="finalsGrade_"]').value.trim() || null;
+                    const remark = row.querySelector('input[name^="remark_"]').value.trim() || null;
+                    if (midtermGrade || finalsGrade || remark) {
+                        const gradeDTO = {
+                            studentId: studentNo,
+                            courseId: courseId,
+                            facultyId: facultyId,
+                            midtermGrade: midtermGrade,
+                            finalsGrade: finalsGrade,
+                            semester: semester,
+                            schoolYear: schoolYear,
+                            remarks: remark
+                        };
+                        fetch('/api/grades/encode', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(gradeDTO)
+                        })
+                        .then(response => {
+                            if (!response.ok) allSuccess = false;
+                            return response.json();
+                        })
+                        .catch(() => { allSuccess = false; });
                     }
                 });
+                setTimeout(() => {
+                    if (allSuccess) {
+                        alert('Grades saved successfully!');
+                    } else {
+                        alert('Some grades failed to save.');
+                    }
+                }, 1000);
             });
+        });
+    </script>
+    <script>
+        // Calculate computed rating when grades change
+        const gradeInputs = document.querySelectorAll('.grade-input');
 
-            // Save button functionality
-            document.querySelector('.save-button').addEventListener('click', function () {
-                alert('Grades saved successfully!');
-            });
+        gradeInputs.forEach(input => {
+            input.addEventListener('change', function () {
+                const row = this.closest('tr');
+                const firstGrade = row.querySelector('td:nth-child(4) input').value;
+                const secondGrade = row.querySelector('td:nth-child(5) input').value;
 
-            // Finalize button functionality
-            document.querySelector('.finalize-button').addEventListener('click', function () {
-                if (confirm('Are you sure you want to finalize these grades? This action cannot be undone.')) {
-                    alert('Grades have been finalized and submitted.');
-                    // Disable all inputs after finalizing
-                    document.querySelectorAll('.grade-input, .remark-input').forEach(input => {
-                        input.disabled = true;
-                    });
-                    // Disable buttons
-                    document.querySelector('.save-button').disabled = true;
-                    document.querySelector('.finalize-button').disabled = true;
+                // Only calculate if both grades are numbers
+                if (!isNaN(firstGrade) && !isNaN(secondGrade) && firstGrade !== '-' && secondGrade !== '-') {
+                    const computed = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(3);
+                    const final = ((parseFloat(firstGrade) + parseFloat(secondGrade)) / 2).toFixed(2);
+
+                    row.querySelector('td:nth-child(6)').textContent = computed;
+                    row.querySelector('td:nth-child(7)').textContent = final;
+
+                    // Set remark based on final grade
+                    if (parseFloat(final) <= 3.0) {
+                        row.querySelector('td:nth-child(8)').textContent = 'PASSED';
+                    } else {
+                        row.querySelector('td:nth-child(8)').textContent = 'FAILED';
+                    }
+                } else {
+                    row.querySelector('td:nth-child(6)').textContent = '-';
+                    row.querySelector('td:nth-child(7)').textContent = '-';
+                    row.querySelector('td:nth-child(8)').textContent = '';
                 }
             });
+        });
+
+        // Save button functionality
+        document.querySelector('.save-button').addEventListener('click', function () {
+            alert('Grades saved successfully!');
+        });
+
+        // Finalize button functionality
+        document.querySelector('.finalize-button').addEventListener('click', function () {
+            if (confirm('Are you sure you want to finalize these grades? This action cannot be undone.')) {
+                alert('Grades have been finalized and submitted.');
+                // Disable all inputs after finalizing
+                document.querySelectorAll('.grade-input, .remark-input').forEach(input => {
+                    input.disabled = true;
+                });
+                // Disable buttons
+                document.querySelector('.save-button').disabled = true;
+                document.querySelector('.finalize-button').disabled = true;
+            }
         });
     </script>
 </body>
