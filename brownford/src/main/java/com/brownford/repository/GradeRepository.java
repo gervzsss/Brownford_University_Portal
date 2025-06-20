@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,4 +30,13 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
             @Param("semester") String semester,
             @Param("schoolYear") String schoolYear
     );
+
+    // Find all grades for a student
+    List<Grade> findByStudent(Student student);
+
+    // Find grade by student, course, and semester (no school year)
+    Optional<Grade> findByStudentAndCourseAndSemester(
+            Student student,
+            Course course,
+            String semester);
 }

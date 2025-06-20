@@ -13,6 +13,8 @@ import com.brownford.repository.StudentRepository;
 import com.brownford.model.Student;
 import com.brownford.service.EnrollmentService;
 import com.brownford.model.Enrollment;
+import com.brownford.model.Course;
+import com.brownford.model.CurriculumCourse;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -74,6 +76,54 @@ public class StudentController {
     @GetMapping("/student-enrollment")
     public String enrollment(Model model, Principal principal) {
         addStudentToModel(model, principal);
+        if (principal != null) {
+            String username = principal.getName();
+            Student student = studentRepository.findAll().stream()
+                    .filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
+            if (student != null && student.getProgram() != null) {
+                Enrollment latestEnrollment = enrollmentService.getLatestEnrollmentForStudent(student.getId());
+                String nextSemester = null;
+                String nextYearLevel = null;
+                List<Map<String, Object>> availableCourses = Collections.emptyList();
+                if (latestEnrollment != null) {
+                    boolean allGraded = true;
+                    for (Course prevCourse : latestEnrollment.getCourses()) {
+                        String finalGrade = enrollmentService.getFinalGradeForCourse(student, prevCourse, latestEnrollment.getSemester());
+                        boolean hasFinal = finalGrade != null && !finalGrade.isEmpty();
+                        if (!hasFinal) {
+                            allGraded = false;
+                        }
+                    }
+                    if (allGraded) {
+                        String[] nextTerm = enrollmentService.getNextTerm(latestEnrollment);
+                        nextYearLevel = nextTerm[0];
+                        nextSemester = nextTerm[1];
+                        Long programId = student.getProgram().getId();
+                        List<CurriculumCourse> allowedCourses = enrollmentService.getCurriculumCoursesForTerm(programId, nextYearLevel, nextSemester);
+                        availableCourses = allowedCourses.stream()
+                            .map(cc -> {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("id", cc.getCourse().getId());
+                                map.put("code", cc.getCourse().getCourseCode());
+                                map.put("title", cc.getCourse().getCourseTitle());
+                                map.put("units", cc.getCourse().getUnits());
+                                map.put("schedule", "");
+                                map.put("instructor", "");
+                                map.put("slots", "");
+                                return map;
+                            })
+                            .toList();
+                    } else {
+                        nextSemester = latestEnrollment.getSemester();
+                        nextYearLevel = latestEnrollment.getYearLevel();
+                        availableCourses = Collections.emptyList();
+                    }
+                }
+                model.addAttribute("availableCourses", availableCourses);
+                model.addAttribute("semester", nextSemester);
+                model.addAttribute("yearLevel", nextYearLevel);
+            }
+        }
         return "/student/student-enrollment";
     }
 

@@ -136,10 +136,27 @@
                 </div>
             </div>
 
+            <!-- Next Term Summary -->
+            <div class="next-term-summary"
+                style="margin: 24px 0; padding: 16px; background: #f8f6f2; border-radius: 8px; border: 1px solid #e0d7c6;">
+                <h3 style="margin-bottom: 8px;">Next Enrollment</h3>
+                <p style="margin: 0 0 8px 0;">
+                    <strong>Year Level:</strong> <span th:text="${yearLevel}">Year</span> &nbsp;|
+                    <strong>Semester:</strong> <span th:text="${semester}">Semester</span>
+                </p>
+                <p style="margin: 0 0 8px 0;">
+                    You will be enrolled in all the following courses for this term:
+                </p>
+                <ul style="margin: 0 0 8px 24px;">
+                    <li th:each="course : ${availableCourses}" th:text="${course.code} + ' - ' + ${course.title}">Course
+                    </li>
+                </ul>
+            </div>
+
             <!-- Available Courses -->
             <div class="available-courses">
-                <h3 class="courses-title"
-                    th:text="'Available Courses for ' + ${student.yearLevel} + ' / ' + ${semester}">Available Courses
+                <h3 class="courses-title" th:text="'Available Courses for ' + ${yearLevel} + ' / ' + ${semester}">
+                    Available Courses
                 </h3>
                 <div class="courses-table-container">
                     <table class="courses-table">
@@ -151,32 +168,101 @@
                                 <th>Schedule</th>
                                 <th>Instructor</th>
                                 <th>Slots</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:if="${availableCourses == null or #lists.isEmpty(availableCourses)}">
-                                <td colspan="7" style="text-align: center;">No courses available for enrollment</td>
+                                <td colspan="6" style="text-align: center;">No courses available for enrollment</td>
                             </tr>
-                            <tr th:each="course : ${availableCourses}">
+                            <tr th:each="course : ${availableCourses}" th:attr="data-course-id=${course.id}">
                                 <td th:text="${course.code}">Course Code</td>
                                 <td th:text="${course.title}">Course Title</td>
                                 <td th:text="${course.units}">Units</td>
                                 <td th:text="${course.schedule}">Schedule</td>
                                 <td th:text="${course.instructor}">Instructor</td>
                                 <td th:text="${course.slots}">Slots</td>
-                                <td>
-                                    <a th:href="@{/enroll-course(courseId=${course.id})}"
-                                        class="enroll-button">Enroll</a>
-                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div style="text-align: right; margin-top: 16px;">
+                    <button id="enrollAllBtn" class="enroll-button"
+                        style="padding: 10px 24px; font-size: 1.1em; background: #8B4513; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Enroll
+                        in All
+                        Courses</button>
+                </div>
             </div>
         </main>
     </div>
+    <input type="hidden" id="studentId" th:value="${student.id}" />
+    <input type="hidden" id="semester" th:value="${semester}" />
+    <input type="hidden" id="yearLevel" th:value="${yearLevel}" />
     <script th:src="@{/js/notifications.js}"></script>
+    <script>
+        // Handles enrollment button click and error display for student self-enrollment
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Remove per-course enroll buttons logic
+            const enrollAllBtn = document.getElementById('enrollAllBtn');
+            if (enrollAllBtn) {
+                enrollAllBtn.addEventListener('click', async function (e) {
+                    e.preventDefault();
+                    // Collect all course IDs from the available courses table
+                    const courseRows = document.querySelectorAll('.courses-table tbody tr[data-course-id]');
+                    const courseIds = Array.from(courseRows).map(row => parseInt(row.getAttribute('data-course-id')));
+                    if (courseIds.length === 0) {
+                        showEnrollmentError('No courses found to enroll.');
+                        return;
+                    }
+                    const studentId = document.getElementById('studentId')?.value || window.studentId;
+                    const semester = document.getElementById('semester')?.value || window.semester;
+                    const yearLevel = document.getElementById('yearLevel')?.value || window.yearLevel;
+                    const sectionId = document.getElementById('sectionId')?.value || null;
+                    if (!studentId || !semester || !yearLevel) {
+                        showEnrollmentError('Missing enrollment information.');
+                        return;
+                    }
+                    const payload = {
+                        studentId: studentId,
+                        courses: courseIds,
+                        semester: semester,
+                        yearLevel: yearLevel,
+                        sectionId: sectionId ? parseInt(sectionId) : null
+                    };
+                    try {
+                        const response = await fetch('/api/enrollments', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            showEnrollmentError(errorText || 'Enrollment failed.');
+                            return;
+                        }
+                        window.location.reload();
+                    } catch (err) {
+                        showEnrollmentError(err.message || 'Enrollment failed.');
+                    }
+                });
+            }
+        });
+
+        function showEnrollmentError(msg) {
+            let errBox = document.getElementById('enrollmentErrorBox');
+            if (!errBox) {
+                errBox = document.createElement('div');
+                errBox.id = 'enrollmentErrorBox';
+                errBox.style.color = 'red';
+                errBox.style.margin = '1em 0';
+                const main = document.querySelector('.enrollment-content');
+                main.insertBefore(errBox, main.firstChild);
+            }
+            errBox.textContent = msg;
+        }
+    </script>
+
+
 </body>
 
 </html>

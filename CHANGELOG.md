@@ -1,11 +1,16 @@
 # Changelog
 
+
+## [06.21.250125]
+
+### Major Changes
+- Self Enrollment of students is now Working.
+
 ## [06.20.251456]
 
 ### Major Changes
 - Working Grading Sheet Page for Faculty.
 - Working Grades Page for Student
-
 
 ## [06.20.250229]
 
