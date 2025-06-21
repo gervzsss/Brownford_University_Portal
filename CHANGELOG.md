@@ -1,5 +1,10 @@
 # Changelog
 
+### [06.22.250129]
+
+### New
+- Added a feature where when the System will automatically create an admin account when there accounts of it.
+
 
 ## [06.21.250125]
 

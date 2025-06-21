@@ -32,18 +32,36 @@ public class EnrollmentService {
     // Helper: get next chronological term
     private static class Term {
         int year;
-        int sem; // 1=1st, 2=2nd, 3=Summer
-        Term(int year, int sem) { this.year = year; this.sem = sem; }
+        int sem; // 1=1st, 2=2nd
+
+        Term(int year, int sem) {
+            this.year = year;
+            this.sem = sem;
+        }
+
         static Term from(String yearLevel, String semester) {
             int y = Integer.parseInt(yearLevel);
-            int s = semester.toLowerCase().contains("1st") ? 1 : semester.toLowerCase().contains("2nd") ? 2 : 3;
+            int s;
+            String semLower = semester.toLowerCase();
+            if (semLower.contains("1st")) {
+                s = 1;
+            } else if (semLower.contains("2nd")) {
+                s = 2;
+            } else {
+                throw new IllegalArgumentException(
+                        "Invalid semester: " + semester + ". Only '1st' and '2nd' semesters are allowed.");
+            }
             return new Term(y, s);
         }
+
         Term next() {
-            if (sem == 1) return new Term(year, 2);
-            if (sem == 2) return new Term(year, 3);
+            if (sem == 1)
+                return new Term(year, 2);
+            if (sem == 2)
+                return new Term(year + 1, 1);
             return new Term(year + 1, 1);
         }
+
         boolean equals(String yearLevel, String semester) {
             Term t = from(yearLevel, semester);
             return t.year == year && t.sem == sem;
@@ -53,26 +71,32 @@ public class EnrollmentService {
     public Enrollment createEnrollment(Long studentId, List<Long> courseIds, String semester, String yearLevel,
             Long sectionId) {
         Student student = studentRepository.findById(studentId).orElseThrow();
-        // System.out.println("[DEBUG] createEnrollment called with: studentId=" + studentId + ", semester=" + semester + ", yearLevel=" + yearLevel + ", courseIds=" + courseIds);
+        // System.out.println("[DEBUG] createEnrollment called with: studentId=" +
+        // studentId + ", semester=" + semester + ", yearLevel=" + yearLevel + ",
+        // courseIds=" + courseIds);
         // 1. Check latest enrollment
         Enrollment latest = enrollmentRepository.findTopByStudentOrderByCreatedAtDesc(student);
         if (latest != null) {
-            // System.out.println("[DEBUG] Latest enrollment: yearLevel=" + latest.getYearLevel() + ", semester=" + latest.getSemester());
+            // System.out.println("[DEBUG] Latest enrollment: yearLevel=" +
+            // latest.getYearLevel() + ", semester=" + latest.getSemester());
             for (Course prevCourse : latest.getCourses()) {
                 String finalGrade = getFinalGradeForCourse(student, prevCourse, latest.getSemester());
                 boolean hasFinal = finalGrade != null && !finalGrade.isEmpty();
-                // System.out.println("[DEBUG] Previous course: " + prevCourse.getCourseCode() + ", hasFinalGrade=" + hasFinal + (finalGrade != null ? ", finalGrade=" + finalGrade : ", no grade record found"));
+                // System.out.println("[DEBUG] Previous course: " + prevCourse.getCourseCode() +
+                // ", hasFinalGrade=" + hasFinal + (finalGrade != null ? ", finalGrade=" +
+                // finalGrade : ", no grade record found"));
                 if (!hasFinal) {
-                    throw new IllegalStateException("You must have final grades for all previous subjects before enrolling.");
+                    throw new IllegalStateException(
+                            "You must have final grades for all previous subjects before enrolling.");
                 }
             }
             // 3. Check chronological order
             Term prev = Term.from(latest.getYearLevel(), latest.getSemester());
             Term next = prev.next();
-            // System.out.println("[DEBUG] Next allowed term: yearLevel=" + next.year + ", semester=" + (next.sem == 1 ? "1st Semester" : next.sem == 2 ? "2nd Semester" : "Summer"));
-            // System.out.println("[DEBUG] Attempted enrollment: yearLevel=" + yearLevel + ", semester=" + semester);
+
             if (!next.equals(yearLevel, semester)) {
-                throw new IllegalStateException("Enrollment must be chronological. Next allowed: " + next.year + " year, " + (next.sem == 1 ? "1st Semester" : next.sem == 2 ? "2nd Semester" : "Summer"));
+                throw new IllegalStateException("Enrollment must be chronological. Next allowed: " + next.year
+                        + " year, " + (next.sem == 1 ? "1st Semester" : "2nd Semester"));
             }
         }
         List<Course> courses = courseRepository.findAllById(courseIds);
@@ -198,26 +222,33 @@ public class EnrollmentService {
      * Returns true if all courses in the latest enrollment have final grades.
      */
     public boolean allPreviousCoursesGraded(Student student, Enrollment latestEnrollment) {
-        if (latestEnrollment == null) return false;
+        if (latestEnrollment == null)
+            return false;
         for (Course prevCourse : latestEnrollment.getCourses()) {
             boolean hasFinal = gradeRepository
-                .findByStudentAndCourseAndSemester(
-                    student, prevCourse, latestEnrollment.getSemester())
-                .map(g -> g.getFinalGrade() != null && !g.getFinalGrade().isEmpty()).orElse(false);
-            if (!hasFinal) return false;
+                    .findByStudentAndCourseAndSemester(
+                            student, prevCourse, latestEnrollment.getSemester())
+                    .map(g -> g.getFinalGrade() != null && !g.getFinalGrade().isEmpty()).orElse(false);
+            if (!hasFinal)
+                return false;
         }
         return true;
     }
 
     /**
-     * Returns the next chronological term as [yearLevel, semester] given the latest enrollment.
+     * Returns the next chronological term as [yearLevel, semester] given the latest
+     * enrollment.
      */
     public String[] getNextTerm(Enrollment latestEnrollment) {
-        if (latestEnrollment == null) return null;
+        if (latestEnrollment == null)
+            return null;
         int y = Integer.parseInt(latestEnrollment.getYearLevel());
-        int s = latestEnrollment.getSemester().toLowerCase().contains("1st") ? 1 : latestEnrollment.getSemester().toLowerCase().contains("2nd") ? 2 : 3;
-        if (s == 1) return new String[] { String.valueOf(y), "2nd Semester" };
-        if (s == 2) return new String[] { String.valueOf(y), "Summer" };
+        int s = latestEnrollment.getSemester().toLowerCase().contains("1st") ? 1
+                : latestEnrollment.getSemester().toLowerCase().contains("2nd") ? 2 : 3;
+        if (s == 1)
+            return new String[] { String.valueOf(y), "2nd Semester" };
+        if (s == 2)
+            return new String[] { String.valueOf(y + 1), "1st Semester" };
         return new String[] { String.valueOf(y + 1), "1st Semester" };
     }
 
@@ -229,21 +260,22 @@ public class EnrollmentService {
         if (curriculumOpt.isPresent()) {
             List<CurriculumCourse> allowedCourses = curriculumOpt.get().getCurriculumCourses();
             return allowedCourses.stream()
-                .filter(cc -> String.valueOf(cc.getYearLevel()).equals(yearLevel)
-                        && cc.getSemester().equals(semester))
-                .toList();
+                    .filter(cc -> String.valueOf(cc.getYearLevel()).equals(yearLevel)
+                            && cc.getSemester().equals(semester))
+                    .toList();
         }
         return List.of();
     }
 
     /**
-     * Returns the final grade (String) for a student/course/semester, or null if not found.
+     * Returns the final grade (String) for a student/course/semester, or null if
+     * not found.
      */
     public String getFinalGradeForCourse(Student student, Course course, String semester) {
         return gradeRepository
-            .findByStudentAndCourseAndSemester(student, course, semester)
-            .map(g -> g.getFinalGrade())
-            .orElse(null);
+                .findByStudentAndCourseAndSemester(student, course, semester)
+                .map(g -> g.getFinalGrade())
+                .orElse(null);
     }
 
     /**
