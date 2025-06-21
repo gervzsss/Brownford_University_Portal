@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordInput = document.getElementById("password");
     const passwordToggle = document.querySelector(".password-toggle");
     const submitButton = document.querySelector(".sign-in-button");
-    const portalSelector = document.querySelector(".portal-selector");
     const formGroups = document.querySelectorAll(".form-group");
 
     // Track if user has started interacting with the form
@@ -35,78 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 <circle cx="12" cy="12" r="3"></circle>
             `;
             }
-        });
-    }
-
-    // Portal selector dropdown functionality
-    if (portalSelector) {
-        const portalOptions = [
-            "Student Portal",
-            "Faculty Portal",
-            "Admin Portal",
-        ];
-
-        const portalTitle = portalSelector.querySelector(".portal-title");
-        const dropdownArrow = portalSelector.querySelector(".dropdown-arrow");
-
-        // Create dropdown menu
-        const dropdownMenu = document.createElement("div");
-        dropdownMenu.className = "portal-dropdown-menu";
-        dropdownMenu.style.display = "none";
-        dropdownMenu.style.position = "absolute";
-        dropdownMenu.style.backgroundColor = "rgba(222, 208, 182, 0.95)";
-        dropdownMenu.style.borderRadius = "4px";
-        dropdownMenu.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.1)";
-        dropdownMenu.style.zIndex = "10";
-        dropdownMenu.style.width = "100%";
-        dropdownMenu.style.marginTop = "5px";
-
-        portalOptions.forEach(option => {
-            const item = document.createElement("div");
-            item.className = "portal-option";
-            item.textContent = option;
-            item.style.padding = "10px 15px";
-            item.style.cursor = "pointer";
-            item.style.transition = "background-color 0.2s";
-
-            item.addEventListener("mouseover", () => {
-                item.style.backgroundColor = "rgba(139, 69, 19, 0.1)";
-            });
-
-            item.addEventListener("mouseout", () => {
-                item.style.backgroundColor = "transparent";
-            });
-
-            item.addEventListener("click", (e) => {
-                // Preserve the dropdown arrow when updating the title
-                portalTitle.innerHTML = option + ' <span class="dropdown-arrow">▼</span>';
-                dropdownMenu.style.display = "none";
-                e.stopPropagation();
-            });
-
-            dropdownMenu.appendChild(item);
-        });
-
-        portalSelector.style.position = "relative";
-        portalSelector.appendChild(dropdownMenu);
-
-        portalSelector.addEventListener("click", (e) => {
-            const arrow = portalTitle.querySelector(".dropdown-arrow");
-            if (dropdownMenu.style.display === "none") {
-                dropdownMenu.style.display = "block";
-                if (arrow) arrow.textContent = "▲";
-            } else {
-                dropdownMenu.style.display = "none";
-                if (arrow) arrow.textContent = "▼";
-            }
-            e.stopPropagation();
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", () => {
-            dropdownMenu.style.display = "none";
-            const arrow = portalTitle.querySelector(".dropdown-arrow");
-            if (arrow) arrow.textContent = "▼";
         });
     }
 
@@ -229,45 +156,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Remember me functionality
-    const rememberMeContainer = document.createElement("div");
-    rememberMeContainer.className = "remember-me";
-    rememberMeContainer.style.display = "flex";
-    rememberMeContainer.style.alignItems = "center";
-    rememberMeContainer.style.justifyContent = "center";
-    rememberMeContainer.style.marginTop = "10px";
-
-    const rememberMeCheckbox = document.createElement("input");
-    rememberMeCheckbox.type = "checkbox";
-    rememberMeCheckbox.id = "remember-me";
-    rememberMeCheckbox.name = "remember-me";
-    rememberMeCheckbox.style.marginRight = "5px";
-
-    const rememberMeLabel = document.createElement("label");
-    rememberMeLabel.htmlFor = "remember-me";
-    rememberMeLabel.textContent = "Remember me";
-    rememberMeLabel.style.fontSize = "14px";
-    rememberMeLabel.style.color = "#5a2604";
-
-    rememberMeContainer.appendChild(rememberMeCheckbox);
-    rememberMeContainer.appendChild(rememberMeLabel);
-
-    const forgotPasswordDiv = document.querySelector(".forgot-password");
-    if (forgotPasswordDiv) {
-        forgotPasswordDiv.parentNode.insertBefore(rememberMeContainer, forgotPasswordDiv);
-    }
-
-    // Check if username is stored in localStorage
+    const rememberMeCheckbox = document.getElementById("remember-me");
     if (localStorage.getItem("rememberedUsername")) {
         usernameInput.value = localStorage.getItem("rememberedUsername");
-        rememberMeCheckbox.checked = true;
+        if (rememberMeCheckbox) rememberMeCheckbox.checked = true;
     }
-
-    // Save username to localStorage if remember me is checked
-    loginForm.addEventListener("submit", function () {
-        if (rememberMeCheckbox.checked) {
-            localStorage.setItem("rememberedUsername", usernameInput.value);
-        } else {
-            localStorage.removeItem("rememberedUsername");
-        }
-    });
+    if (loginForm && rememberMeCheckbox) {
+        loginForm.addEventListener("submit", function () {
+            if (rememberMeCheckbox.checked) {
+                localStorage.setItem("rememberedUsername", usernameInput.value);
+            } else {
+                localStorage.removeItem("rememberedUsername");
+            }
+        });
+    }
 });

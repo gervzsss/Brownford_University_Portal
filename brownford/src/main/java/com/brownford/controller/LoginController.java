@@ -8,12 +8,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "/Global/login";
-    }
-
-    @GetMapping("/forgot-password")
-    public String forgotPassword() {
-        return "/Global/forgot-password";
+        return "/login";
     }
 
     @GetMapping("/error")

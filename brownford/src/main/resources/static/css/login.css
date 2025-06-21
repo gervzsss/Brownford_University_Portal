@@ -63,25 +63,6 @@ body {
   font-family: "Cinzel Decorative";
 }
 
-/* Portal selector dropdown */
-.portal-selector {
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-
-.portal-title {
-  color: #72411e;
-  font-size: 16px;
-  display: inline-flex;
-  align-items: center;
-  font-family: "Cinzel Decorative";
-}
-
-.dropdown-arrow {
-  font-size: 12px;
-  margin-left: 5px;
-}
-
 /* Login form */
 .login-form {
   text-align: center;
@@ -161,23 +142,6 @@ body {
   font-size: 14px;
 }
 
-/* Forgot password link */
-.forgot-password {
-  margin: 15px 0;
-}
-
-.forgot-password a {
-  color: #5a2604;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 14px;
-  font-family: "Cinzel Decorative";
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}
-
 /* Sign in button */
 .sign-in-button {
   background-color: transparent;
@@ -218,10 +182,6 @@ body {
     font-size: 24px;
   }
 
-  .portal-title {
-    font-size: 18px;
-  }
-
   .sign-in-button {
     padding: 8px 20px;
     font-size: 16px;
@@ -247,19 +207,6 @@ body {
 
 .success-message {
   animation: fadeIn 0.3s ease-out;
-}
-
-/* Portal dropdown styles */
-.portal-dropdown-menu {
-  animation: fadeIn 0.2s ease-out;
-}
-
-.portal-option {
-  transition: background-color 0.2s;
-}
-
-.portal-option:hover {
-  background-color: rgba(139, 69, 19, 0.1);
 }
 
 /* Input focus effect */

@@ -1,10 +1,19 @@
 # Changelog
 
-### [06.22.250129]
+## [06.22.250147]
+
+### Changes
+- Login Page UI Changes
+
+### Removed
+- Removed student-enrollment separate js file.
+- Removed forgot-password html file.
+- Removed mapping for forgot password.
+
+## [06.22.250129]
 
 ### New
 - Added a feature where when the System will automatically create an admin account when there accounts of it.
-
 
 ## [06.21.250125]
 

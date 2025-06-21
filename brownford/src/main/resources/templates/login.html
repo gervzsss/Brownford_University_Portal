@@ -22,12 +22,6 @@
             <!-- University Name -->
             <h1 class="university-name">Brown Ford University</h1>
 
-            <!-- Student Portal Dropdown -->
-            <div class="portal-selector">
-                <h2 class="portal-title"> Student Portal</Portal> <span class="dropdown-arrow">▼</span>
-                </h2>
-            </div>
-
             <!-- Login Form -->
             <div class="login-form">
                 <h3 class="login-instruction">FILL OUT THE FORM TO LOGIN</h3>
@@ -71,23 +65,22 @@
                         </div>
                     </div>
 
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me" name="remember-me" />
+                        <label for="remember-me">Remember me</label>
+                    </div>
+
                     <!-- Error message container (for login failures) -->
                     <div th:if="${param.error}" class="error-message">
                         Invalid student ID or password. Please try again.
                     </div>
 
-                    <div class="forgot-password">
-                        <a href="/forgot-password">forgot Password</a>
-                    </div>
-
                     <button type="submit" class="sign-in-button">SIGN IN</button>
                 </form>
 
-                <p class="help-text">
-                    Forgot your password? No worries! Click 'FORGOT PASSWORD' and follow
-                    the steps to set a new one. Make sure to check your email or phone
-                    for the reset link
-                </p>
+                <!-- <p class="help-text">
+                    Forgot your password? Please approach the university admin office for assistance regarding your account credentials, as per university policy.
+                </p> -->
             </div>
         </div>
     </div>
