@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.brownford.repository.StudentRepository;
 import com.brownford.model.Student;
@@ -31,6 +32,9 @@ public class StudentController {
     @Autowired
     private EnrollmentService enrollmentService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private void addStudentToModel(Model model, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
@@ -38,19 +42,23 @@ public class StudentController {
                     .filter(s -> s.getUser().getUsername().equals(username)).findFirst().orElse(null);
             model.addAttribute("student", student);
 
-            // Add currentSemester for all student pages
+            // Add currentSemester and yearLevel for all student pages
             if (student != null) {
                 Enrollment latestEnrollment = enrollmentService.getLatestEnrollmentForStudent(student.getId());
                 if (latestEnrollment != null) {
                     model.addAttribute("currentSemester", latestEnrollment.getSemester());
+                    model.addAttribute("yearLevel", latestEnrollment.getYearLevel());
                 } else {
                     model.addAttribute("currentSemester", "N/A");
+                    model.addAttribute("yearLevel", student.getYearLevel() != null ? student.getYearLevel() : "N/A");
                 }
             } else {
                 model.addAttribute("currentSemester", "N/A");
+                model.addAttribute("yearLevel", "N/A");
             }
         } else {
             model.addAttribute("currentSemester", "N/A");
+            model.addAttribute("yearLevel", "N/A");
         }
     }
 
@@ -85,7 +93,16 @@ public class StudentController {
                 String nextSemester = null;
                 String nextYearLevel = null;
                 List<Map<String, Object>> availableCourses = Collections.emptyList();
+                String enrollmentStatus = "Unknown";
+                String currentSemester = null;
+                String currentYearLevel = null;
                 if (latestEnrollment != null) {
+                    currentSemester = latestEnrollment.getSemester();
+                    currentYearLevel = latestEnrollment.getYearLevel();
+                    enrollmentStatus = latestEnrollment.getStatus();
+                    if ("APPROVED".equalsIgnoreCase(enrollmentStatus)) {
+                        enrollmentStatus = "ENROLLED";
+                    }
                     boolean allGraded = true;
                     for (Course prevCourse : latestEnrollment.getCourses()) {
                         String finalGrade = enrollmentService.getFinalGradeForCourse(student, prevCourse, latestEnrollment.getSemester());
@@ -95,9 +112,18 @@ public class StudentController {
                         }
                     }
                     if (allGraded) {
+                        // If all previous courses are graded and no enrollment exists for the next term, set FOR ENROLLMENT
                         String[] nextTerm = enrollmentService.getNextTerm(latestEnrollment);
-                        nextYearLevel = nextTerm[0];
-                        nextSemester = nextTerm[1];
+                        final String nextYearLevelFinal = nextTerm[0];
+                        final String nextSemesterFinal = nextTerm[1];
+                        nextYearLevel = nextYearLevelFinal;
+                        nextSemester = nextSemesterFinal;
+                        // Check if student already has enrollment for the next term
+                        boolean hasNextEnrollment = enrollmentService.getEnrollmentsForStudent(student.getId()).stream()
+                            .anyMatch(e -> nextYearLevelFinal.equals(e.getYearLevel()) && nextSemesterFinal.equals(e.getSemester()));
+                        if (!hasNextEnrollment) {
+                            enrollmentStatus = "FOR ENROLLMENT";
+                        }
                         Long programId = student.getProgram().getId();
                         List<CurriculumCourse> allowedCourses = enrollmentService.getCurriculumCoursesForTerm(programId, nextYearLevel, nextSemester);
                         availableCourses = allowedCourses.stream()
@@ -114,14 +140,17 @@ public class StudentController {
                             })
                             .toList();
                     } else {
-                        nextSemester = latestEnrollment.getSemester();
-                        nextYearLevel = latestEnrollment.getYearLevel();
+                        nextSemester = null;
+                        nextYearLevel = null;
                         availableCourses = Collections.emptyList();
                     }
                 }
                 model.addAttribute("availableCourses", availableCourses);
-                model.addAttribute("semester", nextSemester);
-                model.addAttribute("yearLevel", nextYearLevel);
+                model.addAttribute("semester", currentSemester); // Info bar uses current
+                model.addAttribute("yearLevel", currentYearLevel); // Info bar uses current
+                model.addAttribute("enrollmentStatus", enrollmentStatus);
+                model.addAttribute("nextSemester", nextSemester); // Next term summary uses next
+                model.addAttribute("nextYearLevel", nextYearLevel); // Next term summary uses next
             }
         }
         return "/student/student-enrollment";
@@ -165,12 +194,74 @@ public class StudentController {
         }
         profile.put("semester", semester);
         profile.put("section", section);
-        // Address, birthday, gender, mobileNumber are not in Student, so set as N/A
-        profile.put("address", "N/A");
-        profile.put("dateOfBirth", "N/A");
-        profile.put("gender", "N/A");
-        profile.put("mobileNumber", "N/A");
+        // Return real values for address, birthday, gender, mobileNumber
+        profile.put("address", student.getAddress() != null ? student.getAddress() : "N/A");
+        profile.put("dateOfBirth", student.getDateOfBirth() != null ? student.getDateOfBirth() : "N/A");
+        profile.put("gender", student.getGender() != null ? student.getGender() : "N/A");
+        profile.put("mobileNumber", student.getMobileNumber() != null ? student.getMobileNumber() : "N/A");
         return profile;
+    }
+
+    @org.springframework.web.bind.annotation.PutMapping("/api/student/profile-info")
+    @ResponseBody
+    public Map<String, Object> updateStudentProfileInfo(@org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
+        Map<String, Object> result = new HashMap<>();
+        if (principal == null) {
+            result.put("success", false);
+            result.put("message", "Not authenticated");
+            return result;
+        }
+        String username = principal.getName();
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null) {
+            result.put("success", false);
+            result.put("message", "Student not found");
+            return result;
+        }
+        student.setGender(payload.getOrDefault("gender", student.getGender()));
+        student.setDateOfBirth(payload.getOrDefault("birthday", student.getDateOfBirth()));
+        student.setMobileNumber(payload.getOrDefault("mobileNumber", student.getMobileNumber()));
+        student.setAddress(payload.getOrDefault("address", student.getAddress()));
+        studentRepository.save(student);
+        result.put("success", true);
+        return result;
+    }
+
+    @org.springframework.web.bind.annotation.PostMapping("/api/student/change-password")
+    @ResponseBody
+    public Map<String, Object> changePassword(@org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
+        Map<String, Object> result = new HashMap<>();
+        if (principal == null) {
+            result.put("success", false);
+            result.put("message", "Not authenticated");
+            return result;
+        }
+        String username = principal.getName();
+        Student student = studentRepository.findAll().stream().filter(s -> s.getUser().getUsername().equals(username))
+                .findFirst().orElse(null);
+        if (student == null) {
+            result.put("success", false);
+            result.put("message", "Student not found");
+            return result;
+        }
+        String currentPassword = payload.get("currentPassword");
+        String newPassword = payload.get("newPassword");
+        if (currentPassword == null || newPassword == null) {
+            result.put("success", false);
+            result.put("message", "Missing password fields");
+            return result;
+        }
+        // Use PasswordEncoder to check current password
+        if (!passwordEncoder.matches(currentPassword, student.getUser().getPassword())) {
+            result.put("success", false);
+            result.put("message", "Current password is incorrect");
+            return result;
+        }
+        student.getUser().setPassword(passwordEncoder.encode(newPassword));
+        studentRepository.save(student);
+        result.put("success", true);
+        return result;
     }
 }
 

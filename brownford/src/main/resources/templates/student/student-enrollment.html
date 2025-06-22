@@ -4,86 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University - Enrollment</title>
+    <title>Enrollment - Brown Ford University</title>
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
+    <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
 </head>
 
 <body>
+    <header-header></header-header>
+
     <div class="background-container">
         <div class="background-image"></div>
-
-        <!-- Header -->
-        <header class="header">
-            <div class="logo-container">
-                <div class="logo">
-                    <div class="logo-inner">
-                        <img th:src="@{/images/logo.png}" alt="Brown Ford University Logo" class="university-logo">
-                    </div>
-                </div>
-                <h1 class="university-name">Brown Ford University</h1>
-            </div>
-            <div class="header-icons">
-                <!-- Notification Icon -->
-                <div class="notification-icon">
-                    <a href="#" class="notification-link" id="notificationToggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                    </a>
-                    <!-- Notification Dropdown -->
-                    <div class="notification-dropdown" id="notificationDropdown">
-                        <div class="notification-header">
-                            <h3>Notifications</h3>
-                            <a href="#" class="mark-all-read">Mark all as read</a>
-                        </div>
-                        <div class="notification-list">
-                            <p>No notifications available.</p>
-                        </div>
-                        <div class="notification-footer">
-                            <a href="#" class="view-all">View All Notifications</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Profile Icon -->
-                <div class="profile-icon">
-                    <a th:href="@{/student-profile}" class="profile-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Interactive Logout Icon as an anchor tag -->
-                <div class="logout-icon">
-                    <a th:href="@{/logout}" class="logout-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Navigation -->
-        <nav class="main-nav">
-            <ul>
-                <li><a th:href="@{/student-home}">Home</a></li>
-                <li><a th:href="@{/student-schedule}">Schedule</a></li>
-                <li><a th:href="@{/student-grades}">Grades</a></li>
-                <li><a th:href="@{/student-enrollment}" class="active">Enrollment</a></li>
-            </ul>
-        </nav>
 
         <!-- Main Content -->
         <main class="enrollment-content">
@@ -98,7 +33,10 @@
                     </div>
                     <div>
                         <h2 class="enrollment-title">ENROLLMENT PORTAL</h2>
-                        <p class="semester-info">1ST SEMESTER / ACADEMIC YEAR 2024-2025</p>
+                        <p class="semester-info"
+                            th:text="${currentSemester} + ' / ' + ${yearLevel} + ' / ' + ${student.program.name}">
+                            Semester / Year Level / Program
+                        </p>
                     </div>
                 </div>
                 <div class="student-info">
@@ -110,29 +48,9 @@
             <div class="enrollment-status">
                 <div class="status-box">
                     <h3>Enrollment Status: <span
-                            th:class="${enrollmentStatus != null and enrollmentStatus.isOpen} ? 'status-open' : ''"
-                            th:text="${enrollmentStatus != null ? enrollmentStatus.status : 'Unknown'}">Status</span>
+                            th:text="${enrollmentStatus != null ? enrollmentStatus : 'Unknown'}">Status</span>
                     </h3>
                     <!-- Enrollment period and window date removed as per new logic -->
-                </div>
-            </div>
-
-            <!-- Enrollment Steps -->
-            <div class="enrollment-steps">
-                <h3 class="steps-title">Enrollment Steps</h3>
-                <div class="steps-container">
-                    <div th:each="step : ${enrollmentSteps}" class="step">
-                        <div class="step-number" th:text="${step.stepNumber}">1</div>
-                        <div class="step-content">
-                            <h4 th:text="${step.title}">Step Title</h4>
-                            <p th:text="${step.description}">Step description</p>
-                            <span
-                                th:class="${step.status == 'Completed' ? 'step-status completed' : 'step-status pending'}"
-                                th:text="${step.status}">Status</span>
-                            <a th:if="${step.actionUrl != null}" th:href="${step.actionUrl}" class="action-button"
-                                th:text="${step.actionText}">Action</a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -141,8 +59,8 @@
                 style="margin: 24px 0; padding: 16px; background: #f8f6f2; border-radius: 8px; border: 1px solid #e0d7c6;">
                 <h3 style="margin-bottom: 8px;">Next Enrollment</h3>
                 <p style="margin: 0 0 8px 0;">
-                    <strong>Year Level:</strong> <span th:text="${yearLevel}">Year</span> &nbsp;|
-                    <strong>Semester:</strong> <span th:text="${semester}">Semester</span>
+                    <strong>Year Level:</strong> <span th:text="${nextYearLevel != null ? nextYearLevel : 'N/A'}">Year</span> &nbsp;|
+                    <strong>Semester:</strong> <span th:text="${nextSemester != null ? nextSemester : 'N/A'}">Semester</span>
                 </p>
                 <p style="margin: 0 0 8px 0;">
                     You will be enrolled in all the following courses for this term:
@@ -155,7 +73,7 @@
 
             <!-- Available Courses -->
             <div class="available-courses">
-                <h3 class="courses-title" th:text="'Available Courses for ' + ${yearLevel} + ' / ' + ${semester}">
+                <h3 class="courses-title" th:text="'Available Courses for Year ' + ${yearLevel} + ' / ' + ${semester}">
                     Available Courses
                 </h3>
                 <div class="courses-table-container">
@@ -195,9 +113,11 @@
         </main>
     </div>
     <input type="hidden" id="studentId" th:value="${student.id}" />
-    <input type="hidden" id="semester" th:value="${semester}" />
-    <input type="hidden" id="yearLevel" th:value="${yearLevel}" />
-    <script th:src="@{/js/notifications.js}"></script>
+    <input type="hidden" id="semester" th:value="${nextSemester != null ? nextSemester : ''}" />
+    <input type="hidden" id="yearLevel" th:value="${nextYearLevel != null ? nextYearLevel : ''}" />
+
+    <footer-footer></footer-footer>
+
     <script>
         // Handles enrollment button click and error display for student self-enrollment
 

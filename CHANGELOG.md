@@ -1,5 +1,13 @@
 # Changelog
 
+
+## [06.23.250104]
+
+### Changes
+- Separated the Header and Footer HTML for reusability.
+- Student Pages Improvements.
+- Log In page UI changes.
+
 ## [06.22.250147]
 
 ### Changes

@@ -22,6 +22,11 @@ public class Student {
 
     private String yearLevel;
 
+    private String address;
+    private String dateOfBirth; // ISO format (yyyy-MM-dd)
+    private String gender;
+    private String mobileNumber;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -61,5 +66,37 @@ public class Student {
 
     public void setYearLevel(String yearLevel) {
         this.yearLevel = yearLevel;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 }
