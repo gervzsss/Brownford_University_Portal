@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.23.252230]
+
+### Changes
+- Slightly Improved Faculty Pages.
+- Slightly Cleaned the Home.css file.
+
 ## [06.23.251936]
 
 ### Changes

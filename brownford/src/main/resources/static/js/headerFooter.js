@@ -398,3 +398,82 @@ class AdminHeader extends HTMLElement {
 }
 
 customElements.define('admin-header', AdminHeader);
+
+class FacultyHeader extends HTMLElement {
+    connectedCallback() {
+        const path = window.location.pathname;
+        this.innerHTML = `<!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-inner">
+                        <img src="/images/logo.png" alt="Brown Ford University Logo" class="university-logo">
+                    </div>
+                </div>
+                <h1 class="university-name">Brown Ford University</h1>
+            </div>
+            <div class="header-icons">
+                <!-- Notification Icon -->
+                <div class="notification-icon">
+                    <a href="#" class="notification-link" id="notificationToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </a>
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="#" class="mark-all-read">Mark all as read</a>
+                        </div>
+                        <div class="notification-list">
+                            <p>No notifications available.</p>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#" class="view-all">View All Notifications</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Icon -->
+                <div class="profile-icon">
+                    <a href="/faculty-profile" class="profile-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Interactive Logout Icon as an anchor tag -->
+                <div class="logout-icon">
+                    <a href="/logout" class="logout-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                            stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="/faculty-dashboard" class="${path.includes('faculty-dashboard') ? 'active' : ''
+            }">Home</a></li>
+                <li><a href="/faculty-workload" class="${path.includes('faculty-workload') ? 'active' : ''
+            }">Workload</a>
+                </li>
+                <li><a href="/faculty-schedule" class="${path.includes('faculty-schedule') ? 'active' : ''
+            }">Schedule</a></li>
+            </ul>
+        </nav>`;
+    }
+}
+
+customElements.define('faculty-header', FacultyHeader);
