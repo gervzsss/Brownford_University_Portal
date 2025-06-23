@@ -21,6 +21,9 @@ public class GradeService {
     @Autowired
     private GradeRepository gradeRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public boolean isValidGradeValue(String gradeValue) {
         return ALLOWED_GRADES.contains(gradeValue);
     }
@@ -89,7 +92,14 @@ public class GradeService {
         grade.setSemester(semester);
         grade.setSchoolYear(schoolYear);
         grade.setDateEncoded(java.time.LocalDateTime.now());
-        return gradeRepository.save(grade);
+        Grade saved = gradeRepository.save(grade);
+        // Trigger notification for grade release
+        notificationService.createNotification(
+            student,
+            "A new grade has been released for course: " + course.getCourseTitle() + ".",
+            "GRADE_RELEASED"
+        );
+        return saved;
     }
 
     public Optional<Grade> findGrade(Long id) {

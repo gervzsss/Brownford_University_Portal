@@ -15,7 +15,7 @@
     <script th:src="@{/js/notifications.js}"></script>
 </head>
 
-<body> 
+<body>
     <header-header></header-header>
 
     <div class="background-container">
@@ -38,7 +38,7 @@
                     <div>
                         <h2 class="grades-title">GRADES</h2>
                         <p class="semester-info"
-                            th:text="${currentSemester} + ' / ' + ${yearLevel} + ' / ' + ${student.program.name}">
+                            th:text="${currentSemester} + ' / ' + 'Year Level: ' + ${yearLevel} + ' / ' + ${student.program.name}">
                             Semester / Year Level / Program
                         </p>
                     </div>
@@ -60,7 +60,8 @@
                     <div class="filter-group">
                         <label for="yearLevel">Year Level:</label>
                         <select id="yearLevel" class="filter-select">
-                            <option th:each="level : ${yearLevels}" th:value="${level}" th:text="${level}">Year Level</option>
+                            <option th:each="level : ${yearLevels}" th:value="${level}" th:text="${level}">Year Level
+                            </option>
                         </select>
                     </div>
                     <div class="filter-group">
@@ -194,10 +195,10 @@
                 });
 
             // Save filter changes to localStorage
-            yearLevelSelect.addEventListener('change', function() {
+            yearLevelSelect.addEventListener('change', function () {
                 localStorage.setItem('studentGradesYearLevel', yearLevelSelect.value);
             });
-            semesterSelect.addEventListener('change', function() {
+            semesterSelect.addEventListener('change', function () {
                 localStorage.setItem('studentGradesSemester', semesterSelect.value);
             });
 
@@ -213,7 +214,7 @@
                 let sumGPA = 0;
                 // Map of grade to grade point (example, adjust as needed)
                 const gradeToPoint = {
-                    '1.00': 1.0, '1.13': 1.13, '1.25': 1.25, '1.38': 1.38, '1.50': 1.5, '1.63': 1.63, '1.75': 1.75, '1.88': 1.88, '2.00': 2.0, '2.13': 2.13, '2.25': 2.25, '2.38': 2.38, '2.50': 2.5, '2.63': 2.63, '2.75': 2.75, '2.88': 2.88,'3.00': 3.0, '5.00': 5.0
+                    '1.00': 1.0, '1.13': 1.13, '1.25': 1.25, '1.38': 1.38, '1.50': 1.5, '1.63': 1.63, '1.75': 1.75, '1.88': 1.88, '2.00': 2.0, '2.13': 2.13, '2.25': 2.25, '2.38': 2.38, '2.50': 2.5, '2.63': 2.63, '2.75': 2.75, '2.88': 2.88, '3.00': 3.0, '5.00': 5.0
                 };
                 courses.forEach(course => {
                     const units = parseFloat(course.units) || 0;

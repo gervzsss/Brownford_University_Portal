@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Notification dropdown toggle
   const notificationToggle = document.getElementById("notificationToggle")
   const notificationDropdown = document.getElementById("notificationDropdown")
-  const markAllReadBtn = document.querySelector(".mark-all-read")
   const notificationBadge = document.querySelector(".notification-badge")
 
   if (notificationToggle && notificationDropdown) {
@@ -26,14 +25,84 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Mark all as read functionality
-  if (markAllReadBtn && notificationBadge) {
+  if (notificationBadge) {
+    notificationBadge.style.display = "none"
+  }
+
+  // --- Notification Polling and Rendering ---
+  const POLL_INTERVAL = 30000 // 30 seconds
+
+  function fetchNotifications() {
+    fetch("/api/notifications")
+      .then((res) => res.json())
+      .then((data) => renderNotifications(data))
+      .catch(() => {})
+  }
+
+  function renderNotifications(notifications) {
+    const dropdown = document.getElementById("notificationDropdown")
+    const list = dropdown ? dropdown.querySelector(".notification-list") : null
+    const badge = document.querySelector(".notification-badge")
+    if (!list) return
+
+    if (!notifications || notifications.length === 0) {
+      list.innerHTML = "<p>No notifications available.</p>"
+      if (badge) badge.style.display = "none"
+      return
+    }
+
+    let unreadCount = 0
+    list.innerHTML = notifications
+      .map((n) => {
+        if (!n.read) unreadCount++
+        return `<div class="notification-item${
+          n.read ? "" : " unread"
+        }">
+      <span class="notification-message">${n.message}</span>
+      <span class="notification-date">${new Date(n.createdAt).toLocaleString()}</span>
+    </div>`
+      })
+      .join("")
+
+    if (badge) {
+      badge.textContent = unreadCount
+      badge.style.display = unreadCount > 0 ? "inline-block" : "none"
+    }
+  }
+
+  // Mark all as read
+  function markAllNotificationsRead() {
+    fetch("/api/notifications")
+      .then((res) => res.json())
+      .then((data) => {
+        const unread = data.filter((n) => !n.read)
+        unread.forEach((n) => {
+          fetch(`/api/notifications/read/${n.id}`, { method: "POST" })
+        })
+        setTimeout(fetchNotifications, 500) // Refresh after marking
+      })
+  }
+
+  // Add badge if not present
+  let badge = document.querySelector(".notification-badge")
+  if (!badge) {
+    const icon = document.querySelector(".notification-icon")
+    if (icon) {
+      badge = document.createElement("span")
+      badge.className = "notification-badge"
+      badge.style.display = "none"
+      icon.appendChild(badge)
+    }
+  }
+  // Poll notifications
+  fetchNotifications()
+  setInterval(fetchNotifications, POLL_INTERVAL)
+  // Mark all as read
+  const markAllReadBtn = document.querySelector(".mark-all-read")
+  if (markAllReadBtn) {
     markAllReadBtn.addEventListener("click", (e) => {
       e.preventDefault()
-      const unreadItems = document.querySelectorAll(".notification-item.unread")
-      unreadItems.forEach((item) => {
-        item.classList.remove("unread")
-      })
-      notificationBadge.style.display = "none"
+      markAllNotificationsRead()
     })
   }
 })

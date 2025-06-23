@@ -187,15 +187,17 @@ public class StudentController {
         profile.put("lastName", student.getUser().getLastName());
         profile.put("email", student.getUser().getEmail());
         profile.put("program", student.getProgram() != null ? student.getProgram().getName() : "");
-        profile.put("yearLevel", student.getYearLevel());
-        // Get latest enrollment for semester and section
+        // Use latest enrollment for yearLevel
+        String yearLevel = student.getYearLevel();
         String semester = "N/A";
         String section = "N/A";
         Enrollment latestEnrollment = enrollmentService.getLatestEnrollmentForStudent(student.getId());
         if (latestEnrollment != null) {
+            yearLevel = latestEnrollment.getYearLevel();
             semester = latestEnrollment.getSemester();
             section = latestEnrollment.getSection() != null ? latestEnrollment.getSection().getSectionCode() : "N/A";
         }
+        profile.put("yearLevel", yearLevel);
         profile.put("semester", semester);
         profile.put("section", section);
         // Return real values for address, birthday, gender, mobileNumber

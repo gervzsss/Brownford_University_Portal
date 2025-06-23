@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [06.23.251811]
+
+### New
+- Notification feature for the Students. Enrollments and Grades Encoding.
+
 ## [06.23.251652]
 
 ### Changes

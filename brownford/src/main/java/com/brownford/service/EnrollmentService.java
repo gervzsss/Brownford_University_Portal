@@ -28,6 +28,8 @@ public class EnrollmentService {
     private CurriculumService curriculumService;
     @Autowired
     private com.brownford.repository.GradeRepository gradeRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     // Helper: get next chronological term
     private static class Term {
@@ -157,7 +159,16 @@ public class EnrollmentService {
     public Enrollment updateEnrollmentStatus(Long id, String status) {
         Enrollment enrollment = enrollmentRepository.findById(id).orElseThrow();
         enrollment.setStatus(status);
-        return enrollmentRepository.save(enrollment);
+        Enrollment saved = enrollmentRepository.save(enrollment);
+        // Trigger notification if approved
+        if ("APPROVED".equalsIgnoreCase(status)) {
+            notificationService.createNotification(
+                enrollment.getStudent(),
+                "Your enrollment for " + enrollment.getSemester() + ", Year Level: " + enrollment.getYearLevel() + " has been approved.",
+                "ENROLLMENT_ACCEPTED"
+            );
+        }
+        return saved;
     }
 
     public void deleteEnrollment(Long id) {
