@@ -60,6 +60,7 @@ body {
   border-bottom: none;
   border-radius: 0 0 20px 20px;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -253,9 +254,15 @@ body {
 .notification-icon {
   margin-left: 20px;
   color: #8b4513;
-  font-size: 24px;
+  font-size: 15px;
   position: relative;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .notification-link {
@@ -279,6 +286,10 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 2;
+  line-height: 20px;
+  min-width: 20px;
+  padding: 0;
+  text-align: center;
 }
 
 .notification-dropdown {
@@ -346,16 +357,6 @@ body {
 
 .notification-item.unread:hover {
   background-color: #e6f2ff;
-}
-
-.notification-icon {
-  margin-right: 15px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .notification-icon.announcement {
@@ -432,14 +433,6 @@ body {
   .notification-item {
     padding: 10px;
   }
-}
-
-/* Other Icon Styling */
-.notification-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 24px;
-  position: relative;
 }
 
 /* Navigation styles */
@@ -2726,42 +2719,25 @@ body {
   margin-top: 20px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .user-controls {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+/* Notification delete button */
+.notification-delete-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 8px;
+  margin-left: 10px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .search-filter-container {
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-
-  .filter-container {
-    width: 100%;
-  }
-
-  .form-row {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .user-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .user-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .user-actions button {
-    width: 100%;
-  }
+.notification-delete-btn:hover {
+  background: #ffeaea;
+  color: #a71d2a;
 }

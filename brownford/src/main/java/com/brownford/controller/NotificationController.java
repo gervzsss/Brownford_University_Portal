@@ -42,4 +42,14 @@ public class NotificationController {
                 .findFirst()
                 .ifPresent(notificationService::markAsRead);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteNotification(@PathVariable Long id, Principal principal) {
+        Student student = getCurrentStudent(principal);
+        if (student == null) return;
+        notificationService.getNotificationsForStudent(student).stream()
+                .filter(n -> n.getId().equals(id))
+                .findFirst()
+                .ifPresent(notificationService::deleteNotification);
+    }
 }

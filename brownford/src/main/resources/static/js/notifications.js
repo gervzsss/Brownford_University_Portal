@@ -57,12 +57,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!n.read) unreadCount++
         return `<div class="notification-item${
           n.read ? "" : " unread"
-        }">
+        }" data-id="${n.id}">
       <span class="notification-message">${n.message}</span>
       <span class="notification-date">${new Date(n.createdAt).toLocaleString()}</span>
+      <button class="notification-delete-btn" title="Delete notification">&times;</button>
     </div>`
       })
       .join("")
+
+    // Add delete event listeners
+    list.querySelectorAll(".notification-delete-btn").forEach((btn) => {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation()
+        const item = btn.closest(".notification-item")
+        const id = item.getAttribute("data-id")
+        if (id) {
+          fetch(`/api/notifications/${id}`, { method: "DELETE" })
+            .then(() => fetchNotifications())
+        }
+      })
+    })
 
     if (badge) {
       badge.textContent = unreadCount

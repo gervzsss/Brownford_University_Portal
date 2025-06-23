@@ -1,5 +1,9 @@
 # Changelog
 
+## [06.23.251936]
+
+### Changes
+- Added delete notification 
 
 ## [06.23.251811]
 
