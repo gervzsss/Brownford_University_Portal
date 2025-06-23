@@ -42,26 +42,91 @@ public class Grade {
     private LocalDateTime dateEncoded;
 
     // Getters and setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Student getStudent() { return student; }
-    public void setStudent(Student student) { this.student = student; }
-    public Course getCourse() { return course; }
-    public void setCourse(Course course) { this.course = course; }
-    public Faculty getFaculty() { return faculty; }
-    public void setFaculty(Faculty faculty) { this.faculty = faculty; }
-    public String getMidtermGrade() { return midtermGrade; }
-    public void setMidtermGrade(String midtermGrade) { this.midtermGrade = midtermGrade; }
-    public String getFinalsGrade() { return finalsGrade; }
-    public void setFinalsGrade(String finalsGrade) { this.finalsGrade = finalsGrade; }
-    public String getFinalGrade() { return finalGrade; }
-    public void setFinalGrade(String finalGrade) { this.finalGrade = finalGrade; }
-    public String getRemarks() { return remarks; }
-    public void setRemarks(String remarks) { this.remarks = remarks; }
-    public String getSemester() { return semester; }
-    public void setSemester(String semester) { this.semester = semester; }
-    public String getSchoolYear() { return schoolYear; }
-    public void setSchoolYear(String schoolYear) { this.schoolYear = schoolYear; }
-    public LocalDateTime getDateEncoded() { return dateEncoded; }
-    public void setDateEncoded(LocalDateTime dateEncoded) { this.dateEncoded = dateEncoded; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getMidtermGrade() {
+        return midtermGrade;
+    }
+
+    public void setMidtermGrade(String midtermGrade) {
+        this.midtermGrade = midtermGrade;
+    }
+
+    public String getFinalsGrade() {
+        return finalsGrade;
+    }
+
+    public void setFinalsGrade(String finalsGrade) {
+        this.finalsGrade = finalsGrade;
+    }
+
+    public String getFinalGrade() {
+        return finalGrade;
+    }
+
+    public void setFinalGrade(String finalGrade) {
+        this.finalGrade = finalGrade;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
+    }
+
+    public LocalDateTime getDateEncoded() {
+        return dateEncoded;
+    }
+
+    public void setDateEncoded(LocalDateTime dateEncoded) {
+        this.dateEncoded = dateEncoded;
+    }
 }

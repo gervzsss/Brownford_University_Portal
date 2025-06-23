@@ -74,8 +74,9 @@ public class FacultyController {
             String username = principal.getName();
             // Find faculty assignments for this faculty
             List<FacultyAssignment> assignments = facultyAssignmentRepository.findAll().stream()
-                .filter(a -> a.getFaculty() != null && a.getFaculty().getUser() != null && a.getFaculty().getUser().getUsername().equals(username))
-                .collect(java.util.stream.Collectors.toList());
+                    .filter(a -> a.getFaculty() != null && a.getFaculty().getUser() != null
+                            && a.getFaculty().getUser().getUsername().equals(username))
+                    .collect(java.util.stream.Collectors.toList());
             java.util.Set<Long> uniqueStudentIds = new java.util.HashSet<>();
             // Get today's day abbreviation (e.g., MONDAY -> M, TUESDAY -> T, etc.)
             String today = LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase();
@@ -85,10 +86,10 @@ public class FacultyController {
                 String semester = assignment.getSemester();
                 if (section != null && semester != null) {
                     List<Enrollment> enrollments = enrollmentRepository.findAll().stream()
-                        .filter(e -> "APPROVED".equalsIgnoreCase(e.getStatus())
-                            && e.getSection() != null && e.getSection().getId().equals(section.getId())
-                            && semester.equalsIgnoreCase(e.getSemester()))
-                        .collect(java.util.stream.Collectors.toList());
+                            .filter(e -> "APPROVED".equalsIgnoreCase(e.getStatus())
+                                    && e.getSection() != null && e.getSection().getId().equals(section.getId())
+                                    && semester.equalsIgnoreCase(e.getSemester()))
+                            .collect(java.util.stream.Collectors.toList());
                     for (Enrollment enrollment : enrollments) {
                         Student student = enrollment.getStudent();
                         if (student != null && student.getId() != null) {
@@ -98,21 +99,25 @@ public class FacultyController {
                 }
                 // Calculate teaching hours for this assignment
                 if (assignment.getCurriculumCourse() != null && section != null) {
-                    List<Schedule> schedules = scheduleRepository.findByCurriculumCourseAndSection(assignment.getCurriculumCourse(), section);
+                    List<Schedule> schedules = scheduleRepository
+                            .findByCurriculumCourseAndSection(assignment.getCurriculumCourse(), section);
                     for (Schedule sched : schedules) {
                         if (sched.getStartTime() != null && sched.getEndTime() != null) {
                             // Teaching hours
-                            java.time.Duration duration = java.time.Duration.between(sched.getStartTime(), sched.getEndTime());
+                            java.time.Duration duration = java.time.Duration.between(sched.getStartTime(),
+                                    sched.getEndTime());
                             double hours = duration.toMinutes() / 60.0;
                             if (hours > 0) {
                                 teachingHours += hours;
                             }
                             // Today's schedule
-                            if (sched.getDay() != null && sched.getDay().toUpperCase().contains(today.substring(0,1))) {
+                            if (sched.getDay() != null
+                                    && sched.getDay().toUpperCase().contains(today.substring(0, 1))) {
                                 Map<String, String> schedMap = new java.util.HashMap<>();
                                 String time = sched.getStartTime().toString() + " - " + sched.getEndTime().toString();
                                 String courseTitle = assignment.getCurriculumCourse().getCourse().getCourseTitle();
-                                String sectionRoom = section.getSectionCode() + " | " + (sched.getRoom() != null ? sched.getRoom() : "");
+                                String sectionRoom = section.getSectionCode() + " | "
+                                        + (sched.getRoom() != null ? sched.getRoom() : "");
                                 // Status
                                 LocalTime now = LocalTime.now();
                                 String status = "Upcoming";
@@ -134,7 +139,7 @@ public class FacultyController {
             totalStudents = uniqueStudentIds.size();
         }
         model.addAttribute("totalStudents", totalStudents);
-        model.addAttribute("teachingHours", (int)Math.round(teachingHours));
+        model.addAttribute("teachingHours", (int) Math.round(teachingHours));
         model.addAttribute("pendingGrades", pendingGrades); // Placeholder
         model.addAttribute("todaysSchedule", todaysSchedule);
         return "/faculty/faculty-dashboard";
@@ -147,8 +152,9 @@ public class FacultyController {
         if (principal != null) {
             String username = principal.getName();
             List<FacultyAssignment> assignments = facultyAssignmentRepository.findAll().stream()
-                .filter(a -> a.getFaculty() != null && a.getFaculty().getUser() != null && a.getFaculty().getUser().getUsername().equals(username))
-                .collect(java.util.stream.Collectors.toList());
+                    .filter(a -> a.getFaculty() != null && a.getFaculty().getUser() != null
+                            && a.getFaculty().getUser().getUsername().equals(username))
+                    .collect(java.util.stream.Collectors.toList());
             int rowNum = 1;
             for (FacultyAssignment assignment : assignments) {
                 Map<String, Object> row = new java.util.HashMap<>();
@@ -168,13 +174,16 @@ public class FacultyController {
                 StringBuilder scheduleStr = new StringBuilder();
                 StringBuilder roomStr = new StringBuilder();
                 if (assignment.getCurriculumCourse() != null && section != null) {
-                    java.util.List<Schedule> schedules = scheduleRepository.findByCurriculumCourseAndSection(assignment.getCurriculumCourse(), section);
+                    java.util.List<Schedule> schedules = scheduleRepository
+                            .findByCurriculumCourseAndSection(assignment.getCurriculumCourse(), section);
                     for (Schedule sched : schedules) {
-                        if (scheduleStr.length() > 0) scheduleStr.append("/");
+                        if (scheduleStr.length() > 0)
+                            scheduleStr.append("/");
                         scheduleStr.append((sched.getDay() != null ? sched.getDay() : "") + " " +
-                            (sched.getStartTime() != null ? sched.getStartTime().toString() : "") + "-" +
-                            (sched.getEndTime() != null ? sched.getEndTime().toString() : ""));
-                        if (roomStr.length() > 0) roomStr.append("/");
+                                (sched.getStartTime() != null ? sched.getStartTime().toString() : "") + "-" +
+                                (sched.getEndTime() != null ? sched.getEndTime().toString() : ""));
+                        if (roomStr.length() > 0)
+                            roomStr.append("/");
                         roomStr.append(sched.getRoom() != null ? sched.getRoom() : "");
                     }
                 }
@@ -210,21 +219,21 @@ public class FacultyController {
 
     @GetMapping("/faculty-grading-sheet")
     public String facultyGradingSheet(
-        @RequestParam("section") String sectionCode,
-        @RequestParam("course") String courseCode,
-        Model model,
-        Principal principal
-    ) {
+            @RequestParam("section") String sectionCode,
+            @RequestParam("course") String courseCode,
+            Model model,
+            Principal principal) {
         addFacultyToModel(model, principal);
         Section section = sectionRepository.findBySectionCode(sectionCode).orElse(null);
         Course course = courseRepository.findByCourseCode(courseCode).orElse(null);
         List<Student> students = new java.util.ArrayList<>();
         if (section != null && course != null) {
             List<Enrollment> enrollments = enrollmentRepository.findAll().stream()
-                .filter(e -> "APPROVED".equalsIgnoreCase(e.getStatus())
-                    && e.getSection() != null && e.getSection().getId().equals(section.getId())
-                    && e.getCourses() != null && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId())))
-                .collect(Collectors.toList());
+                    .filter(e -> "APPROVED".equalsIgnoreCase(e.getStatus())
+                            && e.getSection() != null && e.getSection().getId().equals(section.getId())
+                            && e.getCourses() != null
+                            && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId())))
+                    .collect(Collectors.toList());
             for (Enrollment enrollment : enrollments) {
                 if (enrollment.getStudent() != null) {
                     students.add(enrollment.getStudent());
@@ -233,9 +242,10 @@ public class FacultyController {
         }
         // Find the FacultyAssignment for this section and course
         FacultyAssignment assignment = facultyAssignmentRepository.findAll().stream()
-            .filter(a -> a.getSection() != null && a.getSection().getSectionCode().equals(sectionCode)
-                && a.getCurriculumCourse() != null && a.getCurriculumCourse().getCourse().getCourseCode().equals(courseCode))
-            .findFirst().orElse(null);
+                .filter(a -> a.getSection() != null && a.getSection().getSectionCode().equals(sectionCode)
+                        && a.getCurriculumCourse() != null
+                        && a.getCurriculumCourse().getCourse().getCourseCode().equals(courseCode))
+                .findFirst().orElse(null);
         String semester = assignment != null ? assignment.getSemester() : "";
         String schoolYear = assignment != null ? assignment.getSchoolYear() : "";
         model.addAttribute("students", students);

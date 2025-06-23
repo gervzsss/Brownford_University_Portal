@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<header-header></header-header>
+    <header-header></header-header>
 
     <div class="background-container">
         <div class="background-image"></div>
@@ -172,7 +172,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="currentPassword">Current Password:</label>
-                            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="newPassword">New Password:</label>
@@ -182,7 +183,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="confirmPassword">Confirm New Password:</label>
-                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                                required>
                         </div>
                     </div>
                     <div style="text-align:right; margin-top:20px;">
@@ -222,7 +224,7 @@
                 })
                 .catch(() => {
                     [
-                        'profileName','studentId','fullName','email','program','yearLevel','semester','section','address','birthday','gender','mobileNumber'
+                        'profileName', 'studentId', 'fullName', 'email', 'program', 'yearLevel', 'semester', 'section', 'address', 'birthday', 'gender', 'mobileNumber'
                     ].forEach(id => {
                         const el = document.getElementById(id);
                         if (el) el.textContent = 'N/A';
@@ -235,12 +237,12 @@
             const closeContactModal = document.getElementById('closeContactModal');
             updateContactBtn.onclick = () => { contactModal.style.display = 'block'; };
             closeContactModal.onclick = () => { contactModal.style.display = 'none'; };
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target === contactModal) contactModal.style.display = 'none';
                 if (event.target === passwordModal) passwordModal.style.display = 'none';
             };
             // Contact form submit
-            document.getElementById('contactForm').onsubmit = function(e) {
+            document.getElementById('contactForm').onsubmit = function (e) {
                 e.preventDefault();
                 const payload = {
                     gender: document.getElementById('editGender').value,
@@ -253,18 +255,18 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 })
-                .then(res => res.json())
-                .then(resp => {
-                    document.getElementById('contactFormMsg').textContent = 'Contact information updated!';
-                    // Optionally update profile display
-                    document.getElementById('gender').textContent = payload.gender;
-                    document.getElementById('birthday').textContent = payload.birthday;
-                    document.getElementById('mobileNumber').textContent = payload.mobileNumber;
-                    document.getElementById('address').textContent = payload.address;
-                })
-                .catch(() => {
-                    document.getElementById('contactFormMsg').textContent = 'Failed to update. Please try again.';
-                });
+                    .then(res => res.json())
+                    .then(resp => {
+                        document.getElementById('contactFormMsg').textContent = 'Contact information updated!';
+                        // Optionally update profile display
+                        document.getElementById('gender').textContent = payload.gender;
+                        document.getElementById('birthday').textContent = payload.birthday;
+                        document.getElementById('mobileNumber').textContent = payload.mobileNumber;
+                        document.getElementById('address').textContent = payload.address;
+                    })
+                    .catch(() => {
+                        document.getElementById('contactFormMsg').textContent = 'Failed to update. Please try again.';
+                    });
             };
 
             // Password modal logic
@@ -274,7 +276,7 @@
             changePasswordBtn.onclick = () => { passwordModal.style.display = 'block'; };
             closePasswordModal.onclick = () => { passwordModal.style.display = 'none'; };
             // Password form submit
-            document.getElementById('passwordForm').onsubmit = function(e) {
+            document.getElementById('passwordForm').onsubmit = function (e) {
                 e.preventDefault();
                 const currentPassword = document.getElementById('currentPassword').value;
                 const newPassword = document.getElementById('newPassword').value;
@@ -288,17 +290,17 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ currentPassword, newPassword })
                 })
-                .then(res => res.json())
-                .then(resp => {
-                    if (resp.success) {
-                        document.getElementById('passwordFormMsg').textContent = 'Password changed successfully!';
-                    } else {
-                        document.getElementById('passwordFormMsg').textContent = resp.message || 'Failed to change password.';
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('passwordFormMsg').textContent = 'Failed to change password. Please try again.';
-                });
+                    .then(res => res.json())
+                    .then(resp => {
+                        if (resp.success) {
+                            document.getElementById('passwordFormMsg').textContent = 'Password changed successfully!';
+                        } else {
+                            document.getElementById('passwordFormMsg').textContent = resp.message || 'Failed to change password.';
+                        }
+                    })
+                    .catch(() => {
+                        document.getElementById('passwordFormMsg').textContent = 'Failed to change password. Please try again.';
+                    });
             };
         });
     </script>

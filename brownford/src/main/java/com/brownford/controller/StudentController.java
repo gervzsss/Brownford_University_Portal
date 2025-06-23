@@ -105,14 +105,16 @@ public class StudentController {
                     }
                     boolean allGraded = true;
                     for (Course prevCourse : latestEnrollment.getCourses()) {
-                        String finalGrade = enrollmentService.getFinalGradeForCourse(student, prevCourse, latestEnrollment.getSemester());
+                        String finalGrade = enrollmentService.getFinalGradeForCourse(student, prevCourse,
+                                latestEnrollment.getSemester());
                         boolean hasFinal = finalGrade != null && !finalGrade.isEmpty();
                         if (!hasFinal) {
                             allGraded = false;
                         }
                     }
                     if (allGraded) {
-                        // If all previous courses are graded and no enrollment exists for the next term, set FOR ENROLLMENT
+                        // If all previous courses are graded and no enrollment exists for the next
+                        // term, set FOR ENROLLMENT
                         String[] nextTerm = enrollmentService.getNextTerm(latestEnrollment);
                         final String nextYearLevelFinal = nextTerm[0];
                         final String nextSemesterFinal = nextTerm[1];
@@ -120,25 +122,27 @@ public class StudentController {
                         nextSemester = nextSemesterFinal;
                         // Check if student already has enrollment for the next term
                         boolean hasNextEnrollment = enrollmentService.getEnrollmentsForStudent(student.getId()).stream()
-                            .anyMatch(e -> nextYearLevelFinal.equals(e.getYearLevel()) && nextSemesterFinal.equals(e.getSemester()));
+                                .anyMatch(e -> nextYearLevelFinal.equals(e.getYearLevel())
+                                        && nextSemesterFinal.equals(e.getSemester()));
                         if (!hasNextEnrollment) {
                             enrollmentStatus = "FOR ENROLLMENT";
                         }
                         Long programId = student.getProgram().getId();
-                        List<CurriculumCourse> allowedCourses = enrollmentService.getCurriculumCoursesForTerm(programId, nextYearLevel, nextSemester);
+                        List<CurriculumCourse> allowedCourses = enrollmentService.getCurriculumCoursesForTerm(programId,
+                                nextYearLevel, nextSemester);
                         availableCourses = allowedCourses.stream()
-                            .map(cc -> {
-                                Map<String, Object> map = new HashMap<>();
-                                map.put("id", cc.getCourse().getId());
-                                map.put("code", cc.getCourse().getCourseCode());
-                                map.put("title", cc.getCourse().getCourseTitle());
-                                map.put("units", cc.getCourse().getUnits());
-                                map.put("schedule", "");
-                                map.put("instructor", "");
-                                map.put("slots", "");
-                                return map;
-                            })
-                            .toList();
+                                .map(cc -> {
+                                    Map<String, Object> map = new HashMap<>();
+                                    map.put("id", cc.getCourse().getId());
+                                    map.put("code", cc.getCourse().getCourseCode());
+                                    map.put("title", cc.getCourse().getCourseTitle());
+                                    map.put("units", cc.getCourse().getUnits());
+                                    map.put("schedule", "");
+                                    map.put("instructor", "");
+                                    map.put("slots", "");
+                                    return map;
+                                })
+                                .toList();
                     } else {
                         nextSemester = null;
                         nextYearLevel = null;
@@ -204,7 +208,8 @@ public class StudentController {
 
     @org.springframework.web.bind.annotation.PutMapping("/api/student/profile-info")
     @ResponseBody
-    public Map<String, Object> updateStudentProfileInfo(@org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
+    public Map<String, Object> updateStudentProfileInfo(
+            @org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
         Map<String, Object> result = new HashMap<>();
         if (principal == null) {
             result.put("success", false);
@@ -230,7 +235,8 @@ public class StudentController {
 
     @org.springframework.web.bind.annotation.PostMapping("/api/student/change-password")
     @ResponseBody
-    public Map<String, Object> changePassword(@org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
+    public Map<String, Object> changePassword(
+            @org.springframework.web.bind.annotation.RequestBody Map<String, String> payload, Principal principal) {
         Map<String, Object> result = new HashMap<>();
         if (principal == null) {
             result.put("success", false);

@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [06.23.251652]
+
+### Changes
+- Admin Pages HTML Header Changes
+- Admin Pages Icon Changes
+
 ## [06.23.250104]
 
 ### Changes

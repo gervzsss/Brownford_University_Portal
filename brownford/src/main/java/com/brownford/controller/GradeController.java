@@ -34,8 +34,8 @@ public class GradeController {
     @PostMapping("/encode")
     public ResponseEntity<?> encodeGrade(@RequestBody GradeDTO gradeDTO) {
         Optional<Student> studentOpt = studentRepository.findAll().stream()
-            .filter(s -> s.getStudentId().equals(gradeDTO.getStudentId()))
-            .findFirst();
+                .filter(s -> s.getStudentId().equals(gradeDTO.getStudentId()))
+                .findFirst();
         Optional<Course> courseOpt = courseRepository.findById(gradeDTO.getCourseId());
         Optional<Faculty> facultyOpt = facultyRepository.findById(gradeDTO.getFacultyId());
         if (studentOpt.isEmpty() || courseOpt.isEmpty() || facultyOpt.isEmpty()) {
@@ -49,8 +49,7 @@ public class GradeController {
                     gradeDTO.getMidtermGrade(),
                     gradeDTO.getFinalsGrade(),
                     gradeDTO.getSemester(),
-                    gradeDTO.getSchoolYear()
-            );
+                    gradeDTO.getSchoolYear());
             return ResponseEntity.ok(grade);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,23 +71,23 @@ public class GradeController {
         try {
             List<Grade> grades = gradeRepository.findAll();
             List<GradeDTO> result = grades.stream()
-                .filter(g -> g.getCourse() != null && g.getCourse().getId().equals(courseId)
-                        && g.getSemester() != null && g.getSemester().equals(semester)
-                        && g.getSchoolYear() != null && g.getSchoolYear().equals(schoolYear))
-                .map(g -> {
-                    GradeDTO dto = new GradeDTO();
-                    dto.setStudentId(g.getStudent().getStudentId());
-                    dto.setCourseId(g.getCourse().getId());
-                    dto.setFacultyId(g.getFaculty().getId());
-                    dto.setMidtermGrade(g.getMidtermGrade());
-                    dto.setFinalsGrade(g.getFinalsGrade());
-                    dto.setFinalGrade(g.getFinalGrade());
-                    dto.setRemarks(g.getRemarks());
-                    dto.setSemester(g.getSemester());
-                    dto.setSchoolYear(g.getSchoolYear());
-                    return dto;
-                })
-                .toList();
+                    .filter(g -> g.getCourse() != null && g.getCourse().getId().equals(courseId)
+                            && g.getSemester() != null && g.getSemester().equals(semester)
+                            && g.getSchoolYear() != null && g.getSchoolYear().equals(schoolYear))
+                    .map(g -> {
+                        GradeDTO dto = new GradeDTO();
+                        dto.setStudentId(g.getStudent().getStudentId());
+                        dto.setCourseId(g.getCourse().getId());
+                        dto.setFacultyId(g.getFaculty().getId());
+                        dto.setMidtermGrade(g.getMidtermGrade());
+                        dto.setFinalsGrade(g.getFinalsGrade());
+                        dto.setFinalGrade(g.getFinalGrade());
+                        dto.setRemarks(g.getRemarks());
+                        dto.setSemester(g.getSemester());
+                        dto.setSchoolYear(g.getSchoolYear());
+                        return dto;
+                    })
+                    .toList();
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,24 +98,25 @@ public class GradeController {
     @GetMapping("/by-section-course")
     public List<Grade> getGradesBySectionAndCourse(@RequestParam Long sectionId, @RequestParam Long courseId) {
         return gradeRepository.findAll().stream()
-            .filter(g -> g.getCourse() != null && g.getCourse().getId().equals(courseId)
-                && g.getStudent() != null && g.getStudent().getProgram() != null
-                && g.getStudent().getProgram().getCurriculums() != null
-                && g.getStudent().getProgram().getCurriculums().stream().anyMatch(c -> c.getId().equals(sectionId)))
-            .toList();
+                .filter(g -> g.getCourse() != null && g.getCourse().getId().equals(courseId)
+                        && g.getStudent() != null && g.getStudent().getProgram() != null
+                        && g.getStudent().getProgram().getCurriculums() != null
+                        && g.getStudent().getProgram().getCurriculums().stream()
+                                .anyMatch(c -> c.getId().equals(sectionId)))
+                .toList();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateGrade(@PathVariable Long id, @RequestBody GradeDTO gradeDTO) {
         return gradeRepository.findById(id)
-            .map(grade -> {
-                grade.setMidtermGrade(gradeDTO.getMidtermGrade());
-                grade.setFinalsGrade(gradeDTO.getFinalsGrade());
-                grade.setFinalGrade(gradeDTO.getFinalGrade());
-                gradeRepository.save(grade);
-                return ResponseEntity.ok(grade);
-            })
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(grade -> {
+                    grade.setMidtermGrade(gradeDTO.getMidtermGrade());
+                    grade.setFinalsGrade(gradeDTO.getFinalsGrade());
+                    grade.setFinalGrade(gradeDTO.getFinalGrade());
+                    gradeRepository.save(grade);
+                    return ResponseEntity.ok(grade);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Add more endpoints as needed (delete, search by student/course, etc.)
