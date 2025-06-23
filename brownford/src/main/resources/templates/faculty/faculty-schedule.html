@@ -16,7 +16,6 @@
 
 <body>
     <faculty-header></faculty-header>
-
     <div class="background-container">
         <div class="background-image"></div>
 
@@ -39,44 +38,36 @@
                     </div>
                 </div>
                 <div class="student-info">
-                    <p class="student-name">Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty
+                    <p class="student-name">Prof. <span
+                            th:text="${faculty.user.firstName + ' ' + faculty.user.lastName}">Faculty
                             Name</span></p>
                     <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span></p>
                 </div>
             </div>
-
             <div class="filter-section">
                 <div class="filter-row">
                     <div class="filter-group">
                         <label for="schoolYear">School Year:</label>
-                        <select id="schoolYear" name="schoolYear" class="filter-select">
-                            <option value="2223">2022-2023</option>
-                            <option value="2324">2023-2024</option>
-                            <option value="2425" selected>2024-2025</option>
+                        <select id="schoolYear" name="schoolYear" class="filter-select" aria-label="Select School Year">
+                            <!-- Options will be populated dynamically -->
                         </select>
                     </div>
                     <div class="filter-group">
                         <label for="semester">Semester:</label>
-                        <select id="semester" name="semester" class="filter-select">
+                        <select id="semester" name="semester" class="filter-select" aria-label="Select Semester">
                             <option value="First">First</option>
-                            <option value="Second" selected>Second</option>
-                            <option value="Summer">Summer</option>
+                            <option value="Second">Second</option>
                         </select>
                     </div>
-                    <button id="viewButton" class="certificate-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <span class="certificate-text">VIEW</span>
-                    </button>
                 </div>
             </div>
 
             <!-- Weekly Schedule Table -->
             <div id="scheduleTable" class="schedule-table-container">
-                <table class="schedule-table">
+                <div th:if="${#lists.isEmpty(weeklySchedule)}" class="no-schedule-message">
+                    <p>No classes scheduled for the selected period.</p>
+                </div>
+                <table class="schedule-table" th:if="${!#lists.isEmpty(weeklySchedule)}">
                     <thead>
                         <tr>
                             <th>Time</th>
@@ -87,13 +78,13 @@
                         <tr th:each="slot : ${timeSlots}">
                             <td th:text="${slot}"></td>
                             <td th:each="day : ${days}">
-                                <div th:if="${weeklySchedule[day][slot] != null}">
+                                <div th:if="${weeklySchedule[day] != null and weeklySchedule[day][slot] != null}">
                                     <div th:each="entry : ${weeklySchedule[day][slot]}">
                                         <div class="schedule-entry">
                                             <span th:text="${entry.course}"></span> -
-                                            <span th:text="${entry.title}"></span><br/>
-                                            <span th:text="${entry.section}"></span> | 
-                                            <span th:text="${entry.room}"></span><br/>
+                                            <span th:text="${entry.title}"></span><br />
+                                            <span th:text="${entry.section}"></span> |
+                                            <span th:text="${entry.room}"></span><br />
                                             <span th:text="${entry.time}"></span>
                                         </div>
                                     </div>
@@ -120,51 +111,12 @@
             </div>
         </main>
     </div>
-    </div>
 
     <footer-footer></footer-footer>
 
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const viewButton = document.getElementById('viewButton');
-            const scheduleTable = document.getElementById('scheduleTable');
-            const schoolYearSelect = document.getElementById('schoolYear');
-            const semesterSelect = document.getElementById('semester');
-
-            // Initially show the table
-            scheduleTable.style.display = 'block';
-
-            // Show table when View button is clicked
-            viewButton.addEventListener('click', function () {
-                scheduleTable.style.display = 'block';
-            });
-
-            // For demonstration purposes, hide table when selections change
-            schoolYearSelect.addEventListener('change', function () {
-                scheduleTable.style.display = 'none';
-            });
-
-            semesterSelect.addEventListener('change', function () {
-                scheduleTable.style.display = 'none';
-            });
-
-            // Highlight current day
-            const today = new Date().getDay(); // 0 is Sunday, 1 is Monday, etc.
-            if (today > 0 && today < 7) { // Only highlight weekdays (Monday to Saturday)
-                const dayIndex = today === 6 ? 6 : today; // Adjust for Sunday
-                const rows = document.querySelectorAll('.schedule-table tbody tr');
-
-                rows.forEach(row => {
-                    const cell = row.querySelector(`td:nth-child(${dayIndex + 1})`); // +1 because first column is time
-                    if (cell && cell.textContent.trim() !== '') {
-                        cell.style.backgroundColor = '#f0e6dd';
-                    }
-                });
-            }
-        });
-    </script>
+    <script th:src="@{/js/faculty-schedule.js}"></script>
 </body>
 
 </html>

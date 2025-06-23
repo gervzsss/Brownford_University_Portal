@@ -67,25 +67,25 @@
                     </div>
                     <div class="grading-info-item">
                         <h3>COURSE</h3>
-                        <p>STAT104: Linear Regression</p>
+                        <p th:text="${course != null ? course.courseCode + ': ' + course.courseTitle : ''}"></p>
                     </div>
                 </div>
                 <div class="grading-info-row">
                     <div class="grading-info-item">
                         <h3>SCHOOL YEAR:</h3>
-                        <p>2024-2025</p>
+                        <p th:text="${schoolYear}"></p>
                     </div>
                     <div class="grading-info-item">
                         <h3>SEMESTER:</h3>
-                        <p>Second</p>
+                        <p th:text="${semester}"></p>
                     </div>
                     <div class="grading-info-item">
                         <h3>SECTION:</h3>
-                        <p>BSSTAT 1-1</p>
+                        <p th:text="${section != null ? section.sectionCode : ''}"></p>
                     </div>
                     <div class="grading-info-item">
                         <h3>SCHEDULE:</h3>
-                        <p>M/M 9:00AM-12:00PM/1:30PM-4:30PM</p>
+                        <p th:text="${scheduleString}"></p>
                     </div>
                 </div>
                 <div class="grading-info-row">

@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <h2 class="enrolled-subjects-title">FACULTY WORKLOAD</h2>
-                        <p class="semester-info">2024-2025 / 2ND SEMESTER</p>
+                        <p class="semester-info" id="semesterInfo">2024-2025 / 2ND SEMESTER</p>
                     </div>
                 </div>
                 <div class="student-info">
@@ -47,33 +47,17 @@
                 <div class="filter-row">
                     <div class="filter-group">
                         <label for="schoolYear">School Year:</label>
-                        <select id="schoolYear" name="schoolYear" class="filter-select">
-                            <option value="2223">2022-2023</option>
-                            <option value="2324">2023-2024</option>
-                            <option value="2425" selected>2024-2025</option>
-                        </select>
+                        <select id="schoolYear" name="schoolYear" class="filter-select"></select>
                     </div>
                     <div class="filter-group">
                         <label for="semester">Semester:</label>
-                        <select id="semester" name="semester" class="filter-select">
-                            <option value="First">First</option>
-                            <option value="Second" selected>Second</option>
-                            <option value="Summer">Summer</option>
-                        </select>
+                        <select id="semester" name="semester" class="filter-select"></select>
                     </div>
-                    <button id="viewButton" class="certificate-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <span class="certificate-text">VIEW</span>
-                    </button>
                 </div>
             </div>
 
             <!-- Workload Table -->
-            <div id="workloadTable" class="schedule-table-container">
+            <div id="workloadTable" class="workload-table-container">
                 <table class="schedule-table">
                     <thead>
                         <tr>
@@ -87,27 +71,8 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr th:each="row : ${workloadList}">
-                            <td th:text="${row.no}">1</td>
-                            <td th:text="${row.section}">Section</td>
-                            <td th:text="${row.subjectCode}">Subject Code</td>
-                            <td th:text="${row.description}">Description</td>
-                            <td th:text="${row.schedule}">Schedule</td>
-                            <td th:text="${row.room}">Room</td>
-                            <td th:text="${row.units}">Units</td>
-                            <td>
-                                <div class="action-buttons">
-                                    <a th:href="@{'/faculty-class-list?section=' + ${row.sectionParam} + '&subject=' + ${row.subjectParam}}"
-                                        class="view-button-small">Class List</a>
-                                    <a th:href="@{'/faculty-grading-sheet?section=' + ${row.sectionParam} + '&course=' + ${row.subjectParam}}"
-                                        class="view-button-small">Grading</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr th:if="${workloadList.size()} == 0">
-                            <td colspan="8" style="text-align: center;">No workload assigned.</td>
-                        </tr>
+                    <tbody id="workloadTableBody">
+                        <!-- Dynamic rows go here -->
                     </tbody>
                 </table>
             </div>
@@ -121,7 +86,7 @@
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    <span class="certificate-text">
+                    <span class="certificate-text"> 
                         DOWNLOAD<br>WORKLOAD REPORT
                     </span>
                 </a>
@@ -134,31 +99,7 @@
 
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const viewButton = document.getElementById('viewButton');
-            const workloadTable = document.getElementById('workloadTable');
-            const schoolYearSelect = document.getElementById('schoolYear');
-            const semesterSelect = document.getElementById('semester');
-
-            // Initially show the table
-            workloadTable.style.display = 'block';
-
-            // Show table when View button is clicked
-            viewButton.addEventListener('click', function () {
-                workloadTable.style.display = 'block';
-            });
-
-            // For demonstration purposes, hide table when selections change
-            schoolYearSelect.addEventListener('change', function () {
-                workloadTable.style.display = 'none';
-            });
-
-            semesterSelect.addEventListener('change', function () {
-                workloadTable.style.display = 'none';
-            });
-        });
-    </script>
+    <script th:src="@{/js/faculty-workload.js}"></script>
 </body>
 
 </html>

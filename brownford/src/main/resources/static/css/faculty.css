@@ -1,0 +1,51 @@
+    /* faculty.css - Faculty Schedule Page Enhancements */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.page-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #2d2d2d;
+  margin-bottom: 0.2rem;
+}
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.schedule-table-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 1.5rem;
+  margin: 1.5rem auto 2rem auto;
+  max-width: 1000px;
+  overflow-x: auto;
+}
+
+.no-schedule-message {
+  text-align: center;
+  color: #b00;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 700px) {
+  .schedule-table-container {
+    padding: 0.5rem;
+  }
+  .page-title {
+    font-size: 1.3rem;
+  }
+  .schedule-table th, .schedule-table td {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+  }
+}
+
+/* Highlight current day cell (already handled by JS, but style here) */
+.schedule-table td[style*="background-color"] {
+  background-color: #f0e6dd !important;
+}

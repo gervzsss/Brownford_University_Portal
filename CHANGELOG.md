@@ -1,5 +1,14 @@
 # Changelog
 
+## [06.24.250247]
+
+### Changes
+- Improved Faculty Grading Sheets.
+- Improved Faculty Profile Page.
+  - Added New fields in the Faculty Entity Model.
+- Improved Faculty Schedule Page.
+- Improved Faculty Workload Page.
+
 ## [06.23.252230]
 
 ### Changes
