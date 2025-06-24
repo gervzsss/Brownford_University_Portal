@@ -10,7 +10,6 @@
         rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}" />
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <script th:src="@{/js/headerFooter.js}"></script>
 </head>
 
@@ -51,6 +50,17 @@
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
                             Add Enrollment
+                        </button>
+                        <button class="add-user-btn" id="batchEnrollBtn"
+                            style="margin-left: 10px; background-color: #155724; color: #fff;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="9" y1="9" x2="15" y2="15"></line>
+                                <line x1="15" y1="9" x2="9" y2="15"></line>
+                            </svg>
+                            Batch Enroll
                         </button>
                     </div>
 
@@ -219,6 +229,77 @@
                 </div>
             </div>
         </div>
+
+        <!-- Batch Enrollment Modal -->
+        <div id="batchEnrollmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Batch Enrollment</h3>
+                    <span class="close-modal" id="closeBatchModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="batchEnrollmentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="batchStudentSelect">Students *</label>
+                                <select id="batchStudentSelect" name="studentIds" class="form-control" multiple required
+                                    style="min-width: 250px; min-height: 100px;">
+                                    <option value="">Loading students...</option>
+                                </select>
+                                <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple students</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="batchProgramSelect">Program</label>
+                                <select id="batchProgramSelect" name="programId" class="form-control">
+                                    <option value="">Select Program</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="batchYearLevelSelect">Year Level *</label>
+                                <select id="batchYearLevelSelect" name="yearLevel" class="form-control" required>
+                                    <option value="">Select Year Level</option>
+                                    <option value="1">First Year</option>
+                                    <option value="2">Second Year</option>
+                                    <option value="3">Third Year</option>
+                                    <option value="4">Fourth Year</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="batchSemesterSelect">Semester *</label>
+                                <select id="batchSemesterSelect" name="semester" class="form-control" required>
+                                    <option value="">Select Semester</option>
+                                    <option value="1st Semester">1st Semester</option>
+                                    <option value="2nd Semester">2nd Semester</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="batchSectionSelect">Section</label>
+                                <select id="batchSectionSelect" name="sectionId" class="form-control">
+                                    <option value="">Select Section</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="batchCoursesSelect">Courses *</label>
+                                <select id="batchCoursesSelect" name="courses" class="form-control" multiple required>
+                                    <option value="">Loading courses...</option>
+                                </select>
+                                <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple courses</small>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelBatchEnrollmentBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit Batch Enrollment</button>
+                        </div>
+                    </form>
+                    <div id="batchResult" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script th:src="@{/js/sidebar-nav.js}"></script>
@@ -242,8 +323,11 @@
 
             // Event listeners
             document.getElementById('addEnrollmentBtn').addEventListener('click', openAddEnrollmentModal);
+            document.getElementById('batchEnrollBtn').addEventListener('click', openBatchEnrollmentModal);
             document.getElementById('cancelEnrollmentBtn').addEventListener('click', closeEnrollmentModal);
+            document.getElementById('cancelBatchEnrollmentBtn').addEventListener('click', closeBatchEnrollmentModal);
             document.getElementById('enrollmentForm').addEventListener('submit', submitEnrollmentForm);
+            document.getElementById('batchEnrollmentForm').addEventListener('submit', submitBatchEnrollmentForm);
             document.getElementById('searchInput').addEventListener('keyup', debounce(() => { currentPage = 1; loadEnrollments(); }, 300));
             document.getElementById('statusFilter').addEventListener('change', () => { currentPage = 1; loadEnrollments(); });
             document.getElementById('programFilter').addEventListener('change', () => { currentPage = 1; loadEnrollments(); });
@@ -255,7 +339,14 @@
 
             // Close modal when clicking outside or on close button
             document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', closeEnrollmentModal);
+                btn.addEventListener('click', function(e) {
+                    // Determine which modal to close
+                    if (btn.id === 'closeBatchModal') {
+                        closeBatchEnrollmentModal();
+                    } else {
+                        closeEnrollmentModal();
+                    }
+                });
             });
 
             document.getElementById('enrollmentModal').addEventListener('click', function (e) {
@@ -651,9 +742,23 @@
             }
         }
 
+        function openBatchEnrollmentModal() {
+            document.getElementById('batchEnrollmentForm').reset();
+            document.getElementById('batchResult').innerHTML = '';
+            populateBatchStudentDropdown();
+            populateBatchProgramDropdown();
+            populateBatchSectionDropdown();
+            populateBatchCoursesDropdown();
+            document.getElementById('batchEnrollmentModal').style.display = 'block';
+        }
+
         function closeEnrollmentModal() {
             document.getElementById('enrollmentModal').style.display = 'none';
             editingEnrollmentId = null;
+        }
+
+        function closeBatchEnrollmentModal() {
+            document.getElementById('batchEnrollmentModal').style.display = 'none';
         }
 
         function showEnrollmentModal() {
@@ -661,8 +766,8 @@
         }
 
         // Populate dropdown functions
-        async function populateStudentDropdown() {
-            const select = document.getElementById('studentSelect');
+        async function populateStudentDropdown(isBatch = false) {
+            const select = document.getElementById(isBatch ? 'batchStudentSelect' : 'studentSelect');
             select.innerHTML = '<option value="">Loading students...</option>';
 
             try {
@@ -684,64 +789,223 @@
 
         async function populateProgramDropdown() {
             const select = document.getElementById('programSelect');
-            select.innerHTML = '<option value="">Loading programs...</option>';
+            const batchSelect = document.getElementById('batchProgramSelect');
+            const isBatch = batchSelect && batchSelect.closest('.modal').style.display === 'block';
+
+            (isBatch ? batchSelect : select).innerHTML = '<option value="">Loading programs...</option>';
 
             try {
                 const response = await fetch('/api/programs');
                 if (!response.ok) throw new Error('Failed to fetch programs');
 
                 const programs = await response.json();
-                select.innerHTML = '<option value="">Select Program</option>' +
+                const options = programs.map(program =>
+                    `<option value="${program.id}">${program.code} - ${program.name}</option>`
+                ).join('');
+
+                select.innerHTML = '<option value="">Select Program</option>' + options;
+                if (isBatch) {
+                    batchSelect.innerHTML = '<option value="">Select Program</option>' + options;
+                }
+            } catch (error) {
+                console.error('Error loading programs:', error);
+                select.innerHTML = '<option value="">Failed to load programs</option>';
+                if (isBatch) {
+                    batchSelect.innerHTML = '<option value="">Failed to load programs</option>';
+                }
+            }
+        }
+
+        // Populate the program filter dropdown for filtering enrollments
+        async function populateProgramFilter() {
+            const select = document.getElementById('programFilter');
+            try {
+                const response = await fetch('/api/programs');
+                if (!response.ok) throw new Error('Failed to fetch programs');
+                const programs = await response.json();
+                select.innerHTML = '<option value="">All Programs</option>' +
                     programs.map(program =>
                         `<option value="${program.id}">${program.code} - ${program.name}</option>`
                     ).join('');
             } catch (error) {
-                console.error('Error loading programs:', error);
-                select.innerHTML = '<option value="">Failed to load programs</option>';
+                console.error('Error loading programs for filter:', error);
             }
         }
 
         async function populateSectionDropdown() {
             const select = document.getElementById('sectionSelect');
-            select.innerHTML = '<option value="">Loading sections...</option>';
+            const batchSelect = document.getElementById('batchSectionSelect');
+            const isBatch = batchSelect && batchSelect.closest('.modal').style.display === 'block';
+
+            (isBatch ? batchSelect : select).innerHTML = '<option value="">Loading sections...</option>';
 
             try {
                 const response = await fetch('/api/sections');
                 if (!response.ok) throw new Error('Failed to fetch sections');
 
                 const sections = await response.json();
-                select.innerHTML = '<option value="">Select Section</option>' +
-                    sections.map(section =>
-                        `<option value="${section.id}">${section.sectionCode}</option>`
-                    ).join('');
+                const options = sections.map(section =>
+                    `<option value="${section.id}">${section.sectionCode}</option>`
+                ).join('');
+
+                select.innerHTML = '<option value="">Select Section</option>' + options;
+                if (isBatch) {
+                    batchSelect.innerHTML = '<option value="">Select Section</option>' + options;
+                }
             } catch (error) {
                 console.error('Error loading sections:', error);
                 select.innerHTML = '<option value="">Failed to load sections</option>';
+                if (isBatch) {
+                    batchSelect.innerHTML = '<option value="">Failed to load sections</option>';
+                }
             }
         }
 
         async function populateCoursesDropdown() {
             const select = document.getElementById('coursesSelect');
-            select.innerHTML = '<option value="">Loading courses...</option>';
+            const batchSelect = document.getElementById('batchCoursesSelect');
+            const isBatch = batchSelect && batchSelect.closest('.modal').style.display === 'block';
+
+            (isBatch ? batchSelect : select).innerHTML = '<option value="">Loading courses...</option>';
 
             // Get selected student, year, semester
             const studentId = document.getElementById('studentSelect').value;
             const yearLevel = document.getElementById('yearLevelSelect').value;
             const semester = document.getElementById('semesterSelect').value;
 
-            if (!studentId || !yearLevel || !semester) {
-                select.innerHTML = '<option value="">Select student, year, and semester first</option>';
+            if (isBatch) {
+                const batchStudentIds = Array.from(document.getElementById('batchStudentSelect').selectedOptions)
+                    .map(option => option.value);
+                if (batchStudentIds.length === 0) {
+                    batchSelect.innerHTML = '<option value="">Select students first</option>';
+                    return;
+                }
+                // Use first selected student to determine programId
+                const firstStudentId = batchStudentIds[0];
+                try {
+                    const studentRes = await fetch(`/api/students/${firstStudentId}`);
+                    if (!studentRes.ok) throw new Error('Failed to fetch student');
+                    const student = await studentRes.json();
+                    const programId = student.program && student.program.id;
+                    if (!programId) throw new Error('Student has no program assigned');
+
+                    // Fetch curriculum for program
+                    const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
+                    if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
+                    const curriculum = await curriculumRes.json();
+                    // Filter curriculumCourses by year and semester
+                    const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
+                        cc.yearLevel == yearLevel && cc.semester == semester
+                    );
+                    if (filteredCourses.length === 0) {
+                        batchSelect.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
+                        return;
+                    }
+                    batchSelect.innerHTML = filteredCourses.map(cc =>
+                        `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
+                    ).join('');
+                } catch (error) {
+                    console.error('Error loading curriculum courses:', error);
+                    batchSelect.innerHTML = `<option value="">${error.message}</option>`;
+                }
+            } else {
+                if (!studentId || !yearLevel || !semester) {
+                    select.innerHTML = '<option value="">Select student, year, and semester first</option>';
+                    return;
+                }
+
+                try {
+                    // Fetch student to get programId
+                    const studentRes = await fetch(`/api/students/${studentId}`);
+                    if (!studentRes.ok) throw new Error('Failed to fetch student');
+                    const student = await studentRes.json();
+                    const programId = student.program && student.program.id;
+                    if (!programId) throw new Error('Student has no program assigned');
+
+                    // Fetch curriculum for program
+                    const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
+                    if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
+                    const curriculum = await curriculumRes.json();
+                    // Filter curriculumCourses by year and semester
+                    const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
+                        cc.yearLevel == yearLevel && cc.semester == semester
+                    );
+                    if (filteredCourses.length === 0) {
+                        select.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
+                        return;
+                    }
+                    select.innerHTML = filteredCourses.map(cc =>
+                        `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
+                    ).join('');
+                } catch (error) {
+                    console.error('Error loading curriculum courses:', error);
+                    select.innerHTML = `<option value="">${error.message}</option>`;
+                }
+            }
+        }
+
+        // Add event listeners to update courses when student, year, or semester changes
+        document.getElementById('studentSelect').addEventListener('change', populateCoursesDropdown);
+        document.getElementById('yearLevelSelect').addEventListener('change', populateCoursesDropdown);
+        document.getElementById('semesterSelect').addEventListener('change', populateCoursesDropdown);
+
+        // Populate batch modal dropdowns (reuse logic, but for batch fields)
+        async function populateBatchStudentDropdown() {
+            const select = document.getElementById('batchStudentSelect');
+            select.innerHTML = '<option value="">Loading students...</option>';
+            try {
+                const response = await fetch('/api/students');
+                if (!response.ok) throw new Error('Failed to fetch students');
+                const students = await response.json();
+                select.innerHTML = students.map(student =>
+                    `<option value="${student.id}">${student.studentId} - ${student.user.firstName} ${student.user.lastName}</option>`
+                ).join('');
+            } catch (error) {
+                select.innerHTML = '<option value="">Failed to load students</option>';
+            }
+        }
+        async function populateBatchProgramDropdown() {
+            const select = document.getElementById('batchProgramSelect');
+            select.innerHTML = '<option value="">Loading programs...</option>';
+            try {
+                const response = await fetch('/api/programs');
+                if (!response.ok) throw new Error('Failed to fetch programs');
+                const programs = await response.json();
+                select.innerHTML = '<option value="">Select Program</option>' +
+                    programs.map(program =>
+                        `<option value="${program.id}">${program.code} - ${program.name}</option>`
+                    ).join('');
+            } catch (error) {
+                select.innerHTML = '<option value="">Failed to load programs</option>';
+            }
+        }
+        async function populateBatchSectionDropdown() {
+            const select = document.getElementById('batchSectionSelect');
+            select.innerHTML = '<option value="">Loading sections...</option>';
+            try {
+                const response = await fetch('/api/sections');
+                if (!response.ok) throw new Error('Failed to fetch sections');
+                const sections = await response.json();
+                select.innerHTML = '<option value="">Select Section</option>' +
+                    sections.map(section =>
+                        `<option value="${section.id}">${section.sectionCode}</option>`
+                    ).join('');
+            } catch (error) {
+                select.innerHTML = '<option value="">Failed to load sections</option>';
+            }
+        }
+        async function populateBatchCoursesDropdown() {
+            const select = document.getElementById('batchCoursesSelect');
+            select.innerHTML = '<option value="">Loading courses...</option>';
+            // Get selected program, year, semester
+            const programId = document.getElementById('batchProgramSelect').value;
+            const yearLevel = document.getElementById('batchYearLevelSelect').value;
+            const semester = document.getElementById('batchSemesterSelect').value;
+            if (!programId || !yearLevel || !semester) {
+                select.innerHTML = '<option value="">Select program, year, and semester first</option>';
                 return;
             }
-
             try {
-                // Fetch student to get programId
-                const studentRes = await fetch(`/api/students/${studentId}`);
-                if (!studentRes.ok) throw new Error('Failed to fetch student');
-                const student = await studentRes.json();
-                const programId = student.program && student.program.id;
-                if (!programId) throw new Error('Student has no program assigned');
-
                 // Fetch curriculum for program
                 const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
                 if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
@@ -758,32 +1022,14 @@
                     `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
                 ).join('');
             } catch (error) {
-                console.error('Error loading curriculum courses:', error);
                 select.innerHTML = `<option value="">${error.message}</option>`;
             }
         }
 
-        // Add event listeners to update courses when student, year, or semester changes
-        document.getElementById('studentSelect').addEventListener('change', populateCoursesDropdown);
-        document.getElementById('yearLevelSelect').addEventListener('change', populateCoursesDropdown);
-        document.getElementById('semesterSelect').addEventListener('change', populateCoursesDropdown);
-
-        async function populateProgramFilter() {
-            const select = document.getElementById('programFilter');
-
-            try {
-                const response = await fetch('/api/programs');
-                if (!response.ok) throw new Error('Failed to fetch programs');
-
-                const programs = await response.json();
-                select.innerHTML = '<option value="">All Programs</option>' +
-                    programs.map(program =>
-                        `<option value="${program.id}">${program.code} - ${program.name}</option>`
-                    ).join('');
-            } catch (error) {
-                console.error('Error loading programs for filter:', error);
-            }
-        }
+        // Update courses when program/year/semester changes
+        document.getElementById('batchProgramSelect').addEventListener('change', populateBatchCoursesDropdown);
+        document.getElementById('batchYearLevelSelect').addEventListener('change', populateBatchCoursesDropdown);
+        document.getElementById('batchSemesterSelect').addEventListener('change', populateBatchCoursesDropdown);
 
         // Form submission
         async function submitEnrollmentForm(e) {
@@ -837,6 +1083,55 @@
             } catch (error) {
                 console.error('Error saving enrollment:', error);
                 alert('Failed to save enrollment: ' + error.message);
+            }
+        }
+
+        // Batch enrollment submission
+        async function submitBatchEnrollmentForm(e) {
+            e.preventDefault();
+            const studentIds = Array.from(document.getElementById('batchStudentSelect').selectedOptions).map(opt => parseInt(opt.value));
+            const programId = document.getElementById('batchProgramSelect').value;
+            const yearLevel = document.getElementById('batchYearLevelSelect').value;
+            const semester = document.getElementById('batchSemesterSelect').value;
+            const sectionId = document.getElementById('batchSectionSelect').value;
+            const courseIds = Array.from(document.getElementById('batchCoursesSelect').selectedOptions).map(opt => parseInt(opt.value));
+            if (!studentIds.length || !yearLevel || !semester || !courseIds.length) {
+                alert('Please fill in all required fields and select at least one student and course.');
+                return;
+            }
+            const payload = {
+                studentIds,
+                programId: programId ? parseInt(programId) : null,
+                yearLevel,
+                semester,
+                sectionId: sectionId ? parseInt(sectionId) : null,
+                courses: courseIds
+            };
+            try {
+                const response = await fetch('/api/enrollments/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) throw new Error('Batch enrollment failed');
+                const result = await response.json();
+                let html = '';
+                if (result.success && result.success.length) {
+                    html += `<div style='color:green;'>Successfully enrolled: ${result.success.length} student(s).</div>`;
+                }
+                if (result.failed && result.failed.length) {
+                    html += `<div style='color:red;'>Failed: <ul>` +
+                        result.failed.map(f => `<li>Student ID ${f.studentId}: ${f.reason}</li>`).join('') +
+                        `</ul></div>`;
+                }
+                document.getElementById('batchResult').innerHTML = html;
+                if (result.success && result.success.length) {
+                    loadEnrollments();
+                    closeBatchEnrollmentModal();
+                    alert('Batch enrollment completed!');
+                }
+            } catch (error) {
+                document.getElementById('batchResult').innerHTML = `<div style='color:red;'>${error.message}</div>`;
             }
         }
 

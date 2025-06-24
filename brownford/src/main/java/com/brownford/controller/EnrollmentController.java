@@ -1,11 +1,13 @@
 package com.brownford.controller;
 
+import com.brownford.dto.BatchEnrollmentRequest;
 import com.brownford.dto.CourseInfo;
 import com.brownford.dto.EnrollmentDTO;
 import com.brownford.model.Enrollment;
 import com.brownford.service.EnrollmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -112,6 +114,15 @@ public class EnrollmentController {
     @DeleteMapping("/{id}")
     public void deleteEnrollment(@PathVariable Long id) {
         enrollmentService.deleteEnrollment(id);
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<?> batchEnroll(@RequestBody BatchEnrollmentRequest request) {
+        // Call service to process batch enrollment
+        // Example result structure:
+        // { "success": [1,2,3], "failed": [ {"studentId":4, "reason":"Already enrolled"} ] }
+        Map<String, Object> result = enrollmentService.batchEnroll(request);
+        return ResponseEntity.ok(result);
     }
 }
 // No major changes needed, but ensure studentId refers to Student entity.

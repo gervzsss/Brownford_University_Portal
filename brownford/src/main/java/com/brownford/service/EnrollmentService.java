@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import com.brownford.model.CurriculumCourse;
+import com.brownford.dto.BatchEnrollmentRequest;
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class EnrollmentService {
@@ -301,5 +305,41 @@ public class EnrollmentService {
      */
     public java.util.List<com.brownford.model.Grade> getAllGradesForStudent(Student student) {
         return gradeRepository.findByStudent(student);
+    }
+
+    /**
+     * Batch enroll multiple students in the same courses/section/term.
+     * Returns a map with lists of successful and failed enrollments.
+     */
+    public Map<String, Object> batchEnroll(BatchEnrollmentRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        ArrayList<Long> success = new ArrayList<>();
+        ArrayList<Map<String, Object>> failed = new ArrayList<>();
+        if (request.getStudentIds() == null || request.getStudentIds().isEmpty()) {
+            result.put("success", success);
+            result.put("failed", failed);
+            return result;
+        }
+        for (Long studentId : request.getStudentIds()) {
+            try {
+                // Use existing createEnrollment logic
+                createEnrollment(
+                    studentId,
+                    request.getCourses(),
+                    request.getSemester(),
+                    request.getYearLevel(),
+                    request.getSectionId()
+                );
+                success.add(studentId);
+            } catch (Exception ex) {
+                Map<String, Object> failInfo = new HashMap<>();
+                failInfo.put("studentId", studentId);
+                failInfo.put("reason", ex.getMessage());
+                failed.add(failInfo);
+            }
+        }
+        result.put("success", success);
+        result.put("failed", failed);
+        return result;
     }
 }

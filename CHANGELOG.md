@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [06.25.250033]
+
+### New
+- Added Bulk Enrollment Feature in the Enrollment Management Page [ADMIN].
+
+### Changes
+- Removed ref links of common.css in all html files.
+
+
 ## [06.24.252241]
 
 ### Changes
