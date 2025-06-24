@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.25.250225]
+
+### Fix
+- Fixed Student Schedule Page Table.
+
 ## [06.25.250203]
 
 ### New
