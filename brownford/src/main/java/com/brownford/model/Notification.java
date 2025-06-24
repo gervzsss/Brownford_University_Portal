@@ -14,6 +14,10 @@ public class Notification {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
     private String message;
     private String type; // e.g., ENROLLMENT_ACCEPTED, GRADE_RELEASED
     @Column(name = "is_read")
@@ -25,6 +29,8 @@ public class Notification {
     public void setId(Long id) { this.id = id; }
     public Student getStudent() { return student; }
     public void setStudent(Student student) { this.student = student; }
+    public Faculty getFaculty() { return faculty; }
+    public void setFaculty(Faculty faculty) { this.faculty = faculty; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
     public String getType() { return type; }

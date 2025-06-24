@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.24.251809]
+
+### Changes
+- Notification for Faculty when assigned or remove from assignned course is now working.
+
 ## [06.24.250247]
 
 ### Changes

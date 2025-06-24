@@ -28,10 +28,10 @@ class MyHeader extends HTMLElement {
                             <a href="#" class="mark-all-read">Mark all as read</a>
                         </div>
                         <div class="notification-list">
-                            <p>No notifications available.</p>
+                            <p class="no-notifications">No notifications available.</p>
                         </div>
                         <div class="notification-footer">
-                            <a href="#" class="view-all">View All Notifications</a>
+                            <a href="#" class="remove-all">Remove All Notifications</a>
                         </div>
                     </div>
                 </div>
@@ -374,7 +374,7 @@ class AdminHeader extends HTMLElement {
                             <a href="#" class="mark-all-read">Mark all as read</a>
                         </div>
                         <div class="notification-list">
-                            <p>No notifications available.</p>
+                            <p class="no-notifications">No notifications available.</p>
                         </div>
                         <div class="notification-footer">
                             <a href="#" class="view-all">View All Notifications</a>
@@ -429,7 +429,7 @@ class FacultyHeader extends HTMLElement {
                             <a href="#" class="mark-all-read">Mark all as read</a>
                         </div>
                         <div class="notification-list">
-                            <p>No notifications available.</p>
+                            <p class="no-notifications">No notifications available.</p>
                         </div>
                         <div class="notification-footer">
                             <a href="#" class="view-all">View All Notifications</a>

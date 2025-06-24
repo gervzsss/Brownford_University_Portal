@@ -319,12 +319,13 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+.remove-all,
 .mark-all-read {
   color: #6b3a1d;
   text-decoration: none;
   font-size: 14px;
 }
-
+.remove-all:hover,
 .mark-all-read:hover {
   text-decoration: underline;
 }
@@ -332,6 +333,14 @@ body {
 .notification-list {
   overflow-y: auto;
   max-height: 350px;
+}
+
+.no-notifications {
+  text-align: center;
+  color: #333;
+  padding: 10px;
+  display: block;
+  font-size: 1em;
 }
 
 .notification-item {

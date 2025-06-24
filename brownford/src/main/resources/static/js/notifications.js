@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
     notificationToggle.addEventListener("click", (e) => {
       e.preventDefault()
       notificationDropdown.classList.toggle("show")
+      if (notificationDropdown.classList.contains("show")) {
+        fetchNotifications()
+      }
     })
 
     // Close dropdown when clicking outside
@@ -24,37 +27,36 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Mark all as read functionality
-  if (notificationBadge) {
-    notificationBadge.style.display = "none"
-  }
-
-  // --- Notification Polling and Rendering ---
+  // --- Unified Notification Dropdown Logic for Student and Faculty ---
   const POLL_INTERVAL = 30000 // 30 seconds
+  let notifications = []
+
+  // Always use unified endpoint for both students and faculty
+  const apiBase = "/api/notifications"
 
   function fetchNotifications() {
-    fetch("/api/notifications")
+    fetch(apiBase)
       .then((res) => res.json())
-      .then((data) => renderNotifications(data))
+      .then((data) => {
+        notifications = data
+        renderNotifications()
+      })
       .catch(() => {})
   }
 
-  function renderNotifications(notifications) {
-    const dropdown = document.getElementById("notificationDropdown")
-    const list = dropdown ? dropdown.querySelector(".notification-list") : null
+  function renderNotifications() {
+    const list = notificationDropdown.querySelector(".notification-list")
     const badge = document.querySelector(".notification-badge")
     if (!list) return
 
     if (!notifications || notifications.length === 0) {
-      list.innerHTML = "<p>No notifications available.</p>"
+      list.innerHTML = "<p class='no-notifications'>No notifications available.</p>"
       if (badge) badge.style.display = "none"
       return
     }
 
-    let unreadCount = 0
     list.innerHTML = notifications
       .map((n) => {
-        if (!n.read) unreadCount++
         return `<div class="notification-item${
           n.read ? "" : " unread"
         }" data-id="${n.id}">
@@ -65,6 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("")
 
+    // Add click event to mark as read
+    list.querySelectorAll(".notification-item.unread").forEach((item) => {
+      item.addEventListener("click", function () {
+        const id = this.getAttribute("data-id")
+        fetch(apiBase + "/read/" + id, {
+          method: "POST",
+        }).then(() => fetchNotifications())
+      })
+    })
+
     // Add delete event listeners
     list.querySelectorAll(".notification-delete-btn").forEach((btn) => {
       btn.addEventListener("click", function (e) {
@@ -72,51 +84,65 @@ document.addEventListener("DOMContentLoaded", () => {
         const item = btn.closest(".notification-item")
         const id = item.getAttribute("data-id")
         if (id) {
-          fetch(`/api/notifications/${id}`, { method: "DELETE" })
+          fetch(apiBase + "/" + id, { method: "DELETE" })
             .then(() => fetchNotifications())
         }
       })
     })
 
-    if (badge) {
-      badge.textContent = unreadCount
-      badge.style.display = unreadCount > 0 ? "inline-block" : "none"
+    // Update bell icon with unread count
+    const unreadCount = notifications.filter((n) => !n.read).length
+    updateBadge(unreadCount)
+  }
+
+  function updateBadge(unreadCount) {
+    let bell = document.getElementById("notificationToggle")
+    if (bell) {
+      let badge = bell.querySelector(".notification-badge")
+      if (!badge && unreadCount > 0) {
+        badge = document.createElement("span")
+        badge.className = "notification-badge"
+        bell.appendChild(badge)
+      }
+      if (badge) {
+        badge.textContent = unreadCount > 0 ? unreadCount : ""
+        badge.style.display = unreadCount > 0 ? "inline-block" : "none"
+      }
     }
   }
 
-  // Mark all as read
-  function markAllNotificationsRead() {
-    fetch("/api/notifications")
-      .then((res) => res.json())
-      .then((data) => {
-        const unread = data.filter((n) => !n.read)
-        unread.forEach((n) => {
-          fetch(`/api/notifications/read/${n.id}`, { method: "POST" })
-        })
-        setTimeout(fetchNotifications, 500) // Refresh after marking
-      })
-  }
-
-  // Add badge if not present
-  let badge = document.querySelector(".notification-badge")
-  if (!badge) {
-    const icon = document.querySelector(".notification-icon")
-    if (icon) {
-      badge = document.createElement("span")
-      badge.className = "notification-badge"
-      badge.style.display = "none"
-      icon.appendChild(badge)
-    }
-  }
   // Poll notifications
   fetchNotifications()
   setInterval(fetchNotifications, POLL_INTERVAL)
+
   // Mark all as read
   const markAllReadBtn = document.querySelector(".mark-all-read")
   if (markAllReadBtn) {
     markAllReadBtn.addEventListener("click", (e) => {
       e.preventDefault()
-      markAllNotificationsRead()
+      const unread = notifications.filter((n) => !n.read)
+      Promise.all(
+        unread.map((n) =>
+          fetch(apiBase + "/read/" + n.id, {
+            method: "POST",
+          })
+        )
+      ).then(() => fetchNotifications())
+    })
+  }
+
+  // Remove all notifications
+  const removeAllBtn = document.querySelector(".remove-all")
+  if (removeAllBtn) {
+    removeAllBtn.addEventListener("click", (e) => {
+      e.preventDefault()
+      if (notifications.length === 0) return
+      if (!confirm("Are you sure you want to remove all notifications?")) return
+      Promise.all(
+        notifications.map((n) =>
+          fetch(apiBase + "/" + n.id, { method: "DELETE" })
+        )
+      ).then(() => fetchNotifications())
     })
   }
 })

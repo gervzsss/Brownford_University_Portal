@@ -2,6 +2,7 @@ package com.brownford.service;
 
 import com.brownford.model.Notification;
 import com.brownford.model.Student;
+import com.brownford.model.Faculty;
 import com.brownford.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,22 @@ public class NotificationService {
 
     public void deleteNotification(Notification notification) {
         notificationRepository.delete(notification);
+    }
+
+    public List<Notification> getNotificationsForFaculty(Faculty faculty) {
+        return notificationRepository.findByFacultyOrderByCreatedAtDesc(faculty);
+    }
+
+    public List<Notification> getUnreadNotificationsForFaculty(Faculty faculty) {
+        return notificationRepository.findByFacultyAndIsReadFalseOrderByCreatedAtDesc(faculty);
+    }
+
+    public Notification createNotification(Faculty faculty, String message, String type) {
+        Notification notification = new Notification();
+        notification.setFaculty(faculty);
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setRead(false);
+        return notificationRepository.save(notification);
     }
 }
