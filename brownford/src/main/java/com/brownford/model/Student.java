@@ -20,8 +20,6 @@ public class Student {
     @JoinColumn(name = "program_id")
     private Program program;
 
-    private String yearLevel;
-
     private String address;
     private String dateOfBirth; // ISO format (yyyy-MM-dd)
     private String gender;
@@ -58,14 +56,6 @@ public class Student {
 
     public void setProgram(Program program) {
         this.program = program;
-    }
-
-    public String getYearLevel() {
-        return yearLevel;
-    }
-
-    public void setYearLevel(String yearLevel) {
-        this.yearLevel = yearLevel;
     }
 
     public String getAddress() {

@@ -1,5 +1,21 @@
 # Changelog
 
+## [06.25.250330]
+
+### Changes
+- Removed yearLevel field that is not connectd to enrollment table.
+
+### Fix
+- Fixed User Management Page Modal not populating the program and passwords.
+
+### Bugs
+- User Management Page View Modal not displaying the correct informations.
+- User Management Page Last Login is not fetching in the table
+
+### Future Changes
+- Add Middlename field in the User Creation.
+- Update all the name on the system to display the Middlename on Fullnames.
+  
 ## [06.25.250225]
 
 ### Fix
@@ -22,7 +38,6 @@
 
 ### Changes
 - Removed ref links of common.css in all html files.
-
 
 ## [06.24.252241]
 

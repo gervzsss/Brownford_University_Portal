@@ -50,7 +50,7 @@ public class StudentController {
                     model.addAttribute("yearLevel", latestEnrollment.getYearLevel());
                 } else {
                     model.addAttribute("currentSemester", "N/A");
-                    model.addAttribute("yearLevel", student.getYearLevel() != null ? student.getYearLevel() : "N/A");
+                    model.addAttribute("yearLevel", "N/A");
                 }
             } else {
                 model.addAttribute("currentSemester", "N/A");
@@ -188,7 +188,7 @@ public class StudentController {
         profile.put("email", student.getUser().getEmail());
         profile.put("program", student.getProgram() != null ? student.getProgram().getName() : "");
         // Use latest enrollment for yearLevel
-        String yearLevel = student.getYearLevel();
+        String yearLevel = "N/A";
         String semester = "N/A";
         String section = "N/A";
         Enrollment latestEnrollment = enrollmentService.getLatestEnrollmentForStudent(student.getId());

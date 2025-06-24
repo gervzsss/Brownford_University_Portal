@@ -3,6 +3,8 @@ package com.brownford.controller;
 import com.brownford.model.User;
 import com.brownford.model.Student;
 import com.brownford.model.Faculty;
+import com.brownford.model.Program;
+import com.brownford.dto.ProgramDTO;
 import com.brownford.repository.UserRepository;
 import com.brownford.repository.StudentRepository;
 import com.brownford.repository.FacultyRepository;
@@ -98,10 +100,44 @@ public class UserManagement {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return userRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable Long id) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User user = userOpt.get();
+        Map<String, Object> result = new HashMap<>();
+        result.put("id", user.getId());
+        result.put("username", user.getUsername());
+        result.put("firstName", user.getFirstName());
+        result.put("lastName", user.getLastName());
+        result.put("email", user.getEmail());
+        result.put("role", user.getRole());
+        result.put("status", user.getStatus());
+        result.put("password", user.getPassword()); // Only for pre-populating the form, not for security
+        result.put("lastLogin", user.getLastLogin());
+        if (user.getRole().equalsIgnoreCase("student")) {
+            Student student = studentRepository.findById(user.getId()).orElse(null);
+            if (student != null) {
+                result.put("studentId", student.getStudentId());
+                Program program = student.getProgram();
+                if (program != null) {
+                    ProgramDTO programDTO = new ProgramDTO();
+                    programDTO.setId(program.getId());
+                    programDTO.setCode(program.getCode());
+                    programDTO.setName(program.getName());
+                    result.put("program", programDTO);
+                } else {
+                    result.put("program", null);
+                }
+            }
+        } else if (user.getRole().equalsIgnoreCase("faculty")) {
+            Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+            if (faculty != null) {
+                result.put("facultyId", faculty.getFacultyId());
+            }
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping
@@ -120,7 +156,6 @@ public class UserManagement {
         if (user.getRole().equalsIgnoreCase("student")) {
             Student student = new Student();
             student.setUser(savedUser);
-            student.setYearLevel(payload.getOrDefault("yearLevel", "").toString());
             // Set program if available
             if (payload.containsKey("programId")) {
                 try {
@@ -170,7 +205,7 @@ public class UserManagement {
         }
         // user.setLastLogin ... (if needed)
 
-        // Update student program/yearLevel if student
+        // Update student program if student
         if (user.getRole().equalsIgnoreCase("student")) {
             Student student = studentRepository.findById(user.getId()).orElse(null);
             if (student != null) {
@@ -181,9 +216,6 @@ public class UserManagement {
                     } catch (Exception e) {
                         // Ignore or log invalid programId
                     }
-                }
-                if (payload.containsKey("yearLevel")) {
-                    student.setYearLevel(payload.get("yearLevel").toString());
                 }
                 studentRepository.save(student);
             }
