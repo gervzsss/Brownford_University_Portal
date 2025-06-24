@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [06.25.250057]
+
+### Changes
+- Removed System Notification Section in the Admin Dashboard.
+
 ## [06.25.250033]
 
 ### New
