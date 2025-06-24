@@ -377,7 +377,7 @@ class AdminHeader extends HTMLElement {
                             <p class="no-notifications">No notifications available.</p>
                         </div>
                         <div class="notification-footer">
-                            <a href="#" class="view-all">View All Notifications</a>
+                            <a href="#" class="remove-all">Remove All Notifications</a>
                         </div>
                     </div>
                 </div>
@@ -432,7 +432,7 @@ class FacultyHeader extends HTMLElement {
                             <p class="no-notifications">No notifications available.</p>
                         </div>
                         <div class="notification-footer">
-                            <a href="#" class="view-all">View All Notifications</a>
+                            <a href="#" class="remove-all">Remove All Notifications</a>
                         </div>
                     </div>
                 </div>

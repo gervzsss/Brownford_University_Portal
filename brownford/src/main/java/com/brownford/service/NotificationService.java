@@ -56,4 +56,21 @@ public class NotificationService {
         notification.setRead(false);
         return notificationRepository.save(notification);
     }
+
+    public List<Notification> getNotificationsForAdmin() {
+        return notificationRepository.findByRecipientRoleOrderByCreatedAtDesc("admin");
+    }
+
+    public List<Notification> getUnreadNotificationsForAdmin() {
+        return notificationRepository.findByRecipientRoleAndIsReadFalseOrderByCreatedAtDesc("admin");
+    }
+
+    public Notification createAdminNotification(String message, String type) {
+        Notification notification = new Notification();
+        notification.setRecipientRole("admin");
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setRead(false);
+        return notificationRepository.save(notification);
+    }
 }

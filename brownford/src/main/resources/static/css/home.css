@@ -325,6 +325,7 @@ body {
   text-decoration: none;
   font-size: 14px;
 }
+
 .remove-all:hover,
 .mark-all-read:hover {
   text-decoration: underline;
@@ -358,6 +359,7 @@ body {
 
 .notification-item.unread {
   background-color: #f0f7ff;
+  font-weight: bold;
 }
 
 .notification-item.unread:hover {
@@ -421,6 +423,90 @@ body {
   }
 }
 
+/* System Notifications Section Styles */
+.sys-notif-section {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(139, 58, 29, 0.07);
+  padding: 24px 28px 18px 28px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.sys-notif-section .section-title {
+  color: #6B3A1D;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+}
+
+.sys-notif-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 3em;
+}
+
+.sys-notif-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f5f1;
+  border-left: 4px solid #8b4513;
+  border-radius: 8px;
+  padding: 14px 18px 12px 16px;
+  box-shadow: 0 1px 4px rgba(139, 58, 29, 0.04);
+  transition: background 0.2s;
+  margin-bottom: 2em;
+  font-weight: bold;
+}
+
+.sys-notif-item:hover {
+  background: #f3ede7;
+}
+
+.sys-notif-event {
+  display: flex;
+  align-items: center;
+  color: #4d2e13;
+  font-size: 1.05rem;
+  font-family: 'Alice', serif;
+  word-break: break-word;
+  flex: 1;
+}
+
+.sys-notif-event svg {
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.sys-notif-date {
+  color: #a67c52;
+  font-size: 0.98rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  margin-left: 18px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.sys-notif-container .empty-state {
+  text-align: center;
+  color: #bfa07a;
+  padding: 32px 0 12px 0;
+}
+
+.sys-notif-container .empty-state svg {
+  margin-bottom: 8px;
+}
+
+.sys-notif-container .empty-state p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.08rem;
+  color: #a67c52;
+}
+
 /* Navigation styles */
 .main-nav {
   display: flex;
@@ -467,6 +553,7 @@ body {
   background-color: rgba(255, 255, 255, 0.8);
   margin: 20px;
   border-radius: 10px;
+  padding-bottom: 4em;
 }
 
 /* Welcome Section */
@@ -2576,6 +2663,7 @@ body {
 .view-all-container {
   margin-bottom: 20px;
 }
+
 .schedule-container {
   display: flex;
   flex-direction: column;
@@ -2934,4 +3022,61 @@ body {
   .faculty-dashboard .quick-links-container {
     grid-template-columns: 1fr;
   }
+}
+
+/* faculty.css - Faculty Schedule Page Enhancements */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #2d2d2d;
+  margin-bottom: 0.2rem;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.schedule-table-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem;
+  margin: 1.5rem auto 2rem auto;
+  max-width: 1000px;
+  overflow-x: auto;
+}
+
+.no-schedule-message {
+  text-align: center;
+  color: #b00;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 700px) {
+  .schedule-table-container {
+    padding: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+  }
+}
+
+/* Highlight current day cell (already handled by JS, but style here) */
+.schedule-table td[style*="background-color"] {
+  background-color: #f0e6dd !important;
 }

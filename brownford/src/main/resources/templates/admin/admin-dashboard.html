@@ -301,32 +301,38 @@
                 </section>
 
                 <!-- System Notifications Section -->
-                <section class="calendar-section">
-                    <h3 class="section-title">System Notifications</h3>
-                    <div class="calendar-container" th:if="${not #lists.isEmpty(systemNotifications)}">
-                        <div class="calendar-item" th:each="notification : ${systemNotifications}">
-                            <div class="calendar-date" th:text="${notification.date}">Date</div>
-                            <div class="calendar-event" th:text="${notification.message}">Notification message</div>
-                        </div>
-                    </div>
-                    <div class="calendar-container" th:if="${#lists.isEmpty(systemNotifications)}">
-                        <div class="empty-state">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                <h3 class="section-title">System Notifications</h3>
+                <div class="sys-notif-container" th:if="${not #lists.isEmpty(systemNotifications)}">
+                    <div class="sys-notif-item" th:each="notification : ${systemNotifications}">
+                        <div class="sys-notif-event">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
                             </svg>
-                            <p>No system notifications at this time. Important system messages will appear here.</p>
+                            <span th:text="${notification.message}">Notification message</span>
                         </div>
+                        <div class="sys-notif-date" th:text="${notification.createdAt}">Date</div>
+
                     </div>
-                    <div class="view-all-container" th:if="${not #lists.isEmpty(systemNotifications)}">
-                        <a th:href="@{/admin-notifications}" class="view-all-link">View All Notifications</a>
+                </div>
+                <div class="sys-notif-container" th:if="${#lists.isEmpty(systemNotifications)}">
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <p>No system notifications at this time. Important system messages will appear here.</p>
                     </div>
-                </section>
+                </div>
             </main>
         </div>
     </div>
+
+    <footer-footer></footer-footer>
 
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>

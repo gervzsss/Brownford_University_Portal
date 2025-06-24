@@ -7,6 +7,8 @@
     <title>Home - Brown Ford University</title>
     <!-- Link to the external CSS files -->
     <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
@@ -88,10 +90,54 @@
                     </div>
                 </a>
             </div>
+
+            <!-- System Notifications Section -->
+            <h3 class="section-title">System Notifications</h3>
+            <div id="sys-notif-container">
+                <!-- Notifications will be loaded here by JS -->
+            </div>
+
         </main>
     </div>
 
     <footer-footer></footer-footer>
+
+    <script>
+        function loadNotifications() {
+            fetch('/api/notifications/unread')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('sys-notif-container');
+                    container.innerHTML = '';
+                    const latest = (data || []).slice(0, 5); // Only the latest 5 unread notifications
+                    if (latest.length > 0) {
+                        latest.forEach(notification => {
+                            const notifItem = document.createElement('div');
+                            notifItem.className = 'sys-notif-item';
+                            notifItem.innerHTML = `
+                        <div class="sys-notif-event">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <span>${notification.message}</span>
+                        </div>
+                        <div class="sys-notif-date">${notification.createdAt ? new Date(notification.createdAt).toLocaleString() : ''}</div>
+                    `;
+                            container.appendChild(notifItem);
+                        });
+                    } else {
+                        container.innerHTML = `
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <p>No system notifications at this time. Important system messages will appear here.</p>
+                    </div>
+                `;
+                    }
+                });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            loadNotifications();
+            setInterval(loadNotifications, 5000); // Refresh every 5 seconds
+        });
+    </script>
 </body>
 
 </html>

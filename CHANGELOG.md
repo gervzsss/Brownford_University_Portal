@@ -1,5 +1,15 @@
 # Changelog
 
+
+## [06.24.252241]
+
+### Changes
+- Notification Feature for the Admin when student requests for enrollment.
+- Improve the Notifications UI.
+
+### Added
+- Added System Notifications in the Student and Faculty Home/Dashboard.
+
 ## [06.24.251809]
 
 ### Changes

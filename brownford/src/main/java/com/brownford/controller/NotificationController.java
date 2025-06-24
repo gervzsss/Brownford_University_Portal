@@ -26,7 +26,8 @@ public class NotificationController {
     private UserRepository userRepository;
 
     private Student getCurrentStudent(Principal principal) {
-        if (principal == null) return null;
+        if (principal == null)
+            return null;
         String username = principal.getName();
         return studentRepository.findAll().stream()
                 .filter(s -> s.getUser().getUsername().equals(username))
@@ -34,11 +35,21 @@ public class NotificationController {
     }
 
     private Faculty getCurrentFaculty(Principal principal) {
-        if (principal == null) return null;
+        if (principal == null)
+            return null;
         String username = principal.getName();
         return userRepository.findByUsername(username)
-            .flatMap(user -> facultyRepository.findByUser(user))
-            .orElse(null);
+                .flatMap(user -> facultyRepository.findByUser(user))
+                .orElse(null);
+    }
+
+    private boolean isAdmin(Principal principal) {
+        if (principal == null)
+            return false;
+        String username = principal.getName();
+        return userRepository.findByUsername(username)
+                .map(user -> "admin".equals(user.getRole()))
+                .orElse(false);
     }
 
     @GetMapping
@@ -49,6 +60,22 @@ public class NotificationController {
             return notificationService.getNotificationsForStudent(student);
         } else if (faculty != null) {
             return notificationService.getNotificationsForFaculty(faculty);
+        } else if (isAdmin(principal)) {
+            return notificationService.getNotificationsForAdmin();
+        }
+        return List.of();
+    }
+
+    @GetMapping("/unread")
+    public List<Notification> getUnreadNotifications(Principal principal) {
+        Student student = getCurrentStudent(principal);
+        Faculty faculty = getCurrentFaculty(principal);
+        if (student != null) {
+            return notificationService.getUnreadNotificationsForStudent(student);
+        } else if (faculty != null) {
+            return notificationService.getUnreadNotificationsForFaculty(faculty);
+        } else if (isAdmin(principal)) {
+            return notificationService.getUnreadNotificationsForAdmin();
         }
         return List.of();
     }
@@ -59,14 +86,19 @@ public class NotificationController {
         Faculty faculty = getCurrentFaculty(principal);
         if (student != null) {
             notificationService.getNotificationsForStudent(student).stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .ifPresent(notificationService::markAsRead);
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::markAsRead);
         } else if (faculty != null) {
             notificationService.getNotificationsForFaculty(faculty).stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .ifPresent(notificationService::markAsRead);
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::markAsRead);
+        } else if (isAdmin(principal)) {
+            notificationService.getNotificationsForAdmin().stream()
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::markAsRead);
         }
     }
 
@@ -76,14 +108,19 @@ public class NotificationController {
         Faculty faculty = getCurrentFaculty(principal);
         if (student != null) {
             notificationService.getNotificationsForStudent(student).stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .ifPresent(notificationService::deleteNotification);
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::deleteNotification);
         } else if (faculty != null) {
             notificationService.getNotificationsForFaculty(faculty).stream()
-                .filter(n -> n.getId().equals(id))
-                .findFirst()
-                .ifPresent(notificationService::deleteNotification);
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::deleteNotification);
+        } else if (isAdmin(principal)) {
+            notificationService.getNotificationsForAdmin().stream()
+                    .filter(n -> n.getId().equals(id))
+                    .findFirst()
+                    .ifPresent(notificationService::deleteNotification);
         }
     }
 }

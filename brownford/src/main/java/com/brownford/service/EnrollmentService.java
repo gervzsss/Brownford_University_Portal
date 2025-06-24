@@ -135,7 +135,14 @@ public class EnrollmentService {
             // Assign section from latest enrollment if available
             enrollment.setSection(latest.getSection());
         }
-        return enrollmentRepository.save(enrollment);
+        Enrollment savedEnrollment = enrollmentRepository.save(enrollment);
+        // Notify all admins of new enrollment request
+        String studentName = student.getUser() != null ? student.getUser().getFullName()
+                : (student.getStudentId() != null ? student.getStudentId() : "A student");
+        String adminMessage = studentName + " has requested enrollment for " + semester + ", Year Level: " + yearLevel
+                + ".";
+        notificationService.createAdminNotification(adminMessage, "ENROLLMENT_REQUEST");
+        return savedEnrollment;
     }
 
     // Keep the old method for compatibility (if needed)
@@ -163,10 +170,10 @@ public class EnrollmentService {
         // Trigger notification if approved
         if ("APPROVED".equalsIgnoreCase(status)) {
             notificationService.createNotification(
-                enrollment.getStudent(),
-                "Your enrollment for " + enrollment.getSemester() + ", Year Level: " + enrollment.getYearLevel() + " has been approved.",
-                "ENROLLMENT_ACCEPTED"
-            );
+                    enrollment.getStudent(),
+                    "Your enrollment for " + enrollment.getSemester() + ", Year Level: " + enrollment.getYearLevel()
+                            + " has been approved.",
+                    "ENROLLMENT_ACCEPTED");
         }
         return saved;
     }

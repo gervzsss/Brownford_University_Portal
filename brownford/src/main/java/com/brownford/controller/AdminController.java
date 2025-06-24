@@ -4,11 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 
 import com.brownford.repository.UserRepository;
 import com.brownford.repository.CourseRepository;
+import com.brownford.service.NotificationService;
+import com.brownford.model.Notification;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -17,9 +21,14 @@ public class AdminController {
     private UserRepository userRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/admin-dashboard")
-    public String adminDashboard() {
+    public String adminDashboard(Model model) {
+        List<Notification> allNotifications = notificationService.getNotificationsForAdmin();
+        List<Notification> latestNotifications = allNotifications.stream().limit(4).toList();
+        model.addAttribute("systemNotifications", latestNotifications);
         return "/admin/admin-dashboard";
     }
 

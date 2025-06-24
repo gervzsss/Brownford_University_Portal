@@ -8,7 +8,14 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     List<Notification> findByStudentOrderByCreatedAtDesc(Student student);
+
     List<Notification> findByStudentAndIsReadFalseOrderByCreatedAtDesc(Student student);
+
     List<Notification> findByFacultyOrderByCreatedAtDesc(Faculty faculty);
+
     List<Notification> findByFacultyAndIsReadFalseOrderByCreatedAtDesc(Faculty faculty);
+
+    List<Notification> findByRecipientRoleOrderByCreatedAtDesc(String recipientRole);
+
+    List<Notification> findByRecipientRoleAndIsReadFalseOrderByCreatedAtDesc(String recipientRole);
 }
