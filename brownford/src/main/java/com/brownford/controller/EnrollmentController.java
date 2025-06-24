@@ -3,6 +3,7 @@ package com.brownford.controller;
 import com.brownford.dto.BatchEnrollmentRequest;
 import com.brownford.dto.CourseInfo;
 import com.brownford.dto.EnrollmentDTO;
+import com.brownford.dto.PendingApprovalDTO;
 import com.brownford.model.Enrollment;
 import com.brownford.service.EnrollmentService;
 
@@ -123,6 +124,12 @@ public class EnrollmentController {
         // { "success": [1,2,3], "failed": [ {"studentId":4, "reason":"Already enrolled"} ] }
         Map<String, Object> result = enrollmentService.batchEnroll(request);
         return ResponseEntity.ok(result);
+    }
+
+    // Endpoint: Get latest 5 pending approvals for dashboard summary
+    @GetMapping("/pending-approvals/summary")
+    public List<PendingApprovalDTO> getLatestPendingApprovalsSummary() {
+        return enrollmentService.getLatestPendingApprovals(5);
     }
 }
 // No major changes needed, but ensure studentId refers to Student entity.

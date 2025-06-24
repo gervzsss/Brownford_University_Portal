@@ -646,7 +646,7 @@ body {
 
 .view-all-link {
   display: inline-block;
-  color: #6b3a1d;
+  color: #8b4513;
   text-decoration: none;
   font-weight: bold;
   padding: 8px 15px;
@@ -3079,4 +3079,100 @@ body {
 /* Highlight current day cell (already handled by JS, but style here) */
 .schedule-table td[style*="background-color"] {
   background-color: #f0e6dd !important;
+}
+
+/* Pending Approvals Section (Admin Dashboard) */
+#pending-approvals-list .event-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s;
+  border-left: 5px solid #8b4513;
+}
+
+#pending-approvals-list .event-card:hover {
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.16);
+  background: #f9f6f2;
+}
+
+#pending-approvals-list .event-date {
+  min-width: 54px;
+  text-align: center;
+  margin-right: 18px;
+  background: #f5e7d6;
+  border-radius: 8px;
+  padding: 8px 0 6px 0;
+  font-family: 'Cinzel', serif;
+}
+
+#pending-approvals-list .event-month {
+  display: block;
+  font-size: 13px;
+  color: #8b4513;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#pending-approvals-list .event-day {
+  display: block;
+  font-size: 22px;
+  color: #8b4513;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+#pending-approvals-list .event-details {
+  flex: 1;
+}
+
+#pending-approvals-list .event-title {
+  font-size: 18px;
+  color: #6b3a1d;
+  margin-bottom: 4px;
+  font-family: 'Cinzel Decorative', serif;
+}
+
+#pending-approvals-list .event-description {
+  font-size: 15px;
+  color: #5a4633;
+  margin-bottom: 8px;
+}
+
+#pending-approvals-list .event-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#pending-approvals-list .event-time {
+  font-size: 13px;
+  color: #8b4513;
+  background: #f5e7d6;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-right: 8px;
+}
+
+#pending-approvals-view-all {
+  text-align: right;
+  margin-top: 0;
+}
+
+
+#pending-approvals-empty .empty-state {
+  text-align: center;
+  color: #a67c52;
+  padding: 30px 0 10px 0;
+}
+
+#pending-approvals-empty svg {
+  margin-bottom: 10px;
+}
+
+#pending-approvals-empty p {
+  font-size: 15px;
 }

@@ -17,6 +17,9 @@ import com.brownford.dto.BatchEnrollmentRequest;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
+import com.brownford.dto.PendingApprovalDTO;
+import java.util.stream.Collectors;
+import java.util.Comparator;
 
 @Service
 public class EnrollmentService {
@@ -341,5 +344,33 @@ public class EnrollmentService {
         result.put("success", success);
         result.put("failed", failed);
         return result;
+    }
+
+    /**
+     * Returns the latest 5 pending enrollments as PendingApprovalDTOs, sorted by request date descending.
+     */
+    public List<PendingApprovalDTO> getLatestPendingApprovals(int limit) {
+        return enrollmentRepository.findByStatus("PENDING").stream()
+            .sorted(Comparator.comparing(Enrollment::getCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())))
+            .limit(limit)
+            .map(enrollment -> {
+                PendingApprovalDTO dto = new PendingApprovalDTO();
+                dto.setEnrollmentId(enrollment.getId());
+                if (enrollment.getStudent() != null && enrollment.getStudent().getUser() != null) {
+                    dto.setStudentName(enrollment.getStudent().getUser().getFirstName() + " " + enrollment.getStudent().getUser().getLastName());
+                } else {
+                    dto.setStudentName("N/A");
+                }
+                if (enrollment.getStudent() != null && enrollment.getStudent().getProgram() != null) {
+                    dto.setProgramName(enrollment.getStudent().getProgram().getName());
+                } else {
+                    dto.setProgramName("N/A");
+                }
+                dto.setYearLevel(enrollment.getYearLevel());
+                dto.setSemester(enrollment.getSemester());
+                dto.setRequestDate(enrollment.getCreatedAt());
+                return dto;
+            })
+            .collect(Collectors.toList());
     }
 }

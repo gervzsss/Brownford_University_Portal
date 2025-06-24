@@ -1,5 +1,9 @@
 # Changelog
 
+## [06.25.250203]
+
+### New
+- Working Pending Approval in the Admin Dashboard.
 
 ## [06.25.250057]
 

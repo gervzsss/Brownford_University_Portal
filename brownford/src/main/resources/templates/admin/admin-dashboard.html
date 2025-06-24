@@ -266,23 +266,8 @@
                 <!-- Pending Approvals Section -->
                 <section class="events-section">
                     <h3 class="section-title">Pending Approvals</h3>
-                    <div class="events-container" th:if="${not #lists.isEmpty(pendingApprovals)}">
-                        <div class="event-card" th:each="approval : ${pendingApprovals}">
-                            <div class="event-date">
-                                <span class="event-month" th:text="${approval.month}">Month</span>
-                                <span class="event-day" th:text="${approval.day}">Day</span>
-                            </div>
-                            <div class="event-details">
-                                <h4 class="event-title" th:text="${approval.title}">Approval Title</h4>
-                                <p class="event-description" th:text="${approval.description}">Approval description</p>
-                                <div class="event-info">
-                                    <span class="event-time" th:text="${approval.requestId}">Request ID</span>
-                                    <a th:href="${approval.reviewUrl}" class="view-button-small">Review</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="events-container" th:if="${#lists.isEmpty(pendingApprovals)}">
+                    <div id="pending-approvals-list" class="events-container"></div>
+                    <div id="pending-approvals-empty" class="events-container" style="display:none;">
                         <div class="empty-state">
                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
@@ -294,8 +279,8 @@
                                 attention.</p>
                         </div>
                     </div>
-                    <div class="view-all-container" th:if="${not #lists.isEmpty(pendingApprovals)}">
-                        <a th:href="@{/admin-approvals}" class="view-all-link">View All Pending Approvals</a>
+                    <div id="pending-approvals-view-all" class="view-all-container">
+                        <a th:href="@{/admin-enrollments}" class="view-all-link">View All Pending Enrollments</a>
                     </div>
                 </section>
             </main>
@@ -306,6 +291,7 @@
 
     <script th:src="@{/js/notifications.js}"></script>
     <script th:src="@{/js/sidebar-nav.js}"></script>
+    <script th:src="@{/js/pending-approvals.js}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/api/admin/system-summary')
