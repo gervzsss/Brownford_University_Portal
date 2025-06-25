@@ -31,7 +31,7 @@
                     </svg>
                 </div>
                 <div class="profile-title">
-                    <h2 class="profile-name" id="facultyName">Prof. Faculty Name</h2>
+                    <h2 class="profile-name" th:text="${faculty.user.fullName}">Prof. Faculty Name</h2>
                     <p class="profile-subtitle">Faculty Profile</p>
                 </div>
             </div>
@@ -42,15 +42,15 @@
                     <div class="profile-info-grid">
                         <div class="info-item">
                             <span class="info-label">Faculty ID:</span>
-                            <span class="info-value" id="facultyId">F-2022-0123</span>
+                            <span class="info-value" th:text="${faculty.id}"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Full Name:</span>
-                            <span class="info-value" id="fullName">Full Name</span>
+                            <span class="info-value" th:text="${(faculty.user.fullName)?.toUpperCase()}">Full Name</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Email:</span>
-                            <span class="info-value" id="email">email@example.com</span>
+                            <span class="info-value" th:text="${faculty.user.email}">email@example.com</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Status:</span>
@@ -89,36 +89,6 @@
                         <div class="info-item">
                             <span class="info-label">Employment Status:</span>
                             <span class="info-value" id="employmentStatus">Employment Status</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h3 class="section-title">Contact Information</h3>
-                    <div class="profile-info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Email Address:</span>
-                            <span class="info-value" id="email">gervy.masbate@brownford.edu</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Mobile Number:</span>
-                            <span class="info-value" id="mobileNumber">+63 912 345 6789</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Office Location:</span>
-                            <span class="info-value" id="officeLocation">Science Building, Room 305</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Office Hours:</span>
-                            <span class="info-value" id="officeHours">MWF 2:00 PM - 4:00 PM</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Home Address:</span>
-                            <span class="info-value" id="address">123 Faculty Village, University Town</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Emergency Contact:</span>
-                            <span class="info-value" id="emergencyContact">Maria Masbate (Wife) - +63 923 456 7890</span>
                         </div>
                     </div>
                 </div>

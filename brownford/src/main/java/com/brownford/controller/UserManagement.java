@@ -64,10 +64,13 @@ public class UserManagement {
         // Filter by search
         if (search != null && !search.isEmpty()) {
             String searchLower = search.toLowerCase();
-            users = users.stream().filter(user -> user.getUsername().toLowerCase().contains(searchLower) ||
-                    user.getFirstName().toLowerCase().contains(searchLower) ||
-                    user.getLastName().toLowerCase().contains(searchLower) ||
-                    user.getEmail().toLowerCase().contains(searchLower)).toList();
+            users = users.stream().filter(user ->
+                user.getUsername().toLowerCase().contains(searchLower) ||
+                user.getFirstName().toLowerCase().contains(searchLower) ||
+                (user.getMiddleName() != null && user.getMiddleName().toLowerCase().contains(searchLower)) ||
+                user.getLastName().toLowerCase().contains(searchLower) ||
+                user.getEmail().toLowerCase().contains(searchLower)
+            ).toList();
         }
 
         // Filter by role
@@ -116,6 +119,7 @@ public class UserManagement {
         result.put("status", user.getStatus());
         result.put("password", user.getPassword()); // Only for pre-populating the form, not for security
         result.put("lastLogin", user.getLastLogin());
+        result.put("middleName", user.getMiddleName());
         if (user.getRole().equalsIgnoreCase("student")) {
             Student student = studentRepository.findById(user.getId()).orElse(null);
             if (student != null) {
@@ -151,6 +155,7 @@ public class UserManagement {
         user.setRole(payload.get("role").toString());
         user.setStatus(payload.get("status").toString());
         user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
+        user.setMiddleName(payload.get("middleName").toString());
         User savedUser = userRepository.save(user);
         // If student, create Student entity
         if (user.getRole().equalsIgnoreCase("student")) {
@@ -199,6 +204,7 @@ public class UserManagement {
         user.setEmail(payload.get("email").toString());
         user.setRole(payload.get("role").toString());
         user.setStatus(payload.get("status").toString());
+        user.setMiddleName(payload.get("middleName").toString());
         if (payload.containsKey("password") && payload.get("password") != null
                 && !payload.get("password").toString().isEmpty()) {
             user.setPassword(passwordEncoder.encode(payload.get("password").toString()));

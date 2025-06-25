@@ -1,6 +1,3 @@
-// faculty-profile.js
-// Handles dynamic loading and updating of faculty profile info
-
 document.addEventListener('DOMContentLoaded', function () {
     // Helper for safe display
     function safe(val) { return val && val !== '' ? val : 'N/A'; }
@@ -9,9 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('/api/faculty/profile/info')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('facultyName').textContent = safe((data.firstName || '') + ' ' + (data.lastName || ''));
+            const fullName = ((data.firstName ? data.firstName : '') + ' ' + (data.middleName ? data.middleName + ' ' : '') + (data.lastName ? data.lastName : ''));
+
+            document.getElementById('profileName').textContent = safe(fullName);
             document.getElementById('facultyId').textContent = safe(data.facultyId);
-            document.getElementById('fullName').textContent = safe((data.firstName || '') + ' ' + (data.lastName || ''));
+            document.getElementById('fullName').textContent = safe(fullName).toUpperCase();
             document.getElementById('email').textContent = safe(data.email);
             document.getElementById('status').textContent = safe(data.status);
             document.getElementById('lastLogin').textContent = safe(data.lastLogin);

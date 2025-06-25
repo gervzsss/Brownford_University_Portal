@@ -31,7 +31,7 @@
                     </svg>
                 </div>
                 <div class="profile-title">
-                    <h2 class="profile-name" id="profileName">Student Name</h2>
+                    <h2 class="profile-name" id="profileName">Full Name</h2>
                     <p class="profile-subtitle">Student Profile</p>
                 </div>
             </div>
@@ -204,9 +204,11 @@
                 .then(response => response.json())
                 .then(data => {
                     function safe(val) { return val && val !== '' ? val : 'N/A'; }
-                    document.getElementById('profileName').textContent = safe((data.firstName ? data.firstName : '') + ' ' + (data.lastName ? data.lastName : ''));
+                    // Compose full name with middle name, all caps
+                    const fullName = ((data.firstName ? data.firstName : '') + ' ' + (data.middleName ? data.middleName + ' ' : '') + (data.lastName ? data.lastName : ''));
+                    document.getElementById('profileName').textContent = safe(fullName);
                     document.getElementById('studentId').textContent = safe(data.studentId);
-                    document.getElementById('fullName').textContent = safe((data.firstName ? data.firstName : '') + ' ' + (data.lastName ? data.lastName : ''));
+                    document.getElementById('fullName').textContent = safe(fullName).toUpperCase();
                     document.getElementById('email').textContent = safe(data.email);
                     document.getElementById('program').textContent = safe(data.program);
                     document.getElementById('yearLevel').textContent = safe(data.yearLevel);

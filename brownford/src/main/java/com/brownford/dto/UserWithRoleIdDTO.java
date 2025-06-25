@@ -6,6 +6,7 @@ public class UserWithRoleIdDTO {
     private Long id;
     private String username;
     private String firstName;
+    private String middleName;
     private String lastName;
     private String email;
     private String role;
@@ -17,6 +18,7 @@ public class UserWithRoleIdDTO {
         this.id = user.getId();
         this.username = user.getUsername();
         this.firstName = user.getFirstName();
+        this.middleName = user.getMiddleName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
         this.role = user.getRole();
@@ -48,6 +50,14 @@ public class UserWithRoleIdDTO {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getLastName() {

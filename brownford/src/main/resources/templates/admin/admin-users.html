@@ -122,6 +122,7 @@
                             <div class="form-group">
                                 <label for="userRole">Role</label>
                                 <select id="userRole" name="userRole" class="form-control" required>
+                                    <option>Select Role</option>
                                     <option value="student">Student</option>
                                     <option value="faculty">Faculty</option>
                                     <option value="admin">Admin</option>
@@ -132,6 +133,10 @@
                             <div class="form-group">
                                 <label for="firstName">First Name</label>
                                 <input type="text" id="firstName" name="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="middleName">Middle Name</label>
+                                <input type="text" id="middleName" name="middleName" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="lastName">Last Name</label>
@@ -316,6 +321,7 @@
                 const formData = {
                     username: document.getElementById('username').value,
                     firstName: document.getElementById('firstName').value,
+                    middleName: document.getElementById('middleName').value,
                     lastName: document.getElementById('lastName').value,
                     email: document.getElementById('email').value,
                     role: document.getElementById('userRole').value,
@@ -427,7 +433,7 @@
                     row.innerHTML = `
                         <td>${user.id}</td>
                         <td>${user.username}</td>
-                        <td>${user.firstName} ${user.lastName}</td>
+                        <td>${user.firstName} ${user.middleName} ${user.lastName}</td>
                         <td>${user.email}</td>
                         <td><span class="role-badge ${user.role.toLowerCase()}">${user.role}</span></td>
                         <td><span class="status-badge ${user.status.toLowerCase()}">${user.status}</span></td>
@@ -507,7 +513,7 @@
                 const user = await response.json();
                 document.getElementById('viewUserId').textContent = user.id;
                 document.getElementById('viewUsername').textContent = user.username;
-                document.getElementById('viewFullName').textContent = user.firstName + ' ' + user.lastName;
+                document.getElementById('viewFullName').textContent = `${user.firstName} ${user.middleName} ${user.lastName}`;
                 document.getElementById('viewEmail').textContent = user.email;
                 document.getElementById('viewRole').textContent = user.role;
                 document.getElementById('viewStatus').textContent = user.status;
@@ -535,6 +541,7 @@
                 document.getElementById('userForm').reset();
                 document.getElementById('username').value = user.username;
                 document.getElementById('firstName').value = user.firstName;
+                document.getElementById('middleName').value = user.middleName || '';
                 document.getElementById('lastName').value = user.lastName;
                 document.getElementById('email').value = user.email;
                 document.getElementById('userRole').value = user.role;
@@ -624,7 +631,7 @@
                     row.innerHTML = `
                         <td>${user.id}</td>
                         <td>${user.username}</td>
-                        <td>${user.firstName} ${user.lastName}</td>
+                        <td>${user.firstName} ${user.middleName} ${user.lastName}</td>
                         <td>${user.email}</td>
                         <td><span class="role-badge ${user.role.toLowerCase()}">${user.role}</span></td>
                         <td><span class="status-badge ${user.status.toLowerCase()}">${user.status}</span></td>
@@ -704,7 +711,7 @@
                 const user = await response.json();
                 document.getElementById('viewUserId').textContent = user.id;
                 document.getElementById('viewUsername').textContent = user.username;
-                document.getElementById('viewFullName').textContent = user.firstName + ' ' + user.lastName;
+                document.getElementById('viewFullName').textContent = `${user.firstName} ${user.middleName} ${user.lastName}`;
                 document.getElementById('viewEmail').textContent = user.email;
                 document.getElementById('viewRole').textContent = user.role;
                 document.getElementById('viewStatus').textContent = user.status;
@@ -732,6 +739,7 @@
                 document.getElementById('userForm').reset();
                 document.getElementById('username').value = user.username;
                 document.getElementById('firstName').value = user.firstName;
+                document.getElementById('middleName').value = user.middleName || '';
                 document.getElementById('lastName').value = user.lastName;
                 document.getElementById('email').value = user.email;
                 document.getElementById('userRole').value = user.role;
@@ -790,222 +798,9 @@
         }
     </script>
 
-    <style>
-        /* Empty state styles */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-        }
+    <!-- <style>
 
-        .empty-state svg {
-            margin-bottom: 1rem;
-            opacity: 0.6;
-        }
-
-        .empty-state p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .empty-state-message {
-            text-align: center;
-        }
-
-        .empty-pagination-message {
-            text-align: center;
-            color: #888;
-            font-size: 0.9rem;
-            padding: 0.5rem;
-            font-style: italic;
-        }
-
-        /* Modal overlay and modal improvements */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(30, 20, 10, 0.25);
-            backdrop-filter: blur(6px) saturate(120%);
-            -webkit-backdrop-filter: blur(6px) saturate(120%);
-            transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .modal.show {
-            display: block;
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18), 0 1.5px 6px rgba(139, 69, 19, 0.08);
-            margin: 4vh auto;
-            padding: 2.5rem 2rem 2rem 2rem;
-            max-width: 420px;
-            min-width: 320px;
-            position: relative;
-            animation: modalPopIn 0.32s cubic-bezier(.4, 0, .2, 1);
-        }
-
-        @media (max-width: 600px) {
-            .modal-content {
-                max-width: 98vw;
-                min-width: unset;
-                padding: 1.2rem 0.5rem 1.5rem 0.5rem;
-            }
-        }
-
-        @keyframes modalPopIn {
-            0% {
-                transform: scale(0.92) translateY(30px);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #eeeeee;
-            padding-bottom: 0.7rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .modal-header h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.25rem;
-            color: #ffffff;
-            margin: 0;
-        }
-
-        .close-modal {
-            font-size: 1.7rem;
-            color: #ffffff;
-            cursor: pointer;
-            border-radius: 50%;
-            padding: 0 0.5rem;
-            transition: background 0.2s;
-        }
-
-        .close-modal:hover {
-            background: #cfbdb1;
-        }
-
-        .modal-body {
-            padding: 0;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 600px) {
-            .form-row {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-
-        .form-group label {
-            font-weight: 500;
-            color: #6B3A1D;
-            margin-bottom: 0.3rem;
-        }
-
-        .form-control {
-            border-radius: 6px;
-            border: 1px solid #d6cfc7;
-            padding: 0.5rem 0.7rem;
-            font-size: 1rem;
-            background: #faf8f6;
-            transition: border 0.2s;
-        }
-
-        .form-control:focus {
-            border: 1.5px solid #8B4513;
-            outline: none;
-            background: #fff;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.7rem;
-            margin-top: 1.2rem;
-        }
-
-        /* User details modal grid improvements */
-        .user-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.7rem 1.2rem;
-            margin-bottom: 1.2rem;
-        }
-
-        @media (max-width: 600px) {
-            .user-info-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1rem;
-        }
-
-        .info-label {
-            font-size: 0.97rem;
-            color: #8B4513;
-            font-weight: 500;
-        }
-
-        .info-value {
-            font-size: 1.05rem;
-            color: #333;
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        .user-avatar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1.2rem;
-        }
-
-        .user-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 1.2rem;
-        }
-
-        /* Modal fade/scale transitions */
-        .modal {
-            transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-        }
-
-        .modal-content {
-            transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-        }
-    </style>
+    </style> -->
 </body>
 
 </html>

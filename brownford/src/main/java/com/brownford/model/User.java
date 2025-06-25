@@ -17,6 +17,9 @@ public class User {
     private String firstName;
 
     @Column(nullable = false)
+    private String middleName;
+
+    @Column(nullable = false)
     private String lastName;
 
     @Column(nullable = false, unique = true)
@@ -56,6 +59,14 @@ public class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getLastName() {
@@ -107,6 +118,6 @@ public class User {
     }
 
     public String getFullName() {
-        return (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+        return (firstName != null ? firstName : "") + " " + (middleName != null ? middleName + " " : "") + (lastName != null ? lastName : "");
     }
 }

@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.26.250115]
+
+### Changes
+- Added Middle name in the users table.
+- Faculty/Student Dashboard Name display changes.
+- Faculty/Student Profile Page Name display changes.
+
 ## [06.25.250330]
 
 ### Changes
