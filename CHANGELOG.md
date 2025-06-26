@@ -1,5 +1,9 @@
 # Changelog
 
+## [06.26.251909]
+
+### New
+- Added favicon icon for browser icons.
 
 ## [06.26.251827]
 
