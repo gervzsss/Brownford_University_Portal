@@ -707,3 +707,88 @@ class FacultyProfileRestController {
         return result;
     }
 }
+
+@RestController
+@RequestMapping("/api/faculty")
+class FacultyClassListRestController {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private FacultyRepository facultyRepository;
+    @Autowired
+    private FacultyAssignmentRepository facultyAssignmentRepository;
+    @Autowired
+    private ScheduleRepository scheduleRepository;
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
+
+    @GetMapping("/class-list")
+    public List<Map<String, Object>> getFacultyClassList(Principal principal) {
+        List<Map<String, Object>> result = new java.util.ArrayList<>();
+        if (principal == null)
+            return result;
+        String username = principal.getName();
+        var facultyOpt = userRepository.findByUsername(username)
+                .flatMap(user -> facultyRepository.findByUser(user));
+        if (facultyOpt.isEmpty())
+            return result;
+        var faculty = facultyOpt.get();
+        var assignments = facultyAssignmentRepository.findAll().stream()
+                .filter(a -> a.getFaculty() != null && a.getFaculty().getId().equals(faculty.getId()))
+                .collect(Collectors.toList());
+        for (var assignment : assignments) {
+            var section = assignment.getSection();
+            var curriculumCourse = assignment.getCurriculumCourse();
+            if (section == null || curriculumCourse == null)
+                continue;
+            var course = curriculumCourse.getCourse();
+            // Schedule string
+            var schedules = scheduleRepository.findByCurriculumCourseAndSection(curriculumCourse, section);
+            StringBuilder scheduleStr = new StringBuilder();
+            StringBuilder roomStr = new StringBuilder();
+            for (var sched : schedules) {
+                if (scheduleStr.length() > 0)
+                    scheduleStr.append(" / ");
+                scheduleStr.append((sched.getDay() != null ? sched.getDay() : "") + " " +
+                        (sched.getStartTime() != null ? sched.getStartTime().toString() : "") + "-" +
+                        (sched.getEndTime() != null ? sched.getEndTime().toString() : ""));
+                if (roomStr.length() > 0)
+                    roomStr.append(" / ");
+                roomStr.append(sched.getRoom() != null ? sched.getRoom() : "");
+            }
+            // Enrolled students
+            var enrollments = enrollmentRepository.findAll().stream()
+                    .filter(e -> e.getSection() != null && e.getSection().getId().equals(section.getId())
+                            && e.getCourses() != null
+                            && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId())))
+                    .collect(Collectors.toList());
+            List<Map<String, Object>> students = new java.util.ArrayList<>();
+            int no = 1;
+            for (var enrollment : enrollments) {
+                var student = enrollment.getStudent();
+                if (student == null)
+                    continue;
+                var user = student.getUser();
+                Map<String, Object> studentMap = new HashMap<>();
+                studentMap.put("no", no++);
+                studentMap.put("studentNo", student.getStudentId());
+                studentMap.put("fullName",
+                        (user.getLastName() + ", " + user.getFirstName() + " " + user.getMiddleName()).toUpperCase());
+                studentMap.put("email", user.getEmail());
+                studentMap.put("cellphoneNumber", student.getMobileNumber()); // Add cellphone number
+                students.add(studentMap);
+            }
+            Map<String, Object> classMap = new HashMap<>();
+            classMap.put("sectionCode", section.getSectionCode());
+            classMap.put("courseCode", course.getCourseCode());
+            classMap.put("courseTitle", course.getCourseTitle());
+            classMap.put("schoolYear", assignment.getSchoolYear());
+            classMap.put("semester", assignment.getSemester());
+            classMap.put("schedule", scheduleStr.toString());
+            classMap.put("room", roomStr.toString());
+            classMap.put("students", students);
+            result.add(classMap);
+        }
+        return result;
+    }
+}

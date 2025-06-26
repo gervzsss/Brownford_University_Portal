@@ -868,10 +868,17 @@ body {
   color: #6b3a1d;
 }
 
+.schedule-subtitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #6b3a1d;
+}
+
 .schedule-note {
   font-size: 16px;
-  color: #333;
+  color: #6b3a1d;
 }
+
 .schedule-table-container,
 .workload-table-container {
   overflow-x: auto;
@@ -981,7 +988,7 @@ body {
 
 .grades-subtitle {
   font-size: 20px;
-  color: #333;
+  color: #6b3a1d;
   margin-bottom: 5px;
 }
 
@@ -2400,12 +2407,6 @@ body {
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
   border: none;
-}
-
-.sign-in-button,
-.view-grades-btn,
-.save-button,
-.finalize-button {
   background-color: #8b4513;
   color: white;
   padding: 10px 20px;
@@ -2817,11 +2818,6 @@ body {
   margin-bottom: 15px;
 }
 
-.grading-info-row:last-child {
-  justify-content: center;
-  margin-bottom: 0;
-}
-
 .grading-info-item {
   margin-right: 20px;
 }
@@ -2879,26 +2875,6 @@ body {
   justify-content: center;
   gap: 20px;
   margin-top: 30px;
-}
-
-.save-button,
-.finalize-button {
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.save-button {
-  background-color: #2196f3;
-}
-
-.save-button:hover {
-  background-color: #1976d2;
 }
 
 .finalize-button {

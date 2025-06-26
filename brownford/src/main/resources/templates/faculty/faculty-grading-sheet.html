@@ -35,13 +35,15 @@
                     </div>
                     <div>
                         <h2 class="grades-title">GRADING SHEET</h2>
-                        <p class="semester-info">STAT104: Linear Regression | BSSTAT 1-1</p>
+                        <p class="semester-info">Enter or review final grades for each student.</p>
+                        <p class="semester-info">All grades will reflect in the student portal after submission.</p>
+
                     </div>
                 </div>
                 <div class="student-info">
                     <p class="student-name">Prof. <span
                             th:text="${faculty.user.firstName + ' ' + faculty.user.lastName}">Faculty Name</span></p>
-                    <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span></p>
+                    <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">Faculty ID</span></p>
                 </div>
             </div>
 
@@ -58,19 +60,9 @@
             <div class="grading-info-box">
                 <div class="grading-info-row">
                     <div class="grading-info-item">
-                        <h3>GRADE SHEET STATUS</h3>
-                        <p class="status-open">OPEN</p>
-                    </div>
-                    <div class="grading-info-item">
-                        <h3>STATUS</h3>
-                        <p class="status-finalize">Finalize</p>
-                    </div>
-                    <div class="grading-info-item">
                         <h3>COURSE</h3>
                         <p th:text="${course != null ? course.courseCode + ': ' + course.courseTitle : ''}"></p>
                     </div>
-                </div>
-                <div class="grading-info-row">
                     <div class="grading-info-item">
                         <h3>SCHOOL YEAR:</h3>
                         <p th:text="${schoolYear}"></p>
@@ -87,9 +79,6 @@
                         <h3>SCHEDULE:</h3>
                         <p th:text="${scheduleString}"></p>
                     </div>
-                </div>
-                <div class="grading-info-row">
-                    <button class="review-button">Review Grading Sheet</button>
                 </div>
             </div>
 
@@ -113,7 +102,7 @@
                         <tr th:each="student, iterStat : ${students}">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${student.studentId}"></td>
-                            <td th:text="${student.user.lastName + ', ' + student.user.firstName}"></td>
+                            <td th:text="${(student.user.lastName + ', ' + student.user.firstName + ' ' + student.user.middleName)?.toUpperCase()}"></td>
                             <td><input type="text" class="grade-input" th:name="'midtermGrade_' + ${student.studentId}"
                                     th:id="'midtermGrade_' + ${student.studentId}" /></td>
                             <td><input type="text" class="grade-input" th:name="'finalsGrade_' + ${student.studentId}"
@@ -130,7 +119,6 @@
 
             <div class="grading-actions">
                 <button class="save-button">Save Changes</button>
-                <button class="finalize-button">Finalize Grades</button>
             </div>
         </main>
     </div>
@@ -198,13 +186,6 @@
                             .catch(() => { allSuccess = false; });
                     }
                 });
-                // setTimeout(() => {
-                //     if (allSuccess) {
-                //         alert('Grades saved successfully!');
-                //     } else {
-                //         alert('Some grades failed to save.');
-                //     }
-                // }, 1000);
             });
         });
     </script>
@@ -245,19 +226,6 @@
             alert('Grades saved successfully!');
         });
 
-        // Finalize button functionality
-        document.querySelector('.finalize-button').addEventListener('click', function () {
-            if (confirm('Are you sure you want to finalize these grades? This action cannot be undone.')) {
-                alert('Grades have been finalized and submitted.');
-                // Disable all inputs after finalizing
-                document.querySelectorAll('.grade-input, .remark-input').forEach(input => {
-                    input.disabled = true;
-                });
-                // Disable buttons
-                document.querySelector('.save-button').disabled = true;
-                document.querySelector('.finalize-button').disabled = true;
-            }
-        });
     </script>
 </body>
 

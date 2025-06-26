@@ -1,5 +1,14 @@
 # Changelog
 
+
+## [06.26.251827]
+
+### New
+- Faculty Class List.
+
+### Changes
+- Improved Faculty Grading Sheet.
+
 ## [06.25.261458]
 
 ### Changes
