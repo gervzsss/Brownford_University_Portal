@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University - Faculty Grading Sheet</title>
+    <title>Faculty Grading Sheet - Brown Ford University</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
-    <link rel="stylesheet" th:href="@{/css/faculty.css}">
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
     <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
 </head>
 
 <body>
+    <faculty-header></faculty-header>
+
     <div class="background-container">
         <div class="background-image"></div>
-
-        <faculty-header></faculty-header>
 
         <!-- Main Content -->
         <main class="grades-content">
@@ -143,7 +143,6 @@
     <input type="hidden" id="semester" th:value="${semester}" />
     <input type="hidden" id="schoolYear" th:value="${schoolYear}" />
 
-    <script src="/js/notifications.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Get dynamic values from Thymeleaf-rendered hidden fields or JS variables

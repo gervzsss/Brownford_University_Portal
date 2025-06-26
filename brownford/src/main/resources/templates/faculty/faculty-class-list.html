@@ -4,217 +4,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brown Ford University - Class List</title>
+    <title>Class List - Brown Ford University</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
-    <link rel="stylesheet" th:href="@{/css/faculty.css}">
-    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
+    <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
 </head>
 
 <body>
-    <facuty-header></faculty-header>
+    <faculty-header></faculty-header>
 
-        <div class="background-container">
-            <div class="background-image"></div>
+    <div class="background-container">
+        <div class="background-image"></div>
 
-            <!-- Main Content -->
-            <main class="schedule-content">
-                <div class="schedule-header">
-                    <div class="schedule-icon-container">
-                        <div class="grades-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 class="enrolled-subjects-title">CLASS LIST</h2>
-                            <p class="semester-info">STAT104: Linear Regression | BSSTAT 1-1 | 2024-2025 / 2ND SEMESTER
-                            </p>
-                        </div>
-                    </div>
-                    <div class="student-info">
-                        <p class="student-name">Prof. <span
-                                th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty Name</span></p>
-                        <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span></p>
-                    </div>
-                </div>
-
-                <div class="back-link-container">
-                    <a href="/faculty-workload" class="back-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
+        <!-- Main Content -->
+        <main class="schedule-content">
+            <div class="schedule-header">
+                <div class="schedule-icon-container">
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                         </svg>
-                        Back to Workload
-                    </a>
-                </div>
-
-                <div class="filter-section">
-                    <div class="filter-row">
-                        <div class="filter-group">
-                            <label for="section">Section:</label>
-                            <select id="section" name="section" class="filter-select">
-                                <option value="BSSTAT1-1" selected>BSSTAT 1-1</option>
-                                <option value="BSSTAT2-1">BSSTAT 2-1</option>
-                                <option value="BSSTAT1-2">BSSTAT 1-2</option>
-                                <option value="BSSTAT2-2">BSSTAT 2-2</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="subject">Course:</label>
-                            <select id="subject" name="subject" class="filter-select">
-                                <option value="STAT104" selected>STAT104: Linear Regression</option>
-                                <option value="NSTP102">NSTP102: National Service Training Program 2</option>
-                            </select>
-                        </div>
-                        <button id="viewButton" class="certificate-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <span class="certificate-text">VIEW</span>
-                        </button>
+                    </div>
+                    <div>
+                        <h2 class="enrolled-subjects-title">CLASS LIST</h2>
+                        <p class="semester-info">STAT104: Linear Regression | BSSTAT 1-1 | 2024-2025 / 2ND SEMESTER
+                        </p>
                     </div>
                 </div>
-
-                <!-- Class List Table -->
-                <div id="classListTable" class="schedule-table-container">
-                    <table class="schedule-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Student ID</th>
-                                <th>Student Name</th>
-                                <th>Program</th>
-                                <th>Year Level</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>411-172-BF-1</td>
-                                <td>DELA CRUZ, JUAN MANALO C.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>juan.delacruz@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>411-173-BF-1</td>
-                                <td>JAVIER, MA. REGINE M.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>regine.javier@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>411-174-BF-1</td>
-                                <td>TORRES, CJ LOYD B.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>cj.torres@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>411-175-BF-1</td>
-                                <td>SANTOS, MARIA CLARA P.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>maria.santos@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>411-176-BF-1</td>
-                                <td>REYES, JOHN MICHAEL S.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>john.reyes@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>411-177-BF-1</td>
-                                <td>GARCIA, ANNA MARIE L.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>anna.garcia@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>411-178-BF-1</td>
-                                <td>MENDOZA, CARLO JAMES D.</td>
-                                <td>BSSTAT</td>
-                                <td>1st Year</td>
-                                <td>carlo.mendoza@student.brownford.edu</td>
-                                <td>Regular</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="student-info">
+                    <p class="student-name">Prof. <span th:text="${faculty.firstName + ' ' + faculty.lastName}">Faculty
+                            Name</span></p>
+                    <p class="student-id">Faculty ID: <span th:text="${faculty.facultyId}">F-2022-0123</span></p>
                 </div>
+            </div>
 
-                <!-- Download Button -->
-                <div class="certificate-button-container">
-                    <a href="#" class="certificate-button">
+            <div class="back-link-container">
+                <a href="/faculty-workload" class="back-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to Workload
+                </a>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="section">Section:</label>
+                        <select id="section" name="section" class="filter-select">
+                            <option value="BSSTAT1-1" selected>BSSTAT 1-1</option>
+                            <option value="BSSTAT2-1">BSSTAT 2-1</option>
+                            <option value="BSSTAT1-2">BSSTAT 1-2</option>
+                            <option value="BSSTAT2-2">BSSTAT 2-2</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="subject">Course:</label>
+                        <select id="subject" name="subject" class="filter-select">
+                            <option value="STAT104" selected>STAT104: Linear Regression</option>
+                            <option value="NSTP102">NSTP102: National Service Training Program 2</option>
+                        </select>
+                    </div>
+                    <button id="viewButton" class="certificate-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <span class="certificate-text">
-                            DOWNLOAD<br>CLASS LIST
-                        </span>
-                    </a>
+                        <span class="certificate-text">VIEW</span>
+                    </button>
                 </div>
-            </main>
-        </div>
-        </div>
+            </div>
 
-        <footer-footer></footer-footer>
+            <!-- Class List Table -->
+            <div id="classListTable" class="schedule-table-container">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Program</th>
+                            <th>Year Level</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>411-172-BF-1</td>
+                            <td>DELA CRUZ, JUAN MANALO C.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>juan.delacruz@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>411-173-BF-1</td>
+                            <td>JAVIER, MA. REGINE M.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>regine.javier@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>411-174-BF-1</td>
+                            <td>TORRES, CJ LOYD B.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>cj.torres@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>411-175-BF-1</td>
+                            <td>SANTOS, MARIA CLARA P.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>maria.santos@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>411-176-BF-1</td>
+                            <td>REYES, JOHN MICHAEL S.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>john.reyes@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>411-177-BF-1</td>
+                            <td>GARCIA, ANNA MARIE L.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>anna.garcia@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>411-178-BF-1</td>
+                            <td>MENDOZA, CARLO JAMES D.</td>
+                            <td>BSSTAT</td>
+                            <td>1st Year</td>
+                            <td>carlo.mendoza@student.brownford.edu</td>
+                            <td>Regular</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <script th:src="@{/js/notifications.js}"></script>
-        <script th:src="@{/js/sidebar-nav.js}"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const viewButton = document.getElementById('viewButton');
-                const classListTable = document.getElementById('classListTable');
-                const sectionSelect = document.getElementById('section');
-                const subjectSelect = document.getElementById('subject');
+            <!-- Download Button -->
+            <div class="certificate-button-container">
+                <a href="#" class="certificate-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="certificate-text">
+                        DOWNLOAD<br>CLASS LIST
+                    </span>
+                </a>
+            </div>
+        </main>
+    </div>
+    </div>
 
-                // Initially show the table
+    <footer-footer></footer-footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const viewButton = document.getElementById('viewButton');
+            const classListTable = document.getElementById('classListTable');
+            const sectionSelect = document.getElementById('section');
+            const subjectSelect = document.getElementById('subject');
+
+            // Initially show the table
+            classListTable.style.display = 'block';
+
+            // Show table when View button is clicked
+            viewButton.addEventListener('click', function () {
                 classListTable.style.display = 'block';
-
-                // Show table when View button is clicked
-                viewButton.addEventListener('click', function () {
-                    classListTable.style.display = 'block';
-                });
-
-                // For demonstration purposes, hide table when selections change
-                sectionSelect.addEventListener('change', function () {
-                    classListTable.style.display = 'none';
-                });
-
-                subjectSelect.addEventListener('change', function () {
-                    classListTable.style.display = 'none';
-                });
             });
-        </script>
+
+            // For demonstration purposes, hide table when selections change
+            sectionSelect.addEventListener('change', function () {
+                classListTable.style.display = 'none';
+            });
+
+            subjectSelect.addEventListener('change', function () {
+                classListTable.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 
 </html>

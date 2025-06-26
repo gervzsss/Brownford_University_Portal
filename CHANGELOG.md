@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.25.261458]
+
+### Changes
+- Fixed Faculty Profile Page.
+
 ## [06.26.250115]
 
 ### Changes

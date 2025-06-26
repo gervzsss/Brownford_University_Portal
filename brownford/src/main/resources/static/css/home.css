@@ -2662,6 +2662,7 @@ body {
 /* Schedule container styles */
 .view-all-container {
   margin-bottom: 20px;
+  text-align: right;
 }
 
 .schedule-container {

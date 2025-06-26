@@ -184,7 +184,7 @@ public class StudentController {
             return profile;
         profile.put("studentId", student.getStudentId());
         profile.put("firstName", student.getUser().getFirstName());
-        profile.put("middleName", student.getUser().getMiddleName()); // Add middle name
+        profile.put("middleName", student.getUser().getMiddleName());
         profile.put("lastName", student.getUser().getLastName());
         profile.put("email", student.getUser().getEmail());
         profile.put("program", student.getProgram() != null ? student.getProgram().getName() : "");
