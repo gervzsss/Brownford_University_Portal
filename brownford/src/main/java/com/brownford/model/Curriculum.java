@@ -13,7 +13,6 @@ public class Curriculum {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id", nullable = false)
-    @com.fasterxml.jackson.annotation.JsonIgnore
     private Program program;
 
     @Column(nullable = false)

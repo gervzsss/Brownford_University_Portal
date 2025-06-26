@@ -20,15 +20,6 @@ public class Faculty {
     private String dateOfBirth; // ISO string or yyyy-MM-dd
     private String mobileNumber;
     private String address;
-    private String specialization;
-    private String position;
-    private String highestDegree;
-    private String employmentStatus;
-    private String officeLocation;
-    private String officeHours;
-    private String emergencyContact;
-    private String researchInterests;
-    private String publications;
 
     // Add more faculty-specific fields as needed
 
@@ -87,77 +78,5 @@ public class Faculty {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public String getHighestDegree() {
-        return highestDegree;
-    }
-
-    public void setHighestDegree(String highestDegree) {
-        this.highestDegree = highestDegree;
-    }
-
-    public String getEmploymentStatus() {
-        return employmentStatus;
-    }
-
-    public void setEmploymentStatus(String employmentStatus) {
-        this.employmentStatus = employmentStatus;
-    }
-
-    public String getOfficeLocation() {
-        return officeLocation;
-    }
-
-    public void setOfficeLocation(String officeLocation) {
-        this.officeLocation = officeLocation;
-    }
-
-    public String getOfficeHours() {
-        return officeHours;
-    }
-
-    public void setOfficeHours(String officeHours) {
-        this.officeHours = officeHours;
-    }
-
-    public String getEmergencyContact() {
-        return emergencyContact;
-    }
-
-    public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
-    }
-
-    public String getResearchInterests() {
-        return researchInterests;
-    }
-
-    public void setResearchInterests(String researchInterests) {
-        this.researchInterests = researchInterests;
-    }
-
-    public String getPublications() {
-        return publications;
-    }
-
-    public void setPublications(String publications) {
-        this.publications = publications;
     }
 }

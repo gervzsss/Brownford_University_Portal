@@ -1,5 +1,13 @@
 # Changelog
 
+## [06.26.252046]
+
+### Fix
+- Fixed the issue where a dding a Curriculum is not working.
+
+### Bug
+- Deleting/Editing a Course in the Curriculum is not working at the moment.
+
 ## [06.26.251909]
 
 ### New
