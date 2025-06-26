@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.27.250155]
+
+### Changes
+- Improve Schedule Assignment Modal.
+
 ## [06.26.252345]
 
 ### Changes
