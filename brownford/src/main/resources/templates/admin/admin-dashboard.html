@@ -11,7 +11,10 @@
         rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <script th:src="@{/js/sidebar-nav.js}"></script>
     <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
+    <script th:src="@{/js/pending-approvals.js}"></script>
 </head>
 
 <body>
@@ -279,9 +282,6 @@
 
     <footer-footer></footer-footer>
 
-    <script th:src="@{/js/notifications.js}"></script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
-    <script th:src="@{/js/pending-approvals.js}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/api/admin/system-summary')

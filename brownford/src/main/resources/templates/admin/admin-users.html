@@ -11,7 +11,9 @@
         rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <script th:src="@{/js/sidebar-nav.js}"></script>
     <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
 </head>
 
 <body>
@@ -22,7 +24,7 @@
 
         <!-- Wrap the main content in content-wrapper -->
         <div class="content-wrapper" id="contentWrapper">
-            <main class="dashboard-content">
+            <main class="admin-dashboard-content">
                 <!-- Welcome Section -->
                 <section class="welcome-section">
                     <div class="welcome-header">
@@ -247,8 +249,6 @@
         </div>
     </div>
 
-    <script th:src="@{/js/notifications.js}"></script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
     <script>
         let editingUserId = null;
         let currentSearch = '';
@@ -598,7 +598,7 @@
                 const programSelect = document.getElementById('program');
                 programSelect.innerHTML = '<option value="">Loading...</option>';
                 programGroup.style.display = 'block';
-                    const response = await fetch('/api/programs');
+                const response = await fetch('/api/programs');
                 const programs = await response.json();
                 programSelect.innerHTML = '<option value="">Select Program</option>' +
                     programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');

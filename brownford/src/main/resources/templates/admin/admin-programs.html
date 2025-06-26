@@ -11,7 +11,9 @@
         rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <script th:src="@{/js/sidebar-nav.js}"></script>
     <script th:src="@{/js/headerFooter.js}"></script>
+    <script th:src="@{/js/notifications.js}"></script>
 </head>
 
 <body>
@@ -20,61 +22,63 @@
     <div class="background-container">
         <div class="background-image"></div>
 
-        <main class="dashboard-content">
-            <section class="welcome-section">
-                <div class="welcome-header">
-                    <div class="welcome-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
-                        </svg>
-                    </div>
-                    <div class="welcome-text">
-                        <h2>Program Management</h2>
-                        <p>Manage academic programs, their details, and status.</p>
-                    </div>
-                </div>
-            </section>
-            <section class="content-panel">
-                <div class="panel-header"
-                    style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <h2 class="section-title" style="margin-bottom: 0;">Program Management</h2>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="add-user-btn" id="addProgramBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
-                                <path d="M12 5v14M5 12h14" />
+        <div class="content-wrapper" id="contentWrapper">
+            <main class="admin-dashboard-content">
+                <section class="welcome-section">
+                    <div class="welcome-header">
+                        <div class="welcome-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
                             </svg>
-                            Add Program
-                        </button>
+                        </div>
+                        <div class="welcome-text">
+                            <h2>Program Management</h2>
+                            <p>Manage academic programs, their details, and status.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-content">
-                    <div class="table-container">
-                        <table class="data-table" id="programTable">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Years</th>
-                                    <th>Total Units</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Program rows will be inserted here by JS -->
-                            </tbody>
-                        </table>
+                </section>
+                <section class="content-panel">
+                    <div class="panel-header"
+                        style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <h2 class="section-title" style="margin-bottom: 0;">Program Management</h2>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="add-user-btn" id="addProgramBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                                    <path d="M12 5v14M5 12h14" />
+                                </svg>
+                                Add Program
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </main>
-    </div>
+                    <div class="panel-content">
+                        <div class="table-container">
+                            <table class="data-table" id="programTable">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Years</th>
+                                        <th>Total Units</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Program rows will be inserted here by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
     <!-- Modal for Add/Edit Program -->
     <div id="programModal" class="modal">
@@ -117,8 +121,7 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/js/notifications.js}"></script>
-    <script th:src="@{/js/sidebar-nav.js}"></script>
+
     <script>
         // JS for loading, adding, editing, deleting programs
         let editingProgramId = null;

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.26.252345]
+
+### Changes
+- Admin Pages UI Improvements
+
 ## [06.26.252139]
 
 ### Fix
