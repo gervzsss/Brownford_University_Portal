@@ -105,4 +105,16 @@ public class CurriculumController {
         Optional<CurriculumCourse> course = curriculumService.getCurriculumCourseById(id);
         return course.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/courses/{courseId}")
+    public CurriculumCourse updateCurriculumCourse(@PathVariable Long courseId, @RequestBody CurriculumCourse updated) {
+        CurriculumCourse existing = curriculumService.getCurriculumCourseById(courseId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum course not found"));
+        existing.setYearLevel(updated.getYearLevel());
+        existing.setSemester(updated.getSemester());
+        existing.setRequired(updated.isRequired());
+        existing.setCourse(updated.getCourse());
+        // If curriculum can change, add: existing.setCurriculum(updated.getCurriculum());
+        return curriculumService.saveCurriculumCourse(existing);
+    }
 }
