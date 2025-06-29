@@ -373,4 +373,74 @@ public class EnrollmentService {
             })
             .collect(Collectors.toList());
     }
+
+    public Map<String, Object> getLastCoursesAndNextPrerequisites(String studentId, String yearLevel, String semester) {
+        Map<String, Object> result = new HashMap<>();
+        Student student = studentRepository.findAll().stream()
+                .filter(s -> s.getStudentId() != null && s.getStudentId().equals(studentId))
+                .findFirst().orElse(null);
+        if (student == null) {
+            result.put("courses", List.of());
+            return result;
+        }
+        // Find latest enrollment for the given yearLevel and semester
+        Enrollment latest = enrollmentRepository.findByStudent(student).stream()
+                .filter(e -> e.getYearLevel().equals(yearLevel) && e.getSemester().equals(semester))
+                .findFirst().orElse(null);
+        if (latest == null) {
+            result.put("courses", List.of());
+            return result;
+        }
+        // For each requested course, find its prerequisites from the previous semester
+        List<Map<String, Object>> courseDetails = new ArrayList<>();
+        // Determine previous term
+        int y = Integer.parseInt(yearLevel);
+        String prevSemester;
+        int prevYear;
+        if (semester.toLowerCase().contains("2nd")) {
+            prevSemester = "1st Semester";
+            prevYear = y;
+        } else {
+            prevSemester = "2nd Semester";
+            prevYear = y - 1;
+        }
+        for (Course c : latest.getCourses()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("courseCode", c.getCourseCode());
+            map.put("courseTitle", c.getCourseTitle());
+            map.put("units", c.getUnits());
+            // Find prerequisites (from previous semester only)
+            List<Map<String, Object>> prereqList = new ArrayList<>();
+            if (c.getPrerequisites() != null && !c.getPrerequisites().isEmpty()) {
+                String[] prereqCodes = c.getPrerequisites().split(",");
+                for (String prereqCode : prereqCodes) {
+                    String trimmedCode = prereqCode.trim();
+                    // Find course by code
+                    Course prereq = courseRepository.findAll().stream()
+                            .filter(crs -> crs.getCourseCode().equalsIgnoreCase(trimmedCode)).findFirst().orElse(null);
+                    if (prereq != null) {
+                        // Check if prerequisite is from previous semester
+                        boolean isPrevTerm = (prereq.getYearLevel() != null && prereq.getYearLevel() == prevYear)
+                                && (prereq.getSemester() != null && prereq.getSemester().equalsIgnoreCase(prevSemester));
+                        if (isPrevTerm) {
+                            // Fetch remarks from grades table
+                            String remarks = gradeRepository
+                                .findByStudentAndCourseAndSemester(student, prereq, prevSemester)
+                                .map(g -> g.getRemarks()).orElse(null);
+                            Map<String, Object> preq = new HashMap<>();
+                            preq.put("courseCode", prereq.getCourseCode());
+                            preq.put("courseTitle", prereq.getCourseTitle());
+                            preq.put("units", prereq.getUnits());
+                            preq.put("remarks", remarks);
+                            prereqList.add(preq);
+                        }
+                    }
+                }
+            }
+            map.put("prerequisites", prereqList);
+            courseDetails.add(map);
+        }
+        result.put("courses", courseDetails);
+        return result;
+    }
 }

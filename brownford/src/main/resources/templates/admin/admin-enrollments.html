@@ -55,7 +55,7 @@
                             Add Enrollment
                         </button>
                         <button class="add-user-btn" id="batchEnrollBtn"
-                            style="margin-left: 10px; background-color: #155724; color: #fff;">
+                            style="margin-left: 10px; background-color: #155724; color: #fff; margin-top: 20px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -304,6 +304,19 @@
                 </div>
             </div>
         </div>
+
+        <!-- Review Courses Modal -->
+        <div id="reviewCoursesModal" class="modal">
+            <div class="modal-content" style="max-width:700px;">
+                <div class="modal-header">
+                    <h3>Course Review & Prerequisites</h3>
+                    <span class="close-modal" id="closeReviewCoursesModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="reviewCoursesSummary"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -474,7 +487,14 @@
                         </path>
                     </svg>
                 </button>
-        `;
+                <button class="btn-sm btn-info" onclick="openReviewCoursesModal('${enrollment.studentId}','${enrollment.programId}','${enrollment.yearLevel}','${enrollment.semester}')" title="Review Courses">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#007bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                </button>
+            `;
 
                 if (enrollment.status === 'PENDING') {
                     actionButtons += `
@@ -1189,6 +1209,61 @@
                 throw error;
             }
         }
+
+        // Review Courses Modal
+        function openReviewCoursesModal(studentId, programId, yearLevel, semester) {
+            const modal = document.getElementById('reviewCoursesModal');
+            const summaryDiv = document.getElementById('reviewCoursesSummary');
+            summaryDiv.innerHTML = '<p>Loading course review...</p>';
+            modal.style.display = 'block';
+            // Fetch requested courses and their prerequisites with remarks
+            fetch(`/api/enrollments/last-courses?studentId=${encodeURIComponent(studentId)}&yearLevel=${encodeURIComponent(yearLevel)}&semester=${encodeURIComponent(semester)}`)
+                .then(r => r.json())
+                .then(data => {
+                    const courses = data && data.courses ? data.courses : [];
+                    if (!courses.length) {
+                        summaryDiv.innerHTML = '<p>No course data found.</p>';
+                        return;
+                    }
+                    // Build two-column layout: left = requested courses, right = prerequisites with remarks
+                    let html = '<div style="display:flex; gap:32px; flex-wrap:wrap;">';
+                    // Left: Requested Courses
+                    html += '<div style="flex:1; min-width:250px;"><h4>Requested Courses</h4>';
+                    html += '<ul style="list-style:disc inside;">';
+                    courses.forEach(c => {
+                        html += `<li><strong>${c.courseCode}</strong> - ${c.courseTitle} (${c.units} units)</li>`;
+                    });
+                    html += '</ul></div>';
+                    // Right: Prerequisites for each course
+                    html += '<div style="flex:2; min-width:320px;"><h4>Prerequisites & Remarks</h4>';
+                    courses.forEach(c => {
+                        html += `<div style="margin-bottom:18px;"><strong>${c.courseCode}:</strong>`;
+                        if (c.prerequisites && c.prerequisites.length > 0) {
+                            html += '<ul style="margin:6px 0 0 18px;">';
+                            c.prerequisites.forEach(pr => {
+                                html += `<li>${pr.courseCode} - ${pr.courseTitle}`;
+                                if (pr.remarks !== undefined && pr.remarks !== null) {
+                                    html += ` <span style='color:#555;'>(Remarks: <em>${pr.remarks || 'None'}</em>)</span>`;
+                                }
+                                html += '</li>';
+                            });
+                            html += '</ul>';
+                        } else {
+                            html += '<div style="margin-left:18px; color:#888;">No prerequisites</div>';
+                        }
+                        html += '</div>';
+                    });
+                    html += '</div></div>';
+                    summaryDiv.innerHTML = html;
+                })
+                .catch(() => { summaryDiv.innerHTML = '<p>Error loading course review.</p>'; });
+        }
+        document.getElementById('closeReviewCoursesModal').onclick = function () { document.getElementById('reviewCoursesModal').style.display = 'none'; };
+        window.onclick = function (event) {
+            if (event.target === document.getElementById('reviewCoursesModal')) {
+                document.getElementById('reviewCoursesModal').style.display = 'none';
+            }
+        };
     </script>
 
     <style>

@@ -2550,6 +2550,7 @@ body {
   transition: all 0.2s ease;
   text-decoration: none;
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 .btn-grades,

@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.30.250313]
+
+### New
+- Added Course Review and Prerequisites in the Admin Student Enrollment Page.
+
 ## [06.30.250153]
 
 ### Fix

@@ -131,5 +131,12 @@ public class EnrollmentController {
     public List<PendingApprovalDTO> getLatestPendingApprovalsSummary() {
         return enrollmentService.getLatestPendingApprovals(5);
     }
+
+    // Endpoint to review last enrolled courses and next semester prerequisites for a student
+    @GetMapping("/last-courses")
+    public ResponseEntity<?> getLastCoursesAndPrerequisites(@RequestParam String studentId, @RequestParam String yearLevel, @RequestParam String semester) {
+        Map<String, Object> result = enrollmentService.getLastCoursesAndNextPrerequisites(studentId, yearLevel, semester);
+        return ResponseEntity.ok(result);
+    }
 }
 // No major changes needed, but ensure studentId refers to Student entity.
