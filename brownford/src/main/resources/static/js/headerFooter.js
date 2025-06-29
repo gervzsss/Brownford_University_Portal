@@ -323,7 +323,6 @@ class AdminHeader extends HTMLElement {
                         </button>
                         <div class="sidebar-dropdown-menu">
                             <a href="/admin-student-list" class="sidebar-dropdown-item">Student List</a>
-                            <a href="/admin-student-records" class="sidebar-dropdown-item">Academic Records</a>
                         </div>
                     </li>
                 </ul>

@@ -4,11 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Records - Brown Ford University</title>
+    <title>Student Grades Record - Brown Ford University</title>
     <link rel="icon" type="image/png" th:href="@{/images/logo-circle.png}">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
-        rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <script th:src="@{/js/sidebar-nav.js}"></script>
@@ -18,156 +15,180 @@
 
 <body>
     <admin-header></admin-header>
-
     <div class="background-container">
         <div class="background-image"></div>
-
-        <div class="content-wrapper" id="contentWrapper">
-            <main class="admin-dashboard-content">
-                <!-- Header Section (Welcome) -->
-                <section class="welcome-section">
-                    <div class="welcome-header">
-                        <div class="welcome-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="welcome-text">
-                            <h2>Academic Records</h2>
-                            <p>View and manage student academic records.</p>
-                        </div>
+        <main class="grades-content">
+            <div class="grades-header">
+                <div class="grades-icon-container">
+                    <div class="grades-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
                     </div>
-                </section>
-
-                <!-- Academic Records Content -->
-                <section class="content-panel">
-                    <div class="panel-header">
-                        <h2 class="section-title">Student Academic Records</h2>
+                    <div>
+                        <h2 class="grades-title">STUDENT GRADES RECORD</h2>
+                        <p class="semester-info" id="studentProgramInfo">Program / Year Level</p>
                     </div>
-                    <div class="panel-content">
-                        <div class="user-controls">
-                            <div class="search-filter-container">
-                                <div class="search-container">
-                                    <input type="text" placeholder="Search by name, ID, program, or year..."
-                                        id="recordsSearchInput">
-                                    <button class="search-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="filter-container">
-                                    <select id="programFilter" class="filter-select">
-                                        <option value="all">All Programs</option>
-                                        <option value="bscs">BS Computer Science</option>
-                                        <option value="bsit">BS Information Technology</option>
-                                        <option value="bsba">BS Business Administration</option>
-                                        <option value="bsstat">BS Statistics</option>
-                                    </select>
-                                    <select id="yearFilter" class="filter-select">
-                                        <option value="all">All Year Levels</option>
-                                        <option value="1">First Year</option>
-                                        <option value="2">Second Year</option>
-                                        <option value="3">Third Year</option>
-                                        <option value="4">Fourth Year</option>
-                                    </select>
-                                    <select id="gpaFilter" class="filter-select">
-                                        <option value="all">All GPA</option>
-                                        <option value="excellent">Excellent (3.5-4.0)</option>
-                                        <option value="good">Good (3.0-3.49)</option>
-                                        <option value="average">Average (2.5-2.99)</option>
-                                        <option value="below">Below Average (Below 2.5)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="action-buttons">
-                                <button id="exportTranscriptBtn" class="export-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                    Export Transcript
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="table-container">
-                            <table class="data-table" id="recordsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Student ID</th>
-                                        <th>Name</th>
-                                        <th>Program</th>
-                                        <th>Year Level</th>
-                                        <th>GPA</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="student : ${studentList}">
-                                        <td th:text="${student.id}">S-0001</td>
-                                        <td th:text="${student.name}">Jane Smith</td>
-                                        <td th:text="${student.program}">BS Computer Science</td>
-                                        <td th:text="${student.yearLevel}">3</td>
-                                        <td th:text="${student.gpa}">3.75</td>
-                                        <td><span class="status-badge"
-                                                th:classappend="${student.status == 'Active' ? 'active' : 'inactive'}"
-                                                th:text="${student.status}">Active</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button class="action-btn btn-view view-record-btn">View/Edit
-                                                    Record</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${#lists.isEmpty(studentList)}" class="empty-state-row">
-                                        <td colspan="7" class="empty-state-message">
-                                            <div class="empty-state">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path
-                                                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
-                                                    </path>
-                                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                                                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                                                    <polyline points="10 9 9 9 8 9"></polyline>
-                                                </svg>
-                                                <p>No academic records found. Add students or adjust your search filters
-                                                    to
-                                                    see results.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="pagination" id="recordsPaginationContainer">
-                            <div class="empty-pagination-message">
-                                <p>Pagination will appear when there are enough records to display multiple pages.</p>
-                            </div>
-                        </div>
+                </div>
+                <div class="student-info">
+                    <h3 class="student-name" id="studentName">Student Name</h3>
+                    <p class="student-id" id="studentId">Student ID</p>
+                </div>
+            </div>
+            <div class="grades-description">
+                <h3 class="grades-subtitle">Full Academic Performance Record</h3>
+                <p class="grades-note">This page shows all grades from the student's first enrollment onward.</p>
+            </div>
+            <!-- Grades Table -->
+            <div class="grades-table-container">
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>School Year</th>
+                            <th>Course Code</th>
+                            <th>Course Title</th>
+                            <th>Semester</th>
+                            <th>Units</th>
+                            <th>Midterm</th>
+                            <th>Finals</th>
+                            <th>Final Grade</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-right"><strong>Cumulative GPA:</strong></td>
+                            <td colspan="5" id="cumulativeGPA"><strong>0.00</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <!-- Cumulative Stats -->
+            <div class="cumulative-gpa-section">
+                <h3 class="cumulative-title">Cumulative Academic Performance</h3>
+                <div class="cumulative-info">
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Cumulative GPA:</span>
+                        <span class="cumulative-value" id="cumulativeGPAValue">0.00</span>
                     </div>
-                </section>
-            </main>
-        </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Equivalent Grade Point:</span>
+                        <span class="cumulative-value" id="gradePoint">N/A</span>
+                    </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Academic Standing:</span>
+                        <span class="cumulative-value status-good" id="academicStanding">N/A</span>
+                    </div>
+                    <div class="cumulative-item">
+                        <span class="cumulative-label">Total Units Earned:</span>
+                        <span class="cumulative-value" id="totalUnits">0.0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Download Button -->
+            <div class="certificate-button-container">
+                <a href="#" class="certificate-button" id="downloadGradesBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="certificate-text">DOWNLOAD<br>GRADE REPORT</span>
+                </a>
+            </div>
+        </main>
     </div>
-
+    <footer-footer></footer-footer>
+    <script>
+        // Helper: get query param
+        function getQueryParam(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const studentId = getQueryParam('studentId');
+            if (!studentId) {
+                document.getElementById('gradesTableBody').innerHTML = '<tr><td colspan="9" style="text-align:center;">No student selected.</td></tr>';
+                return;
+            }
+            // Fetch all grades for the student
+            fetch(`/api/grades/all-for-student?studentId=${encodeURIComponent(studentId)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!Array.isArray(data) || data.length === 0) {
+                        document.getElementById('gradesTableBody').innerHTML = '<tr><td colspan="9" style="text-align:center;">No grades found for this student.</td></tr>';
+                        return;
+                    }
+                    // Sort by schoolYear, courseCode, semester
+                    data.sort((a, b) => {
+                        if (a.schoolYear !== b.schoolYear) return a.schoolYear.localeCompare(b.schoolYear);
+                        if (a.courseCode !== b.courseCode) return a.courseCode.localeCompare(b.courseCode);
+                        if (a.semester !== b.semester) return a.semester.localeCompare(b.semester);
+                        return 0;
+                    });
+                    let totalUnits = 0, totalWeightedGrade = 0, validGrades = 0, sumGPA = 0;
+                    const gradeToPoint = { '1.00': 1.0, '1.13': 1.13, '1.25': 1.25, '1.38': 1.38, '1.50': 1.5, '1.63': 1.63, '1.75': 1.75, '1.88': 1.88, '2.00': 2.0, '2.13': 2.13, '2.25': 2.25, '2.38': 2.38, '2.50': 2.5, '2.63': 2.63, '2.75': 2.75, '2.88': 2.88, '3.00': 3.0, '5.00': 5.0 };
+                    let html = '';
+                    data.forEach(grade => {
+                        html += `<tr>
+                            <td>${grade.schoolYear ?? ''}</td>
+                            <td>${grade.courseCode ?? ''}</td>
+                            <td>${grade.courseTitle ?? ''}</td>
+                            <td>${grade.semester ?? ''}</td>
+                            <td>${grade.units ?? ''}</td>
+                            <td>${grade.midtermGrade ?? 'Pending'}</td>
+                            <td>${grade.finalsGrade ?? 'Pending'}</td>
+                            <td>${grade.finalGrade ?? 'Pending'}</td>
+                            <td>${grade.remarks ?? 'Pending'}</td>
+                        </tr>`;
+                        // GPA calculation
+                        const units = parseFloat(grade.units) || 0;
+                        const finalGrade = grade.finalGrade;
+                        const numericGrade = parseFloat(finalGrade);
+                        if (!isNaN(numericGrade) && numericGrade >= 1.00 && numericGrade <= 3.00) {
+                            totalUnits += units;
+                        }
+                        if (finalGrade && gradeToPoint[finalGrade]) {
+                            totalWeightedGrade += gradeToPoint[finalGrade] * units;
+                            sumGPA += gradeToPoint[finalGrade];
+                            validGrades++;
+                        }
+                    });
+                    document.getElementById('gradesTableBody').innerHTML = html;
+                    let gpa = totalUnits > 0 ? (totalWeightedGrade / totalUnits).toFixed(2) : 'N/A';
+                    let gradePoint = validGrades > 0 ? (sumGPA / validGrades).toFixed(2) : 'N/A';
+                    let standing = 'N/A';
+                    if (gpa !== 'N/A') {
+                        if (gpa <= 1.5) standing = "President's Lister";
+                        else if (gpa <= 1.75) standing = "Dean's Lister";
+                        else if (gpa <= 3.0) standing = "Good Standing";
+                        else standing = "Probation";
+                    }
+                    document.getElementById('cumulativeGPA').innerHTML = `<strong>${gpa}</strong>`;
+                    document.getElementById('cumulativeGPAValue').textContent = gpa;
+                    document.getElementById('gradePoint').textContent = gradePoint;
+                    document.getElementById('academicStanding').textContent = standing;
+                    document.getElementById('totalUnits').textContent = totalUnits.toFixed(1);
+                    // Fetch and display student info (name, id)
+                    fetch(`/api/admin/users/student-info?studentId=${encodeURIComponent(studentId)}`)
+                        .then(resp => resp.json())
+                        .then(info => {
+                            document.getElementById('studentName').textContent = info.fullName || 'Student Name';
+                            document.getElementById('studentId').textContent = 'Student ID: ' + (info.studentId || studentId);
+                            document.getElementById('studentProgramInfo').textContent = (info.programName || '') + (info.yearLevel ? ' / Year Level: ' + info.yearLevel : '');
+                        });
+                });
+        });
+    </script>
 </body>
 
 </html>

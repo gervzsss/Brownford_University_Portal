@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.29.251826]
+
+### New
+- Admin Student Grades Records.
+
 ## [06.29.251249]
 
 ### New

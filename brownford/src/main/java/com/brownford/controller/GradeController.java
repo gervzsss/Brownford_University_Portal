@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -117,6 +118,39 @@ public class GradeController {
                     return ResponseEntity.ok(grade);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/all-for-student")
+    public ResponseEntity<?> getAllGradesForStudent(@RequestParam String studentId) {
+        try {
+            Optional<Student> studentOpt = studentRepository.findAll().stream()
+                    .filter(s -> s.getStudentId().equals(studentId))
+                    .findFirst();
+            if (studentOpt.isEmpty()) {
+                return ResponseEntity.badRequest().body("Student not found");
+            }
+            List<Grade> grades = gradeRepository.findByStudent(studentOpt.get());
+            List<Map<String, Object>> result = grades.stream().map(g -> {
+                Map<String, Object> map = new java.util.HashMap<>();
+                map.put("studentId", g.getStudent().getStudentId());
+                map.put("courseId", g.getCourse().getId());
+                map.put("courseCode", g.getCourse().getCourseCode());
+                map.put("courseTitle", g.getCourse().getCourseTitle());
+                map.put("units", g.getCourse().getUnits());
+                map.put("facultyId", g.getFaculty().getId());
+                map.put("midtermGrade", g.getMidtermGrade());
+                map.put("finalsGrade", g.getFinalsGrade());
+                map.put("finalGrade", g.getFinalGrade());
+                map.put("remarks", g.getRemarks());
+                map.put("semester", g.getSemester());
+                map.put("schoolYear", g.getSchoolYear());
+                return map;
+            }).toList();
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error fetching grades: " + e.getMessage());
+        }
     }
 
     // Add more endpoints as needed (delete, search by student/course, etc.)

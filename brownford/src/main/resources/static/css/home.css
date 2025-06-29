@@ -2552,6 +2552,7 @@ body {
   border: 1px solid transparent;
 }
 
+.btn-grades,
 .btn-view,
 .btn-edit {
   background-color: #8b4513;
@@ -2559,6 +2560,7 @@ body {
   border-color: #8b4513;
 }
 
+.btn-grades:hover,
 .btn-view:hover,
 .btn-edit:hover {
   background-color: #6b3a1d;
@@ -3114,7 +3116,6 @@ body {
   font-size: 18px;
   color: #6b3a1d;
   margin-bottom: 4px;
-  font-family: 'Cinzel Decorative', serif;
 }
 
 #pending-approvals-list .event-description {

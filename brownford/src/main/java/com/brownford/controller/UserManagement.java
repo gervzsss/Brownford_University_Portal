@@ -422,4 +422,31 @@ public class UserManagement {
         Optional<Student> student = studentRepository.findByStudentId(studentId);
         return student.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/student-info")
+    public ResponseEntity<?> getStudentInfoByStudentId(@RequestParam String studentId) {
+        Student student = studentRepository.findAll().stream()
+            .filter(s -> s.getStudentId() != null && s.getStudentId().equals(studentId))
+            .findFirst().orElse(null);
+        if (student == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Student not found"));
+        }
+        String fullName = student.getUser().getLastName() + ", " + student.getUser().getFirstName() + (student.getUser().getMiddleName() != null ? (" " + student.getUser().getMiddleName()) : "");
+        String programName = student.getProgram() != null ? student.getProgram().getName() : "";
+        // Get latest enrollment for yearLevel
+        String yearLevel = null;
+        Enrollment latest = null;
+        try {
+            latest = enrollmentService.getLatestEnrollmentForStudent(student.getId());
+        } catch (Exception e) {}
+        if (latest != null) {
+            yearLevel = latest.getYearLevel();
+        }
+        return ResponseEntity.ok(Map.of(
+            "studentId", student.getStudentId(),
+            "fullName", fullName,
+            "programName", programName,
+            "yearLevel", yearLevel
+        ));
+    }
 }

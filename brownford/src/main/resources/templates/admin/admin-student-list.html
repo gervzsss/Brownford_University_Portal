@@ -272,6 +272,7 @@
                             <td>
                                 <div class="table-actions">
                                     <button class="btn-sm btn-view" data-id="${student.id}">View</button>
+                                    <button class="btn-sm btn-grades" data-studentid="${student.studentId}">View Grades</button>
                                 </div>
                             </td>
                         </tr>
@@ -304,6 +305,12 @@
                     document.getElementById('editStudentMobileNumber').value = data.mobileNumber || '';
                     document.getElementById('editStudentAddress').value = data.address || '';
                     studentProfileModal.style.display = 'block';
+                }
+                if (e.target.classList.contains('btn-grades')) {
+                    const studentId = e.target.getAttribute('data-studentid');
+                    if (studentId) {
+                        window.location.href = `/admin-student-records?studentId=${encodeURIComponent(studentId)}`;
+                    }
                 }
             });
 
