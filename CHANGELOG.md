@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.29.241834]
+
+### Changes
+- The System will automatically create the Database if not found.
+
 ## [06.29.251826]
 
 ### New
