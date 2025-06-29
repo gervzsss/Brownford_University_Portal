@@ -36,8 +36,8 @@
                             </svg>
                         </div>
                         <div class="welcome-text">
-                            <h2>Workload Management</h2>
-                            <p>View and manage faculty workloads.</p>
+                            <h2>Faculty Workload</h2>
+                            <p>View all assigned courses for this faculty.</p>
                         </div>
                     </div>
                 </section>
@@ -45,119 +45,145 @@
                 <!-- Workload Content -->
                 <section class="content-panel">
                     <div class="panel-header">
-                        <h2 class="section-title">Faculty Workload Management</h2>
+                        <h2 class="section-title">Workload for <span id="facultyName"></span> (<span id="facultyId"></span>)</h2>
                     </div>
                     <div class="panel-content">
                         <div class="user-controls">
-                            <div class="search-filter-container">
-                                <div class="search-container">
-                                    <input type="text" placeholder="Search faculty..." id="workloadSearchInput">
-                                    <button class="search-button">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        </svg>
-                                    </button>
+                            <div class="filter-section">
+                                <div class="filter-row">
+                                    <div class="filter-group">
+                                        <label for="schoolYear">School Year:</label>
+                                        <select id="schoolYear" name="schoolYear" class="filter-select"></select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label for="semester">Semester:</label>
+                                        <select id="semester" name="semester" class="filter-select"></select>
+                                    </div>
                                 </div>
-                                <div class="filter-container">
-                                    <!--
-                                    <select id="departmentFilter" class="filter-select">
-                                        <option value="all">All Departments</option>
-                                        <option value="business">Business Administration</option>
-                                        <option value="statistics">Statistics</option>
-                                        <option value="computer_science">Computer Science</option>
-                                        <option value="engineering">Engineering</option>
-                                        <option value="humanities">Humanities</option>
-                                    </select>
-                                    -->
-                                    <select id="workloadStatusFilter" class="filter-select">
-                                        <option value="all">All Workload Status</option>
-                                        <option value="normal">Normal</option>
-                                        <option value="overload">Overload</option>
-                                        <option value="underload">Underload</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="action-buttons">
-                                <button id="exportWorkloadBtn" class="export-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                        <polyline points="7 10 12 15 17 10"></polyline>
-                                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                                    </svg>
-                                    Export Report
-                                </button>
                             </div>
                         </div>
-
-                        <div class="table-container">
-                            <table class="data-table" id="workloadTable">
+                        <div id="workloadTable" class="workload-table-container">
+                            <table class="schedule-table">
                                 <thead>
                                     <tr>
-                                        <th>Faculty ID</th>
-                                        <th>Name</th>
-                                        <th>Total Units</th>
-                                        <th>Courses Assigned</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>No</th>
+                                        <th>Section</th>
+                                        <th>Subject Code</th>
+                                        <th>Description</th>
+                                        <th>Schedule</th>
+                                        <th>Room</th>
+                                        <th>Units</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr th:each="faculty : ${facultyList}">
-                                        <td th:text="${faculty.id}">F-0001</td>
-                                        <td th:text="${faculty.name}">John Doe</td>
-                                        <td th:text="${faculty.totalUnits}">18</td>
-                                        <td th:text="${faculty.coursesAssigned}">3</td>
-                                        <td>
-                                            <span th:if="${faculty.totalUnits} &gt; 18"
-                                                class="status-badge badge-danger">Overload</span>
-                                            <span th:if="${faculty.totalUnits} &lt; 12"
-                                                class="status-badge badge-warning">Underload</span>
-                                            <span
-                                                th:if="${faculty.totalUnits} &gt;= 12 and ${faculty.totalUnits} &lt;= 18"
-                                                class="status-badge badge-success">Normal</span>
-                                        </td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button class="action-btn btn-edit assign-btn">Assign/Remove</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${#lists.isEmpty(facultyList)}" class="empty-state-row">
-                                        <td colspan="7" class="empty-state-message">
-                                            <div class="empty-state">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                                </svg>
-                                                <p>No faculty workload data found. Add faculty or adjust your search
-                                                    filters
-                                                    to see results.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="workloadTableBody">
+                                    <!-- Dynamic rows go here -->
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="pagination" id="workloadPaginationContainer">
-                            <div class="empty-pagination-message">
-                                <p>Pagination will appear when there are enough records to display multiple pages.</p>
-                            </div>
+                        <div class="certificate-button-container">
+                            <a href="#" class="certificate-button">
+                                <!-- ...existing SVG... -->
+                                <span class="certificate-text">
+                                    DOWNLOAD<br>WORKLOAD REPORT
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </section>
             </main>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get facultyId from query string
+            function getQueryParam(name) {
+                const url = new URL(window.location.href);
+                return url.searchParams.get(name);
+            }
+            const facultyId = getQueryParam('facultyId');
+            if (!facultyId) {
+                alert('No faculty selected.');
+                return;
+            }
+            // Optionally fetch faculty name/id for header
+            fetch(`/api/admin/users/${facultyId}`)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('facultyName').textContent = `${data.firstName} ${data.lastName}`;
+                    document.getElementById('facultyId').textContent = data.facultyId || facultyId;
+                });
+            const schoolYearSelect = document.getElementById('schoolYear');
+            const semesterSelect = document.getElementById('semester');
+            const tableBody = document.getElementById('workloadTableBody');
+            // Fetch filter options from backend
+            function fetchFilters() {
+                fetch(`/api/admin/faculty-workload-filters?facultyId=${facultyId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        populateFilters(data);
+                        fetchAndRenderTable();
+                    });
+            }
+            function populateFilters(data) {
+                schoolYearSelect.innerHTML = '';
+                const sortedYears = [...data.schoolYears].sort((a, b) => b.value.localeCompare(a.value));
+                sortedYears.forEach((yr) => {
+                    const opt = document.createElement('option');
+                    opt.value = yr.value;
+                    opt.textContent = yr.label;
+                    schoolYearSelect.appendChild(opt);
+                });
+                semesterSelect.innerHTML = '';
+                data.semesters.forEach(sem => {
+                    if (sem.value !== 'Summer') {
+                        const opt = document.createElement('option');
+                        opt.value = sem.value;
+                        opt.textContent = sem.label;
+                        semesterSelect.appendChild(opt);
+                    }
+                });
+                if (sortedYears.length > 0) schoolYearSelect.selectedIndex = 0;
+                if (semesterSelect.options.length > 0) semesterSelect.selectedIndex = 0;
+            }
+            function fetchAndRenderTable() {
+                const year = schoolYearSelect.value;
+                const sem = semesterSelect.value;
+                fetch(`/api/admin/faculty-workload-data?facultyId=${facultyId}&schoolYear=${encodeURIComponent(year)}&semester=${encodeURIComponent(sem)}`)
+                    .then(res => res.json())
+                    .then(data => renderTable(data));
+            }
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                if (!data || data.length === 0) {
+                    const tr = document.createElement('tr');
+                    const td = document.createElement('td');
+                    td.colSpan = 7;
+                    td.style.textAlign = 'center';
+                    td.textContent = 'No workload assigned.';
+                    tr.appendChild(td);
+                    tableBody.appendChild(tr);
+                    return;
+                }
+                data.forEach((row, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${row.no}</td>
+                        <td>${row.section}</td>
+                        <td>${row.subjectCode}</td>
+                        <td>${row.description}</td>
+                        <td>${row.schedule}</td>
+                        <td>${row.room}</td>
+                        <td>${row.units}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            }
+            schoolYearSelect.addEventListener('change', fetchAndRenderTable);
+            semesterSelect.addEventListener('change', fetchAndRenderTable);
+            fetchFilters();
+        });
+    </script>
 
 </body>
 

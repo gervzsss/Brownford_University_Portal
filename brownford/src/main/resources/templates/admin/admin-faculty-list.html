@@ -236,7 +236,7 @@
                             <td>
                                 <div class="table-actions">
                                     <button class="btn-sm btn-edit" data-id="${faculty.id}">Edit</button>
-                                    <button class="btn-sm btn-edit" onclick="window.location.href='/admin-faculty-workload?facultyId=${faculty.id}'">View Workloads</button>
+                                    <button class="btn-sm btn-edit btn-view-workload" data-faculty-id="${faculty.id}">View Workloads</button>
                                 </div>
                             </td>
                         </tr>
@@ -250,7 +250,7 @@
 
             // Open modal and populate form
             facultyTableBody.addEventListener('click', async function(e) {
-                if (e.target.classList.contains('btn-edit')) {
+                if (e.target.classList.contains('btn-edit') && !e.target.classList.contains('btn-view-workload')) {
                     const facultyId = e.target.getAttribute('data-id');
                     const res = await fetch(`/api/admin/users/${facultyId}`);
                     if (!res.ok) { alert('Failed to fetch faculty data.'); return; }
@@ -262,8 +262,15 @@
                     document.getElementById('editFacultyEmail').value = data.email || '';
                     document.getElementById('editFacultyMobileNumber').value = data.mobileNumber || '';
                     document.getElementById('editFacultyAddress').value = data.address || '';
-                    document.getElementById('editFacultyStatus').value = (data.status || '').toLowerCase();
-                    editFacultyModal.style.display = 'block';
+                    document.getElementById('editFacultyStatus').value = data.status || '';
+                    facultyModal.style.display = 'block';
+                } else if (e.target.classList.contains('btn-view-workload')) {
+                    const facultyId = e.target.getAttribute('data-faculty-id');
+                    if (facultyId && facultyId !== 'null' && facultyId !== 'undefined') {
+                        window.location.href = `/admin-faculty-workload?facultyId=${facultyId}`;
+                    } else {
+                        alert('Invalid faculty ID for workload view.');
+                    }
                 }
             });
 

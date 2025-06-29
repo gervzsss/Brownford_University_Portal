@@ -299,8 +299,6 @@ class AdminHeader extends HTMLElement {
                         </button>
                         <div class="sidebar-dropdown-menu">
                             <a href="/admin-faculty-list" class="sidebar-dropdown-item">Faculty List</a>
-                            <a href="/admin-faculty-workload" class="sidebar-dropdown-item">Workload
-                                Management</a>
                         </div>
                     </li>
 

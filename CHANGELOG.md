@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.29.251249]
+
+### New
+- Admin Faculty Workload Page.
+
 ## [06.29.251104]
 
 ### New
