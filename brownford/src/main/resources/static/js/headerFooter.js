@@ -303,7 +303,7 @@ class AdminHeader extends HTMLElement {
                                     <circle cx="9" cy="7" r="4"></circle>
                                 </svg>
                             </span>
-                            <span class="sidebar-nav-text">Faculty</span>
+                            <span class="sidebar-nav-text">Student</span>
                         </a>
                     </li>
                 </ul>

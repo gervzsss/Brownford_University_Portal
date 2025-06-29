@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Grades Record - Brown Ford University</title>
     <link rel="icon" type="image/png" th:href="@{/images/logo-circle.png}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
+        rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <script th:src="@{/js/sidebar-nav.js}"></script>
@@ -15,97 +18,111 @@
 
 <body>
     <admin-header></admin-header>
+
     <div class="background-container">
         <div class="background-image"></div>
-        <main class="grades-content">
-            <div class="grades-header">
-                <div class="grades-icon-container">
-                    <div class="grades-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
+
+        <div class="content-wrapper" id="contentWrapper">
+            <main class="grades-content">
+                <div class="grades-header">
+                    <div class="grades-icon-container">
+                        <div class="grades-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="grades-title">STUDENT GRADES RECORD</h2>
+                            <p class="semester-info" id="studentProgramInfo">Program / Year Level</p>
+                        </div>
+                    </div>
+                    <div class="student-info">
+                        <h3 class="student-name" id="studentName">Student Name</h3>
+                        <p class="student-id" id="studentId">Student ID</p>
+                    </div>
+                </div>
+                <div class="back-link-container">
+                    <a href="/admin-student-list" class="back-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
-                    </div>
-                    <div>
-                        <h2 class="grades-title">STUDENT GRADES RECORD</h2>
-                        <p class="semester-info" id="studentProgramInfo">Program / Year Level</p>
+                        Back to List
+                    </a>
+                </div>
+                <div class="grades-description">
+                    <h3 class="grades-subtitle">Full Academic Performance Record</h3>
+                    <p class="grades-note">This page shows all grades from the student's first enrollment onward.</p>
+                </div>
+                <!-- Grades Table -->
+                <div class="grades-table-container">
+                    <table class="grades-table">
+                        <thead>
+                            <tr>
+                                <th>School Year</th>
+                                <th>Course Code</th>
+                                <th>Course Title</th>
+                                <th>Semester</th>
+                                <th>Units</th>
+                                <th>Midterm</th>
+                                <th>Finals</th>
+                                <th>Final Grade</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gradesTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-right"><strong>Cumulative GPA:</strong></td>
+                                <td colspan="5" id="cumulativeGPA"><strong>0.00</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- Cumulative Stats -->
+                <div class="cumulative-gpa-section">
+                    <h3 class="cumulative-title">Cumulative Academic Performance</h3>
+                    <div class="cumulative-info">
+                        <div class="cumulative-item">
+                            <span class="cumulative-label">Cumulative GPA:</span>
+                            <span class="cumulative-value" id="cumulativeGPAValue">0.00</span>
+                        </div>
+                        <div class="cumulative-item">
+                            <span class="cumulative-label">Equivalent Grade Point:</span>
+                            <span class="cumulative-value" id="gradePoint">N/A</span>
+                        </div>
+                        <div class="cumulative-item">
+                            <span class="cumulative-label">Academic Standing:</span>
+                            <span class="cumulative-value status-good" id="academicStanding">N/A</span>
+                        </div>
+                        <div class="cumulative-item">
+                            <span class="cumulative-label">Total Units Earned:</span>
+                            <span class="cumulative-value" id="totalUnits">0.0</span>
+                        </div>
                     </div>
                 </div>
-                <div class="student-info">
-                    <h3 class="student-name" id="studentName">Student Name</h3>
-                    <p class="student-id" id="studentId">Student ID</p>
+                <!-- Download Button -->
+                <div class="certificate-button-container">
+                    <a href="#" class="certificate-button" id="downloadGradesBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        <span class="certificate-text">DOWNLOAD<br>GRADE REPORT</span>
+                    </a>
                 </div>
-            </div>
-            <div class="grades-description">
-                <h3 class="grades-subtitle">Full Academic Performance Record</h3>
-                <p class="grades-note">This page shows all grades from the student's first enrollment onward.</p>
-            </div>
-            <!-- Grades Table -->
-            <div class="grades-table-container">
-                <table class="grades-table">
-                    <thead>
-                        <tr>
-                            <th>School Year</th>
-                            <th>Course Code</th>
-                            <th>Course Title</th>
-                            <th>Semester</th>
-                            <th>Units</th>
-                            <th>Midterm</th>
-                            <th>Finals</th>
-                            <th>Final Grade</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gradesTableBody">
-                        <!-- Populated by JS -->
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="4" class="text-right"><strong>Cumulative GPA:</strong></td>
-                            <td colspan="5" id="cumulativeGPA"><strong>0.00</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <!-- Cumulative Stats -->
-            <div class="cumulative-gpa-section">
-                <h3 class="cumulative-title">Cumulative Academic Performance</h3>
-                <div class="cumulative-info">
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Cumulative GPA:</span>
-                        <span class="cumulative-value" id="cumulativeGPAValue">0.00</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Equivalent Grade Point:</span>
-                        <span class="cumulative-value" id="gradePoint">N/A</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Academic Standing:</span>
-                        <span class="cumulative-value status-good" id="academicStanding">N/A</span>
-                    </div>
-                    <div class="cumulative-item">
-                        <span class="cumulative-label">Total Units Earned:</span>
-                        <span class="cumulative-value" id="totalUnits">0.0</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Download Button -->
-            <div class="certificate-button-container">
-                <a href="#" class="certificate-button" id="downloadGradesBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    <span class="certificate-text">DOWNLOAD<br>GRADE REPORT</span>
-                </a>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
     <footer-footer></footer-footer>
     <script>

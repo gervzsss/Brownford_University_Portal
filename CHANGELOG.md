@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.30.250153]
+
+### Fix
+- Fixes Sidebar navigation
+- Admin Faculty Workload Page
+- Admin Student Academic Record Page
+
 ## [06.29.251851]
 
 ### Removed
