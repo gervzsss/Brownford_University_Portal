@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.29.251844]
+
+### Changes
+- Sidebar Navigation Changes.
+
 ## [06.29.241834]
 
 ### Changes

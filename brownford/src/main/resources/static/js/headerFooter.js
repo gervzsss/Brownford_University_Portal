@@ -279,9 +279,9 @@ class AdminHeader extends HTMLElement {
                         </a>
                     </li>
 
-                    <li class="sidebar-nav-item sidebar-dropdown">
-                        <button class="sidebar-dropdown-toggle">
-                            <span class="sidebar-dropdown-icon">
+                    <li class="sidebar-nav-item">
+                        <a href="/admin-faculty-list" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -289,22 +289,13 @@ class AdminHeader extends HTMLElement {
                                     <circle cx="9" cy="7" r="4"></circle>
                                 </svg>
                             </span>
-                            <span class="sidebar-dropdown-text">Faculty</span>
-                            <span class="sidebar-dropdown-arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </span>
-                        </button>
-                        <div class="sidebar-dropdown-menu">
-                            <a href="/admin-faculty-list" class="sidebar-dropdown-item">Faculty List</a>
-                        </div>
+                            <span class="sidebar-nav-text">Faculty</span>
+                        </a>
                     </li>
 
-                    <li class="sidebar-nav-item sidebar-dropdown">
-                        <button class="sidebar-dropdown-toggle">
-                            <span class="sidebar-dropdown-icon">
+                    <li class="sidebar-nav-item">
+                        <a href="/admin-student-list" class="sidebar-nav-link">
+                            <span class="sidebar-nav-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -312,18 +303,8 @@ class AdminHeader extends HTMLElement {
                                     <circle cx="9" cy="7" r="4"></circle>
                                 </svg>
                             </span>
-                            <span class="sidebar-dropdown-text">Students</span>
-                            <span class="sidebar-dropdown-arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </span>
-                        </button>
-                        <div class="sidebar-dropdown-menu">
-                            <a href="/admin-student-list" class="sidebar-dropdown-item">Student List</a>
-                        </div>
+                            <span class="sidebar-nav-text">Faculty</span>
+                        </a>
                     </li>
                 </ul>
             </div>
