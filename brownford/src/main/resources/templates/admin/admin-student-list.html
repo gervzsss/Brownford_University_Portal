@@ -113,47 +113,92 @@
                             <table class="data-table" id="studentTable">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Student ID</th>
                                         <th>Name</th>
                                         <th>Program</th>
                                         <th>Year Level</th>
+                                        <th>Section</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr th:each="student : ${studentList}">
-                                        <td th:text="${student.id}">S-0001</td>
-                                        <td th:text="${student.name}">Jane Smith</td>
-                                        <td th:text="${student.program}">BS Computer Science</td>
-                                        <td th:text="${student.yearLevel}">3</td>
-                                        <td><span class="status-badge"
-                                                th:classappend="${student.status == 'Active' ? 'active' : 'inactive'}"
-                                                th:text="${student.status}">Active</span></td>
-                                        <td>
-                                            <div class="table-actions">
-                                                <button class="action-btn btn-view view-profile-btn">View
-                                                    Profile</button>
-                                                <button class="action-btn btn-edit">Edit</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr th:if="${#lists.isEmpty(studentList)}" class="empty-state-row">
-                                        <td colspan="6" class="empty-state-message">
-                                            <div class="empty-state">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                                                    viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="9" cy="7" r="4"></circle>
-                                                </svg>
-                                                <p>No students found. Add students or adjust your search filters to see
-                                                    results.</p>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="studentTableBody">
+                                    <!-- Dynamic rows will be inserted here by JS -->
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Student Profile Modal -->
+                        <div id="studentProfileModal" class="modal" style="display:none;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3>Student Profile</h3>
+                                    <span class="close-modal" id="closeStudentProfileModal">&times;</span>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editStudentForm">
+                                        <input type="hidden" id="editStudentId" name="id">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Student ID</label>
+                                                <input type="text" id="viewStudentId" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" id="viewStudentName" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Program</label>
+                                                <input type="text" id="viewStudentProgram" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Year Level</label>
+                                                <input type="text" id="viewStudentYearLevel" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Section</label>
+                                                <input type="text" id="viewStudentSection" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <input type="text" id="viewStudentStatus" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Gender</label>
+                                                <select id="editStudentGender" name="gender" class="form-control">
+                                                    <option value="">Select</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Birthday</label>
+                                                <input type="date" id="editStudentBirthday" name="dateOfBirth" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label>Cellphone Number</label>
+                                                <input type="text" id="editStudentMobileNumber" name="mobileNumber" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input type="text" id="editStudentAddress" name="address" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn btn-secondary" id="cancelEditStudentBtn">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="pagination" id="studentPaginationContainer">
@@ -167,6 +212,153 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const studentTableBody = document.getElementById('studentTableBody');
+            const searchInput = document.getElementById('studentSearchInput');
+            const programFilter = document.getElementById('programFilter');
+            const yearFilter = document.getElementById('yearFilter');
+            const statusFilter = document.getElementById('statusFilter');
+            const studentProfileModal = document.getElementById('studentProfileModal');
+            const closeStudentProfileModal = document.getElementById('closeStudentProfileModal');
+            const cancelEditStudentBtn = document.getElementById('cancelEditStudentBtn');
+            const editStudentForm = document.getElementById('editStudentForm');
+
+            async function loadStudents() {
+                let url = '/api/admin/users?role=STUDENT';
+                const search = searchInput.value.trim();
+                const program = programFilter.value;
+                const year = yearFilter.value;
+                const status = statusFilter.value;
+                const params = [];
+                if (search) params.push('search=' + encodeURIComponent(search));
+                if (status && status !== 'all') params.push('status=' + encodeURIComponent(status));
+                // Filtering by program and yearLevel (client-side for now)
+                if (params.length) url += '&' + params.join('&');
+                const res = await fetch(url);
+                let data = await res.json();
+                // Client-side filter for program and yearLevel
+                if (program && program !== 'all') {
+                    data = data.filter(s => (s.program && s.program.name ? s.program.name : '').toLowerCase().includes(program.replace('bs','').toLowerCase()));
+                }
+                if (year && year !== 'all') {
+                    data = data.filter(s => (s.yearLevel || '').toString() === year);
+                }
+                renderStudentTable(data);
+            }
+
+            function formatStudentName(student) {
+                let name = student.lastName + ', ' + student.firstName;
+                if (student.middleName) name += ' ' + student.middleName;
+                return name.toUpperCase();
+            }
+
+            function renderStudentTable(studentList) {
+                studentTableBody.innerHTML = '';
+                if (!studentList.length) {
+                    studentTableBody.innerHTML = `<tr class="empty-state-row"><td colspan="8" class="empty-state-message"><div class="empty-state"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B4513" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><p>No students found. Add students or adjust your search filters to see results.</p></div></td></tr>`;
+                    return;
+                }
+                studentList.forEach((student, idx) => {
+                    studentTableBody.innerHTML += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td>${student.studentId || ''}</td>
+                            <td>${formatStudentName(student)}</td>
+                            <td>${student.program ? student.program.name : ''}</td>
+                            <td>${student.yearLevel || ''}</td>
+                            <td>${student.section || ''}</td>
+                            <td><span class="status-badge ${student.status && student.status.toLowerCase() === 'active' ? 'active' : 'inactive'}">${student.status || ''}</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn-sm btn-view" data-id="${student.id}">View</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // Event listeners
+            searchInput.addEventListener('input', loadStudents);
+            programFilter.addEventListener('change', loadStudents);
+            yearFilter.addEventListener('change', loadStudents);
+            statusFilter.addEventListener('change', loadStudents);
+
+            // Open modal and populate form
+            studentTableBody.addEventListener('click', async function(e) {
+                if (e.target.classList.contains('btn-view')) {
+                    const studentId = e.target.getAttribute('data-id');
+                    const res = await fetch(`/api/admin/users/${studentId}`);
+                    if (!res.ok) { alert('Failed to fetch student data.'); return; }
+                    const data = await res.json();
+                    document.getElementById('editStudentId').value = data.id;
+                    document.getElementById('viewStudentId').value = data.studentId || '';
+                    document.getElementById('viewStudentName').value = `${data.lastName}, ${data.firstName} ${data.middleName || ''}`.toUpperCase();
+                    document.getElementById('viewStudentProgram').value = data.program ? data.program.name : '';
+                    document.getElementById('viewStudentYearLevel').value = data.yearLevel || '';
+                    document.getElementById('viewStudentSection').value = data.section || '';
+                    document.getElementById('viewStudentStatus').value = data.status || '';
+                    document.getElementById('editStudentGender').value = data.gender || '';
+                    document.getElementById('editStudentBirthday').value = data.dateOfBirth || '';
+                    document.getElementById('editStudentMobileNumber').value = data.mobileNumber || '';
+                    document.getElementById('editStudentAddress').value = data.address || '';
+                    studentProfileModal.style.display = 'block';
+                }
+            });
+
+            // Close modal
+            closeStudentProfileModal.addEventListener('click', function() {
+                studentProfileModal.style.display = 'none';
+                editStudentForm.reset();
+            });
+            cancelEditStudentBtn.addEventListener('click', function() {
+                studentProfileModal.style.display = 'none';
+                editStudentForm.reset();
+            });
+
+            // Submit form
+            editStudentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const id = document.getElementById('editStudentId').value;
+                const payload = {
+                    gender: document.getElementById('editStudentGender').value,
+                    dateOfBirth: document.getElementById('editStudentBirthday').value,
+                    mobileNumber: document.getElementById('editStudentMobileNumber').value,
+                    address: document.getElementById('editStudentAddress').value
+                };
+                const res = await fetch(`/api/admin/users/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    alert('Student information updated successfully.');
+                    studentProfileModal.style.display = 'none';
+                    editStudentForm.reset();
+                    loadStudents();
+                } else {
+                    alert('Failed to update student information.');
+                }
+            });
+
+            // Close modal on outside click
+            window.onclick = function(event) {
+                if (event.target === studentProfileModal) {
+                    studentProfileModal.style.display = 'none';
+                    editStudentForm.reset();
+                }
+            };
+
+            // Redirect to admin-users with addUser=student when Add New Student is clicked
+            document.getElementById('addStudentBtn').addEventListener('click', function() {
+                window.location.href = '/admin-users?addUser=student';
+            });
+
+            // Initial load
+            loadStudents();
+        });
+        </script>
 </body>
 
 </html>

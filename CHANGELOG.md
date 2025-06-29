@@ -1,5 +1,11 @@
 # Changelog
 
+## [06.29.251104]
+
+### New
+- Admin Faculty List Page.
+- Admin Student List Page.
+
 ## [06.27.250155]
 
 ### Changes

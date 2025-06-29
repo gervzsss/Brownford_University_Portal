@@ -81,7 +81,7 @@
                             <table class="data-table" id="usersTable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>#</th>
                                         <th>Username</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
@@ -399,6 +399,38 @@
                     hideModal(viewUserModal);
                 }
             });
+
+            // Auto-open Add User modal with Faculty role if ?addUser=faculty is in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('addUser') === 'faculty') {
+                setTimeout(() => {
+                    document.getElementById('modalTitle').textContent = 'Add New User';
+                    document.getElementById('userForm').reset();
+                    editingUserId = null;
+                    document.getElementById('password').required = true;
+                    document.getElementById('confirmPassword').required = true;
+                    userModal.style.display = 'flex';
+                    setTimeout(() => showModal(userModal), 10);
+                    // Set role to Faculty and trigger change event
+                    userRoleSelect.value = 'faculty';
+                    userRoleSelect.dispatchEvent(new Event('change'));
+                }, 100);
+            }
+            // Auto-open Add User modal with Student role if ?addUser=student is in the URL
+            if (urlParams.get('addUser') === 'student') {
+                setTimeout(() => {
+                    document.getElementById('modalTitle').textContent = 'Add New User';
+                    document.getElementById('userForm').reset();
+                    editingUserId = null;
+                    document.getElementById('password').required = true;
+                    document.getElementById('confirmPassword').required = true;
+                    userModal.style.display = 'flex';
+                    setTimeout(() => showModal(userModal), 10);
+                    // Set role to Student and trigger change event
+                    userRoleSelect.value = 'student';
+                    userRoleSelect.dispatchEvent(new Event('change'));
+                }, 100);
+            }
         });
 
         // Modal show/hide with fade/scale effect
@@ -429,10 +461,10 @@
             const tableBody = document.getElementById('usersTableBody');
             tableBody.innerHTML = '';
             if (users && users.length > 0) {
-                users.forEach(user => {
+                users.forEach((user, idx) => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                    <td>${user.id}</td>
+                    <td>${idx + 1}</td>
                     <td>${user.username}</td>
                     <td>${user.firstName} ${user.middleName} ${user.lastName}</td>
                     <td>${user.email}</td>
@@ -445,11 +477,11 @@
                             <button class="btn btn-sm btn-view" data-id="${user.id}" title="View">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                                    <line x1="12" y1="8" x2="12" y2="8"></line>
-                                </svg>
-                                View
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12" y2="8"></line>
+                            </svg>
+                            View
                             </button>
                             <button class="btn btn-sm btn-edit" data-id="${user.id}" title="Edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"

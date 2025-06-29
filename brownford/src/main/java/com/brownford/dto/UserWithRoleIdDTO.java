@@ -13,8 +13,15 @@ public class UserWithRoleIdDTO {
     private String status;
     private String studentId;
     private String facultyId;
+    private String mobileNumber; // Faculty contact number
+    private String address;      // Faculty address
+    private ProgramDTO program;      // Student program object
+    private String yearLevel;    // Student year level
+    private String section;      // Student section
+    private String gender;       // Student gender
+    private String dateOfBirth;  // Student birthday
 
-    public UserWithRoleIdDTO(User user, String studentId, String facultyId) {
+    public UserWithRoleIdDTO(User user, String studentId, String facultyId, String mobileNumber, String address, ProgramDTO program, String yearLevel, String section, String gender, String dateOfBirth) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.firstName = user.getFirstName();
@@ -25,6 +32,13 @@ public class UserWithRoleIdDTO {
         this.status = user.getStatus();
         this.studentId = studentId;
         this.facultyId = facultyId;
+        this.mobileNumber = mobileNumber;
+        this.address = address;
+        this.program = program;
+        this.yearLevel = yearLevel;
+        this.section = section;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
     }
 
     // Getters and setters
@@ -106,5 +120,61 @@ public class UserWithRoleIdDTO {
 
     public void setFacultyId(String facultyId) {
         this.facultyId = facultyId;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public ProgramDTO getProgram() {
+        return program;
+    }
+
+    public void setProgram(ProgramDTO program) {
+        this.program = program;
+    }
+
+    public String getYearLevel() {
+        return yearLevel;
+    }
+
+    public void setYearLevel(String yearLevel) {
+        this.yearLevel = yearLevel;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

@@ -4,6 +4,7 @@ import com.brownford.model.User;
 import com.brownford.model.Student;
 import com.brownford.model.Faculty;
 import com.brownford.model.Program;
+import com.brownford.model.Enrollment;
 import com.brownford.dto.ProgramDTO;
 import com.brownford.repository.UserRepository;
 import com.brownford.repository.StudentRepository;
@@ -88,16 +89,47 @@ public class UserManagement {
         for (User user : users) {
             String studentId = null;
             String facultyId = null;
+            String mobileNumber = null;
+            String address = null;
+            ProgramDTO programDTO = null;
+            String yearLevel = null;
+            String section = null;
+            String gender = null;
+            String dateOfBirth = null;
             if (user.getRole().equalsIgnoreCase("student")) {
                 Student student = studentRepository.findById(user.getId()).orElse(null);
-                if (student != null)
+                if (student != null) {
                     studentId = student.getStudentId();
+                    if (student.getProgram() != null) {
+                        Program p = student.getProgram();
+                        programDTO = new ProgramDTO();
+                        programDTO.setId(p.getId());
+                        programDTO.setCode(p.getCode());
+                        programDTO.setName(p.getName());
+                        programDTO.setYears(p.getYears());
+                        programDTO.setTotalUnits(p.getTotalUnits());
+                        programDTO.setStatus(p.getStatus());
+                    }
+                    gender = student.getGender();
+                    dateOfBirth = student.getDateOfBirth();
+                    mobileNumber = student.getMobileNumber();
+                    address = student.getAddress();
+                    // Get latest enrollment for yearLevel and section
+                    Enrollment latest = enrollmentService.getLatestEnrollmentForStudent(student.getId());
+                    if (latest != null) {
+                        yearLevel = latest.getYearLevel();
+                        section = latest.getSection() != null ? latest.getSection().getSectionCode() : null;
+                    }
+                }
             } else if (user.getRole().equalsIgnoreCase("faculty")) {
                 Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
-                if (faculty != null)
+                if (faculty != null) {
                     facultyId = faculty.getFacultyId();
+                    mobileNumber = faculty.getMobileNumber();
+                    address = faculty.getAddress();
+                }
             }
-            dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId));
+            dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId, mobileNumber, address, programDTO, yearLevel, section, gender, dateOfBirth));
         }
         return dtos;
     }
@@ -113,13 +145,20 @@ public class UserManagement {
         result.put("id", user.getId());
         result.put("username", user.getUsername());
         result.put("firstName", user.getFirstName());
+        result.put("middleName", user.getMiddleName());
         result.put("lastName", user.getLastName());
         result.put("email", user.getEmail());
         result.put("role", user.getRole());
         result.put("status", user.getStatus());
         result.put("password", user.getPassword()); // Only for pre-populating the form, not for security
-        result.put("lastLogin", user.getLastLogin());
-        result.put("middleName", user.getMiddleName());
+        // Add mobileNumber and address for faculty
+        if ("FACULTY".equalsIgnoreCase(user.getRole())) {
+            Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+            if (faculty != null) {
+                result.put("mobileNumber", faculty.getMobileNumber());
+                result.put("address", faculty.getAddress());
+            }
+        }
         if (user.getRole().equalsIgnoreCase("student")) {
             Student student = studentRepository.findById(user.getId()).orElse(null);
             if (student != null) {
@@ -130,9 +169,25 @@ public class UserManagement {
                     programDTO.setId(program.getId());
                     programDTO.setCode(program.getCode());
                     programDTO.setName(program.getName());
+                    programDTO.setYears(program.getYears());
+                    programDTO.setTotalUnits(program.getTotalUnits());
+                    programDTO.setStatus(program.getStatus());
                     result.put("program", programDTO);
                 } else {
                     result.put("program", null);
+                }
+                result.put("gender", student.getGender());
+                result.put("dateOfBirth", student.getDateOfBirth());
+                result.put("mobileNumber", student.getMobileNumber());
+                result.put("address", student.getAddress());
+                // Get latest enrollment for yearLevel and section
+                Enrollment latest = enrollmentService.getLatestEnrollmentForStudent(student.getId());
+                if (latest != null) {
+                    result.put("yearLevel", latest.getYearLevel());
+                    result.put("section", latest.getSection() != null ? latest.getSection().getSectionCode() : null);
+                } else {
+                    result.put("yearLevel", null);
+                    result.put("section", null);
                 }
             }
         } else if (user.getRole().equalsIgnoreCase("faculty")) {
@@ -193,20 +248,33 @@ public class UserManagement {
         }
         User user = optionalUser.get();
 
-        // Only assign new ID if role is changing
-        if (!user.getRole().equals(payload.get("role").toString())) {
+        // Only assign new ID if role is changing and role is present in payload
+        if (payload.containsKey("role") && payload.get("role") != null && !user.getRole().equals(payload.get("role").toString())) {
             userIdentifierService.assignIdentifier(user);
         }
 
-        user.setUsername(payload.get("username").toString());
-        user.setFirstName(payload.get("firstName").toString());
-        user.setLastName(payload.get("lastName").toString());
-        user.setEmail(payload.get("email").toString());
-        user.setRole(payload.get("role").toString());
-        user.setStatus(payload.get("status").toString());
-        user.setMiddleName(payload.get("middleName").toString());
-        if (payload.containsKey("password") && payload.get("password") != null
-                && !payload.get("password").toString().isEmpty()) {
+        if (payload.containsKey("username") && payload.get("username") != null) {
+            user.setUsername(payload.get("username").toString());
+        }
+        if (payload.containsKey("firstName") && payload.get("firstName") != null) {
+            user.setFirstName(payload.get("firstName").toString());
+        }
+        if (payload.containsKey("lastName") && payload.get("lastName") != null) {
+            user.setLastName(payload.get("lastName").toString());
+        }
+        if (payload.containsKey("email") && payload.get("email") != null) {
+            user.setEmail(payload.get("email").toString());
+        }
+        if (payload.containsKey("role") && payload.get("role") != null) {
+            user.setRole(payload.get("role").toString());
+        }
+        if (payload.containsKey("status") && payload.get("status") != null) {
+            user.setStatus(payload.get("status").toString());
+        }
+        if (payload.containsKey("middleName") && payload.get("middleName") != null) {
+            user.setMiddleName(payload.get("middleName").toString());
+        }
+        if (payload.containsKey("password") && payload.get("password") != null && !payload.get("password").toString().isEmpty()) {
             user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
         }
         // user.setLastLogin ... (if needed)
@@ -224,6 +292,19 @@ public class UserManagement {
                     }
                 }
                 studentRepository.save(student);
+            }
+        }
+        // Update faculty contact info if faculty
+        if (user.getRole().equalsIgnoreCase("faculty")) {
+            Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
+            if (faculty != null) {
+                if (payload.containsKey("mobileNumber")) {
+                    faculty.setMobileNumber(payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
+                }
+                if (payload.containsKey("address")) {
+                    faculty.setAddress(payload.get("address") != null ? payload.get("address").toString() : null);
+                }
+                facultyRepository.save(faculty);
             }
         }
 

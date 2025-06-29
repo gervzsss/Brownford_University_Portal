@@ -2559,10 +2559,12 @@ body {
   border-color: #8b4513;
 }
 
+.btn-view:hover,
 .btn-edit:hover {
   background-color: #6b3a1d;
   border-color: #6b3a1d;
   transform: translateY(-1px);
+  cursor: pointer;
 }
 
 .btn-danger {
