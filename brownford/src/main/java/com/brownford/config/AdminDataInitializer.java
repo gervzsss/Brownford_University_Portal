@@ -21,6 +21,7 @@ public class AdminDataInitializer implements CommandLineRunner {
             User admin = new User();
             admin.setUsername("admin");
             admin.setFirstName("System");
+            admin.setMiddleName("Account");
             admin.setLastName("Administrator");
             admin.setEmail("admin@brownford.edu");
             admin.setRole("admin");

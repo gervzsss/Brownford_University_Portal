@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.30.250353]
+
+### Fix
+- Admin Data Initializer File Fix.
+
 ## [06.30.250344]
 
 ### Fix
