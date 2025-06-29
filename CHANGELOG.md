@@ -1,5 +1,10 @@
 # Changelog
 
+## [06.29.251851]
+
+### Removed
+- Removed Remove Activities in the Admin Dashboard Page.
+
 ## [06.29.251844]
 
 ### Changes

@@ -160,45 +160,6 @@
                 </div>
                 </section>
 
-                <!-- Recent Activities Section -->
-                <h3 class="section-title">Recent Activities</h3>
-                <div class="announcements-container" th:if="${not #lists.isEmpty(recentActivities)}">
-                    <div class="announcement-card" th:each="activity : ${recentActivities}"
-                        th:classappend="${activity.priority ? 'priority' : ''}">
-                        <div class="announcement-header">
-                            <div class="announcement-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <h4 class="announcement-title" th:text="${activity.title}">Activity Title</h4>
-                        </div>
-                        <div class="announcement-content">
-                            <p th:text="${activity.content}">Activity content description.</p>
-                        </div>
-                        <div class="announcement-footer">
-                            <span class="announcement-date" th:text="${activity.date}">Date and time</span>
-                            <a th:href="${activity.detailsUrl}" class="announcement-action">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="announcements-container" th:if="${#lists.isEmpty(recentActivities)}">
-                    <div class="empty-state">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
-                            stroke="#6B3A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                        <p>No recent activities found. Activities will appear here as you perform actions in the
-                            system.
-                        </p>
-                    </div>
-                </div>
-
                 <!-- Pending Approvals Section -->
                 <h3 class="section-title">Pending Approvals</h3>
                 <div id="pending-approvals-list" class="events-container"></div>
