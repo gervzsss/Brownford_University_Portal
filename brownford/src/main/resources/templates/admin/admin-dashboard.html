@@ -97,15 +97,14 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                                <path d="M19 21H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4l2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"></path>
+                                <line x1="9" y1="9" x2="15" y2="9"></line>
+                                <line x1="9" y1="13" x2="15" y2="13"></line>
                             </svg>
                         </div>
                         <div class="quick-link-text">
-                            <h4 id="classSchedules">0</h4>
-                            <p>Class Schedules</p>
+                            <h4 id="unassignedSchedule">0</h4>
+                            <p>Unassigned Schedule</p>
                         </div>
                     </div>
                 </div>
@@ -192,13 +191,22 @@
                     document.getElementById('totalStudents').textContent = data.totalStudents ?? '0';
                     document.getElementById('facultyMembers').textContent = data.facultyMembers ?? '0';
                     document.getElementById('activeCourses').textContent = data.activeCourses ?? '0';
-                    document.getElementById('classSchedules').textContent = data.classSchedules ?? '0';
+                    // document.getElementById('classSchedules').textContent = data.classSchedules ?? '0';
                 })
                 .catch(() => {
                     document.getElementById('totalStudents').textContent = '0';
                     document.getElementById('facultyMembers').textContent = '0';
                     document.getElementById('activeCourses').textContent = '0';
-                    document.getElementById('classSchedules').textContent = '0';
+                    // document.getElementById('classSchedules').textContent = '0';
+                });
+            // Fetch unassigned schedule count
+            fetch('/api/admin/unassigned-schedule')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('unassignedSchedule').textContent = data.unassignedCount ?? '0';
+                })
+                .catch(() => {
+                    document.getElementById('unassignedSchedule').textContent = '0';
                 });
         });
     </script>

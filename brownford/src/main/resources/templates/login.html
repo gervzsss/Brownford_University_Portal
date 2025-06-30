@@ -39,7 +39,7 @@
                                 </svg>
                             </span>
                             <input type="text" id="username" name="username" class="form-control"
-                                placeholder="Student ID" required aria-required="true" />
+                                placeholder="username" required aria-required="true" />
                         </div>
                     </div>
 
@@ -54,7 +54,7 @@
                                 </svg>
                             </span>
                             <input type="password" id="password" name="password" class="form-control"
-                                placeholder="Password" required aria-required="true" />
+                                placeholder="password" required aria-required="true" />
                             <span class="password-toggle">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -73,7 +73,7 @@
 
                     <!-- Error message container (for login failures) -->
                     <div th:if="${param.error}" class="error-message">
-                        Invalid student ID or password. Please try again.
+                        Invalid username or password. Please try again.
                     </div>
 
                     <button type="submit" class="sign-in-button">SIGN IN</button>

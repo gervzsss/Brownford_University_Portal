@@ -30,36 +30,25 @@ public class GradeService {
 
     public String getRemarksForGrade(String gradeValue) {
         if (gradeValue == null) {
-            return "Pending"; // or return "" if you prefer blank
+            return "Pending";
         }
         switch (gradeValue) {
-            case "1.00":
-            case "1.13":
-            case "1.25":
-            case "1.38":
-            case "1.50":
-            case "1.63":
-            case "1.75":
-            case "1.88":
-            case "2.00":
-            case "2.13":
-            case "2.25":
-            case "2.38":
-            case "2.50":
-            case "2.63":
-            case "2.88":
-            case "2.75":
-            case "3.00":
-                return "PASSED";
-            case "5.00":
-                return "Failed";
             case "INC":
                 return "Incomplete";
             case "DRP":
                 return "Dropped";
-            default:
-                return "";
         }
+        try {
+            double grade = Double.parseDouble(gradeValue);
+            if (grade >= 1.00 && grade <= 3.00) {
+                return "PASSED";
+            } else if (grade > 3.00) {
+                return "FAILED";
+            }
+        } catch (NumberFormatException e) {
+            // Not a numeric grade, already handled above
+        }
+        return "";
     }
 
     @Transactional

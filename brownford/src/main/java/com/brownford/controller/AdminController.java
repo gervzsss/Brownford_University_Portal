@@ -10,6 +10,8 @@ import com.brownford.repository.UserRepository;
 import com.brownford.repository.CourseRepository;
 import com.brownford.service.NotificationService;
 import com.brownford.model.Notification;
+import com.brownford.repository.FacultyAssignmentRepository;
+import com.brownford.repository.CurriculumCourseRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,10 @@ public class AdminController {
     private CourseRepository courseRepository;
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private FacultyAssignmentRepository facultyAssignmentRepository;
+    @Autowired
+    private CurriculumCourseRepository curriculumCourseRepository;
 
     @GetMapping("/admin-dashboard")
     public String adminDashboard(Model model) {
@@ -102,5 +108,18 @@ public class AdminController {
         summary.put("activeCourses", activeCourses);
         summary.put("classSchedules", 0); // Placeholder for now
         return summary;
+    }
+
+    @GetMapping("/api/admin/unassigned-schedule")
+    @ResponseBody
+    public Map<String, Object> getUnassignedScheduleCount() {
+        // Count CurriculumCourses that do not have a FacultyAssignment (unassigned)
+        long unassignedCount = curriculumCourseRepository.findAll().stream()
+            .filter(cc -> facultyAssignmentRepository.findAll().stream()
+                .noneMatch(fa -> fa.getCurriculumCourse().getId().equals(cc.getId()) && fa.getFaculty() != null))
+            .count();
+        Map<String, Object> result = new HashMap<>();
+        result.put("unassignedCount", unassignedCount);
+        return result;
     }
 }

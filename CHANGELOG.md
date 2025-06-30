@@ -1,5 +1,12 @@
 # Changelog
 
+## [06.30.251221]
+
+### Fix
+- Login Page Improvement.
+- Admin Dashboard Unassigned Schedule Quick Link.
+- Fixed PENDING Remarks.
+
 ## [06.30.250353]
 
 ### Fix
