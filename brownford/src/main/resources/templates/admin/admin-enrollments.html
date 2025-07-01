@@ -227,10 +227,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="coursesSelect">Courses *</label>
-                                <select id="coursesSelect" name="courses" class="form-control" multiple required>
-                                    <option value="">Loading courses...</option>
-                                </select>
-                                <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple courses</small>
+                                <div id="coursesCheckboxList" class="checkbox-list"></div>
+                                <small class="form-text text-muted">Select one or more courses</small>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -298,10 +296,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="batchCoursesSelect">Courses *</label>
-                                <select id="batchCoursesSelect" name="courses" class="form-control" multiple required>
-                                    <option value="">Loading courses...</option>
-                                </select>
-                                <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple courses</small>
+                                <div id="batchCoursesCheckboxList" class="checkbox-list"></div>
+                                <small class="form-text text-muted">Select one or more courses</small>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -760,9 +756,9 @@
                 await populateCoursesDropdown();
                 // Select courses (if you add courses array to DTO in the future)
                 if (enrollment.courses && enrollment.courses.length > 0) {
-                    const coursesSelect = document.getElementById('coursesSelect');
-                    Array.from(coursesSelect.options).forEach(option => {
-                        option.selected = enrollment.courses.some(courseId => String(courseId) === option.value);
+                    const coursesContainer = document.getElementById('coursesCheckboxList');
+                    Array.from(coursesContainer.querySelectorAll('input[type="checkbox"]')).forEach(checkbox => {
+                        checkbox.checked = enrollment.courses.some(courseId => String(courseId) === checkbox.value);
                     });
                 }
 
@@ -894,85 +890,66 @@
         }
 
         async function populateCoursesDropdown() {
-            const select = document.getElementById('coursesSelect');
-            const batchSelect = document.getElementById('batchCoursesSelect');
-            const isBatch = batchSelect && batchSelect.closest('.modal').style.display === 'block';
-
-            (isBatch ? batchSelect : select).innerHTML = '<option value="">Loading courses...</option>';
-
-            // Get selected student, year, semester
+            const container = document.getElementById('coursesCheckboxList');
+            container.innerHTML = '<span>Loading courses...</span>';
             const studentId = document.getElementById('studentSelect').value;
             const yearLevel = document.getElementById('yearLevelSelect').value;
             const semester = document.getElementById('semesterSelect').value;
-
-            if (isBatch) {
-                const batchStudentIds = Array.from(document.getElementById('batchStudentSelect').selectedOptions)
-                    .map(option => option.value);
-                if (batchStudentIds.length === 0) {
-                    batchSelect.innerHTML = '<option value="">Select students first</option>';
+            if (!studentId || !yearLevel || !semester) {
+                container.innerHTML = '<span>Select student, year, and semester first</span>';
+                return;
+            }
+            try {
+                const studentRes = await fetch(`/api/students/${studentId}`);
+                if (!studentRes.ok) throw new Error('Failed to fetch student');
+                const student = await studentRes.json();
+                const programId = student.program && student.program.id;
+                if (!programId) throw new Error('Student has no program assigned');
+                const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
+                if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
+                const curriculum = await curriculumRes.json();
+                const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
+                    cc.yearLevel == yearLevel && cc.semester == semester
+                );
+                if (filteredCourses.length === 0) {
+                    container.innerHTML = '<span>No courses in curriculum for this year/semester</span>';
                     return;
                 }
-                // Use first selected student to determine programId
-                const firstStudentId = batchStudentIds[0];
-                try {
-                    const studentRes = await fetch(`/api/students/${firstStudentId}`);
-                    if (!studentRes.ok) throw new Error('Failed to fetch student');
-                    const student = await studentRes.json();
-                    const programId = student.program && student.program.id;
-                    if (!programId) throw new Error('Student has no program assigned');
+                container.innerHTML = filteredCourses.map(cc =>
+                    `<label style='display:block;'><input type='checkbox' name='courses' value='${cc.course.id}'> ${cc.course.courseCode} - ${cc.course.courseTitle}</label>`
+                ).join('');
+            } catch (error) {
+                container.innerHTML = `<span>${error.message}</span>`;
+            }
+        }
 
-                    // Fetch curriculum for program
-                    const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
-                    if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
-                    const curriculum = await curriculumRes.json();
-                    // Filter curriculumCourses by year and semester
-                    const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
-                        cc.yearLevel == yearLevel && cc.semester == semester
-                    );
-                    if (filteredCourses.length === 0) {
-                        batchSelect.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
-                        return;
-                    }
-                    batchSelect.innerHTML = filteredCourses.map(cc =>
-                        `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
-                    ).join('');
-                } catch (error) {
-                    console.error('Error loading curriculum courses:', error);
-                    batchSelect.innerHTML = `<option value="">${error.message}</option>`;
-                }
-            } else {
-                if (!studentId || !yearLevel || !semester) {
-                    select.innerHTML = '<option value="">Select student, year, and semester first</option>';
+        // Replace populateBatchCoursesDropdown to render checkboxes
+        async function populateBatchCoursesDropdown() {
+            const container = document.getElementById('batchCoursesCheckboxList');
+            container.innerHTML = '<span>Loading courses...</span>';
+            const programId = document.getElementById('batchProgramSelect').value;
+            const yearLevel = document.getElementById('batchYearLevelSelect').value;
+            const semester = document.getElementById('batchSemesterSelect').value;
+            if (!programId || !yearLevel || !semester) {
+                container.innerHTML = '<span>Select program, year, and semester first</span>';
+                return;
+            }
+            try {
+                const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
+                if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
+                const curriculum = await curriculumRes.json();
+                const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
+                    cc.yearLevel == yearLevel && cc.semester == semester
+                );
+                if (filteredCourses.length === 0) {
+                    container.innerHTML = '<span>No courses in curriculum for this year/semester</span>';
                     return;
                 }
-
-                try {
-                    // Fetch student to get programId
-                    const studentRes = await fetch(`/api/students/${studentId}`);
-                    if (!studentRes.ok) throw new Error('Failed to fetch student');
-                    const student = await studentRes.json();
-                    const programId = student.program && student.program.id;
-                    if (!programId) throw new Error('Student has no program assigned');
-
-                    // Fetch curriculum for program
-                    const curriculumRes = await fetch(`/api/curriculums/by-program/${programId}`);
-                    if (!curriculumRes.ok) throw new Error('No curriculum found for this program');
-                    const curriculum = await curriculumRes.json();
-                    // Filter curriculumCourses by year and semester
-                    const filteredCourses = (curriculum.curriculumCourses || []).filter(cc =>
-                        cc.yearLevel == yearLevel && cc.semester == semester
-                    );
-                    if (filteredCourses.length === 0) {
-                        select.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
-                        return;
-                    }
-                    select.innerHTML = filteredCourses.map(cc =>
-                        `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
-                    ).join('');
-                } catch (error) {
-                    console.error('Error loading curriculum courses:', error);
-                    select.innerHTML = `<option value="">${error.message}</option>`;
-                }
+                container.innerHTML = filteredCourses.map(cc =>
+                    `<label style='display:block;'><input type='checkbox' name='batchCourses' value='${cc.course.id}'> ${cc.course.courseCode} - ${cc.course.courseTitle}</label>`
+                ).join('');
+            } catch (error) {
+                container.innerHTML = `<span>${error.message}</span>`;
             }
         }
 
@@ -1027,14 +1004,14 @@
             }
         }
         async function populateBatchCoursesDropdown() {
-            const select = document.getElementById('batchCoursesSelect');
-            select.innerHTML = '<option value="">Loading courses...</option>';
+            const container = document.getElementById('batchCoursesCheckboxList');
+            container.innerHTML = '<span>Loading courses...</span>';
             // Get selected program, year, semester
             const programId = document.getElementById('batchProgramSelect').value;
             const yearLevel = document.getElementById('batchYearLevelSelect').value;
             const semester = document.getElementById('batchSemesterSelect').value;
             if (!programId || !yearLevel || !semester) {
-                select.innerHTML = '<option value="">Select program, year, and semester first</option>';
+                container.innerHTML = '<span>Select program, year, and semester first</span>';
                 return;
             }
             try {
@@ -1047,14 +1024,14 @@
                     cc.yearLevel == yearLevel && cc.semester == semester
                 );
                 if (filteredCourses.length === 0) {
-                    select.innerHTML = '<option value="">No courses in curriculum for this year/semester</option>';
+                    container.innerHTML = '<span>No courses in curriculum for this year/semester</span>';
                     return;
                 }
-                select.innerHTML = filteredCourses.map(cc =>
-                    `<option value="${cc.course.id}">${cc.course.courseCode} - ${cc.course.courseTitle}</option>`
+                container.innerHTML = filteredCourses.map(cc =>
+                    `<label style='display:block;'><input type='checkbox' name='batchCourses' value='${cc.course.id}'> ${cc.course.courseCode} - ${cc.course.courseTitle}</label>`
                 ).join('');
             } catch (error) {
-                select.innerHTML = `<option value="">${error.message}</option>`;
+                container.innerHTML = `<span>${error.message}</span>`;
             }
         }
 
@@ -1068,13 +1045,11 @@
             e.preventDefault();
 
             const studentId = document.getElementById('studentSelect').value;
-            const courseIds = Array.from(document.getElementById('coursesSelect').selectedOptions)
-                .map(option => parseInt(option.value));
+            const courseIds = Array.from(document.querySelectorAll('#coursesCheckboxList input[name="courses"]:checked')).map(cb => parseInt(cb.value));
             const semester = document.getElementById('semesterSelect').value;
             const yearLevel = document.getElementById('yearLevelSelect').value;
             const sectionId = document.getElementById('sectionSelect').value;
             const programId = document.getElementById('programSelect').value;
-            console.log('sectionId:', sectionId); // Debug log
             if (!studentId || courseIds.length === 0 || !semester || !yearLevel || !sectionId) {
                 alert('Please fill in all required fields, including section.');
                 return;
@@ -1126,7 +1101,7 @@
             const yearLevel = document.getElementById('batchYearLevelSelect').value;
             const semester = document.getElementById('batchSemesterSelect').value;
             const sectionId = document.getElementById('batchSectionSelect').value;
-            const courseIds = Array.from(document.getElementById('batchCoursesSelect').selectedOptions).map(opt => parseInt(opt.value));
+            const courseIds = Array.from(document.querySelectorAll('#batchCoursesCheckboxList input[name="batchCourses"]:checked')).map(cb => parseInt(cb.value));
             if (!studentIds.length || !yearLevel || !semester || !courseIds.length) {
                 alert('Please fill in all required fields and select at least one student and course.');
                 return;

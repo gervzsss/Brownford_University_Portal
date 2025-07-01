@@ -1,9 +1,14 @@
 # Changelog
 
+## [07.01.252002]
+
+### Changes
+- Refactor course selection to use checkboxes instead of dropdowns in enrollment modals.
+
 ## [07.01.251909]
 
 ### Changes
-- Refactor admin templates and styles for improved UI/UX
+- Refactor admin templates and styles for improved UI/UX.
 - Updated CSS styles for form controls and buttons in home.css to enhance visual consistency.
 - Modified admin-curriculum.html to adjust button sizes and alignments.
 - Enhanced admin-enrollments.html with a new search filter layout and improved button designs.
