@@ -2257,7 +2257,7 @@ body {
   color: #333;
 }
 
-.form-control {
+/* .form-control {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -2269,6 +2269,20 @@ body {
   outline: none;
   border-color: #6b3a1d;
   box-shadow: 0 0 0 2px rgba(107, 58, 29, 0.2);
+} */
+
+.form-control {
+  padding: 10px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  font-family: "Alice", serif;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #8b4513;
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
 }
 
 .form-actions {
@@ -2619,20 +2633,6 @@ body {
   color: #6b3a1d;
   margin-bottom: 8px;
   font-family: "Cinzel", serif;
-}
-
-.form-control {
-  padding: 10px 12px;
-  border: 2px solid #e9ecef;
-  border-radius: 4px;
-  font-family: "Alice", serif;
-  transition: border-color 0.2s ease;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #8b4513;
-  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
 }
 
 /* Modal improvements */
@@ -3158,4 +3158,151 @@ body {
 
 #pending-approvals-empty p {
   font-size: 15px;
+}
+
+/* Admin Enrollment Page */
+
+.enrollment-status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.enrollment-status-approved {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.enrollment-status-declined {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.enrollment-status-completed {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.courses-list {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.courses-list:hover {
+  white-space: normal;
+  overflow: visible;
+}
+
+.bulk-actions-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-filter-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.search-filter-container input,
+.search-filter-container select {
+  padding: 8px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 4px;
+  font-family: "Alice", serif;
+}
+
+.search-filter-container input:focus,
+.search-filter-container select:focus {
+  outline: none;
+  border-color: #8b4513;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.close-modal:hover {
+  color: #8b4513;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: 1px solid #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.btn-primary {
+  background-color: #8b4513;
+  color: white;
+  border: 1px solid #8b4513;
+}
+
+.btn-primary:hover {
+  background-color: #6b3a1d;
+  border-color: #6b3a1d;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
 }

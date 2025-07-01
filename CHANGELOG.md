@@ -1,5 +1,17 @@
 # Changelog
 
+## [07.01.251909]
+
+### Changes
+- Refactor admin templates and styles for improved UI/UX
+- Updated CSS styles for form controls and buttons in home.css to enhance visual consistency.
+- Modified admin-curriculum.html to adjust button sizes and alignments.
+- Enhanced admin-enrollments.html with a new search filter layout and improved button designs.
+- Streamlined admin-faculty-list.html by updating SVG icons and button styles.
+- Improved admin-sections.html layout for better usability with a new filter row.
+- Refined admin-student-list.html to ensure consistent input field formatting and button styles.
+- Enhanced admin-users.html with a new search container and improved modal designs for user management.
+
 ## [06.30.251221]
 
 ### Fix

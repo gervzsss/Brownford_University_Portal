@@ -31,10 +31,8 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
                                 fill="none" stroke="#6B3A1D" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="8.5" cy="7" r="4"></circle>
-                                <line x1="20" y1="8" x2="20" y2="14"></line>
-                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
                             </svg>
                         </div>
                         <div class="welcome-text">
@@ -144,7 +142,8 @@
                         </div>
                         <div class="form-group">
                             <label for="editFacultyMiddleName">Middle Name</label>
-                            <input type="text" id="editFacultyMiddleName" name="middleName" class="form-control" required>
+                            <input type="text" id="editFacultyMiddleName" name="middleName" class="form-control"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="editFacultyLastName">Last Name</label>
@@ -184,8 +183,6 @@
             </div>
         </div>
     </div>
-
-    <footer-footer></footer-footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -234,7 +231,7 @@
                             <td title="${faculty.address || ''}">${faculty.address ? (faculty.address.length > 30 ? faculty.address.substring(0, 30) + '…' : faculty.address) : ''}</td>
                             <td><span class="status-badge ${faculty.status && faculty.status.toLowerCase() === 'active' ? 'active' : 'inactive'}">${faculty.status || ''}</span></td>
                             <td>
-                                <div class="table-actions">
+                                <div class="action-buttons">
                                     <button class="btn-sm btn-edit" data-id="${faculty.id}">Edit</button>
                                     <button class="btn-sm btn-edit btn-view-workload" data-faculty-id="${faculty.id}">View Workloads</button>
                                 </div>
@@ -249,7 +246,7 @@
             statusFilter.addEventListener('change', loadFaculty);
 
             // Open modal and populate form
-            facultyTableBody.addEventListener('click', async function(e) {
+            facultyTableBody.addEventListener('click', async function (e) {
                 if (e.target.classList.contains('btn-edit') && !e.target.classList.contains('btn-view-workload')) {
                     const facultyId = e.target.getAttribute('data-id');
                     const res = await fetch(`/api/admin/users/${facultyId}`);
@@ -275,17 +272,17 @@
             });
 
             // Close modal
-            closeEditFacultyModal.addEventListener('click', function() {
+            closeEditFacultyModal.addEventListener('click', function () {
                 editFacultyModal.style.display = 'none';
                 editFacultyForm.reset();
             });
-            cancelEditFacultyBtn.addEventListener('click', function() {
+            cancelEditFacultyBtn.addEventListener('click', function () {
                 editFacultyModal.style.display = 'none';
                 editFacultyForm.reset();
             });
 
             // Submit form
-            editFacultyForm.addEventListener('submit', async function(e) {
+            editFacultyForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
                 const id = document.getElementById('editFacultyId').value;
                 const payload = {
@@ -313,7 +310,7 @@
             });
 
             // Close modal on outside click
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target === editFacultyModal) {
                     editFacultyModal.style.display = 'none';
                     editFacultyForm.reset();
@@ -321,7 +318,7 @@
             };
 
             // Redirect to admin-users with addUser=faculty when Add New Faculty is clicked
-            document.getElementById('addFacultyBtn').addEventListener('click', function() {
+            document.getElementById('addFacultyBtn').addEventListener('click', function () {
                 window.location.href = '/admin-users?addUser=faculty';
             });
 
