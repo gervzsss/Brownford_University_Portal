@@ -754,11 +754,13 @@
 
                 // Re-populate courses dropdown based on selected student/year/semester
                 await populateCoursesDropdown();
-                // Select courses (if you add courses array to DTO in the future)
+                // Select courses (works for both array of IDs or array of objects)
                 if (enrollment.courses && enrollment.courses.length > 0) {
                     const coursesContainer = document.getElementById('coursesCheckboxList');
+                    // Get array of course IDs (support both array of IDs or array of objects)
+                    const enrolledCourseIds = enrollment.courses.map(c => typeof c === 'object' ? c.id || c.courseId : c);
                     Array.from(coursesContainer.querySelectorAll('input[type="checkbox"]')).forEach(checkbox => {
-                        checkbox.checked = enrollment.courses.some(courseId => String(courseId) === checkbox.value);
+                        checkbox.checked = enrolledCourseIds.includes(parseInt(checkbox.value));
                     });
                 }
 

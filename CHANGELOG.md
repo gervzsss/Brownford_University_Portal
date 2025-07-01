@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.02.250227]
+
+### Changes
+- Refactor code structure for improved readability and maintainability.
+
 ## [07.02.250100]
 
 ### Changes
