@@ -89,7 +89,7 @@
                                     </svg>
                                     Add New User
                                 </button>
-                                <button id="exportStudentsBtn" class="export-btn">
+                                <button id="exportUsersBtn" class="export-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -230,39 +230,31 @@
                     <div class="user-info-grid">
                         <div class="info-item">
                             <span class="info-label">User ID:</span>
-                            <span class="info-value" id="viewUserId">S-2022-12345</span>
+                            <span class="info-value" id="viewUserId"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Username:</span>
-                            <span class="info-value" id="viewUsername">asd</span>
+                            <span class="info-value" id="viewUsername"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Full Name:</span>
-                            <span class="info-value" id="viewFullName">Gervy Silvano Masbate</span>
+                            <span class="info-value" id="viewFullName"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Email:</span>
-                            <span class="info-value" id="viewEmail">gervy.masbate@student.brownford.edu</span>
+                            <span class="info-value" id="viewEmail"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Role:</span>
-                            <span class="info-value" id="viewRole">Student</span>
+                            <span class="info-value" id="viewRole"></span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">Status:</span>
-                            <span class="info-value" id="viewStatus">Active</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Created On:</span>
-                            <span class="info-value" id="viewCreatedOn">August 15, 2022</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Last Login:</span>
-                            <span class="info-value" id="viewLastLogin">May 10, 2025 9:15 AM</span>
+                            <span class="info-value" id="viewStatus"></span>
                         </div>
                         <div class="info-item" id="viewProgramItem" style="display: none;">
                             <span class="info-label">Program:</span>
-                            <span class="info-value" id="viewProgram">BSBA - Marketing Management</span>
+                            <span class="info-value" id="viewProgram"></span>
                         </div>
                     </div>
                 </div>
@@ -271,7 +263,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <script>
@@ -578,7 +569,14 @@
                 const response = await fetch(`/api/admin/users/${userId}`);
                 if (!response.ok) throw new Error('User not found');
                 const user = await response.json();
-                document.getElementById('viewUserId').textContent = user.id;
+                // Set User ID based on role
+                let idValue = '';
+                if (user.role === 'student') {
+                    idValue = user.studentId || '';
+                } else if (user.role === 'faculty') {
+                    idValue = user.facultyId || '';
+                } // admin: leave blank
+                document.getElementById('viewUserId').textContent = idValue;
                 document.getElementById('viewUsername').textContent = user.username;
                 document.getElementById('viewFullName').textContent = `${user.firstName} ${user.middleName} ${user.lastName}`;
                 document.getElementById('viewEmail').textContent = user.email;
@@ -586,8 +584,7 @@
                 document.getElementById('viewStatus').textContent = user.status;
                 if (user.role === 'student') {
                     document.getElementById('viewProgramItem').style.display = 'block';
-                    document.getElementById('viewProgram').textContent = user.program ? (user.program.code + ' - ' + user.program.name) :
-                        '';
+                    document.getElementById('viewProgram').textContent = user.program ? (user.program.code + ' - ' + user.program.name) : '';
                 } else {
                     document.getElementById('viewProgramItem').style.display = 'none';
                 }
@@ -614,8 +611,9 @@
                 document.getElementById('email').value = user.email;
                 document.getElementById('userRole').value = user.role;
                 document.getElementById('status').value = user.status;
-                document.getElementById('password').value = user.password || '';
-                document.getElementById('confirmPassword').value = user.password || '';
+                // Do NOT set password fields when editing
+                document.getElementById('password').value = '';
+                document.getElementById('confirmPassword').value = '';
                 document.getElementById('password').required = false;
                 document.getElementById('confirmPassword').required = false;
                 if (user.role === 'student') {
@@ -624,8 +622,8 @@
                     const programSelect = document.getElementById('program');
                     programGroup.style.display = 'block';
                     programSelect.innerHTML = '<option value="">Loading...</option>';
-                    const response = await fetch('/api/programs');
-                    const programs = await response.json();
+                    const progResponse = await fetch('/api/programs');
+                    const programs = await progResponse.json();
                     programSelect.innerHTML = '<option value="">Select Program</option>' +
                         programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
                     // Set the value after options are loaded
@@ -638,57 +636,30 @@
                 userModal.style.display = 'flex';
                 setTimeout(() => showModal(userModal), 10);
             } catch (err) {
-                alert('Failed to load user for editing: ' + err);
+                alert('Failed to load user data for editing: ' + err);
             }
         }
 
-        // Delete a user
+        // Delete a user (soft delete)
         async function deleteUser(userId) {
             if (!confirm('Are you sure you want to delete this user?')) return;
             try {
-                const response = await fetch(`/api/admin/users/${userId}`, { method: 'DELETE' });
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'DELETE'
+                });
                 if (response.ok) {
-                    alert('User deleted!');
+                    alert('User deleted successfully!');
                     loadUsers();
                 } else {
-                    alert('Failed to delete user.');
+                    const error = await response.text();
+                    alert('Failed to delete user: ' + error);
                 }
             } catch (err) {
-                alert('Error deleting user: ' + err);
-            }
-        }
-
-        // Populate program dropdown dynamically when role is student
-        document.getElementById('userRole').addEventListener('change', async function () {
-            const programGroup = document.getElementById('programGroup');
-            if (this.value === 'student') {
-                const programSelect = document.getElementById('program');
-                programSelect.innerHTML = '<option value="">Loading...</option>';
-                programGroup.style.display = 'block';
-                const response = await fetch('/api/programs');
-                const programs = await response.json();
-                programSelect.innerHTML = '<option value="">Select Program</option>' +
-                    programs.map(p => `<option value="${p.id}">${p.code} - ${p.name}</option>`).join('');
-            } else {
-                programGroup.style.display = 'none';
-            }
-        });
-
-        // Load users from the API and render them in the table, with search and filters
-        async function loadUsers() {
-            try {
-                let url = '/api/admin/users?';
-                if (currentSearch) url += `search=${encodeURIComponent(currentSearch)}&`;
-                if (currentRole && currentRole !== 'all') url += `role=${encodeURIComponent(currentRole)}&`;
-                if (currentStatus && currentStatus !== 'all') url += `status=${encodeURIComponent(currentStatus)}&`;
-                const response = await fetch(url);
-                const users = await response.json();
-                renderUsersTable(users);
-            } catch (err) {
-                alert('Failed to load users: ' + err);
+                alert('Error: ' + err);
             }
         }
     </script>
+
 </body>
 
 </html>

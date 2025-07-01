@@ -2077,6 +2077,30 @@ body {
   background-color: #f9f9f9;
 }
 
+.data-table .empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 180px !important;
+  height: 180px !important;
+  text-align: center;
+  color: #6B3A1D;
+  font-size: 1.1em;
+  padding: 0 !important;
+  border: none;
+}
+
+.data-table .empty-state svg {
+  margin-bottom: 8px;
+}
+
+.data-table tr .empty-state {
+  /* Remove default table cell alignment */
+  vertical-align: middle;
+  padding: 0;
+}
+
 /* Role and Status Badges */
 .role-badge,
 .status-badge {
@@ -2256,20 +2280,6 @@ body {
   font-weight: 500;
   color: #333;
 }
-
-/* .form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #6b3a1d;
-  box-shadow: 0 0 0 2px rgba(107, 58, 29, 0.2);
-} */
 
 .form-control {
   padding: 10px 12px;
@@ -3180,6 +3190,10 @@ body {
 .enrollment-status-completed {
   background-color: #d1ecf1;
   color: #0c5460;
+}
+
+.checkbox-list label {
+  cursor: pointer;
 }
 
 .courses-list {

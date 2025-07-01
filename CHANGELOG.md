@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.01.252123]
+
+### Changes
+- Enhance user management interface.
+
 ## [07.01.252002]
 
 ### Changes
