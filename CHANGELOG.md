@@ -1,5 +1,14 @@
 # Changelog
 
+## [07.02.250100]
+
+### Changes
+- Add Curriculum and Program Data Initializers.
+- Implement CurriculumAndCoursesDataInitializer to populate curriculum and curriculum courses data.
+- Create ProgramDataInitializer to insert default program data into the database.
+- Ensure both initializers depend on course data initialization.
+- Add debug statements for tracking saved curriculums and curriculum courses.
+
 ## [07.01.252123]
 
 ### Changes
