@@ -67,13 +67,13 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .join("")
 
-    // Add click event to mark as read
-    list.querySelectorAll(".notification-item.unread").forEach((item) => {
-      item.addEventListener("click", function () {
+    // Add click event to redirect and mark as read
+    list.querySelectorAll(".notification-item").forEach((item) => {
+      item.addEventListener("click", function (e) {
+        // Prevent click if delete button is clicked
+        if (e.target.classList.contains("notification-delete-btn")) return;
         const id = this.getAttribute("data-id")
-        fetch(apiBase + "/read/" + id, {
-          method: "POST",
-        }).then(() => fetchNotifications())
+        window.location.href = `/api/notifications/mark-read-and-redirect/${id}`
       })
     })
 

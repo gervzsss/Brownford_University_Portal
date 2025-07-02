@@ -123,4 +123,15 @@ public class NotificationController {
                     .ifPresent(notificationService::deleteNotification);
         }
     }
+
+    @GetMapping("/mark-read-and-redirect/{id}")
+    public org.springframework.web.servlet.view.RedirectView markReadAndRedirect(@PathVariable Long id, Principal principal) {
+        Notification notification = notificationService.getNotificationById(id);
+        if (notification != null && !notification.isRead()) {
+            notificationService.markAsRead(notification);
+        }
+        String targetUrl = (notification != null && notification.getTargetUrl() != null && !notification.getTargetUrl().isEmpty())
+                ? notification.getTargetUrl() : "/";
+        return new org.springframework.web.servlet.view.RedirectView(targetUrl);
+    }
 }

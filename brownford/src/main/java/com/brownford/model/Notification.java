@@ -24,6 +24,7 @@ public class Notification {
     private boolean isRead = false;
     private LocalDateTime createdAt = LocalDateTime.now();
     private String recipientRole; // e.g., "admin" for admin notifications
+    private String targetUrl; // URL to redirect when notification is clicked
 
     // Getters and setters
     public Long getId() {
@@ -88,5 +89,13 @@ public class Notification {
 
     public void setRecipientRole(String recipientRole) {
         this.recipientRole = recipientRole;
+    }
+
+    public String getTargetUrl() {
+        return targetUrl;
+    }
+
+    public void setTargetUrl(String targetUrl) {
+        this.targetUrl = targetUrl;
     }
 }

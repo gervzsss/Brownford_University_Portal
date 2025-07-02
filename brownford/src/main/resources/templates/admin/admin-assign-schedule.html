@@ -99,16 +99,7 @@
                     <div class="panel-header">
                         <h2 class="section-title">Step 2: Assign Faculty & Schedule</h2>
                         <div class="panel-actions">
-                            <button class="btn btn-secondary" id="saveAllBtn" style="display: none;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                    <polyline points="17,21 17,13 7,13 7,21"></polyline>
-                                    <polyline points="7,3 7,8 15,8"></polyline>
-                                </svg>
-                                Save All Changes
-                            </button>
+                            <!-- Removed Save All Changes button -->
                         </div>
                     </div>
                     <div class="panel-content">
@@ -314,9 +305,6 @@
                 // Form submission
                 assignmentForm.addEventListener('submit', handleAssignmentSubmit);
 
-                // Save all button
-                document.getElementById('saveAllBtn').addEventListener('click', saveAllAssignments);
-
                 // Close modal on outside click
                 window.addEventListener('click', function (event) {
                     if (event.target === assignmentModal) {
@@ -507,10 +495,6 @@
                 document.getElementById('assignedCourses').textContent = assigned;
                 document.getElementById('partialCourses').textContent = partial;
                 document.getElementById('unassignedCourses').textContent = unassigned;
-
-                // Show save all button if there are changes
-                const hasAssignments = assigned > 0 || partial > 0;
-                document.getElementById('saveAllBtn').style.display = hasAssignments ? 'block' : 'none';
             }
 
             function getAssignmentStatus(assignment) {

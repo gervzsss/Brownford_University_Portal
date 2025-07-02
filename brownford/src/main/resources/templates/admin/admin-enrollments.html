@@ -336,6 +336,15 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function () {
+            // Check for status param in URL and set filter
+            const urlParams = new URLSearchParams(window.location.search);
+            const statusParam = urlParams.get('status');
+            if (statusParam) {
+                const statusFilter = document.getElementById('statusFilter');
+                if (statusFilter) {
+                    statusFilter.value = statusParam.toUpperCase();
+                }
+            }
             initializeEnrollmentManagement();
         });
 

@@ -69,6 +69,7 @@ public class FacultyAssignmentService {
                 notif.setMessage("You have been removed from section " + section.getSectionCode() + " for course " + cc.getCourse().getCourseCode() + ".");
                 notif.setCreatedAt(java.time.LocalDateTime.now());
                 notif.setRead(false);
+                notif.setTargetUrl("/faculty-schedule");
                 notificationRepository.save(notif);
                 logger.info("Faculty removal notification created for facultyId={}, section={}, course={}", faculty.getId(), section.getSectionCode(), cc.getCourse().getCourseCode());
             } else {
@@ -118,6 +119,7 @@ public class FacultyAssignmentService {
             notif.setMessage("You have been unassigned from section " + section.getSectionCode() + " as faculty for course " + cc.getCourse().getCourseCode() + ".");
             notif.setCreatedAt(java.time.LocalDateTime.now());
             notif.setRead(false);
+            notif.setTargetUrl("/faculty-schedule");
             notificationRepository.save(notif);
         }
         assignment.setCurriculumCourse(cc);
@@ -145,6 +147,7 @@ public class FacultyAssignmentService {
             notif.setMessage("You have been assigned to section " + section.getSectionCode() + " for course " + cc.getCourse().getCourseCode() + ".");
             notif.setCreatedAt(java.time.LocalDateTime.now());
             notif.setRead(false);
+            notif.setTargetUrl("/faculty-schedule");
             notificationRepository.save(notif);
         }
         return savedAssignment;

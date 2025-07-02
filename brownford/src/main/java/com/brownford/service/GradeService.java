@@ -86,7 +86,8 @@ public class GradeService {
         notificationService.createNotification(
             student,
             "A new grade has been released for course: " + course.getCourseTitle() + ".",
-            "GRADE_RELEASED"
+            "GRADE_RELEASED",
+            "/student-grades"
         );
         return saved;
     }

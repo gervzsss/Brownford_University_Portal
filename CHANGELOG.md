@@ -1,5 +1,17 @@
 # Changelog
 
+## [07.02.251953]
+
+### Changes
+- Add notification target URL and redirect functionality.
+- Introduced targetUrl field in Notification model for redirection.
+- Updated NotificationController to mark notifications as read and redirect.
+- Modified notification creation methods in NotificationService to include targetUrl.
+- Adjusted notification handling in EnrollmentService, FacultyAssignmentService, and GradeService to set target URLs.
+- Enhanced JavaScript to redirect on notification click.
+- Removed unnecessary "Save All Changes" button from admin templates.
+- Updated admin dashboard and enrollments templates for improved link handling and status filtering.
+
 ## [07.02.251708]
 
 ### Changes

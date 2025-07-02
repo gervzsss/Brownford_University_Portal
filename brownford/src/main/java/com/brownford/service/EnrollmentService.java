@@ -180,7 +180,9 @@ public class EnrollmentService {
                     enrollment.getStudent(),
                     "Your enrollment for " + enrollment.getSemester() + ", Year Level: " + enrollment.getYearLevel()
                             + " has been approved.",
-                    "ENROLLMENT_ACCEPTED");
+                    "ENROLLMENT_ACCEPTED",
+                    "/student-schedule"
+            );
         }
         return saved;
     }
