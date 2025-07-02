@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.02.252049]
+
+### Changes
+- Refactor: comment out empty state rendering logic in renderEnrollmentsTable function
+
 ## [07.02.251953]
 
 ### Changes
