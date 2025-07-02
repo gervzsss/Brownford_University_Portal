@@ -175,6 +175,21 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editFacultyGender">Gender</label>
+                            <select id="editFacultyGender" name="gender" class="form-control">
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editFacultyBirthday">Birthday</label>
+                            <input type="date" id="editFacultyBirthday" name="dateOfBirth" class="form-control">
+                        </div>
+                    </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn-edit" id="cancelEditFacultyBtn">Cancel</button>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -260,7 +275,9 @@
                     document.getElementById('editFacultyMobileNumber').value = data.mobileNumber || '';
                     document.getElementById('editFacultyAddress').value = data.address || '';
                     document.getElementById('editFacultyStatus').value = data.status || '';
-                    facultyModal.style.display = 'block';
+                    document.getElementById('editFacultyGender').value = data.gender || '';
+                    document.getElementById('editFacultyBirthday').value = data.dateOfBirth || '';
+                    editFacultyModal.style.display = 'block';
                 } else if (e.target.classList.contains('btn-view-workload')) {
                     const facultyId = e.target.getAttribute('data-faculty-id');
                     if (facultyId && facultyId !== 'null' && facultyId !== 'undefined') {
@@ -292,7 +309,9 @@
                     email: document.getElementById('editFacultyEmail').value,
                     mobileNumber: document.getElementById('editFacultyMobileNumber').value,
                     address: document.getElementById('editFacultyAddress').value,
-                    status: document.getElementById('editFacultyStatus').value
+                    status: document.getElementById('editFacultyStatus').value,
+                    gender: document.getElementById('editFacultyGender').value,
+                    dateOfBirth: document.getElementById('editFacultyBirthday').value
                 };
                 const res = await fetch(`/api/admin/users/${id}`, {
                     method: 'PUT',

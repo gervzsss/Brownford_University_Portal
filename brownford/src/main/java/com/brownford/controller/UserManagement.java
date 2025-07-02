@@ -127,6 +127,8 @@ public class UserManagement {
                     facultyId = faculty.getFacultyId();
                     mobileNumber = faculty.getMobileNumber();
                     address = faculty.getAddress();
+                    gender = faculty.getGender();
+                    dateOfBirth = faculty.getDateOfBirth();
                 }
             }
             dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId, mobileNumber, address, programDTO, yearLevel, section, gender, dateOfBirth));
@@ -157,6 +159,8 @@ public class UserManagement {
             if (faculty != null) {
                 result.put("mobileNumber", faculty.getMobileNumber());
                 result.put("address", faculty.getAddress());
+                result.put("gender", faculty.getGender());
+                result.put("dateOfBirth", faculty.getDateOfBirth());
             }
         }
         if (user.getRole().equalsIgnoreCase("student")) {

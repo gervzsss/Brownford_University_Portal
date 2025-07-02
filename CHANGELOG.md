@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.02.251302]
+
+### Changes
+- Add gender and date of birth fields to faculty management.
+
 ## [07.02.250227]
 
 ### Changes
