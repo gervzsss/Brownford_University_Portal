@@ -175,7 +175,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" required placeholder="e.g. john@brownford.edu">
+                            <input type="email" id="email" name="email" class="form-control" required
+                                placeholder="e.g. john@brownford.edu">
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
@@ -264,6 +265,8 @@
             </div>
         </div>
     </div>
+
+    <script th:src="@{/js/modal-global.js}"></script>
 
     <script>
         let editingUserId = null;

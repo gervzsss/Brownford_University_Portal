@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.02.251708]
+
+### Changes
+- Add global modal scroll lock functionality and prevent background scroll when modals are open.
+
 ## [07.02.251302]
 
 ### Changes

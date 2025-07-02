@@ -103,7 +103,9 @@
                         <tr th:each="student, iterStat : ${students}">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${student.studentId}"></td>
-                            <td th:text="${(student.user.lastName + ', ' + student.user.firstName + ' ' + student.user.middleName)?.toUpperCase()}"></td>
+                            <td
+                                th:text="${(student.user.lastName + ', ' + student.user.firstName + ' ' + student.user.middleName)?.toUpperCase()}">
+                            </td>
                             <td><input type="text" class="grade-input" th:name="'midtermGrade_' + ${student.studentId}"
                                     th:id="'midtermGrade_' + ${student.studentId}" /></td>
                             <td><input type="text" class="grade-input" th:name="'finalsGrade_' + ${student.studentId}"
@@ -131,6 +133,8 @@
     <input type="hidden" id="facultyId" th:value="${faculty != null ? faculty.id : ''}" />
     <input type="hidden" id="semester" th:value="${semester}" />
     <input type="hidden" id="schoolYear" th:value="${schoolYear}" />
+
+    <script th:src="@{/js/modal-global.js}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
