@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.03.251116]
+
+### Changes
+- Remove outdated TO-DO list and clean up HTML templates by deleting unused modals and scripts.
+
 ## [07.02.252049]
 
 ### Changes

@@ -221,99 +221,6 @@
             </div>
         </div>
 
-        <!-- View Course Details Modal -->
-        <div id="viewCourseModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Course Details</h3>
-                    <span class="close-modal">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="course-details">
-                        <div class="course-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
-                                fill="none" stroke="#6B3A1D" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                        </div>
-                        <div class="course-info-grid">
-                            <div class="info-item">
-                                <span class="info-label">Course Code:</span>
-                                <span class="info-value" id="viewCourseCode"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Course Title:</span>
-                                <span class="info-value" id="viewCourseTitle"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Units:</span>
-                                <span class="info-value" id="viewCourseCredits"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Prerequisites:</span>
-                                <span class="info-value" id="viewCoursePrerequisites"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Corequisites:</span>
-                                <span class="info-value" id="viewCourseCorequisites"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Status:</span>
-                                <span class="info-value" id="viewCourseStatus"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Programs:</span>
-                                <span class="info-value" id="viewCoursePrograms"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Year Level:</span>
-                                <span class="info-value" id="viewCourseYearLevel"></span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Semester:</span>
-                                <span class="info-value" id="viewCourseSemester"></span>
-                            </div>
-                        </div>
-                        <div class="course-sections">
-                            <h4>Active Sections</h4>
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Section ID</th>
-                                        <th>Instructor</th>
-                                        <th>Schedule</th>
-                                        <th>Room</th>
-                                        <th>Enrollment</th>
-                                        <th>Semester</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="viewCourseSections">
-                                    <tr>
-                                        <td colspan="6" class="empty-state-message">
-                                            No sections available for this course.
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="course-actions">
-                        <button class="btn btn-secondary" id="closeViewCourseBtn">
-                            Close
-                        </button>
-                        <button class="btn btn-primary" id="editFromViewCourseBtn">
-                            Edit Course
-                        </button>
-                        <button class="btn btn-success" id="addSectionFromCourseBtn">
-                            Add Section
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Delete Confirmation Modal -->
         <div id="deleteConfirmModal" class="modal">
             <div class="modal-content modal-sm">
@@ -398,14 +305,11 @@
         document.addEventListener("DOMContentLoaded", function () {
             // Modal elements
             const courseModal = document.getElementById("courseModal");
-            const viewCourseModal = document.getElementById("viewCourseModal");
             const deleteConfirmModal =
                 document.getElementById("deleteConfirmModal");
             const addCourseBtn = document.getElementById("addCourseBtn");
             const closeModalBtns = document.querySelectorAll(".close-modal");
             const cancelCourseBtn = document.getElementById("cancelCourseBtn");
-            const closeViewCourseBtn =
-                document.getElementById("closeViewCourseBtn");
             const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 
             // 1. Fetch programs and populate the dropdown in the course modal
@@ -486,17 +390,12 @@
             closeModalBtns.forEach((btn) => {
                 btn.addEventListener("click", function () {
                     courseModal.style.display = "none";
-                    viewCourseModal.style.display = "none";
                     deleteConfirmModal.style.display = "none";
                 });
             });
 
             cancelCourseBtn.addEventListener("click", function () {
                 courseModal.style.display = "none";
-            });
-
-            closeViewCourseBtn.addEventListener("click", function () {
-                viewCourseModal.style.display = "none";
             });
 
             cancelDeleteBtn.addEventListener("click", function () {
@@ -575,31 +474,6 @@
                             alert("Error loading course: " + err.message);
                         }
                     }
-
-                    // View buttons (delegated)
-                    document.getElementById("coursesTableBody").addEventListener("click", async function (e) {
-                        if (e.target.classList.contains("btn-view")) {
-                            const courseId = e.target.getAttribute("data-id");
-                            try {
-                                const response = await fetch(`/api/courses/${courseId}`);
-                                if (!response.ok) throw new Error("Failed to fetch course");
-                                const course = await response.json();
-                                document.getElementById("viewCourseCode").textContent = course.courseCode;
-                                document.getElementById("viewCourseTitle").textContent = course.courseTitle;
-                                document.getElementById("viewCourseCredits").textContent = course.units;
-                                document.getElementById("viewCoursePrerequisites").textContent = course.prerequisites || "None";
-                                document.getElementById("viewCourseCorequisites").textContent = course.corequisites || "None";
-                                document.getElementById("viewCourseStatus").textContent = course.status;
-                                document.getElementById("viewCoursePrograms").textContent = course.programs && course.programs.length > 0 ? course.programs.map(p => p.code + ' - ' + p.name).join(', ') : 'Not Assigned';
-                                document.getElementById("viewCourseYearLevel").textContent = course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A";
-                                document.getElementById("viewCourseSemester").textContent = course.semester || "N/A";
-                                // Show the modal
-                                viewCourseModal.style.display = "block";
-                            } catch (err) {
-                                alert("Error loading course: " + err.message);
-                            }
-                        }
-                    });
                 });
 
             // Delete buttons (delegated)
@@ -688,14 +562,6 @@
   <td>${course.yearLevel ? (["First Year", "Second Year", "Third Year", "Fourth Year"][course.yearLevel - 1]) : "N/A"}</td>
   <td>${course.courseSemester || course.semester || "N/A"}</td>
   <td class="action-buttons">
-    <button class="btn btn-sm btn-view" data-id="${course.id}" title="View Course">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12" y2="8"></line>
-      </svg>
-      View
-    </button>
     <button class="btn btn-sm btn-edit" data-id="${course.id}" title="Edit Course">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
