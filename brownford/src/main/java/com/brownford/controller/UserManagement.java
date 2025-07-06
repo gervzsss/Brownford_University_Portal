@@ -283,7 +283,7 @@ public class UserManagement {
         }
         // user.setLastLogin ... (if needed)
 
-        // Update student program if student
+        // Update student info if student
         if (user.getRole().equalsIgnoreCase("student")) {
             Student student = studentRepository.findById(user.getId()).orElse(null);
             if (student != null) {
@@ -295,13 +295,31 @@ public class UserManagement {
                         // Ignore or log invalid programId
                     }
                 }
+                if (payload.containsKey("gender")) {
+                    student.setGender(payload.get("gender") != null ? payload.get("gender").toString() : null);
+                }
+                if (payload.containsKey("dateOfBirth")) {
+                    student.setDateOfBirth(payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
+                }
+                if (payload.containsKey("mobileNumber")) {
+                    student.setMobileNumber(payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
+                }
+                if (payload.containsKey("address")) {
+                    student.setAddress(payload.get("address") != null ? payload.get("address").toString() : null);
+                }
                 studentRepository.save(student);
             }
         }
-        // Update faculty contact info if faculty
+        // Update faculty info if faculty
         if (user.getRole().equalsIgnoreCase("faculty")) {
             Faculty faculty = facultyRepository.findById(user.getId()).orElse(null);
             if (faculty != null) {
+                if (payload.containsKey("gender")) {
+                    faculty.setGender(payload.get("gender") != null ? payload.get("gender").toString() : null);
+                }
+                if (payload.containsKey("dateOfBirth")) {
+                    faculty.setDateOfBirth(payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
+                }
                 if (payload.containsKey("mobileNumber")) {
                     faculty.setMobileNumber(payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
                 }

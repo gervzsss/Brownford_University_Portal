@@ -1,5 +1,13 @@
 # Changelog
 
+## [07.07.250125]
+
+### Changes
+- Update student and faculty information handling in UserManagement.java.
+- Revise quick link titles and paths in admin-dashboard.html.
+- Improve action button labels in admin-faculty-list.html.
+- Rename "Other Remark" to "Final Remark" in faculty-grading-sheet.html and add computed rating logic.
+
 ## [07.03.251116]
 
 ### Changes

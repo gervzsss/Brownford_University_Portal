@@ -96,7 +96,7 @@
                             <th>Computed Rating</th>
                             <th>Final Rating</th>
                             <th>Remark</th>
-                            <th>Other Remark</th>
+                            <th>Final Remark</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -155,6 +155,28 @@
                         if (midtermInput) midtermInput.value = grade.midtermGrade || '';
                         if (finalsInput) finalsInput.value = grade.finalsGrade || '';
                         if (remarkInput) remarkInput.value = grade.remarks || '';
+
+                        // --- Compute and display computed rating, final rating, and remark ---
+                        const row = midtermInput?.closest('tr');
+                        if (row) {
+                            const midterm = grade.midtermGrade;
+                            const finals = grade.finalsGrade;
+                            let computed = '-';
+                            let final = '-';
+                            let remark = '';
+                            if (!isNaN(midterm) && !isNaN(finals) && midterm !== '-' && finals !== '-') {
+                                computed = ((parseFloat(midterm) + parseFloat(finals)) / 2).toFixed(3);
+                                final = ((parseFloat(midterm) + parseFloat(finals)) / 2).toFixed(2);
+                                if (parseFloat(final) <= 3.0) {
+                                    remark = 'PASSED';
+                                } else {
+                                    remark = 'FAILED';
+                                }
+                            }
+                            row.querySelector('td:nth-child(6)').textContent = computed;
+                            row.querySelector('td:nth-child(7)').textContent = final;
+                            row.querySelector('td:nth-child(8)').textContent = remark;
+                        }
                     });
                 });
 
