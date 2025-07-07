@@ -760,7 +760,8 @@ class FacultyClassListRestController {
             var enrollments = enrollmentRepository.findAll().stream()
                     .filter(e -> e.getSection() != null && e.getSection().getId().equals(section.getId())
                             && e.getCourses() != null
-                            && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId())))
+                            && e.getCourses().stream().anyMatch(c -> c.getId().equals(course.getId()))
+                            && "APPROVED".equals(e.getStatus()))
                     .collect(Collectors.toList());
             List<Map<String, Object>> students = new java.util.ArrayList<>();
             int no = 1;

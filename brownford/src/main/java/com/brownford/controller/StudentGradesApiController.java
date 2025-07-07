@@ -42,7 +42,8 @@ public class StudentGradesApiController {
         // Find enrollment for the given yearLevel and semester
         List<Enrollment> enrollments = enrollmentRepository.findByStudent(student);
         Enrollment enrollment = enrollments.stream()
-                .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester()))
+                .filter(e -> yearLevel.equals(e.getYearLevel()) && semester.equalsIgnoreCase(e.getSemester())
+                        && "APPROVED".equalsIgnoreCase(e.getStatus()))
                 .findFirst().orElse(null);
 
         List<Map<String, Object>> coursesList = new ArrayList<>();

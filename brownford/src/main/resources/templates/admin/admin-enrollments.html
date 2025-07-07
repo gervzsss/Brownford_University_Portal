@@ -108,7 +108,7 @@
                                         stroke-linejoin="round">
                                         <polyline points="20,6 9,17 4,12"></polyline>
                                     </svg>
-                                    Bulk Approve
+                                    Approve
                                 </button>
                                 <button class="btn btn-sm btn-warning" id="bulkDeclineBtn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -117,7 +117,7 @@
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
                                         <line x1="6" y1="6" x2="18" y2="18"></line>
                                     </svg>
-                                    Bulk Decline
+                                    Decline
                                 </button>
                                 <button class="btn btn-sm btn-danger" id="bulkDeleteBtn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -128,7 +128,7 @@
                                             d="M19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2">
                                         </path>
                                     </svg>
-                                    Bulk Delete
+                                    Delete
                                 </button>
                             </div>
                         </div>
@@ -484,9 +484,9 @@
                 const yearLevel = enrollment.yearLevel || 'N/A';
                 const semester = enrollment.semester || 'N/A';
                 const statusClass = `enrollment-status-${(enrollment.status || 'pending').toLowerCase()}`;
-                // Render courses
+                // Render courses as a bullet list
                 const coursesList = (enrollment.courses && enrollment.courses.length > 0)
-                    ? enrollment.courses.map(c => `${c.courseCode} - ${c.courseTitle}`).join(', ')
+                    ? `<ul style='margin:0; padding-left:18px;'>` + enrollment.courses.map(c => `<li>${c.courseCode} - ${c.courseTitle}</li>`).join('') + `</ul>`
                     : 'N/A';
 
                 let actionButtons = `
@@ -539,7 +539,7 @@
                 <td>${yearLevel}</td>
                 <td>${semester}</td>
                 <td>${sectionDisplay}</td>
-                <td><div class="courses-list" title="${coursesList}">${coursesList}</div></td>
+                <td><div class="courses-list" title="${enrollment.courses && enrollment.courses.length > 0 ? enrollment.courses.map(c => `${c.courseCode} - ${c.courseTitle}`).join(', ') : 'N/A'}">${coursesList}</div></td>
                 <td><span class="status-badge ${statusClass}">${enrollment.status || 'Pending'}</span></td>
                 <td>${actionButtons}</td>
             </tr>

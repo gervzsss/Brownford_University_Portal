@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.07.251135]
+
+### Changes
+- Enhance enrollment filtering and update UI button labels for clarity.
+
 ## [07.07.250125]
 
 ### Changes
