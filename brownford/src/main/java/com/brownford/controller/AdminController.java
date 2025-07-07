@@ -93,6 +93,11 @@ public class AdminController {
         return "/admin/admin-student-records";
     }
 
+    @GetMapping("/admin-activity-log")
+    public String adminActivityLog() {
+        return "/admin/admin-activity-log";
+    }
+
     @GetMapping("/api/admin/system-summary")
     @ResponseBody
     public Map<String, Object> getSystemSummary() {

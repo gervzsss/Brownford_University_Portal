@@ -5,12 +5,14 @@ import com.brownford.dto.CourseInfo;
 import com.brownford.dto.EnrollmentDTO;
 import com.brownford.dto.PendingApprovalDTO;
 import com.brownford.model.Enrollment;
+import com.brownford.service.ActivityLogService;
 import com.brownford.service.EnrollmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,9 @@ import java.util.Map;
 public class EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
+
+    @Autowired
+    private ActivityLogService activityLogService;
 
     // Utility method to map Enrollment to EnrollmentDTO
     private EnrollmentDTO toDTO(Enrollment enrollment) {
@@ -50,15 +55,18 @@ public class EnrollmentController {
     }
 
     @PostMapping
-    public EnrollmentDTO createEnrollment(@RequestBody Map<String, Object> payload) {
+    public EnrollmentDTO createEnrollment(@RequestBody Map<String, Object> payload, Principal principal) {
         Long studentId = Long.valueOf(payload.get("studentId").toString());
         List<?> courseIdsRaw = (List<?>) payload.get("courses");
         List<Long> courseIds = courseIdsRaw.stream().map(id -> Long.valueOf(id.toString())).toList();
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel,
-                sectionId);
+        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel, sectionId);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Created enrollment for studentId: " + studentId + ", courses: " + courseIds + ", semester: " + semester + ", yearLevel: " + yearLevel;
+        activityLogService.log(adminUsername, "Created Enrollment", details);
         return toDTO(enrollment);
     }
 
@@ -78,8 +86,12 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}/status")
-    public EnrollmentDTO updateEnrollmentStatus(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+    public EnrollmentDTO updateEnrollmentStatus(@PathVariable Long id, @RequestBody Map<String, String> payload, Principal principal) {
         Enrollment enrollment = enrollmentService.updateEnrollmentStatus(id, payload.get("status"));
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Updated enrollment status for enrollmentId: " + id + " to " + payload.get("status");
+        activityLogService.log(adminUsername, "Updated Enrollment Status", details);
         return toDTO(enrollment);
     }
 
@@ -100,21 +112,28 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}")
-    public EnrollmentDTO updateEnrollment(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+    public EnrollmentDTO updateEnrollment(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
         Long studentId = Long.valueOf(payload.get("studentId").toString());
         List<?> courseIdsRaw = (List<?>) payload.get("courses");
         List<Long> courseIds = courseIdsRaw.stream().map(cid -> Long.valueOf(cid.toString())).toList();
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel,
-                sectionId);
+        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel, sectionId);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Updated enrollment (ID: " + id + ") for studentId: " + studentId + ", courses: " + courseIds + ", semester: " + semester + ", yearLevel: " + yearLevel;
+        activityLogService.log(adminUsername, "Updated Enrollment", details);
         return toDTO(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEnrollment(@PathVariable Long id) {
+    public void deleteEnrollment(@PathVariable Long id, Principal principal) {
         enrollmentService.deleteEnrollment(id);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Deleted enrollment with ID: " + id;
+        activityLogService.log(adminUsername, "Deleted Enrollment", details);
     }
 
     @PostMapping("/batch")

@@ -13,6 +13,7 @@ import com.brownford.repository.ProgramRepository;
 import com.brownford.service.UserIdentifierService;
 import com.brownford.service.EnrollmentService;
 import com.brownford.dto.UserWithRoleIdDTO;
+import com.brownford.service.ActivityLogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/admin/users")
@@ -54,6 +57,9 @@ public class UserManagement {
 
     @Autowired
     private ProgramRepository programRepository;
+
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @GetMapping
     public List<UserWithRoleIdDTO> getAllUsers(
@@ -204,7 +210,7 @@ public class UserManagement {
     }
 
     @PostMapping
-    public User createUser(@RequestBody Map<String, Object> payload) {
+    public User createUser(@RequestBody Map<String, Object> payload, Principal principal) {
         // Map payload to User object
         User user = new User();
         user.setUsername(payload.get("username").toString());
@@ -241,11 +247,15 @@ public class UserManagement {
             faculty.setFacultyId(facultyId);
             facultyRepository.save(faculty);
         }
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Created user: " + user.getUsername() + " (ID: " + savedUser.getId() + ", Role: " + user.getRole() + ")";
+        activityLogService.log(adminUsername, "Created User", details);
         return savedUser;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -330,11 +340,17 @@ public class UserManagement {
             }
         }
 
-        return ResponseEntity.ok(userRepository.save(user));
+        // Save user after updates
+        User savedUser = userRepository.save(user);
+        // Log the update action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Updated user: " + user.getUsername() + " (ID: " + user.getId() + ")";
+        activityLogService.log(adminUsername, "Updated User", details);
+        return ResponseEntity.ok(savedUser);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id, Principal principal) {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -354,6 +370,10 @@ public class UserManagement {
                 }
             }
             userRepository.deleteById(id);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Deleted user: " + user.getUsername() + " (ID: " + user.getId() + ", Role: " + user.getRole() + ")";
+            activityLogService.log(adminUsername, "Deleted User", details);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();

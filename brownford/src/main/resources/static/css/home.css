@@ -3326,3 +3326,176 @@ body {
   background-color: #e0a800;
   border-color: #d39e00;
 }
+
+/* Activity Log Section (Admin Dashboard) - Reuse Pending Approvals Styles */
+#recent-activity-list .activity-event-card {
+  /* Reuse event-card styles from pending approvals */
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s;
+  border-left: 5px solid #6b3a1d;
+}
+
+#recent-activity-list .activity-event-card:hover {
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.16);
+  background: #f9f6f2;
+}
+
+#recent-activity-list .event-date {
+  min-width: 54px;
+  text-align: center;
+  margin-right: 18px;
+  background: #f5e7d6;
+  border-radius: 8px;
+  padding: 8px 0 6px 0;
+  font-family: 'Cinzel', serif;
+}
+
+#recent-activity-list .event-month {
+  display: block;
+  font-size: 13px;
+  color: #6b3a1d;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#recent-activity-list .event-day {
+  display: block;
+  font-size: 22px;
+  color: #6b3a1d;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+#recent-activity-list .event-details {
+  flex: 1;
+}
+
+#recent-activity-list .event-title {
+  font-size: 18px;
+  color: #6b3a1d;
+  margin-bottom: 4px;
+}
+
+#recent-activity-list .event-description {
+  font-size: 15px;
+  color: #5a4633;
+  margin-bottom: 8px;
+}
+
+#recent-activity-list .event-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#recent-activity-list .event-time {
+  font-size: 13px;
+  color: #8b4513;
+  background: #f5e7d6;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-right: 8px;
+}
+
+#recent-activity-list .event-user {
+  font-size: 13px;
+  color: #8b4513;
+}
+
+#recent-activity-list .empty-state {
+  text-align: center;
+  color: #a67c52;
+  padding: 30px 0 10px 0;
+}
+
+/* Activity Log Full Page - Reuse Pending Approvals Styles */
+#activity-log-list .activity-event-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s;
+  border-left: 5px solid #6b3a1d;
+}
+
+#activity-log-list .activity-event-card:hover {
+  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.16);
+  background: #f9f6f2;
+}
+
+#activity-log-list .event-date {
+  min-width: 54px;
+  text-align: center;
+  margin-right: 18px;
+  background: #f5e7d6;
+  border-radius: 8px;
+  padding: 8px 0 6px 0;
+  font-family: 'Cinzel', serif;
+}
+
+#activity-log-list .event-month {
+  display: block;
+  font-size: 13px;
+  color: #6b3a1d;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#activity-log-list .event-day {
+  display: block;
+  font-size: 22px;
+  color: #6b3a1d;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+#activity-log-list .event-details {
+  flex: 1;
+}
+
+#activity-log-list .event-title {
+  font-size: 18px;
+  color: #6b3a1d;
+  margin-bottom: 4px;
+}
+
+#activity-log-list .event-description {
+  font-size: 15px;
+  color: #5a4633;
+  margin-bottom: 8px;
+}
+
+#activity-log-list .event-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#activity-log-list .event-time {
+  font-size: 13px;
+  color: #8b4513;
+  background: #f5e7d6;
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-right: 8px;
+}
+
+#activity-log-list .event-user {
+  font-size: 13px;
+  color: #8b4513;
+}
+
+#activity-log-list .empty-state {
+  text-align: center;
+  color: #a67c52;
+  padding: 30px 0 10px 0;
+}

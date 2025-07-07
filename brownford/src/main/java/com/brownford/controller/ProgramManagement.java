@@ -2,11 +2,13 @@ package com.brownford.controller;
 
 import com.brownford.dto.ProgramDTO;
 import com.brownford.model.Program;
+import com.brownford.service.ActivityLogService;
 import com.brownford.service.ProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class ProgramManagement {
     @Autowired
     private ProgramService programService;
+
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @GetMapping
     public List<ProgramDTO> getAllPrograms() {
@@ -28,14 +33,18 @@ public class ProgramManagement {
     }
 
     @PostMapping
-    public ResponseEntity<ProgramDTO> createProgram(@RequestBody ProgramDTO programDTO) {
+    public ResponseEntity<ProgramDTO> createProgram(@RequestBody ProgramDTO programDTO, Principal principal) {
         Program program = fromDTO(programDTO);
         Program saved = programService.saveProgram(program);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Created program: " + program.getName() + " (Code: " + program.getCode() + ")";
+        activityLogService.log(adminUsername, "Created Program", details);
         return ResponseEntity.ok(toDTO(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProgramDTO> updateProgram(@PathVariable Long id, @RequestBody ProgramDTO programDTO) {
+    public ResponseEntity<ProgramDTO> updateProgram(@PathVariable Long id, @RequestBody ProgramDTO programDTO, Principal principal) {
         Optional<Program> existing = programService.getProgramById(id);
         if (existing.isPresent()) {
             Program p = existing.get();
@@ -45,6 +54,10 @@ public class ProgramManagement {
             p.setTotalUnits(programDTO.getTotalUnits());
             p.setStatus(programDTO.getStatus());
             Program updated = programService.saveProgram(p);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Updated program: " + p.getName() + " (ID: " + id + ")";
+            activityLogService.log(adminUsername, "Updated Program", details);
             return ResponseEntity.ok(toDTO(updated));
         } else {
             return ResponseEntity.notFound().build();
@@ -52,9 +65,13 @@ public class ProgramManagement {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProgram(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProgram(@PathVariable Long id, Principal principal) {
         if (programService.getProgramById(id).isPresent()) {
             programService.deleteProgram(id);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Deleted program with ID: " + id;
+            activityLogService.log(adminUsername, "Deleted Program", details);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

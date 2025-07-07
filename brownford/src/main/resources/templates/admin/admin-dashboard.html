@@ -194,6 +194,14 @@
                         Enrollments</a>
                 </div>
                 </section>
+
+                <!-- Recent Activity Section -->
+                <h3 class="section-title">Recent Activity</h3>
+                <div id="recent-activity-list" class="events-container"></div>
+                <div class="view-all-container">
+                    <a href="/admin-activity-log" class="view-all-link">View All Activity</a>
+                </div>
+                </section>
             </main>
         </div>
     </div>
@@ -226,6 +234,35 @@
                 })
                 .catch(() => {
                     document.getElementById('unassignedSchedule').textContent = '0';
+                });
+            // Fetch recent activity logs
+            fetch('/api/activity-logs/recent?count=5')
+                .then(response => response.json())
+                .then(logs => {
+                    const container = document.getElementById('recent-activity-list');
+                    if (!logs || logs.length === 0) {
+                        container.innerHTML = `<div class="empty-state"><p>No recent activity.</p></div>`;
+                        return;
+                    }
+                    container.innerHTML = logs.map(log => `
+                        <div class="event-card activity-event-card">
+                            <div class="event-date">
+                                <span class="event-month">${new Date(log.timestamp).toLocaleString('default', { month: 'short' })}</span>
+                                <span class="event-day">${new Date(log.timestamp).getDate()}</span>
+                            </div>
+                            <div class="event-details">
+                                <div class="event-title">${log.action}</div>
+                                <div class="event-description">${log.details}</div>
+                                <div class="event-info">
+                                    <span class="event-time">${new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                    <span class="event-user">by <em>${log.username}</em></span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(() => {
+                    document.getElementById('recent-activity-list').innerHTML = `<div class="empty-state"><p>Failed to load activity logs.</p></div>`;
                 });
         });
     </script>

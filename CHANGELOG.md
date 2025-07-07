@@ -1,5 +1,17 @@
 # Changelog
 
+## [07.07.251853]
+
+### Changes
+- Implement Activity Log Feature for Admin Actions.
+- Added ActivityLogController to handle API requests for activity logs.
+- Created ActivityLog model to represent activity log entries.
+- Implemented ActivityLogRepository for database interactions.
+- Developed ActivityLogService to manage logging and retrieval of logs.
+- Integrated activity logging into various controllers (AdminController, CourseController, CurriculumController, EnrollmentController, FacultyAssignmentController, ProgramManagement, SectionController, UserManagement) to track admin actions.
+- Added recent activity section to the admin dashboard and a dedicated activity log page.
+- Enhanced CSS for activity log display.
+
 ## [07.07.251135]
 
 ### Changes

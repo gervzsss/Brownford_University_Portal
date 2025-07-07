@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Log - Brown Ford University</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo-circle.png}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
+    <script th:src="@{/js/sidebar-nav.js}"></script>
+    <script th:src="@{/js/headerFooter.js}"></script>
+</head>
+<body>
+    <admin-header></admin-header>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="content-wrapper" id="contentWrapper">
+            <main class="dashboard-content">
+                <h2 class="section-title">Activity Log</h2>
+                <div id="activity-log-list" class="events-container"></div>
+                <div class="view-all-container">
+                    <a href="/admin-dashboard" class="view-all-link">&larr; Back to Dashboard</a>
+                </div>
+            </main>
+        </div>
+    </div>
+    <footer-footer></footer-footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/activity-logs/all')
+            .then(response => response.json())
+            .then(logs => {
+                const container = document.getElementById('activity-log-list');
+                if (!logs || logs.length === 0) {
+                    container.innerHTML = `<div class="empty-state"><p>No activity logs found.</p></div>`;
+                    return;
+                }
+                container.innerHTML = logs.map(log => `
+                    <div class="event-card activity-event-card">
+                        <div class="event-date">
+                            <span class="event-month">${new Date(log.timestamp).toLocaleString('default', { month: 'short' })}</span>
+                            <span class="event-day">${new Date(log.timestamp).getDate()}</span>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-title">${log.action}</div>
+                            <div class="event-description">${log.details}</div>
+                            <div class="event-info">
+                                <span class="event-time">${new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                <span class="event-user">by <em>${log.username}</em></span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            })
+            .catch(() => {
+                document.getElementById('activity-log-list').innerHTML = `<div class="empty-state"><p>Failed to load activity logs.</p></div>`;
+            });
+    });
+    </script>
+</body>
+</html>

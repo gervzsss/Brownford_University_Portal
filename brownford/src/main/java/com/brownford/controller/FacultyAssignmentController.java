@@ -9,11 +9,13 @@ import com.brownford.model.FacultyAssignment;
 import com.brownford.service.FacultyAssignmentService;
 import com.brownford.repository.ScheduleRepository;
 import com.brownford.model.Schedule;
+import com.brownford.service.ActivityLogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,8 @@ public class FacultyAssignmentController {
     private FacultyAssignmentService facultyAssignmentService;
     @Autowired
     private ScheduleRepository scheduleRepository;
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @GetMapping
     public List<FacultyAssignmentWithCourseDTO> getAllFacultyAssignments(
@@ -90,13 +94,18 @@ public class FacultyAssignmentController {
     }
 
     @PostMapping
-    public FacultyAssignment createFacultyAssignment(@RequestBody FacultyAssignment assignment) {
-        return facultyAssignmentService.saveFacultyAssignment(assignment);
+    public FacultyAssignment createFacultyAssignment(@RequestBody FacultyAssignment assignment, Principal principal) {
+        FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignment(assignment);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Assigned faculty (ID: " + (assignment.getFaculty() != null ? assignment.getFaculty().getId() : "None") + ") to section (ID: " + (assignment.getSection() != null ? assignment.getSection().getId() : "None") + ") for course (ID: " + (assignment.getCurriculumCourse() != null ? assignment.getCurriculumCourse().getId() : "None") + ")";
+        activityLogService.log(adminUsername, "Assigned Faculty to Section", details);
+        return saved;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<FacultyAssignment> updateFacultyAssignment(@PathVariable Long id,
-            @RequestBody FacultyAssignment updated) {
+            @RequestBody FacultyAssignment updated, Principal principal) {
         Optional<FacultyAssignment> assignmentOpt = facultyAssignmentService.getFacultyAssignmentById(id);
         if (assignmentOpt.isEmpty())
             return ResponseEntity.notFound().build();
@@ -106,25 +115,44 @@ public class FacultyAssignmentController {
         assignment.setFaculty(updated.getFaculty());
         assignment.setSemester(updated.getSemester());
         assignment.setYearLevel(updated.getYearLevel());
-        return ResponseEntity.ok(facultyAssignmentService.saveFacultyAssignment(assignment));
+        FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignment(assignment);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Updated faculty assignment (ID: " + id + ") - Faculty (ID: " + (updated.getFaculty() != null ? updated.getFaculty().getId() : "None") + "), Section (ID: " + (updated.getSection() != null ? updated.getSection().getId() : "None") + "), Course (ID: " + (updated.getCurriculumCourse() != null ? updated.getCurriculumCourse().getId() : "None") + ")";
+        activityLogService.log(adminUsername, "Updated Faculty Assignment", details);
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFacultyAssignment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFacultyAssignment(@PathVariable Long id, Principal principal) {
         facultyAssignmentService.deleteFacultyAssignment(id);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Deleted faculty assignment with ID: " + id;
+        activityLogService.log(adminUsername, "Deleted Faculty Assignment", details);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/with-schedule")
     public ResponseEntity<FacultyAssignment> createFacultyAssignmentWithSchedule(
-            @RequestBody FacultyAssignmentWithScheduleDTO dto) {
-        return ResponseEntity.ok(facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto));
+            @RequestBody FacultyAssignmentWithScheduleDTO dto, Principal principal) {
+        FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Assigned faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + ") to section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None") + ") for course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ") with schedule.";
+        activityLogService.log(adminUsername, "Assigned Faculty to Section with Schedule", details);
+        return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/with-schedule/{id}")
     public ResponseEntity<FacultyAssignment> updateFacultyAssignmentWithSchedule(@PathVariable Long id,
-            @RequestBody FacultyAssignmentWithScheduleDTO dto) {
+            @RequestBody FacultyAssignmentWithScheduleDTO dto, Principal principal) {
         dto.setId(id);
-        return ResponseEntity.ok(facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto));
+        FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Updated faculty assignment (ID: " + id + ") with schedule - Faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + "), Section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None") + "), Course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ")";
+        activityLogService.log(adminUsername, "Updated Faculty Assignment with Schedule", details);
+        return ResponseEntity.ok(saved);
     }
 }

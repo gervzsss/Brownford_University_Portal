@@ -9,6 +9,7 @@ import com.brownford.service.SectionService;
 import com.brownford.service.CurriculumService;
 import com.brownford.model.Curriculum;
 import com.brownford.model.CurriculumCourse;
+import com.brownford.service.ActivityLogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/sections")
@@ -34,6 +36,9 @@ public class SectionController {
     @Autowired
     private CurriculumService curriculumService;
 
+    @Autowired
+    private ActivityLogService activityLogService;
+
     @GetMapping
     public List<SectionDTO> getAllSections() {
         return sectionService.getAllSections().stream().map(this::toDTO).collect(Collectors.toList());
@@ -46,7 +51,7 @@ public class SectionController {
     }
 
     @PostMapping
-    public ResponseEntity<SectionDTO> createSection(@RequestBody SectionDTO sectionDTO) {
+    public ResponseEntity<SectionDTO> createSection(@RequestBody SectionDTO sectionDTO, Principal principal) {
         if (sectionDTO.getProgramId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
@@ -61,11 +66,15 @@ public class SectionController {
             curriculumOpt.ifPresent(section::setCurriculum);
         }
         Section saved = sectionService.saveSection(section);
+        // Log admin action
+        String adminUsername = principal != null ? principal.getName() : "Unknown";
+        String details = "Created section: " + section.getSectionCode() + " (Program ID: " + sectionDTO.getProgramId() + ")";
+        activityLogService.log(adminUsername, "Created Section", details);
         return ResponseEntity.ok(toDTO(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SectionDTO> updateSection(@PathVariable Long id, @RequestBody SectionDTO sectionDTO) {
+    public ResponseEntity<SectionDTO> updateSection(@PathVariable Long id, @RequestBody SectionDTO sectionDTO, Principal principal) {
         Optional<Section> existing = sectionService.getSectionById(id);
         if (existing.isPresent()) {
             Section s = existing.get();
@@ -87,6 +96,10 @@ public class SectionController {
             s.setMaxStudents(sectionDTO.getMaxStudents());
             s.setStatus(sectionDTO.getStatus());
             Section updated = sectionService.saveSection(s);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Updated section: " + s.getSectionCode() + " (ID: " + id + ")";
+            activityLogService.log(adminUsername, "Updated Section", details);
             return ResponseEntity.ok(toDTO(updated));
         } else {
             return ResponseEntity.notFound().build();
@@ -94,9 +107,13 @@ public class SectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSection(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSection(@PathVariable Long id, Principal principal) {
         try {
             sectionService.deleteSection(id);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Deleted section with ID: " + id;
+            activityLogService.log(adminUsername, "Deleted Section", details);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             // Log the error if needed

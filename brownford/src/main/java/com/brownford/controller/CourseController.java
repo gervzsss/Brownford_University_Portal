@@ -1,12 +1,14 @@
 package com.brownford.controller;
 
 import com.brownford.model.Course;
+import com.brownford.service.ActivityLogService;
 import com.brownford.service.CourseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -14,6 +16,9 @@ import java.util.Map;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private ActivityLogService activityLogService;
 
     @GetMapping
     public Iterable<Course> getAllCourses() {
@@ -28,7 +33,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<Course> createCourse(@RequestBody Map<String, Object> payload, Principal principal) {
         try {
             Course course = new Course();
             course.setCourseCode((String) payload.get("courseCode"));
@@ -44,6 +49,10 @@ public class CourseController {
             }
             course.setYearLevel(yearLevel);
             Course saved = courseService.createCourse(course);
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Created course: " + course.getCourseCode() + " - " + course.getCourseTitle();
+            activityLogService.log(adminUsername, "Created Course", details);
             return ResponseEntity.ok(saved);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -51,7 +60,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
         try {
             Course updated = new Course();
             updated.setCourseCode((String) payload.get("courseCode"));
@@ -67,8 +76,13 @@ public class CourseController {
             }
             updated.setYearLevel(yearLevel);
             Course saved = courseService.updateCourse(id, updated);
-            if (saved != null)
+            if (saved != null) {
+                // Log admin action
+                String adminUsername = principal != null ? principal.getName() : "Unknown";
+                String details = "Updated course: " + updated.getCourseCode() + " - " + updated.getCourseTitle() + " (ID: " + id + ")";
+                activityLogService.log(adminUsername, "Updated Course", details);
                 return ResponseEntity.ok(saved);
+            }
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -76,8 +90,12 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCourse(@PathVariable Long id, Principal principal) {
         if (courseService.deleteCourse(id)) {
+            // Log admin action
+            String adminUsername = principal != null ? principal.getName() : "Unknown";
+            String details = "Deleted course with ID: " + id;
+            activityLogService.log(adminUsername, "Deleted Course", details);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
