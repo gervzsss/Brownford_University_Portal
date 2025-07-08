@@ -10,8 +10,10 @@ import com.brownford.service.FacultyAssignmentService;
 import com.brownford.repository.ScheduleRepository;
 import com.brownford.model.Schedule;
 import com.brownford.service.ActivityLogService;
+import com.brownford.exception.ScheduleConflictException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -154,5 +156,10 @@ public class FacultyAssignmentController {
         String details = "Updated faculty assignment (ID: " + id + ") with schedule - Faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + "), Section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None") + "), Course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ")";
         activityLogService.log(adminUsername, "Updated Faculty Assignment with Schedule", details);
         return ResponseEntity.ok(saved);
+    }
+
+    @ExceptionHandler(ScheduleConflictException.class)
+    public ResponseEntity<String> handleScheduleConflict(ScheduleConflictException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

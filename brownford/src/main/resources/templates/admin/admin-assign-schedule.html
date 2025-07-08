@@ -638,6 +638,12 @@
                         body: JSON.stringify(assignmentData)
                     });
 
+                    if (response.status === 409) {
+                        const errorMsg = await response.text();
+                        showNotification(errorMsg || 'Schedule conflict detected', 'error');
+                        return;
+                    }
+
                     if (!response.ok) {
                         throw new Error('Failed to save assignment');
                     }

@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.08.251006]
+
+### Changes
+- Implement schedule conflict detection and handling in FacultyAssignmentController and FacultyAssignmentService.
+
 ## [07.08.250912]
 
 ### Changes

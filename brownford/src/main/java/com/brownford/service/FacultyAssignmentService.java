@@ -13,6 +13,8 @@ import com.brownford.repository.CurriculumCourseRepository;
 import com.brownford.repository.SectionRepository;
 import com.brownford.repository.FacultyRepository;
 import com.brownford.repository.NotificationRepository;
+import com.brownford.exception.ScheduleConflictException;
+import java.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,6 +140,33 @@ public class FacultyAssignmentService {
         schedule.setStartTime(java.time.LocalTime.parse(dto.getStartTime()));
         schedule.setEndTime(java.time.LocalTime.parse(dto.getEndTime()));
         schedule.setRoom(dto.getRoom());
+        // --- Schedule conflict checks ---
+        LocalTime startTime = LocalTime.parse(dto.getStartTime());
+        LocalTime endTime = LocalTime.parse(dto.getEndTime());
+        String day = dto.getDay();
+        String room = dto.getRoom();
+        // Determine if this is an update (existing schedule) or a new schedule
+        Schedule existingSchedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst().orElse(null);
+        Long scheduleId = (existingSchedule != null && existingSchedule.getId() != null) ? existingSchedule.getId() : null;
+        // Section conflict
+        scheduleRepository.findConflictsBySection(section, day, startTime, endTime).stream()
+            .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+            .findAny()
+            .ifPresent(s -> { throw new ScheduleConflictException("Section already has a schedule at this time."); });
+        // Faculty conflict
+        if (faculty != null) {
+            scheduleRepository.findConflictsByFaculty(faculty, day, startTime, endTime).stream()
+                .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+                .findAny()
+                .ifPresent(s -> { throw new ScheduleConflictException("Faculty already has a schedule at this time."); });
+        }
+        // Room conflict
+        if (room != null && !room.isEmpty()) {
+            scheduleRepository.findConflictsByRoom(room, day, startTime, endTime).stream()
+                .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+                .findAny()
+                .ifPresent(s -> { throw new ScheduleConflictException("Room is already booked at this time."); });
+        }
         scheduleRepository.save(schedule);
         // Notify new assignment
         if (faculty != null) {
