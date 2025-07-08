@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.08.251148]
+
+### Changes
+- Add version note for Prof. JOHN CHRISTIAN C. ESMASIN in changelog
+
 ## [07.08.251143]
 
 ### Changes
@@ -16,6 +21,8 @@
 - Refactor FacultyController and update admin activity log template for improved readability and functionality.
 
 ## [07.07.251853]
+
+### Version that is checked by Prof. JOHN CHRISTIAN C. ESMASIN
 
 ### Changes
 - Implement Activity Log Feature for Admin Actions.
