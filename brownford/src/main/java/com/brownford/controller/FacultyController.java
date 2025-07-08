@@ -73,7 +73,7 @@ public class FacultyController {
         addFacultyToModel(model, principal);
         int totalStudents = 0;
         double teachingHours = 0.0;
-        int pendingGrades = 0; // TODO: Integrate with Grade backend
+        int pendingGrades = 0;
         java.util.List<Map<String, String>> todaysSchedule = new java.util.ArrayList<>();
         if (principal != null) {
             String username = principal.getName();

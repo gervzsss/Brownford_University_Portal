@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.08.250912]
+
+### Changes
+- Refactor FacultyController and update admin activity log template for improved readability and functionality.
+
 ## [07.07.251853]
 
 ### Changes
