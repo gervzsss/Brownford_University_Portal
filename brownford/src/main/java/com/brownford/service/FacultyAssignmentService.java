@@ -145,24 +145,26 @@ public class FacultyAssignmentService {
         LocalTime endTime = LocalTime.parse(dto.getEndTime());
         String day = dto.getDay();
         String room = dto.getRoom();
+        String semester = dto.getSemester();
+        String schoolYear = dto.getSchoolYear();
         // Determine if this is an update (existing schedule) or a new schedule
         Schedule existingSchedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst().orElse(null);
         Long scheduleId = (existingSchedule != null && existingSchedule.getId() != null) ? existingSchedule.getId() : null;
         // Section conflict
-        scheduleRepository.findConflictsBySection(section, day, startTime, endTime).stream()
+        scheduleRepository.findConflictsBySection(section, day, startTime, endTime, semester, schoolYear).stream()
             .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
             .findAny()
             .ifPresent(s -> { throw new ScheduleConflictException("Section already has a schedule at this time."); });
         // Faculty conflict
         if (faculty != null) {
-            scheduleRepository.findConflictsByFaculty(faculty, day, startTime, endTime).stream()
+            scheduleRepository.findConflictsByFaculty(faculty, day, startTime, endTime, semester, schoolYear).stream()
                 .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
                 .findAny()
                 .ifPresent(s -> { throw new ScheduleConflictException("Faculty already has a schedule at this time."); });
         }
         // Room conflict
         if (room != null && !room.isEmpty()) {
-            scheduleRepository.findConflictsByRoom(room, day, startTime, endTime).stream()
+            scheduleRepository.findConflictsByRoom(room, day, startTime, endTime, semester, schoolYear).stream()
                 .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
                 .findAny()
                 .ifPresent(s -> { throw new ScheduleConflictException("Room is already booked at this time."); });

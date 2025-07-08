@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.08.251205]
+
+### Changes
+- Enhance schedule conflict queries to include semester and school year parameters.
+
 ## [07.08.251148]
 
 ### Changes
