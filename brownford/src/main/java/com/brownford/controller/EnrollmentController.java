@@ -97,10 +97,10 @@ public class EnrollmentController {
 
     @GetMapping
     public List<EnrollmentDTO> getAllEnrollments(
-            @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "programId", required = false) Long programId,
-            @RequestParam(value = "semester", required = false) String semester) {
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) Long programId,
+            @RequestParam(required = false) String semester) {
         return enrollmentService.getFilteredEnrollments(search, status, programId, semester).stream().map(this::toDTO)
                 .toList();
     }

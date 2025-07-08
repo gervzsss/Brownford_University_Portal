@@ -152,8 +152,8 @@ public class FacultyController {
 
     @GetMapping("/faculty-workload")
     public String facultyWorkload(
-            @RequestParam(value = "schoolYear", required = false) String schoolYear,
-            @RequestParam(value = "semester", required = false) String semester,
+            @RequestParam(required = false) String schoolYear,
+            @RequestParam(required = false) String semester,
             Model model, Principal principal) {
         addFacultyToModel(model, principal);
         java.util.List<Map<String, Object>> workloadList = new java.util.ArrayList<>();
@@ -245,8 +245,8 @@ public class FacultyController {
 
     @GetMapping("/faculty-schedule")
     public String facultySchedule(
-            @RequestParam(value = "schoolYear", required = false) String schoolYear,
-            @RequestParam(value = "semester", required = false) String semester,
+            @RequestParam(required = false) String schoolYear,
+            @RequestParam(required = false) String semester,
             Model model, Principal principal) {
         addFacultyToModel(model, principal);
         final String sy = (schoolYear == null) ? "2425" : schoolYear;
@@ -294,7 +294,7 @@ public class FacultyController {
                         String schedDayRaw = sched.getDay();
                         String schedDay = dayMap.getOrDefault(schedDayRaw, schedDayRaw); // fallback to original if not
                                                                                          // mapped
-                        String schedTime = String.format("%02d:%02d-%02d:%02d",
+                        String schedTime = "%02d:%02d-%02d:%02d".formatted(
                                 sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
                                 sched.getEndTime().getHour(), sched.getEndTime().getMinute());
                         timeSlotSet.add(schedTime);
@@ -448,8 +448,8 @@ class FacultyScheduleDataRestController {
 
     @GetMapping("/schedule-data")
     public Map<String, Object> getScheduleData(
-            @RequestParam(value = "schoolYear", required = false) String schoolYear,
-            @RequestParam(value = "semester", required = false) String semester,
+            @RequestParam(required = false) String schoolYear,
+            @RequestParam(required = false) String semester,
             Principal principal) {
         Map<String, Object> result = new HashMap<>();
         final String sy = (schoolYear == null) ? "2425" : schoolYear;
@@ -488,7 +488,7 @@ class FacultyScheduleDataRestController {
                     for (var sched : schedules) {
                         String schedDayRaw = sched.getDay();
                         String schedDay = dayMap.getOrDefault(schedDayRaw, schedDayRaw);
-                        String schedTime = String.format("%02d:%02d-%02d:%02d",
+                        String schedTime = "%02d:%02d-%02d:%02d".formatted(
                                 sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
                                 sched.getEndTime().getHour(), sched.getEndTime().getMinute());
                         timeSlotSet.add(schedTime);
@@ -564,8 +564,8 @@ class FacultyWorkloadDataRestController {
 
     @GetMapping("/workload-data")
     public List<Map<String, Object>> getWorkloadData(
-            @RequestParam(value = "schoolYear", required = false) String schoolYear,
-            @RequestParam(value = "semester", required = false) String semester,
+            @RequestParam(required = false) String schoolYear,
+            @RequestParam(required = false) String semester,
             Principal principal) {
         List<Map<String, Object>> result = new java.util.ArrayList<>();
         if (principal == null)
@@ -592,9 +592,9 @@ class FacultyWorkloadDataRestController {
                 if (schedStr.length() > 0)
                     schedStr.append(", ");
                 schedStr.append(sched.getDay()).append(" ")
-                        .append(String.format("%02d:%02d-%02d:%02d",
-                                sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
-                                sched.getEndTime().getHour(), sched.getEndTime().getMinute()));
+                        .append("%02d:%02d-%02d:%02d".formatted(
+                        sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
+                        sched.getEndTime().getHour(), sched.getEndTime().getMinute()));
             }
             Map<String, Object> row = new HashMap<>();
             row.put("no", no++);

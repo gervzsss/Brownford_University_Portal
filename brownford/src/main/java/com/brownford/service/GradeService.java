@@ -69,7 +69,7 @@ public class GradeService {
             try {
                 double mid = Double.parseDouble(midtermGrade);
                 double fin = Double.parseDouble(finalsGrade);
-                grade.setFinalGrade(String.format("%.2f", (mid + fin) / 2));
+                grade.setFinalGrade("%.2f".formatted((mid + fin) / 2));
             } catch (NumberFormatException e) {
                 grade.setFinalGrade(null);
             }

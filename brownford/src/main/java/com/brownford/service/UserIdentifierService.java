@@ -41,7 +41,7 @@ public class UserIdentifierService {
         int nextNumber = Integer.parseInt(numericPart) + 1;
 
         // Format with leading zeros
-        return prefix + String.format("%05d", nextNumber);
+        return prefix + "%05d".formatted(nextNumber);
     }
 
     public String generateFacultyId() {
@@ -61,7 +61,7 @@ public class UserIdentifierService {
         int nextNumber = Integer.parseInt(numericPart) + 1;
 
         // Format with leading zeros
-        return prefix + String.format("%04d", nextNumber);
+        return prefix + "%04d".formatted(nextNumber);
     }
 
     public void assignIdentifier(User user) {

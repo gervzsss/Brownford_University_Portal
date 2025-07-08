@@ -1,5 +1,10 @@
 # Changelog
 
+## [07.08.251143]
+
+### Changes
+- Update dependencies and refactor string formatting in multiple classes.
+
 ## [07.08.251006]
 
 ### Changes

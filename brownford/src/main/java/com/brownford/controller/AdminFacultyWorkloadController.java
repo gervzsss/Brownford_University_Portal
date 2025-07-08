@@ -59,9 +59,9 @@ public class AdminFacultyWorkloadController {
             for (var sched : schedules) {
                 if (schedStr.length() > 0) schedStr.append(", ");
                 schedStr.append(sched.getDay()).append(" ")
-                        .append(String.format("%02d:%02d-%02d:%02d",
-                                sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
-                                sched.getEndTime().getHour(), sched.getEndTime().getMinute()));
+                        .append("%02d:%02d-%02d:%02d".formatted(
+                        sched.getStartTime().getHour(), sched.getStartTime().getMinute(),
+                        sched.getEndTime().getHour(), sched.getEndTime().getMinute()));
             }
             Map<String, Object> row = new HashMap<>();
             row.put("no", no++);
