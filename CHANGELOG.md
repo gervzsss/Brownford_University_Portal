@@ -1,6 +1,11 @@
 # Changelog
 
-## [07.08.251205]
+## [08.28.251350]
+
+### Changes
+- Update createEnrollment method to use new notification API with targetUrl parameter.
+
+## [FINALS07.08.251205]
 
 ### Changes
 - Enhance schedule conflict queries to include semester and school year parameters.
