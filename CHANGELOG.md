@@ -1,5 +1,10 @@
 # Changelog
 
+## [09.01.252228]
+
+### Changes
+- Update spring-boot-starter-parent version to 3.5.5.
+
 ## [09.01.252212]
 
 ### Changes
