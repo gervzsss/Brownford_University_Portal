@@ -148,8 +148,8 @@ public class EnrollmentService {
                 : (student.getStudentId() != null ? student.getStudentId() : "A student");
         String adminMessage = studentName + " has requested enrollment for " + semester + ", Year Level: " + yearLevel
                 + ".";
-    // Use new API that accepts a targetUrl (null when no URL is applicable)
-    notificationService.createAdminNotification(adminMessage, "ENROLLMENT_REQUEST", null);
+    // Use new API that accepts a targetUrl; link to admin enrollments for quick access
+    notificationService.createAdminNotification(adminMessage, "ENROLLMENT_REQUEST", "/admin/enrollments");
         return savedEnrollment;
     }
 

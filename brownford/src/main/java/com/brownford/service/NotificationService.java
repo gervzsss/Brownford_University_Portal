@@ -32,12 +32,6 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
-    // Deprecated: use the new method with targetUrl
-    @Deprecated
-    public Notification createNotification(Student student, String message, String type) {
-        return createNotification(student, message, type, null);
-    }
-
     public void markAsRead(Notification notification) {
         notification.setRead(true);
         notificationRepository.save(notification);
@@ -65,12 +59,6 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
-    // Deprecated: use the new method with targetUrl
-    @Deprecated
-    public Notification createNotification(Faculty faculty, String message, String type) {
-        return createNotification(faculty, message, type, null);
-    }
-
     public List<Notification> getNotificationsForAdmin() {
         return notificationRepository.findByRecipientRoleOrderByCreatedAtDesc("admin");
     }
@@ -87,12 +75,6 @@ public class NotificationService {
         notification.setRead(false);
         notification.setTargetUrl(targetUrl);
         return notificationRepository.save(notification);
-    }
-
-    // Deprecated: use the new method with targetUrl
-    @Deprecated
-    public Notification createAdminNotification(String message, String type) {
-        return createAdminNotification(message, type, null);
     }
 
     public Notification getNotificationById(Long id) {

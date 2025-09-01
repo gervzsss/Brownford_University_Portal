@@ -1,5 +1,11 @@
 # Changelog
 
+## [09.01.252026]
+
+### Changes
+- Refactor notification service to remove deprecated methods.
+- Update admin notification to include target URL for quick access.
+
 ## [08.28.251350]
 
 ### Changes
