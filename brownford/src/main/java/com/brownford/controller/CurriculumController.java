@@ -70,7 +70,8 @@ public class CurriculumController {
         CurriculumCourse saved = curriculumService.saveCurriculumCourse(curriculumCourse);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Added course (ID: " + (saved.getCourse() != null ? saved.getCourse().getId() : "None") + ") to curriculum (ID: " + id + ")";
+        String details = "Added course (ID: " + (saved.getCourse() != null ? saved.getCourse().getId() : "None")
+                + ") to curriculum (ID: " + id + ")";
         activityLogService.log(adminUsername, "Added Course to Curriculum", details);
         return saved;
     }
@@ -135,14 +136,16 @@ public class CurriculumController {
     }
 
     @PutMapping("/courses/{courseId}")
-    public CurriculumCourse updateCurriculumCourse(@PathVariable Long courseId, @RequestBody CurriculumCourse updated, Principal principal) {
+    public CurriculumCourse updateCurriculumCourse(@PathVariable Long courseId, @RequestBody CurriculumCourse updated,
+            Principal principal) {
         CurriculumCourse existing = curriculumService.getCurriculumCourseById(courseId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum course not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Curriculum course not found"));
         existing.setYearLevel(updated.getYearLevel());
         existing.setSemester(updated.getSemester());
         existing.setRequired(updated.isRequired());
         existing.setCourse(updated.getCourse());
-        // If curriculum can change, add: existing.setCurriculum(updated.getCurriculum());
+        // If curriculum can change, add:
+        // existing.setCurriculum(updated.getCurriculum());
         CurriculumCourse saved = curriculumService.saveCurriculumCourse(existing);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";

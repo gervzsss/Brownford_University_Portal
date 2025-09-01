@@ -68,13 +68,15 @@ public class SectionController {
         Section saved = sectionService.saveSection(section);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Created section: " + section.getSectionCode() + " (Program ID: " + sectionDTO.getProgramId() + ")";
+        String details = "Created section: " + section.getSectionCode() + " (Program ID: " + sectionDTO.getProgramId()
+                + ")";
         activityLogService.log(adminUsername, "Created Section", details);
         return ResponseEntity.ok(toDTO(saved));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SectionDTO> updateSection(@PathVariable Long id, @RequestBody SectionDTO sectionDTO, Principal principal) {
+    public ResponseEntity<SectionDTO> updateSection(@PathVariable Long id, @RequestBody SectionDTO sectionDTO,
+            Principal principal) {
         Optional<Section> existing = sectionService.getSectionById(id);
         if (existing.isPresent()) {
             Section s = existing.get();

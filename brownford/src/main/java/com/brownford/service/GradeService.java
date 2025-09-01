@@ -84,11 +84,10 @@ public class GradeService {
         Grade saved = gradeRepository.save(grade);
         // Trigger notification for grade release
         notificationService.createNotification(
-            student,
-            "A new grade has been released for course: " + course.getCourseTitle() + ".",
-            "GRADE_RELEASED",
-            "/student-grades"
-        );
+                student,
+                "A new grade has been released for course: " + course.getCourseTitle() + ".",
+                "GRADE_RELEASED",
+                "/student-grades");
         return saved;
     }
 

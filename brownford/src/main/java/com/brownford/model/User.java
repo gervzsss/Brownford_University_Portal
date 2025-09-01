@@ -118,6 +118,7 @@ public class User {
     }
 
     public String getFullName() {
-        return (firstName != null ? firstName : "") + " " + (middleName != null ? middleName + " " : "") + (lastName != null ? lastName : "");
+        return (firstName != null ? firstName : "") + " " + (middleName != null ? middleName + " " : "")
+                + (lastName != null ? lastName : "");
     }
 }

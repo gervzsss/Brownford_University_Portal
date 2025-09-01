@@ -1,5 +1,16 @@
 # Changelog
 
+## [09.01.252212]
+
+### Changes
+- Refactor DTOs and Services for Improved Readability and Maintainability
+- Reformatted getters and setters in BatchEnrollmentRequest and PendingApprovalDTO for consistency.
+- Enhanced logging messages in FacultyAssignmentService for better clarity.
+- Updated notification messages in EnrollmentService and FacultyAssignmentService for improved readability.
+- Cleaned up code formatting in various service classes to adhere to style guidelines.
+- Commented out unused code in admin-enrollments.html for future reference.
+- Minor adjustments to HTML templates for better structure and readability.
+
 ## [09.01.252026]
 
 ### Changes

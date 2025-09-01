@@ -14,14 +14,15 @@ public class UserWithRoleIdDTO {
     private String studentId;
     private String facultyId;
     private String mobileNumber; // Faculty contact number
-    private String address;      // Faculty address
-    private ProgramDTO program;      // Student program object
-    private String yearLevel;    // Student year level
-    private String section;      // Student section
-    private String gender;       // Student gender
-    private String dateOfBirth;  // Student birthday
+    private String address; // Faculty address
+    private ProgramDTO program; // Student program object
+    private String yearLevel; // Student year level
+    private String section; // Student section
+    private String gender; // Student gender
+    private String dateOfBirth; // Student birthday
 
-    public UserWithRoleIdDTO(User user, String studentId, String facultyId, String mobileNumber, String address, ProgramDTO program, String yearLevel, String section, String gender, String dateOfBirth) {
+    public UserWithRoleIdDTO(User user, String studentId, String facultyId, String mobileNumber, String address,
+            ProgramDTO program, String yearLevel, String section, String gender, String dateOfBirth) {
         this.id = user.getId();
         this.username = user.getUsername();
         this.firstName = user.getFirstName();

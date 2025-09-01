@@ -60,7 +60,8 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
+    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Map<String, Object> payload,
+            Principal principal) {
         try {
             Course updated = new Course();
             updated.setCourseCode((String) payload.get("courseCode"));
@@ -79,7 +80,8 @@ public class CourseController {
             if (saved != null) {
                 // Log admin action
                 String adminUsername = principal != null ? principal.getName() : "Unknown";
-                String details = "Updated course: " + updated.getCourseCode() + " - " + updated.getCourseTitle() + " (ID: " + id + ")";
+                String details = "Updated course: " + updated.getCourseCode() + " - " + updated.getCourseTitle()
+                        + " (ID: " + id + ")";
                 activityLogService.log(adminUsername, "Updated Course", details);
                 return ResponseEntity.ok(saved);
             }

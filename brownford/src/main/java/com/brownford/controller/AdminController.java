@@ -120,9 +120,10 @@ public class AdminController {
     public Map<String, Object> getUnassignedScheduleCount() {
         // Count CurriculumCourses that do not have a FacultyAssignment (unassigned)
         long unassignedCount = curriculumCourseRepository.findAll().stream()
-            .filter(cc -> facultyAssignmentRepository.findAll().stream()
-                .noneMatch(fa -> fa.getCurriculumCourse().getId().equals(cc.getId()) && fa.getFaculty() != null))
-            .count();
+                .filter(cc -> facultyAssignmentRepository.findAll().stream()
+                        .noneMatch(
+                                fa -> fa.getCurriculumCourse().getId().equals(cc.getId()) && fa.getFaculty() != null))
+                .count();
         Map<String, Object> result = new HashMap<>();
         result.put("unassignedCount", unassignedCount);
         return result;

@@ -148,8 +148,9 @@ public class EnrollmentService {
                 : (student.getStudentId() != null ? student.getStudentId() : "A student");
         String adminMessage = studentName + " has requested enrollment for " + semester + ", Year Level: " + yearLevel
                 + ".";
-    // Use new API that accepts a targetUrl; link to admin enrollments for quick access
-    notificationService.createAdminNotification(adminMessage, "ENROLLMENT_REQUEST", "/admin/enrollments");
+        // Use new API that accepts a targetUrl; link to admin enrollments for quick
+        // access
+        notificationService.createAdminNotification(adminMessage, "ENROLLMENT_REQUEST", "/admin/enrollments");
         return savedEnrollment;
     }
 
@@ -182,8 +183,7 @@ public class EnrollmentService {
                     "Your enrollment for " + enrollment.getSemester() + ", Year Level: " + enrollment.getYearLevel()
                             + " has been approved.",
                     "ENROLLMENT_ACCEPTED",
-                    "/student-schedule"
-            );
+                    "/student-schedule");
         }
         return saved;
     }
@@ -330,12 +330,11 @@ public class EnrollmentService {
             try {
                 // Use existing createEnrollment logic
                 createEnrollment(
-                    studentId,
-                    request.getCourses(),
-                    request.getSemester(),
-                    request.getYearLevel(),
-                    request.getSectionId()
-                );
+                        studentId,
+                        request.getCourses(),
+                        request.getSemester(),
+                        request.getYearLevel(),
+                        request.getSectionId());
                 success.add(studentId);
             } catch (Exception ex) {
                 Map<String, Object> failInfo = new HashMap<>();
@@ -350,31 +349,33 @@ public class EnrollmentService {
     }
 
     /**
-     * Returns the latest 5 pending enrollments as PendingApprovalDTOs, sorted by request date descending.
+     * Returns the latest 5 pending enrollments as PendingApprovalDTOs, sorted by
+     * request date descending.
      */
     public List<PendingApprovalDTO> getLatestPendingApprovals(int limit) {
         return enrollmentRepository.findByStatus("PENDING").stream()
-            .sorted(Comparator.comparing(Enrollment::getCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())))
-            .limit(limit)
-            .map(enrollment -> {
-                PendingApprovalDTO dto = new PendingApprovalDTO();
-                dto.setEnrollmentId(enrollment.getId());
-                if (enrollment.getStudent() != null && enrollment.getStudent().getUser() != null) {
-                    dto.setStudentName(enrollment.getStudent().getUser().getFirstName() + " " + enrollment.getStudent().getUser().getLastName());
-                } else {
-                    dto.setStudentName("N/A");
-                }
-                if (enrollment.getStudent() != null && enrollment.getStudent().getProgram() != null) {
-                    dto.setProgramName(enrollment.getStudent().getProgram().getName());
-                } else {
-                    dto.setProgramName("N/A");
-                }
-                dto.setYearLevel(enrollment.getYearLevel());
-                dto.setSemester(enrollment.getSemester());
-                dto.setRequestDate(enrollment.getCreatedAt());
-                return dto;
-            })
-            .collect(Collectors.toList());
+                .sorted(Comparator.comparing(Enrollment::getCreatedAt, Comparator.nullsLast(Comparator.reverseOrder())))
+                .limit(limit)
+                .map(enrollment -> {
+                    PendingApprovalDTO dto = new PendingApprovalDTO();
+                    dto.setEnrollmentId(enrollment.getId());
+                    if (enrollment.getStudent() != null && enrollment.getStudent().getUser() != null) {
+                        dto.setStudentName(enrollment.getStudent().getUser().getFirstName() + " "
+                                + enrollment.getStudent().getUser().getLastName());
+                    } else {
+                        dto.setStudentName("N/A");
+                    }
+                    if (enrollment.getStudent() != null && enrollment.getStudent().getProgram() != null) {
+                        dto.setProgramName(enrollment.getStudent().getProgram().getName());
+                    } else {
+                        dto.setProgramName("N/A");
+                    }
+                    dto.setYearLevel(enrollment.getYearLevel());
+                    dto.setSemester(enrollment.getSemester());
+                    dto.setRequestDate(enrollment.getCreatedAt());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     public Map<String, Object> getLastCoursesAndNextPrerequisites(String studentId, String yearLevel, String semester) {
@@ -424,12 +425,13 @@ public class EnrollmentService {
                     if (prereq != null) {
                         // Check if prerequisite is from previous semester
                         boolean isPrevTerm = (prereq.getYearLevel() != null && prereq.getYearLevel() == prevYear)
-                                && (prereq.getSemester() != null && prereq.getSemester().equalsIgnoreCase(prevSemester));
+                                && (prereq.getSemester() != null
+                                        && prereq.getSemester().equalsIgnoreCase(prevSemester));
                         if (isPrevTerm) {
                             // Fetch remarks from grades table
                             String remarks = gradeRepository
-                                .findByStudentAndCourseAndSemester(student, prereq, prevSemester)
-                                .map(g -> g.getRemarks()).orElse(null);
+                                    .findByStudentAndCourseAndSemester(student, prereq, prevSemester)
+                                    .map(g -> g.getRemarks()).orElse(null);
                             Map<String, Object> preq = new HashMap<>();
                             preq.put("courseCode", prereq.getCourseCode());
                             preq.put("courseTitle", prereq.getCourseTitle());

@@ -1,8 +1,6 @@
 **Brownford** University Portal
 ==========================
 
-One-page summary
-
 What this project is
 --------------------
 A Spring Boot + Thymeleaf web portal for university operations with role-based UIs for Students, Faculty, and Admin. It uses Spring Data JPA repositories, service-layer business logic, and server-rendered Thymeleaf templates with client-side JavaScript for interactive parts (notifications, modals, etc.).
@@ -65,13 +63,3 @@ Important files to inspect
 - `com.brownford.repository.*` — JPA repositories
 - `src/main/resources/static/js/` — Client-side JavaScript
 - `src/main/resources/application.properties` — Application configuration
-
-Next steps you might want
--------------------------
-- Replace `null` targetUrl values with meaningful deep links (e.g., `/admin/enrollments`).
-- Remove deprecated overloads in `NotificationService` after ensuring no external callers remain.
-- Add an automated test suite run in CI and a CONTRIBUTING guide.
-
-Contact
--------
-For code questions, open the controller/service file and refer to the files listed above.

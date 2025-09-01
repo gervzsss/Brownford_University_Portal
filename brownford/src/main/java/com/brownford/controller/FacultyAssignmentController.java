@@ -100,7 +100,10 @@ public class FacultyAssignmentController {
         FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignment(assignment);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Assigned faculty (ID: " + (assignment.getFaculty() != null ? assignment.getFaculty().getId() : "None") + ") to section (ID: " + (assignment.getSection() != null ? assignment.getSection().getId() : "None") + ") for course (ID: " + (assignment.getCurriculumCourse() != null ? assignment.getCurriculumCourse().getId() : "None") + ")";
+        String details = "Assigned faculty (ID: "
+                + (assignment.getFaculty() != null ? assignment.getFaculty().getId() : "None") + ") to section (ID: "
+                + (assignment.getSection() != null ? assignment.getSection().getId() : "None") + ") for course (ID: "
+                + (assignment.getCurriculumCourse() != null ? assignment.getCurriculumCourse().getId() : "None") + ")";
         activityLogService.log(adminUsername, "Assigned Faculty to Section", details);
         return saved;
     }
@@ -120,7 +123,10 @@ public class FacultyAssignmentController {
         FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignment(assignment);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Updated faculty assignment (ID: " + id + ") - Faculty (ID: " + (updated.getFaculty() != null ? updated.getFaculty().getId() : "None") + "), Section (ID: " + (updated.getSection() != null ? updated.getSection().getId() : "None") + "), Course (ID: " + (updated.getCurriculumCourse() != null ? updated.getCurriculumCourse().getId() : "None") + ")";
+        String details = "Updated faculty assignment (ID: " + id + ") - Faculty (ID: "
+                + (updated.getFaculty() != null ? updated.getFaculty().getId() : "None") + "), Section (ID: "
+                + (updated.getSection() != null ? updated.getSection().getId() : "None") + "), Course (ID: "
+                + (updated.getCurriculumCourse() != null ? updated.getCurriculumCourse().getId() : "None") + ")";
         activityLogService.log(adminUsername, "Updated Faculty Assignment", details);
         return ResponseEntity.ok(saved);
     }
@@ -141,7 +147,10 @@ public class FacultyAssignmentController {
         FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Assigned faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + ") to section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None") + ") for course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ") with schedule.";
+        String details = "Assigned faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None")
+                + ") to section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None")
+                + ") for course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None")
+                + ") with schedule.";
         activityLogService.log(adminUsername, "Assigned Faculty to Section with Schedule", details);
         return ResponseEntity.ok(saved);
     }
@@ -153,7 +162,10 @@ public class FacultyAssignmentController {
         FacultyAssignment saved = facultyAssignmentService.saveFacultyAssignmentWithSchedule(dto);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Updated faculty assignment (ID: " + id + ") with schedule - Faculty (ID: " + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + "), Section (ID: " + (dto.getSectionId() != null ? dto.getSectionId() : "None") + "), Course (ID: " + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ")";
+        String details = "Updated faculty assignment (ID: " + id + ") with schedule - Faculty (ID: "
+                + (dto.getFacultyId() != null ? dto.getFacultyId() : "None") + "), Section (ID: "
+                + (dto.getSectionId() != null ? dto.getSectionId() : "None") + "), Course (ID: "
+                + (dto.getCurriculumCourseId() != null ? dto.getCurriculumCourseId() : "None") + ")";
         activityLogService.log(adminUsername, "Updated Faculty Assignment with Schedule", details);
         return ResponseEntity.ok(saved);
     }

@@ -44,7 +44,8 @@ public class ProgramManagement {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProgramDTO> updateProgram(@PathVariable Long id, @RequestBody ProgramDTO programDTO, Principal principal) {
+    public ResponseEntity<ProgramDTO> updateProgram(@PathVariable Long id, @RequestBody ProgramDTO programDTO,
+            Principal principal) {
         Optional<Program> existing = programService.getProgramById(id);
         if (existing.isPresent()) {
             Program p = existing.get();

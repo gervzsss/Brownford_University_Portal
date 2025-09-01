@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         notifications = data
         renderNotifications()
       })
-      .catch(() => {})
+      .catch(() => { })
   }
 
   function renderNotifications() {
@@ -57,9 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     list.innerHTML = notifications
       .map((n) => {
-        return `<div class="notification-item${
-          n.read ? "" : " unread"
-        }" data-id="${n.id}">
+        return `<div class="notification-item${n.read ? "" : " unread"
+          }" data-id="${n.id}">
       <span class="notification-message">${n.message}</span>
       <span class="notification-date">${new Date(n.createdAt).toLocaleString()}</span>
       <button class="notification-delete-btn" title="Delete notification">&times;</button>

@@ -53,7 +53,8 @@ public class StudentGradesApiController {
                 courseMap.put("code", course.getCourseCode());
                 courseMap.put("title", course.getCourseTitle());
                 courseMap.put("units", course.getUnits());
-                // Fetch actual grade for this student/course/semester, get the latest schoolYear if multiple
+                // Fetch actual grade for this student/course/semester, get the latest
+                // schoolYear if multiple
                 List<Grade> grades = gradeRepository.findAll();
                 Optional<Grade> gradeOpt = grades.stream()
                         .filter(g -> g.getStudent().getStudentId().equals(student.getStudentId())

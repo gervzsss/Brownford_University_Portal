@@ -71,13 +71,11 @@ public class UserManagement {
         // Filter by search
         if (search != null && !search.isEmpty()) {
             String searchLower = search.toLowerCase();
-            users = users.stream().filter(user ->
-                user.getUsername().toLowerCase().contains(searchLower) ||
-                user.getFirstName().toLowerCase().contains(searchLower) ||
-                (user.getMiddleName() != null && user.getMiddleName().toLowerCase().contains(searchLower)) ||
-                user.getLastName().toLowerCase().contains(searchLower) ||
-                user.getEmail().toLowerCase().contains(searchLower)
-            ).toList();
+            users = users.stream().filter(user -> user.getUsername().toLowerCase().contains(searchLower) ||
+                    user.getFirstName().toLowerCase().contains(searchLower) ||
+                    (user.getMiddleName() != null && user.getMiddleName().toLowerCase().contains(searchLower)) ||
+                    user.getLastName().toLowerCase().contains(searchLower) ||
+                    user.getEmail().toLowerCase().contains(searchLower)).toList();
         }
 
         // Filter by role
@@ -137,7 +135,8 @@ public class UserManagement {
                     dateOfBirth = faculty.getDateOfBirth();
                 }
             }
-            dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId, mobileNumber, address, programDTO, yearLevel, section, gender, dateOfBirth));
+            dtos.add(new UserWithRoleIdDTO(user, studentId, facultyId, mobileNumber, address, programDTO, yearLevel,
+                    section, gender, dateOfBirth));
         }
         return dtos;
     }
@@ -249,13 +248,15 @@ public class UserManagement {
         }
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Created user: " + user.getUsername() + " (ID: " + savedUser.getId() + ", Role: " + user.getRole() + ")";
+        String details = "Created user: " + user.getUsername() + " (ID: " + savedUser.getId() + ", Role: "
+                + user.getRole() + ")";
         activityLogService.log(adminUsername, "Created User", details);
         return savedUser;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> payload,
+            Principal principal) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -263,7 +264,8 @@ public class UserManagement {
         User user = optionalUser.get();
 
         // Only assign new ID if role is changing and role is present in payload
-        if (payload.containsKey("role") && payload.get("role") != null && !user.getRole().equals(payload.get("role").toString())) {
+        if (payload.containsKey("role") && payload.get("role") != null
+                && !user.getRole().equals(payload.get("role").toString())) {
             userIdentifierService.assignIdentifier(user);
         }
 
@@ -288,7 +290,8 @@ public class UserManagement {
         if (payload.containsKey("middleName") && payload.get("middleName") != null) {
             user.setMiddleName(payload.get("middleName").toString());
         }
-        if (payload.containsKey("password") && payload.get("password") != null && !payload.get("password").toString().isEmpty()) {
+        if (payload.containsKey("password") && payload.get("password") != null
+                && !payload.get("password").toString().isEmpty()) {
             user.setPassword(passwordEncoder.encode(payload.get("password").toString()));
         }
         // user.setLastLogin ... (if needed)
@@ -309,10 +312,12 @@ public class UserManagement {
                     student.setGender(payload.get("gender") != null ? payload.get("gender").toString() : null);
                 }
                 if (payload.containsKey("dateOfBirth")) {
-                    student.setDateOfBirth(payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
+                    student.setDateOfBirth(
+                            payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
                 }
                 if (payload.containsKey("mobileNumber")) {
-                    student.setMobileNumber(payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
+                    student.setMobileNumber(
+                            payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
                 }
                 if (payload.containsKey("address")) {
                     student.setAddress(payload.get("address") != null ? payload.get("address").toString() : null);
@@ -328,10 +333,12 @@ public class UserManagement {
                     faculty.setGender(payload.get("gender") != null ? payload.get("gender").toString() : null);
                 }
                 if (payload.containsKey("dateOfBirth")) {
-                    faculty.setDateOfBirth(payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
+                    faculty.setDateOfBirth(
+                            payload.get("dateOfBirth") != null ? payload.get("dateOfBirth").toString() : null);
                 }
                 if (payload.containsKey("mobileNumber")) {
-                    faculty.setMobileNumber(payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
+                    faculty.setMobileNumber(
+                            payload.get("mobileNumber") != null ? payload.get("mobileNumber").toString() : null);
                 }
                 if (payload.containsKey("address")) {
                     faculty.setAddress(payload.get("address") != null ? payload.get("address").toString() : null);
@@ -372,7 +379,8 @@ public class UserManagement {
             userRepository.deleteById(id);
             // Log admin action
             String adminUsername = principal != null ? principal.getName() : "Unknown";
-            String details = "Deleted user: " + user.getUsername() + " (ID: " + user.getId() + ", Role: " + user.getRole() + ")";
+            String details = "Deleted user: " + user.getUsername() + " (ID: " + user.getId() + ", Role: "
+                    + user.getRole() + ")";
             activityLogService.log(adminUsername, "Deleted User", details);
             return ResponseEntity.ok().build();
         } else {
@@ -468,27 +476,28 @@ public class UserManagement {
     @GetMapping("/student-info")
     public ResponseEntity<?> getStudentInfoByStudentId(@RequestParam String studentId) {
         Student student = studentRepository.findAll().stream()
-            .filter(s -> s.getStudentId() != null && s.getStudentId().equals(studentId))
-            .findFirst().orElse(null);
+                .filter(s -> s.getStudentId() != null && s.getStudentId().equals(studentId))
+                .findFirst().orElse(null);
         if (student == null) {
             return ResponseEntity.badRequest().body(Map.of("error", "Student not found"));
         }
-        String fullName = student.getUser().getLastName() + ", " + student.getUser().getFirstName() + (student.getUser().getMiddleName() != null ? (" " + student.getUser().getMiddleName()) : "");
+        String fullName = student.getUser().getLastName() + ", " + student.getUser().getFirstName()
+                + (student.getUser().getMiddleName() != null ? (" " + student.getUser().getMiddleName()) : "");
         String programName = student.getProgram() != null ? student.getProgram().getName() : "";
         // Get latest enrollment for yearLevel
         String yearLevel = null;
         Enrollment latest = null;
         try {
             latest = enrollmentService.getLatestEnrollmentForStudent(student.getId());
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         if (latest != null) {
             yearLevel = latest.getYearLevel();
         }
         return ResponseEntity.ok(Map.of(
-            "studentId", student.getStudentId(),
-            "fullName", fullName,
-            "programName", programName,
-            "yearLevel", yearLevel
-        ));
+                "studentId", student.getStudentId(),
+                "fullName", fullName,
+                "programName", programName,
+                "yearLevel", yearLevel));
     }
 }

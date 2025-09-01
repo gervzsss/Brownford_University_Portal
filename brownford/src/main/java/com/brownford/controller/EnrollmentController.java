@@ -62,10 +62,12 @@ public class EnrollmentController {
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel, sectionId);
+        Enrollment enrollment = enrollmentService.createEnrollment(studentId, courseIds, semester, yearLevel,
+                sectionId);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Created enrollment for studentId: " + studentId + ", courses: " + courseIds + ", semester: " + semester + ", yearLevel: " + yearLevel;
+        String details = "Created enrollment for studentId: " + studentId + ", courses: " + courseIds + ", semester: "
+                + semester + ", yearLevel: " + yearLevel;
         activityLogService.log(adminUsername, "Created Enrollment", details);
         return toDTO(enrollment);
     }
@@ -86,7 +88,8 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}/status")
-    public EnrollmentDTO updateEnrollmentStatus(@PathVariable Long id, @RequestBody Map<String, String> payload, Principal principal) {
+    public EnrollmentDTO updateEnrollmentStatus(@PathVariable Long id, @RequestBody Map<String, String> payload,
+            Principal principal) {
         Enrollment enrollment = enrollmentService.updateEnrollmentStatus(id, payload.get("status"));
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
@@ -112,17 +115,20 @@ public class EnrollmentController {
     }
 
     @PutMapping("/{id}")
-    public EnrollmentDTO updateEnrollment(@PathVariable Long id, @RequestBody Map<String, Object> payload, Principal principal) {
+    public EnrollmentDTO updateEnrollment(@PathVariable Long id, @RequestBody Map<String, Object> payload,
+            Principal principal) {
         Long studentId = Long.valueOf(payload.get("studentId").toString());
         List<?> courseIdsRaw = (List<?>) payload.get("courses");
         List<Long> courseIds = courseIdsRaw.stream().map(cid -> Long.valueOf(cid.toString())).toList();
         String semester = payload.get("semester").toString();
         String yearLevel = payload.get("yearLevel").toString();
         Long sectionId = payload.get("sectionId") != null ? Long.valueOf(payload.get("sectionId").toString()) : null;
-        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel, sectionId);
+        Enrollment updated = enrollmentService.updateEnrollment(id, studentId, courseIds, semester, yearLevel,
+                sectionId);
         // Log admin action
         String adminUsername = principal != null ? principal.getName() : "Unknown";
-        String details = "Updated enrollment (ID: " + id + ") for studentId: " + studentId + ", courses: " + courseIds + ", semester: " + semester + ", yearLevel: " + yearLevel;
+        String details = "Updated enrollment (ID: " + id + ") for studentId: " + studentId + ", courses: " + courseIds
+                + ", semester: " + semester + ", yearLevel: " + yearLevel;
         activityLogService.log(adminUsername, "Updated Enrollment", details);
         return toDTO(updated);
     }
@@ -140,7 +146,8 @@ public class EnrollmentController {
     public ResponseEntity<?> batchEnroll(@RequestBody BatchEnrollmentRequest request) {
         // Call service to process batch enrollment
         // Example result structure:
-        // { "success": [1,2,3], "failed": [ {"studentId":4, "reason":"Already enrolled"} ] }
+        // { "success": [1,2,3], "failed": [ {"studentId":4, "reason":"Already
+        // enrolled"} ] }
         Map<String, Object> result = enrollmentService.batchEnroll(request);
         return ResponseEntity.ok(result);
     }
@@ -151,10 +158,13 @@ public class EnrollmentController {
         return enrollmentService.getLatestPendingApprovals(5);
     }
 
-    // Endpoint to review last enrolled courses and next semester prerequisites for a student
+    // Endpoint to review last enrolled courses and next semester prerequisites for
+    // a student
     @GetMapping("/last-courses")
-    public ResponseEntity<?> getLastCoursesAndPrerequisites(@RequestParam String studentId, @RequestParam String yearLevel, @RequestParam String semester) {
-        Map<String, Object> result = enrollmentService.getLastCoursesAndNextPrerequisites(studentId, yearLevel, semester);
+    public ResponseEntity<?> getLastCoursesAndPrerequisites(@RequestParam String studentId,
+            @RequestParam String yearLevel, @RequestParam String semester) {
+        Map<String, Object> result = enrollmentService.getLastCoursesAndNextPrerequisites(studentId, yearLevel,
+                semester);
         return ResponseEntity.ok(result);
     }
 }

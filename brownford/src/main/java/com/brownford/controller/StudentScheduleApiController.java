@@ -71,40 +71,44 @@ public class StudentScheduleApiController {
             CurriculumCourse curriculumCourse = null;
             if (curriculum != null) {
                 curriculumCourse = curriculumCourseRepository.findAll().stream()
-                    .filter(cc -> cc.getCourse().getId().equals(course.getId())
-                        && cc.getCurriculum().getId().equals(curriculum.getId())
-                        && cc.getYearLevel() == (course.getYearLevel() != null ? course.getYearLevel() : yearLevel)
-                        && cc.getSemester().equalsIgnoreCase(course.getSemester() != null ? course.getSemester() : semester))
-                    .findFirst().orElse(null);
+                        .filter(cc -> cc.getCourse().getId().equals(course.getId())
+                                && cc.getCurriculum().getId().equals(curriculum.getId())
+                                && cc.getYearLevel() == (course.getYearLevel() != null ? course.getYearLevel()
+                                        : yearLevel)
+                                && cc.getSemester().equalsIgnoreCase(
+                                        course.getSemester() != null ? course.getSemester() : semester))
+                        .findFirst().orElse(null);
             }
 
             // Find faculty assignment for this course, section, semester, year level
             FacultyAssignment assignment = null;
             if (curriculumCourse != null && studentSection != null) {
                 assignment = facultyAssignmentRepository
-                    .findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
-                        curriculumCourse, studentSection, semester, yearLevel)
-                    .orElse(null);
+                        .findByCurriculumCourseAndSectionAndSemesterAndYearLevel(
+                                curriculumCourse, studentSection, semester, yearLevel)
+                        .orElse(null);
             }
 
             // Find schedule for this course and section
             Schedule schedule = null;
             if (curriculumCourse != null && studentSection != null) {
                 schedule = scheduleRepository
-                    .findByCurriculumCourseAndSection(curriculumCourse, studentSection)
-                    .stream().findFirst().orElse(null);
+                        .findByCurriculumCourseAndSection(curriculumCourse, studentSection)
+                        .stream().findFirst().orElse(null);
             }
 
             // Set schedule details
             map.put("classDays", schedule != null ? schedule.getDay() : "");
-            map.put("classTime", schedule != null ?
-                (schedule.getStartTime() != null && schedule.getEndTime() != null ?
-                    schedule.getStartTime().toString() + " - " + schedule.getEndTime().toString() : "") : "");
+            map.put("classTime",
+                    schedule != null ? (schedule.getStartTime() != null && schedule.getEndTime() != null
+                            ? schedule.getStartTime().toString() + " - " + schedule.getEndTime().toString()
+                            : "") : "");
             map.put("room", schedule != null ? schedule.getRoom() : "");
 
             // Set professor name
             Faculty professor = assignment != null ? assignment.getFaculty() : null;
-            map.put("professors", (professor != null && professor.getUser() != null) ? professor.getUser().getFullName() : "");
+            map.put("professors",
+                    (professor != null && professor.getUser() != null) ? professor.getUser().getFullName() : "");
 
             result.add(map);
         }

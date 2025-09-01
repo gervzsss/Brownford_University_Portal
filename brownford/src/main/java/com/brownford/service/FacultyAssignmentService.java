@@ -61,19 +61,23 @@ public class FacultyAssignmentService {
             Faculty faculty = assignment.getFaculty();
             Section section = assignment.getSection();
             CurriculumCourse cc = assignment.getCurriculumCourse();
-            logger.info("Attempting to delete assignment: id={}, faculty={}, section={}, course={}", id, faculty != null ? faculty.getId() : null, section != null ? section.getSectionCode() : null, cc != null ? cc.getCourse().getCourseCode() : null);
+            logger.info("Attempting to delete assignment: id={}, faculty={}, section={}, course={}", id,
+                    faculty != null ? faculty.getId() : null, section != null ? section.getSectionCode() : null,
+                    cc != null ? cc.getCourse().getCourseCode() : null);
             facultyAssignmentRepository.deleteById(id);
             // Notify faculty of removal
             if (faculty != null && section != null && cc != null) {
                 Notification notif = new Notification();
                 notif.setFaculty(faculty);
                 notif.setType("REMOVAL");
-                notif.setMessage("You have been removed from section " + section.getSectionCode() + " for course " + cc.getCourse().getCourseCode() + ".");
+                notif.setMessage("You have been removed from section " + section.getSectionCode() + " for course "
+                        + cc.getCourse().getCourseCode() + ".");
                 notif.setCreatedAt(java.time.LocalDateTime.now());
                 notif.setRead(false);
                 notif.setTargetUrl("/faculty-schedule");
                 notificationRepository.save(notif);
-                logger.info("Faculty removal notification created for facultyId={}, section={}, course={}", faculty.getId(), section.getSectionCode(), cc.getCourse().getCourseCode());
+                logger.info("Faculty removal notification created for facultyId={}, section={}, course={}",
+                        faculty.getId(), section.getSectionCode(), cc.getCourse().getCourseCode());
             } else {
                 logger.warn("Faculty, section, or course is null. Notification not created for assignment id={}", id);
             }
@@ -85,8 +89,11 @@ public class FacultyAssignmentService {
 
     @Transactional
     public FacultyAssignment saveFacultyAssignmentWithSchedule(FacultyAssignmentWithScheduleDTO dto) {
-        logger.debug("Incoming FacultyAssignmentWithScheduleDTO: id={}, curriculumCourseId={}, sectionId={}, facultyId={}, semester={}, yearLevel={}, schoolYear={}", dto.getId(), dto.getCurriculumCourseId(), dto.getSectionId(), dto.getFacultyId(), dto.getSemester(), dto.getYearLevel(), dto.getSchoolYear());
-        
+        logger.debug(
+                "Incoming FacultyAssignmentWithScheduleDTO: id={}, curriculumCourseId={}, sectionId={}, facultyId={}, semester={}, yearLevel={}, schoolYear={}",
+                dto.getId(), dto.getCurriculumCourseId(), dto.getSectionId(), dto.getFacultyId(), dto.getSemester(),
+                dto.getYearLevel(), dto.getSchoolYear());
+
         FacultyAssignment assignment = null;
         CurriculumCourse cc = curriculumCourseRepository.findById(dto.getCurriculumCourseId()).orElseThrow();
         Section section = sectionRepository.findById(dto.getSectionId()).orElseThrow();
@@ -118,7 +125,8 @@ public class FacultyAssignmentService {
             Notification notif = new Notification();
             notif.setFaculty(previousFaculty);
             notif.setType("REMOVAL");
-            notif.setMessage("You have been unassigned from section " + section.getSectionCode() + " as faculty for course " + cc.getCourse().getCourseCode() + ".");
+            notif.setMessage("You have been unassigned from section " + section.getSectionCode()
+                    + " as faculty for course " + cc.getCourse().getCourseCode() + ".");
             notif.setCreatedAt(java.time.LocalDateTime.now());
             notif.setRead(false);
             notif.setTargetUrl("/faculty-schedule");
@@ -148,26 +156,34 @@ public class FacultyAssignmentService {
         String semester = dto.getSemester();
         String schoolYear = dto.getSchoolYear();
         // Determine if this is an update (existing schedule) or a new schedule
-        Schedule existingSchedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream().findFirst().orElse(null);
-        Long scheduleId = (existingSchedule != null && existingSchedule.getId() != null) ? existingSchedule.getId() : null;
+        Schedule existingSchedule = scheduleRepository.findByCurriculumCourseAndSection(cc, section).stream()
+                .findFirst().orElse(null);
+        Long scheduleId = (existingSchedule != null && existingSchedule.getId() != null) ? existingSchedule.getId()
+                : null;
         // Section conflict
         scheduleRepository.findConflictsBySection(section, day, startTime, endTime, semester, schoolYear).stream()
-            .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
-            .findAny()
-            .ifPresent(s -> { throw new ScheduleConflictException("Section already has a schedule at this time."); });
+                .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+                .findAny()
+                .ifPresent(s -> {
+                    throw new ScheduleConflictException("Section already has a schedule at this time.");
+                });
         // Faculty conflict
         if (faculty != null) {
             scheduleRepository.findConflictsByFaculty(faculty, day, startTime, endTime, semester, schoolYear).stream()
-                .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
-                .findAny()
-                .ifPresent(s -> { throw new ScheduleConflictException("Faculty already has a schedule at this time."); });
+                    .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+                    .findAny()
+                    .ifPresent(s -> {
+                        throw new ScheduleConflictException("Faculty already has a schedule at this time.");
+                    });
         }
         // Room conflict
         if (room != null && !room.isEmpty()) {
             scheduleRepository.findConflictsByRoom(room, day, startTime, endTime, semester, schoolYear).stream()
-                .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
-                .findAny()
-                .ifPresent(s -> { throw new ScheduleConflictException("Room is already booked at this time."); });
+                    .filter(s -> scheduleId == null || !s.getId().equals(scheduleId))
+                    .findAny()
+                    .ifPresent(s -> {
+                        throw new ScheduleConflictException("Room is already booked at this time.");
+                    });
         }
         scheduleRepository.save(schedule);
         // Notify new assignment
@@ -175,7 +191,8 @@ public class FacultyAssignmentService {
             Notification notif = new Notification();
             notif.setFaculty(faculty);
             notif.setType("ASSIGNMENT");
-            notif.setMessage("You have been assigned to section " + section.getSectionCode() + " for course " + cc.getCourse().getCourseCode() + ".");
+            notif.setMessage("You have been assigned to section " + section.getSectionCode() + " for course "
+                    + cc.getCourse().getCourseCode() + ".");
             notif.setCreatedAt(java.time.LocalDateTime.now());
             notif.setRead(false);
             notif.setTargetUrl("/faculty-schedule");
