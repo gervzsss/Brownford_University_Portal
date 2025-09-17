@@ -7,6 +7,7 @@
     <title>Grades - Brown Ford University</title>
     <link rel="icon" type="image/png" th:href="@{/images/logo-circle.png}">
     <!-- Link to the external CSS file -->
+    <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
@@ -77,8 +78,8 @@
             </div>
 
             <!-- Grades Container -->
-            <div class="grades-table-container">
-                <table class="grades-table">
+            <div class="grades-table-container table-responsive">
+                <table class="grades-table data-table">
                     <thead>
                         <tr>
                             <th>Course Code</th>

@@ -1,19 +1,13 @@
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Alice", "Cinzel", "Cinzel Decorative", "Cormorant Garamond", serif;
-}
+@import url("/css/base.css");
 
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #f5f5f5;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Login page specific styles */
+
+/* Per-page overrides for login color tones */
+:root {
+  --color-primary: #6b3a1d;
+  --notif-bg: rgba(222, 208, 182, 0.9);
+  --notif-border-accent: #8b4513;
+  --page-panel-bg: rgba(222, 208, 182, 0.9);
 }
 
 /* Login container with background image */
@@ -31,37 +25,20 @@ body {
 
 /* Login form container */
 .login-form-container {
-  width: 450px;
-  max-width: 100%;
-  background-color: rgba(222, 208, 182, 0.7);
+  width: calc(100% - 40px);
+  max-width: 420px;
+  background-color: rgba(222, 208, 182, 0.95);
   border-radius: 8px;
-  padding: 30px 20px;
+  padding: 18px 14px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Logo styling */
-.logo-container {
-  margin-bottom: 15px;
-}
+.logo-container { margin-bottom: 15px; }
+/* Use .responsive-logo on the logo element to get consistent sizing across pages */
+/* university-name handled by base.css; keep color/font overrides only when necessary */
 
-.university-logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: white;
-  padding: 5px;
-  object-fit: contain;
-}
-
-/* University name */
-.university-name {
-  color: #72411e;
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-family: "Cinzel Decorative";
-}
 
 /* Login form */
 .login-form {
@@ -78,88 +55,16 @@ body {
   margin-bottom: 15px;
 }
 
-.input-with-icon {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background-color: #8b4513;
-  border-radius: 4px;
-  overflow: hidden;
-}
+/* Use .input-with-icon + .form-control--dark for dark input variants; keep input-icon/password-toggle structure */
 
-.input-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 15px;
-  color: white;
-}
-
-.form-control {
-  flex: 1;
-  background-color: #8b4513;
-  border: none;
-  color: white;
-  padding: 15px 10px;
-  font-size: 16px;
-  width: 100%;
-}
-
-.form-control::placeholder {
-  color: rgba(255, 255, 255, 0.8);
-  font-family: "serif";
-}
-
-.form-control:focus {
-  outline: none;
-}
-
-.password-toggle {
-  padding: 0 15px;
-  cursor: pointer;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-/* Error message */
-.error-message {
-  background-color: rgba(220, 53, 69, 0.2);
-  color: #dc3545;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
-
-/* Success message */
-.success-message {
-  background-color: rgba(40, 167, 69, 0.2);
-  color: #28a745;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
+.input-with-icon { position: relative; display:flex; align-items:center; border-radius:4px; overflow:hidden; }
+.input-icon { display:flex; align-items:center; justify-content:center; padding:0 15px; color: inherit; }
+.password-toggle { padding:0 15px; cursor:pointer; }
 
 /* Sign in button */
-.sign-in-button {
-  background-color: transparent;
-  color: #8b4513;
-  border: 2px solid #8b4513;
-  border-radius: 25px;
-  padding: 10px 30px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 10px 0;
-}
-
-.sign-in-button:hover {
-  background-color: #8b4513;
-  color: white;
-}
+/* Use base .btn styles for the sign-in button */
+.login-form .btn { width: 100%; max-width: 320px; margin: 12px auto 0; }
+.login-form .btn--outline { --page-btn-outline-hint: 1; }
 
 /* Help text */
 .help-text {
@@ -172,34 +77,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 480px) {
-  .login-form-container {
-    width: 90%;
-    padding: 20px 15px;
-  }
-
-  .university-name {
-    font-size: 24px;
-  }
-
-  .sign-in-button {
-    padding: 8px 20px;
-    font-size: 16px;
-  }
-}
-
-/* Animation styles */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+@media (max-width: var(--bp-sm)) { /* responsive adjustments kept for container; buttons use base styles */ }
 
 .error-message {
   animation: fadeIn 0.3s ease-out;
@@ -275,6 +153,21 @@ body {
   border-right-color: transparent;
   animation: spin 0.75s linear infinite;
   margin-right: 8px;
+}
+
+/* Larger screens: center a fixed width login box */
+@media (min-width: var(--bp-md)) {
+  .login-form-container {
+    width: 450px;
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-inner { width: 200px; height: 200px; }
+  .login-form-container { padding: 14px; margin-top: -40px; }
+  .login-form .form-control { font-size: 14px; padding: 10px; }
+  .login-form .btn { font-size: 16px; padding: 10px 14px; }
 }
 
 /* Input error message */

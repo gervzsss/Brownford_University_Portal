@@ -1,4 +1,12 @@
+@import url("/css/base.css");
+
 /* Sidebar Navigation Styles */
+
+/* Per-page overrides for sidebar accents */
+:root {
+    --color-primary: #6b3a1d;
+    --notif-border-accent: #b25000;
+}
 .sidebar {
     position: fixed;
     top: 0;
@@ -54,6 +62,8 @@
     cursor: pointer;
     font-size: 20px;
 }
+
+.sidebar-close { --page-sidebar-hint: 1; }
 
 .sidebar-content {
     flex: 1;
@@ -238,17 +248,15 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    .content-wrapper.sidebar-open {
-        margin-left: 0;
-    }
+/* Mobile: sidebar hidden by default, toggled with .open */
+@media (max-width: var(--bp-md)) {
+    .content-wrapper.sidebar-open { margin-left: 0; }
+    .sidebar { width: 280px; transform: translateX(-280px); }
+    .sidebar.open { transform: translateX(0); }
+}
 
-    .sidebar {
-        width: 280px;
-        transform: translateX(-280px);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
+/* Desktop: keep sidebar visible and shift content */
+@media (min-width: var(--bp-md)) {
+    .sidebar { transform: translateX(0); }
+    .content-wrapper.sidebar-open { margin-left: 250px; }
 }

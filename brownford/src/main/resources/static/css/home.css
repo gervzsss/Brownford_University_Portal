@@ -1,16 +1,14 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Alice", "Cinzel", "Cinzel Decorative", "Cormorant Garamond", serif;
-}
+@import url("/css/base.css");
 
-html {
-  overflow-y: scroll;
-}
+/* Home page specific styles */
 
-body {
-  background-color: #f5f5f5;
+/* Per-page CSS variable overrides to preserve previous home colors */
+:root {
+  --notif-bg: #f8f5f1; /* home specific */
+  --notif-border-accent: #8b4513;
+  --notif-text: #4d2e13;
+  --notif-date: #a67c52;
+  --page-panel-bg: rgba(255, 255, 255, 0.92);
 }
 
 /* Prevent background scroll when modal is open */
@@ -41,19 +39,7 @@ body {
   overflow: hidden;
 }
 
-.background-image {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("/images/campus-background.png");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  opacity: 0.8;
-  z-index: -1;
-}
+.background-image { opacity: 0.8; }
 
 /* Header styles */
 
@@ -76,139 +62,20 @@ body {
   border-bottom: none;
 }
 
-.logo-container {
-  display: flex;
-  align-items: center;
-}
+.logo-container { display:flex; align-items:center; }
+/* Use the .responsive-logo class on .logo-inner where you need responsive sizing */
+/* university-name is handled in base.css with responsive sizing */
 
-.logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #8b4513;
-  position: relative;
-}
-
-.logo::after {
-  content: "";
-  position: absolute;
-  width: 90%;
-  height: 90%;
-  border-radius: 50%;
-  border: 1px solid #8b4513;
-}
-
-.logo-inner img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 50%;
-}
-
-.university-name {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 32px;
-  font-weight: bold;
-  font-family: "Cinzel Decorative";
-}
 
 .header-icons {
   display: flex;
   align-items: center;
 }
 
-/* Footer Styles */
-.university-footer {
-  margin-top: 40px;
-  background-color: rgba(107, 58, 29, 0.9);
-  color: white;
-  padding: 30px 20px 15px;
-  border-radius: 10px 10px 0 0;
-}
 
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+/* Footer visuals centralized in base.css. Keep responsive footer layout rules below. */
 
-.footer-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.footer-logo-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.footer-university-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 18px;
-  margin: 0;
-}
-
-.footer-contact {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 15px;
-}
-
-.footer-contact-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.footer-contact-item a {
-  color: white;
-  text-decoration: none;
-}
-
-.footer-contact-item a:hover {
-  text-decoration: underline;
-}
-
-.footer-social {
-  display: flex;
-  gap: 15px;
-}
-
-.social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.social-icon:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  font-size: 14px;
-}
-
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
   .footer-container {
     flex-direction: column;
     align-items: flex-start;
@@ -226,49 +93,49 @@ body {
 }
 
 /* Logout Icon Styling */
-.logout-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
+
+/* Page section grids - mobile-first */
+.announcements-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-.logout-icon:hover {
-  color: #cd853f;
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-/* Profile Icon Styling */
-.profile-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
+.class-schedule {
+  display: block;
+  width: 100%;
 }
 
-.profile-icon:hover {
-  color: #cd853f;
+.grades-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-.profile-link {
-  color: inherit;
-  text-decoration: none;
-}
+@media (min-width: var(--bp-md)) {
+  .announcements-grid {
+    grid-template-columns: 1fr 320px;
+    gap: 18px;
+  }
 
-/* Notification Icon and Dropdown Styles */
-.notification-icon {
-  margin-left: 20px;
-  color: #8b4513;
-  font-size: 15px;
-  position: relative;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grades-summary {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .class-schedule {
+    display: block;
+    width: auto;
+  }
 }
 
 .notification-link {
@@ -277,135 +144,8 @@ body {
   display: block;
 }
 
-.notification-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #e74c3c;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  line-height: 20px;
-  min-width: 20px;
-  padding: 0;
-  text-align: center;
-}
-
-.notification-dropdown {
-  position: absolute;
-  top: 45px;
-  right: -10px;
-  width: 450px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  display: none;
-  max-height: 500px;
-  overflow: hidden;
-  flex-direction: column;
-}
-
-.notification-dropdown.show {
-  display: flex;
-}
-
-.notification-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.remove-all,
-.mark-all-read {
-  color: #6b3a1d;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.remove-all:hover,
-.mark-all-read:hover {
-  text-decoration: underline;
-}
-
-.notification-list {
-  overflow-y: auto;
-  max-height: 350px;
-}
-
-.no-notifications {
-  text-align: center;
-  color: #333;
-  padding: 10px;
-  display: block;
-  font-size: 1em;
-}
-
-.notification-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s;
-}
-
-.notification-item:hover {
-  background-color: #f9f9f9;
-}
-
-.notification-item.unread {
-  background-color: #f0f7ff;
-  font-weight: bold;
-}
-
-.notification-item.unread:hover {
-  background-color: #e6f2ff;
-}
-
-.notification-content {
-  flex: 1;
-}
-
-.notification-message {
-  flex: 1;
-  min-width: 0;
-}
-
-.notification-date {
-  margin-left: 20px;
-  white-space: nowrap;
-  color: #999;
-  font-size: 12px;
-  text-align: right;
-}
-
-.notification-text {
-  margin: 0 0 5px 0;
-  color: #333;
-  font-size: 14px;
-}
-
-.notification-time {
-  margin: 0;
-  color: #999;
-  font-size: 12px;
-}
-
-.notification-footer {
-  padding: 15px;
-  text-align: center;
-  border-top: 1px solid #eee;
-}
+/* Notification dropdown specifics (dropdown width, list heights) are page-specific so remain here */
+/* Keep notification dropdown layout rules in home.css when they depend on page layout. */
 
 .view-all {
   color: #6b3a1d;
@@ -418,16 +158,7 @@ body {
   text-decoration: underline;
 }
 
-@media (max-width: 480px) {
-  .notification-dropdown {
-    width: 280px;
-    right: -120px;
-  }
-
-  .notification-item {
-    padding: 10px;
-  }
-}
+/* Notification dropdown appearance moved to base.css (shared). Page may keep overrides here if needed.) */
 
 /* System Notifications Section Styles */
 .sys-notif-section {
@@ -552,6 +283,43 @@ body {
   background-color: #cd853f;
 }
 
+/* Mobile-first layout helpers for home/dashboard */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.profile-section {
+  display: block;
+  width: 100%;
+}
+
+.quick-links {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.quick-links .link-card {
+  flex: 0 0 auto;
+  min-width: 160px;
+}
+
+.sys-notif-container {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Content area */
 /* Home page specific styles */
 
@@ -568,6 +336,39 @@ body {
   margin: 20px;
   border-radius: 10px;
   padding-bottom: 4em;
+}
+
+/* Larger screens: restore multi-column layouts */
+@media (min-width: var(--bp-md)) {
+  .main-grid {
+    grid-template-columns: 280px 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .profile-section {
+    display: block;
+    width: auto;
+  }
+
+  .quick-links {
+    overflow: visible;
+    flex-wrap: nowrap;
+  }
+}
+
+@media (min-width: var(--bp-lg)) {
+  .main-grid {
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
 }
 
 /* Welcome Section */
@@ -627,21 +428,8 @@ body {
   margin-bottom: inherit;
 }
 
-.quick-link-card {
-  display: flex;
-  align-items: center;
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.quick-link-card:hover {
-  background-color: #f0e6dd;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+/* .quick-link-card visuals centralized in base.css as .quick-link-card/.link-card
+   Keep container/grid here; card visuals (background, hover, spacing) are shared across pages. */
 
 .quick-link-icon {
   margin-right: 15px;
@@ -675,7 +463,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
 
   .quick-links-container,
   .announcements-container,
@@ -723,10 +511,10 @@ body {
 }
 
 .content-area {
-  padding: 40px 20px;
+  padding: 24px 16px;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .announcement-box {
@@ -735,11 +523,12 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .enrollment-announcement {
-  width: 45%;
+  width: 100%;
   position: relative;
   overflow: hidden;
 }
@@ -791,7 +580,7 @@ body {
 }
 
 .schedule-announcement {
-  width: 45%;
+  width: 100%;
   background-color: #cd853f;
   border-radius: 30px;
   padding: 30px;
@@ -816,6 +605,22 @@ body {
   font-size: 40px;
 }
 
+@media (min-width: var(--bp-md)) {
+  .announcement-box {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .enrollment-announcement {
+    width: 55%;
+  }
+
+  .schedule-announcement {
+    width: 45%;
+  }
+}
+
 /* Schedule Page Styles */
 .schedule-content {
   padding: 20px;
@@ -826,8 +631,9 @@ body {
 
 .schedule-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
@@ -894,36 +700,10 @@ body {
 }
 
 .schedule-table-container,
-.workload-table-container {
-  overflow-x: auto;
-  margin-bottom: 30px;
-}
+.workload-table-container { overflow-x: auto; margin-bottom: 30px; }
 
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.schedule-table th,
-.schedule-table td {
-  border: 2px solid #6b3a1d;
-  padding: 10px;
-  text-align: left;
-}
-
-.schedule-table th {
-  background-color: white;
-  color: #6b3a1d;
-  font-weight: bold;
-}
-
-.schedule-table tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-.schedule-table tr:nth-child(even) {
-  background-color: white;
-}
+/* schedule-table visuals are centralized in base.css; override page variables here if needed */
+.schedule-table { --page-table-hint: 1; /* override variables like --table-border-color here if needed */ }
 
 .download-link {
   color: #6b3a1d;
@@ -974,8 +754,9 @@ body {
 
 .grades-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
@@ -1015,41 +796,123 @@ body {
   margin-bottom: 20px;
 }
 
-.grades-table-container {
-  overflow-x: auto;
-  margin-bottom: 15px;
+.grades-table-container { /* use .table-responsive in base.css for responsiveness */
+  --page-table-gap: 0.5rem;
 }
 
-.grades-table {
+/* Admin: Courses page styles (moved from admin-courses.html) */
+.program-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  border: 1px solid #d1bfa3;
+  border-radius: 6px;
+  padding: 12px 10px 6px 10px;
+  background: #f9f6f2;
+  margin-bottom: 8px;
+  min-height: 48px;
+}
+
+.program-checkbox-group label {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 4px;
+  padding: 4px 10px 4px 6px;
+  box-shadow: 0 1px 2px rgba(140, 90, 30, 0.06);
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 1rem;
+  border: 1px solid #e5d6c2;
+}
+
+.program-checkbox-group label:hover {
+  background: #f3e9d7;
+  border-color: #c7a97a;
+}
+
+.program-checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #8b4513;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.dropdown-multiselect {
+  position: relative;
+  display: inline-block;
   width: 100%;
-  border-collapse: collapse;
 }
 
-.grades-table th,
-.grades-table td {
-  border: 2px solid #6b3a1d;
-  padding: 10px;
-  text-align: left;
+.dropdown-multiselect-list {
+  display: none;
+  position: absolute;
+  background: #fff;
+  border: 1px solid #d1bfa3;
+  border-radius: 6px;
+  z-index: 1000;
+  max-height: 220px;
+  overflow-y: auto;
+  min-width: 220px;
 }
 
-.grades-table th {
-  background-color: white;
-  color: #6b3a1d;
-  font-weight: bold;
+.dropdown-multiselect-list label {
+  display: block;
+  padding: 4px 10px;
+  cursor: pointer;
 }
 
-.grades-table tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
+.dropdown-multiselect-list label:hover { background: #f3e9d7; }
 
-.grades-table tr:nth-child(even) {
-  background-color: white;
+/* Admin: Assign Schedule page styles (moved from admin-assign-schedule.html) */
+.section-selector-container { padding: 20px; }
+.selector-group { margin-bottom: 30px; }
+.selector-label { display: block; font-family: "Cinzel", serif; font-weight: 600; color: #6B3A1D; margin-bottom: 10px; font-size: 1.1rem; }
+.selector-wrapper { position: relative; display: inline-block; width: 100%; max-width: 400px; }
+.section-select { width: 100%; padding: 12px 40px 12px 16px; border: 2px solid #D4B896; border-radius: 8px; font-family: "Alice", serif; font-size: 1rem; background-color: white; color: #333; appearance: none; cursor: pointer; transition: all 0.3s ease; }
+.section-select:focus { outline: none; border-color: #8B4513; box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1); }
+.selector-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.info-card { background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC0 100%); border: 1px solid #D4B896; border-radius: 12px; padding: 20px; margin-top: 20px; }
+.info-header h3 { font-family: "Cinzel", serif; color: #6B3A1D; margin: 0 0 15px 0; font-size: 1.2rem; }
+.info-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+.info-item { display: flex; flex-direction: column; }
+.info-label { font-family: "Cinzel", serif; font-weight: 600; color: #8B4513; font-size: 0.9rem; margin-bottom: 4px; }
+.info-value { font-family: "Alice", serif; color: #333; font-size: 1rem; }
+.assignment-summary { background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC0 100%); border: 1px solid #D4B896; border-radius: 12px; padding: 20px; margin-bottom: 30px; }
+.summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+.stat-item { text-align: center; padding: 15px; background: rgba(255, 255, 255, 0.7); border-radius: 8px; border: 1px solid rgba(139, 69, 19, 0.1); }
+.stat-number { display: block; font-family: "Cinzel", serif; font-size: 2rem; font-weight: bold; color: #6B3A1D; margin-bottom: 5px; }
+.stat-label { font-family: "Alice", serif; color: #8B4513; font-size: 0.9rem; }
+.assignment-table-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border: 1px solid #D4B896; }
+.assignment-table { width: 100%; border-collapse: collapse; }
+.assignment-table th { background: linear-gradient(135deg, #8B4513 0%, #6B3A1D 100%); color: white; padding: 15px 12px; text-align: left; font-family: "Cinzel", serif; font-weight: 600; font-size: 0.9rem; }
+.assignment-table td { padding: 15px 12px; border-bottom: 1px solid #E8DCC0; font-family: "Alice", serif; vertical-align: top; }
+.assignment-table tr:hover { background-color: #F9F7F4; }
+.course-info strong { color: #6B3A1D; font-family: "Cinzel", serif; font-size: 1rem; }
+.course-title { color: #666; font-size: 0.9rem; margin-top: 4px; }
+.faculty-assignment, .schedule-info, .room-info { font-size: 0.9rem; }
+.text-muted { color: #999; font-style: italic; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; font-family: "Alice", serif; text-transform: uppercase; letter-spacing: 0.5px; }
+.status-assigned { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.status-partial { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+.status-unassigned { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.form-section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #E8DCC0; }
+.form-section:last-of-type { border-bottom: none; margin-bottom: 0; }
+.form-section h4 { font-family: "Cinzel", serif; color: #6B3A1D; margin: 0 0 15px 0; font-size: 1.1rem; }
+.form-group.full-width { grid-column: 1 / -1; }
+.empty-state { text-align: center; padding: 60px 20px; color: #8B4513; }
+.empty-state-icon { margin-bottom: 20px; }
+.empty-state h3 { font-family: "Cinzel", serif; margin: 0 0 10px 0; font-size: 1.5rem; }
+.empty-state p { font-family: "Alice", serif; margin: 0; font-size: 1rem; opacity: 0.8; }
+@media (max-width: 768px) {
+  .summary-stats { grid-template-columns: repeat(2, 1fr); }
+  .info-content { grid-template-columns: 1fr; }
+  .assignment-table { font-size: 0.8rem; }
+  .assignment-table th, .assignment-table td { padding: 10px 8px; }
 }
-
-.grades-table tfoot {
-  background-color: #f9f9f9;
-  font-weight: bold;
-}
+@media (max-width: 480px) { .summary-stats { grid-template-columns: 1fr; } }
+/* Use .data-table in base.css for consistent table visuals across the app */
 
 .text-right {
   text-align: right;
@@ -1065,8 +928,9 @@ body {
 
 .enrollment-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
@@ -1181,35 +1045,8 @@ body {
   margin-bottom: 15px;
 }
 
-.courses-table-container {
-  overflow-x: auto;
-}
-
-.courses-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.courses-table th,
-.courses-table td {
-  border: 2px solid #6b3a1d;
-  padding: 10px;
-  text-align: left;
-}
-
-.courses-table th {
-  background-color: white;
-  color: #6b3a1d;
-  font-weight: bold;
-}
-
-.courses-table tr:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-.courses-table tr:nth-child(even) {
-  background-color: white;
-}
+.courses-table-container { overflow-x: auto; }
+.courses-table { --page-table-hint: 1; /* override variables like --table-border-color here if needed */ }
 
 .enroll-button {
   display: inline-block;
@@ -1356,12 +1193,14 @@ body {
 
 .professor-card {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   background-color: #fff;
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  gap: 10px;
 }
 
 .professor-card.completed {
@@ -1416,9 +1255,11 @@ body {
 
 .profile-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   margin-bottom: 30px;
-  padding-bottom: 20px;
+  padding-bottom: 16px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -1516,7 +1357,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
   .professor-card {
     flex-direction: column;
     align-items: flex-start;
@@ -1552,7 +1393,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
 
   .enrollment-announcement,
   .schedule-announcement {
@@ -1725,7 +1566,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
   .semester-navigation {
     flex-direction: column;
     gap: 5px;
@@ -1920,7 +1761,7 @@ body {
   background-color: #5a6268;
 }
 
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
   .rating-options {
     flex-wrap: wrap;
     justify-content: center;
@@ -1937,7 +1778,7 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-md)) {
 
   .enrollment-announcement,
   .schedule-announcement {
@@ -1946,22 +1787,13 @@ body {
 }
 
 /* User Management Styles */
-.content-panel {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  margin-bottom: 20px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.content-panel { /* Uses base .content-panel - override background/box-shadow in page CSS only when needed */
+  --page-panel-bg: rgba(255, 255, 255, 0.8);
 }
 
-.panel-header {
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
-}
+.panel-header { padding: 15px 20px; border-bottom: 1px solid #eee; }
 
-.panel-content {
-  padding: 20px;
-}
+.panel-content { padding: 20px; }
 
 .user-controls {
   display: flex;
@@ -2000,13 +1832,8 @@ body {
   outline: none;
 }
 
-.search-button {
-  background-color: transparent;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  color: #8b4513;
-}
+/* search-button visuals centralized in base.css */
+.search-button { --page-btn-hint: 1; }
 
 .filter-container {
   display: flex;
@@ -2022,37 +1849,9 @@ body {
 }
 
 /* Action buttons styling */
-.add-user-btn,
-.export-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-family: "Cinzel", serif;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.add-user-btn {
-  background-color: #8B4513;
-  color: white;
-}
-
-.add-user-btn:hover {
-  background-color: #6B3A1D;
-}
-
-.export-btn {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.export-btn:hover {
-  background-color: #e0e0e0;
-}
+/* add-user-btn/export-btn visuals centralized in base.css - keep per-page overrides via variables */
+.add-user-btn { --page-btn-hint: 1; }
+.export-btn { --page-btn-hint: 1; }
 
 /* Table Styles */
 .table-container {
@@ -2060,28 +1859,8 @@ body {
   margin-bottom: 20px;
 }
 
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
-}
-
-.data-table th,
-.data-table td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.data-table th {
-  background-color: #f5f5f5;
-  font-weight: 600;
-  color: #333;
-}
-
-.data-table tr:hover {
-  background-color: #f9f9f9;
-}
+.data-table { --page-table-hint: 1; }
+.data-table th { --page-table-heading-color: #333; }
 
 .data-table .empty-state {
   display: flex !important;
@@ -2148,125 +1927,14 @@ body {
   color: #292727;
 }
 
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  margin-top: 20px;
-}
+/* Pagination: keep only layout spacing; visuals centralized in base.css */
+.pagination { margin-top: 20px; display:flex; justify-content:center; gap:5px; }
+.pagination-btn { --page-pagination-hint: 1; }
 
-.pagination-btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #ddd;
-  background-color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
 
-.pagination-btn.active {
-  background-color: #6b3a1d;
-  color: white;
-  border-color: #6b3a1d;
-}
-
-.pagination-btn:hover:not(.active):not([disabled]) {
-  background-color: #f0f0f0;
-}
-
-.pagination-btn[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pagination-ellipsis {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  font-size: 14px;
-}
-
-/* Modal Styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(30, 20, 10, 0.25);
-  backdrop-filter: blur(6px) saturate(120%);
-  -webkit-backdrop-filter: blur(6px) saturate(120%);
-  transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-  opacity: 1;
-  pointer-events: auto;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: white;
-  margin: 50px auto;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  width: 90%;
-  max-width: 700px;
-  animation: modalFadeIn 0.3s;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background-color: #6b3a1d;
-  color: white;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.close-modal {
-  font-size: 1.7rem;
-  color: #6b3a1d;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 0 0.5rem;
-  transition: background 0.2s;
-}
-
-.close-modal:hover {
-  background: #f5ece6;
-}
-
-.modal-body {
-  padding: 20px;
-}
+/* Use modal base from base.css; only keep page-specific overrides here */
+.modal-header { background-color: var(--color-primary); color: var(--color-white); }
+.modal-body { padding: 20px; }
 
 /* Form Styles */
 .form-row {
@@ -2287,19 +1955,7 @@ body {
   color: #333;
 }
 
-.form-control {
-  padding: 10px 12px;
-  border: 2px solid #e9ecef;
-  border-radius: 4px;
-  font-family: "Alice", serif;
-  transition: border-color 0.2s ease;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #8b4513;
-  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-}
+.form-control:focus { border-color: var(--color-primary-strong); box-shadow: 0 0 0 3px rgba(139,69,19,0.1); }
 
 .form-actions {
   display: flex;
@@ -2308,30 +1964,9 @@ body {
   margin-top: 20px;
 }
 
-.btn {
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  border: none;
-}
-
-.btn-primary {
-  background-color: #6b3a1d;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ddd;
-}
-
-.btn-danger {
-  background-color: #cc0000;
-  color: white;
-}
+.btn-primary { --page-btn-hint: 1; }
+.btn-secondary { --page-btn-hint: 1; }
+.btn-danger { --page-btn-hint: 1; }
 
 /* User Details Styles */
 .user-details {
@@ -2380,101 +2015,16 @@ body {
   margin-top: 20px;
 }
 
-/* Notification delete button */
-.notification-delete-btn {
-  background: none;
-  border: none;
-  color: #dc3545;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 8px;
-  margin-left: 10px;
-  border-radius: 50%;
-  transition: background 0.2s;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.notification-delete-btn:hover {
-  background: #ffeaea;
-  color: #a71d2a;
-}
+/* Notification delete button moved to base.css */
 
 /* From common.css */
 
 /* Common utility and shared styles for Brown Ford University */
 
-/* Empty state and pagination messages */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-}
-
-.empty-state svg {
-  margin-bottom: 1rem;
-  opacity: 0.6;
-}
-
-.empty-state p {
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.empty-state-message {
-  text-align: center;
-}
-
-.empty-pagination-message {
-  text-align: center;
-  color: #888;
-  font-size: 0.9rem;
-  padding: 0.5rem;
-  font-style: italic;
-}
+/* Empty state and pagination messages moved to base.css */
 
 /* Button styles */
-.btn,
-.sign-in-button,
-.view-grades-btn,
-.view-button-small,
-.review-button,
-.save-button,
-.finalize-button {
-  border-radius: 4px;
-  font-weight: bold;
-  font-family: "Cinzel", serif;
-  transition: background-color 0.3s, color 0.3s;
-  cursor: pointer;
-  border: none;
-  background-color: #8b4513;
-  color: white;
-  padding: 10px 20px;
-}
 
-.sign-in-button:hover,
-.view-grades-btn:hover,
-.save-button:hover,
-.finalize-button:hover {
-  background-color: #6b3a1d;
-}
-
-.view-button-small {
-  background-color: #6b3a1d;
-  color: white;
-  padding: 5px 15px;
-}
-
-.view-button-small:hover,
-.review-button:hover {
-  background-color: #8b4513;
-}
 
 /* Filter section styles */
 .filter-section {
@@ -2600,36 +2150,12 @@ body {
   cursor: pointer;
 }
 
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-  border-color: #dc3545;
-}
+.btn-danger { --page-btn-hint: 1; }
 
-.btn-danger:hover {
-  background-color: #c82333;
-  border-color: #bd2130;
-  transform: translateY(-1px);
-}
-
-/* Table improvements */
-.data-table th {
-  background-color: #f8f9fa;
-  color: #6b3a1d;
-  font-weight: 600;
-  padding: 12px;
-  border-bottom: 2px solid #8b4513;
-}
-
-.data-table td {
-  padding: 12px;
-  vertical-align: middle;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.data-table tr:hover {
-  background-color: #f8f9fa;
-}
+/* Table improvements: visuals centralized in base.css; keep lightweight overrides */
+.data-table th { --page-table-heading-color: #6b3a1d; }
+.data-table td { --page-table-cell-hint: 1; }
+.data-table tr:hover { background-color: #f8f9fa; }
 
 /* Form styling improvements */
 .form-row {
@@ -2651,28 +2177,10 @@ body {
   font-family: "Cinzel", serif;
 }
 
-/* Modal improvements */
-.modal-content {
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #8b4513;
-  padding: 20px;
-  border-radius: 8px 8px 0 0;
-}
-
-.modal-header h3 {
-  color: #6b3a1d;
-  font-family: "Cinzel", serif;
-  margin: 0;
-}
-
-.modal-body {
-  padding: 30px;
-}
+/* Modal: defer core visuals to base.css; keep page size/padding overrides here */
+.modal-content { max-width: 800px; }
+.modal-header { padding: 20px; border-bottom: 2px solid var(--notif-border-accent); }
+.modal-body { padding: 30px; }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -2972,37 +2480,8 @@ body {
 }
 
 @media (max-width: 480px) {
-
-  .grades-header,
-  .schedule-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .student-info {
-    margin-top: 15px;
-  }
-
-  .grades-table,
-  .schedule-table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .grades-table th,
-  .grades-table td,
-  .schedule-table th,
-  .schedule-table td {
-    padding: 8px 5px;
-    font-size: 12px;
-  }
-
-  .grade-input,
-  .remark-input {
-    width: 100%;
-    min-width: 60px;
-    font-size: 12px;
-  }
+  /* Mobile table adjustments centralized in base.css; page keeps small responsive hints */
+  .grades-table { --page-table-hint-mobile: 1; }
 }
 
 /* Date display in schedule section */
@@ -3081,100 +2560,14 @@ body {
   background-color: #f0e6dd !important;
 }
 
-/* Pending Approvals Section (Admin Dashboard) */
-#pending-approvals-list .event-card {
-  display: flex;
-  align-items: flex-start;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
-  margin-bottom: 18px;
-  padding: 18px 20px;
-  transition: box-shadow 0.2s;
-  border-left: 5px solid #8b4513;
-}
 
-#pending-approvals-list .event-card:hover {
-  box-shadow: 0 4px 16px rgba(139, 69, 19, 0.16);
-  background: #f9f6f2;
-}
+/* Pending approvals now use shared .activity-event-card visuals from base.css.
+   Keep a tiny per-page override to set the accent color via variables. */
+#pending-approvals-list .activity-event-card { border-left-color: var(--notif-border-accent); }
+#pending-approvals-list .activity-event-card:hover { background: #f9f6f2; }
+#pending-approvals-list .event-time { background: #f5e7d6; color: var(--notif-border-accent); }
 
-#pending-approvals-list .event-date {
-  min-width: 54px;
-  text-align: center;
-  margin-right: 18px;
-  background: #f5e7d6;
-  border-radius: 8px;
-  padding: 8px 0 6px 0;
-  font-family: 'Cinzel', serif;
-}
-
-#pending-approvals-list .event-month {
-  display: block;
-  font-size: 13px;
-  color: #8b4513;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-#pending-approvals-list .event-day {
-  display: block;
-  font-size: 22px;
-  color: #8b4513;
-  font-weight: bold;
-  margin-top: 2px;
-}
-
-#pending-approvals-list .event-details {
-  flex: 1;
-}
-
-#pending-approvals-list .event-title {
-  font-size: 18px;
-  color: #6b3a1d;
-  margin-bottom: 4px;
-}
-
-#pending-approvals-list .event-description {
-  font-size: 15px;
-  color: #5a4633;
-  margin-bottom: 8px;
-}
-
-#pending-approvals-list .event-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-#pending-approvals-list .event-time {
-  font-size: 13px;
-  color: #8b4513;
-  background: #f5e7d6;
-  border-radius: 6px;
-  padding: 2px 8px;
-  margin-right: 8px;
-}
-
-#pending-approvals-view-all {
-  text-align: right;
-  margin-top: 0;
-}
-
-
-#pending-approvals-empty .empty-state {
-  text-align: center;
-  color: #a67c52;
-  padding: 30px 0 10px 0;
-}
-
-#pending-approvals-empty svg {
-  margin-bottom: 10px;
-}
-
-#pending-approvals-empty p {
-  font-size: 15px;
-}
+#pending-approvals-empty .empty-state { text-align: center; color: var(--notif-date); padding: 30px 0 10px 0; }
 
 /* Admin Enrollment Page */
 
@@ -3252,16 +2645,8 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 0;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 800px;
-  max-height: 90vh;
-  overflow-y: auto;
-}
+.modal { --page-modal-hint: 1; }
+.modal-content { max-width: 800px; width: 80%; max-height: 90vh; overflow-y: auto; }
 
 .close-modal {
   color: #aaa;
@@ -3283,49 +2668,10 @@ body {
   margin-top: 20px;
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-  border: 1px solid #6c757d;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #545b62;
-}
-
-.btn-primary {
-  background-color: #8b4513;
-  color: white;
-  border: 1px solid #8b4513;
-}
-
-.btn-primary:hover {
-  background-color: #6b3a1d;
-  border-color: #6b3a1d;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: white;
-  border: 1px solid #28a745;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-  color: #212529;
-  border: 1px solid #ffc107;
-}
-
-.btn-warning:hover {
-  background-color: #e0a800;
-  border-color: #d39e00;
-}
+.btn-secondary { --page-btn-hint: 1; }
+.btn-primary { --page-btn-hint: 1; }
+.btn-success { --page-btn-hint: 1; }
+.btn-warning { --page-btn-hint: 1; }
 
 /* Activity Log Section (Admin Dashboard) - Reuse Pending Approvals Styles */
 #recent-activity-list .activity-event-card {
@@ -3352,6 +2698,17 @@ body {
   margin-right: 18px;
   background: #f5e7d6;
   border-radius: 8px;
+
+/* Curriculums (moved from admin-curriculum.html inline styles) */
+.curriculum-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px; padding: 20px; }
+.curriculum-sidebar { /* uses shared .panel-card in base.css */ height: fit-content; --page-panel-hint: 1; }
+.curriculum-main { /* uses shared .panel-card in base.css */ --page-panel-hint: 1; }
+.program-list { /* uses shared .list-reset in base.css */ --page-list-hint: 1; }
+.program-item { margin-bottom: 8px; cursor: pointer; border: 2px solid transparent; }
+.program-item:hover { /* slight hover handled in base helper; keep stronger tint here */ background-color: rgba(139,69,19,0.08); }
+.program-item.active { background-color: rgba(139,69,19,0.12); border-color: #8b4513; color: #6b3a1d; font-weight: 600; }
+.year-section { margin-bottom: 30px; border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden; }
+.year-header { background-color: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #e9ecef; font-weight: 600; color: #6b3a1d; }
   padding: 8px 0 6px 0;
   font-family: 'Cinzel', serif;
 }

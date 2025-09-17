@@ -9,6 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <script th:src="@{/js/sidebar-nav.js}"></script>
@@ -46,7 +47,7 @@
                     <div class="panel-header">
                         <h2 class="section-title">Student Enrollments</h2>
                         <div class="action-buttons">
-                            <button class="add-user-btn" id="addEnrollmentBtn">
+                            <button class="add-user-btn btn btn-primary" id="addEnrollmentBtn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -134,8 +135,8 @@
                         </div>
 
                         <!-- Enrollments Table -->
-                        <div class="table-container">
-                            <table class="data-table" id="enrollmentsTable">
+                <div class="table-container table-responsive">
+                    <table class="data-table" id="enrollmentsTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 40px;">

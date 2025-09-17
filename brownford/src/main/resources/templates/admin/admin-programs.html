@@ -9,6 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Alice&family=Cinzel&family=Cinzel+Decorative&family=Cormorant+Garamond&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/home.css}">
     <link rel="stylesheet" th:href="@{/css/sidebar-nav.css}">
     <script th:src="@{/js/sidebar-nav.js}"></script>
@@ -227,119 +228,7 @@
         window.onload = loadPrograms;
     </script>
 
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(30, 20, 10, 0.25);
-            backdrop-filter: blur(6px) saturate(120%);
-            -webkit-backdrop-filter: blur(6px) saturate(120%);
-            transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .modal.show {
-            display: block;
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px rgba(60, 40, 20, 0.18), 0 1.5px 6px rgba(139, 69, 19, 0.08);
-            margin: 4vh auto;
-            padding: 2.5rem 2rem 2rem 2rem;
-            max-width: 420px;
-            min-width: 320px;
-            position: relative;
-            animation: modalPopIn 0.32s cubic-bezier(.4, 0, .2, 1);
-        }
-
-        @keyframes modalPopIn {
-            0% {
-                transform: scale(0.92) translateY(30px);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.7rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .modal-header h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.25rem;
-            color: #6B3A1D;
-            margin: 0;
-        }
-
-        .close-modal {
-            font-size: 1.7rem;
-            color: #8B4513;
-            cursor: pointer;
-            border-radius: 50%;
-            padding: 0 0.5rem;
-            transition: background 0.2s;
-        }
-
-        .close-modal:hover {
-            background: #f5ece6;
-        }
-
-        .form-group label {
-            font-weight: 500;
-            color: #6B3A1D;
-            margin-bottom: 0.3rem;
-        }
-
-        .form-control {
-            border-radius: 6px;
-            border: 1px solid #d6cfc7;
-            padding: 0.5rem 0.7rem;
-            font-size: 1rem;
-            background: #faf8f6;
-            transition: border 0.2s;
-            width: 100%;
-        }
-
-        .form-control:focus {
-            border: 1.5px solid #8B4513;
-            outline: none;
-            background: #fff;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.7rem;
-            margin-top: 1.2rem;
-        }
-
-        @media (max-width: 600px) {
-            .modal-content {
-                max-width: 98vw;
-                min-width: unset;
-                padding: 1.2rem 0.5rem 1.5rem 0.5rem;
-            }
-        }
-    </style>
+    <!-- Modal and form visuals moved to /css/base.css to centralize shared UI components -->
 
 </body>
 
